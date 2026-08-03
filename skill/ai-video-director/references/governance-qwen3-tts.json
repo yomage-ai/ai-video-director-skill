@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "decisionStatus": "approved-local-capability",
+  "evaluatedAt": "2026-08-03",
+  "identity": {
+    "name": "Qwen3-TTS 0.6B Base via MLX-Audio",
+    "kind": "model-plus-runtime",
+    "version": "mlx-audio 0.4.7",
+    "revision": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-bf16@1eccf1cb2519b5a4e8a95b5f0544f3303568164f",
+    "officialSource": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-bf16"
+  },
+  "workflowRole": {
+    "stage": "optional script-only voice sample gate",
+    "function": "clone an authorized speaker voice from local reference audio",
+    "output": "WAV narration",
+    "execution": "generative",
+    "location": "local"
+  },
+  "licensing": {
+    "software": {
+      "license": "MIT",
+      "source": "https://github.com/Blaizzy/mlx-audio",
+      "openSource": true,
+      "commercialUse": true,
+      "conditions": ["retain the MIT notice when distributing the software"]
+    },
+    "modelWeights": {
+      "license": "Apache-2.0",
+      "source": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-bf16",
+      "commercialUse": true,
+      "conditions": ["comply with Apache-2.0 when redistributing model materials"]
+    },
+    "transitiveDependencies": {
+      "auditStatus": "sufficient for current local output use; full SBOM pending before runtime redistribution",
+      "knownRestrictions": [],
+      "distributionAction": "do not publish the packaged runtime until dependency notices and licenses are collected"
+    }
+  },
+  "cost": {
+    "licenseFee": "CNY 0 for tested local use",
+    "apiFee": "CNY 0; no API used",
+    "credits": "none",
+    "localCompute": "local processing time and electricity",
+    "storage": "about 2.51 GB model download plus runtime cache",
+    "maintenance": "dependency pinning and output QA",
+    "freeConclusion": "no software or API fee in the tested local route; total operating cost is not zero"
+  },
+  "access": {
+    "account": "public Hugging Face download did not require a paid plan",
+    "apiKey": "not required after local download",
+    "network": "required for first download only",
+    "hardware": "Apple Silicon; tested on M2 Pro with 16 GB unified memory",
+    "region": "no project-specific restriction identified in the cited licenses",
+    "organizationLimits": "none stated by Apache-2.0 and MIT"
+  },
+  "rightsAndPrivacy": {
+    "uploadsUserMedia": false,
+    "biometricData": "voice reference remains local but is sensitive personal data",
+    "consentRequired": true,
+    "retention": "keep references and outputs outside Git and delete according to the identity record",
+    "outputRightsBoundary": "software licenses do not grant permission to impersonate or use an unauthorized voice",
+    "aiLabeling": "preserve provenance and apply current platform and applicable AI-generated-content labeling rules before publication"
+  },
+  "stability": {
+    "maturity": "new model; usable only with pinned revision and runtime in the tested scope",
+    "reproducibility": "seed 42 repeated with an identical WAV SHA-256 under the pinned environment",
+    "knownFailureModes": [
+      "word substitutions can occur across seeds",
+      "long-form emotion and prosody are not validated",
+      "high memory pressure on a 16 GB Mac"
+    ],
+    "vendorLockIn": "low for WAV output; medium for the MLX-specific runtime"
+  },
+  "evidence": {
+    "testStatus": "tested-and-user-approved-for-one-authorized-reference",
+    "scope": "one 10.4-second reference and one 7.008-second Chinese sentence",
+    "hardware": "Apple M2 Pro, 16 GB unified memory",
+    "versions": {
+      "runtime": "mlx-audio 0.4.7",
+      "modelRevision": "1eccf1cb2519b5a4e8a95b5f0544f3303568164f",
+      "acceptedSeed": 42
+    },
+    "metrics": {
+      "warmWallSeconds": 18.24,
+      "generationSeconds": 13.386,
+      "audioSeconds": 7.008,
+      "warmPeakMemoryGB": 11.69,
+      "asr": "exact target text"
+    },
+    "artifacts": [
+      "scripts/qwen3-voice-clone.py",
+      "scripts/qwen3-voice-clone.py.lock"
+    ]
+  },
+  "recommendation": {
+    "priority": "P1-optional",
+    "allowedRole": "authorized short local voice sample; seed 42 is the accepted preset for the tested reference",
+    "blockedRole": "unreviewed long-form/emotional narration and any unauthorized voice",
+    "reason": "user accepted the sample, ASR matched, and the run was local and reproducible",
+    "recheckTriggers": [
+      "model or runtime changes",
+      "new speaker reference",
+      "long-form or emotional delivery",
+      "runtime redistribution",
+      "license, platform, privacy, or labeling rule changes"
+    ]
+  }
+}

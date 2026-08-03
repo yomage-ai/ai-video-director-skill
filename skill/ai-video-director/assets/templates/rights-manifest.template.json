@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "updatedAt": "",
+  "items": [
+    {
+      "id": "asset-001",
+      "file": "",
+      "kind": "video|image|audio|font|code|model-output",
+      "sourceUrl": "",
+      "authorOrOwner": "",
+      "licenseOrTerms": "",
+      "termsUrl": "",
+      "retrievedAt": "",
+      "commercialUse": "unknown",
+      "attribution": "",
+      "identityOrPropertyConsent": "not-applicable|recorded|missing",
+      "restrictions": [],
+      "decision": "pending"
+    }
+  ]
+}

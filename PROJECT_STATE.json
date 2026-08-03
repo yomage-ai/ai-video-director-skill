@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-03",
+  "repository": "https://github.com/yomage-ai/ai-video-director-skill",
+  "visibility": "private",
+  "status": "internal-v0.1.0-validated",
+  "validatedAt": "2026-08-03",
+  "release": "0.1.0",
+  "skill": {
+    "id": "ai-video-director",
+    "path": "skill/ai-video-director",
+    "legacySkill": "ai-auto-editing-director-disabled"
+  },
+  "activeWorkflow": "governed-talking-head-video-v1",
+  "approvedCapabilities": [
+    "content-lock-and-director-plan",
+    "chatcut-visual-rough-cut-review",
+    "chatcut-fcp-xml-to-canonical-edl",
+    "ffmpeg-copy-preview",
+    "ffmpeg-precise-aroll-and-master",
+    "video-use-boundary-rules",
+    "hyperframes-simple-and-real-asset-visuals",
+    "remotion-complex-structured-react-visuals",
+    "qwen3-tts-authorized-short-sample-seed-42",
+    "full-qa-editable-delivery-and-feedback-memory"
+  ],
+  "pausedCapabilities": [
+    "digital-human-and-avatar-generation",
+    "musetalk"
+  ],
+  "excludedCapabilities": [
+    "sadtalker",
+    "cut-motion",
+    "paid-generated-video-in-the-free-core",
+    "unlicensed-trending-audio",
+    "legacy-ai-auto-editing-director"
+  ],
+  "dataPolicy": {
+    "repositoryContainsPrivateMedia": false,
+    "personalMemoryLocation": "AI_VIDEO_DIRECTOR_DATA_DIR outside Git",
+    "videoProjectsLocation": "outside this repository",
+    "publicRelease": "not-approved"
+  },
+  "validation": {
+    "skillCreator": "pass",
+    "coreTests": "6/6 pass",
+    "testedMediaPath": "synthetic source -> ChatCut XML fixture -> canonical EDL -> FFmpeg precise render",
+    "mermaidDiagrams": "3/3 render",
+    "privacyScan": "pass",
+    "installedSkill": "~/.codex/skills/ai-video-director symlink",
+    "privateMemory": "initialized outside Git"
+  }
+}

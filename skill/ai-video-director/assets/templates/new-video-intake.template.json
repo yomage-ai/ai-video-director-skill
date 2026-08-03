@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "videoType": "talking-head-knowledge",
+  "inputs": {
+    "sourceMedia": [],
+    "approvedScript": "",
+    "supplementaryMedia": [],
+    "referenceLinks": [],
+    "targetPlatform": "douyin",
+    "aspectRatio": "9:16",
+    "targetResolution": "1080x1920",
+    "targetDuration": "",
+    "language": "zh-CN"
+  },
+  "contentLock": {
+    "status": "pending",
+    "primaryClaim": "",
+    "supportingPoints": [],
+    "order": [],
+    "realEvidenceColdOpen": ""
+  },
+  "defaults": {
+    "realEvidenceFirst": true,
+    "backgroundMusic": "off",
+    "transitions": "restrained",
+    "externalPaidGeneration": "requires-explicit-approval"
+  },
+  "reviewGates": [
+    "content-lock-and-director-plan",
+    "rough-cut-and-canonical-edl",
+    "keyframes-and-motion-sample",
+    "asset-rights",
+    "caption-and-audio",
+    "final-master-and-feedback"
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 视频导演"
+  short_description: "AI 视频内容锁定、口播粗剪、视觉精剪、质量验收与持续记忆工作流"
+  default_prompt: "使用 $ai-video-director 处理这条视频，先检查输入并给我内容锁定卡与导演方案。"

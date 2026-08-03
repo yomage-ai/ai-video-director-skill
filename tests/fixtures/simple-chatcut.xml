@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmeml version="5">
+  <project>
+    <children>
+      <sequence id="sequence-1">
+        <name>Simple ChatCut Export</name>
+        <duration>60</duration>
+        <rate>
+          <timebase>30</timebase>
+          <ntsc>FALSE</ntsc>
+        </rate>
+        <media>
+          <video>
+            <track>
+              <clipitem id="clipitem-1">
+                <name>source.mp4</name>
+                <start>0</start>
+                <end>30</end>
+                <in>0</in>
+                <out>30</out>
+                <rate>
+                  <timebase>30</timebase>
+                  <ntsc>FALSE</ntsc>
+                </rate>
+                <file id="file-1">
+                  <name>source.mp4</name>
+                  <pathurl>file:///tmp/source.mp4</pathurl>
+                </file>
+              </clipitem>
+              <clipitem id="clipitem-2">
+                <name>source.mp4</name>
+                <start>30</start>
+                <end>60</end>
+                <in>60</in>
+                <out>90</out>
+                <rate>
+                  <timebase>30</timebase>
+                  <ntsc>FALSE</ntsc>
+                </rate>
+                <file id="file-1" />
+              </clipitem>
+            </track>
+          </video>
+        </media>
+      </sequence>
+    </children>
+  </project>
+</xmeml>

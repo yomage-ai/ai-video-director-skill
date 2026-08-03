@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-03",
+  "scope": "Current internal workflow; every version, pricing, license, policy, or role change requires recheck.",
+  "tools": [
+    {
+      "id": "chatcut",
+      "kind": "cloud-editor-and-plugin",
+      "priority": "P1",
+      "activeRole": "multitrack transcript-linked rough-cut review and FCP XML export",
+      "blockedRole": "final cloud master until text/motion-frame and DTS regressions pass; private endpoint automation",
+      "cost": "account required; AI operations consume credits according to current policy",
+      "rights": "commercial creative output allowed by current Usage Policy; user retains responsibility for inputs and outputs",
+      "privacy": "media is uploaded; current Terms say user media is not used for model training; retention and account policy require project review",
+      "source": "https://chatcut.io/terms/"
+    },
+    {
+      "id": "canonical-edl-bridge",
+      "kind": "local-script",
+      "priority": "P1",
+      "activeRole": "convert reviewed ChatCut straight cuts into the sole timing source",
+      "blockedRole": "speed ramps, transitions, multicam, nested sequences, transforms, captions, motion graphics",
+      "cost": "local compute only",
+      "rights": "repository-authored code; repository is currently private and unlicensed for redistribution",
+      "privacy": "local",
+      "source": "scripts/chatcut-xml-to-canonical-edl.mjs"
+    },
+    {
+      "id": "ffmpeg",
+      "kind": "local-media-tool",
+      "priority": "P1",
+      "activeRole": "probe, approximate copy preview, exact A-roll, audio handling, master and validation",
+      "blockedRole": "semantic edit decisions",
+      "cost": "no API fee; local compute",
+      "rights": "LGPL-2.1-or-later by default; GPL applies when optional GPL parts are enabled; inspect the distributed build",
+      "privacy": "local",
+      "source": "https://ffmpeg.org/legal.html"
+    },
+    {
+      "id": "hyperframes",
+      "kind": "local-html-video-framework",
+      "testedVersion": "0.7.90",
+      "priority": "P1",
+      "activeRole": "real-media composition, fixed structures, simple variables and authored visual shots",
+      "blockedRole": "automatic content understanding",
+      "cost": "no per-render fee; local compute",
+      "rights": "Apache-2.0 in current official repository",
+      "privacy": "local render by default; publishing/cloud features require separate review",
+      "source": "https://github.com/heygen-com/hyperframes"
+    },
+    {
+      "id": "remotion",
+      "kind": "react-video-framework",
+      "testedVersion": "4.0.504",
+      "priority": "P1-conditional",
+      "activeRole": "nested data, conditional layouts, reusable React visual systems for current one-person internal creator use",
+      "blockedRole": "external automation product without a new license assessment",
+      "cost": "current free creator license applies to individuals and companies up to three people; automator/company terms differ",
+      "rights": "source-available special license; not equivalent to a permissive open-source license",
+      "privacy": "local render unless a cloud service is selected",
+      "source": "https://www.remotion.dev/license"
+    },
+    {
+      "id": "video-use-rules",
+      "kind": "absorbed-workflow-logic",
+      "priority": "P1-boundary-rules",
+      "activeRole": "word-boundary handles, fades, joins and EDL acceptance rules",
+      "blockedRole": "native Scribe claim or second director layer",
+      "cost": "native Scribe access not evaluated",
+      "rights": "do not redistribute upstream code without its license review",
+      "privacy": "depends on selected transcription backend",
+      "source": "https://github.com/browser-use/video-use"
+    },
+    {
+      "id": "qwen3-tts-mlx",
+      "kind": "local-model-and-runtime",
+      "testedVersion": "mlx-audio 0.4.7 / pinned model revision",
+      "priority": "P1-optional-short-sample",
+      "activeRole": "authorized short Chinese voice clone, seed 42",
+      "blockedRole": "unauthorized voice, unattended long-form, guaranteed emotion",
+      "cost": "no API fee; first model download, storage and high local memory use",
+      "rights": "software/model licenses do not grant likeness or voice rights",
+      "privacy": "local; reference remains sensitive and outside Git",
+      "source": "governance-qwen3-tts.json"
+    },
+    {
+      "id": "videocut",
+      "kind": "editing-runtime",
+      "testedVersion": "0.3.0 environment only",
+      "priority": "P2",
+      "activeRole": "none until a controlled component test passes",
+      "blockedRole": "core workflow",
+      "cost": "Volcengine transcription access/key required for full test",
+      "rights": "pending governance review",
+      "privacy": "pending",
+      "source": "not-yet-approved"
+    },
+    {
+      "id": "seedance-2",
+      "kind": "paid-generative-video-service",
+      "priority": "excluded-free-core",
+      "activeRole": "none",
+      "blockedRole": "all current production use",
+      "cost": "current ChatCut plan rejected task because Pro was required",
+      "rights": "recheck service and output terms if budget is later approved",
+      "privacy": "cloud",
+      "source": "https://chatcut.io/docs/credits-policy"
+    },
+    {
+      "id": "digital-human",
+      "kind": "avatar-branch",
+      "priority": "P3-paused",
+      "activeRole": "none",
+      "blockedRole": "production and demos",
+      "cost": "not evaluated",
+      "rights": "identity authorization mandatory",
+      "privacy": "face and voice are sensitive",
+      "source": "paused-by-user"
+    },
+    {
+      "id": "sadtalker",
+      "kind": "avatar-tool",
+      "priority": "excluded",
+      "activeRole": "none",
+      "blockedRole": "all use and demos",
+      "cost": "irrelevant",
+      "rights": "not evaluated for adoption",
+      "privacy": "face and voice inputs",
+      "source": "rejected-by-user-for-quality"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "updatedAt": "",
+  "currentStageId": "00-intake-preflight",
+  "status": "pending",
+  "allowedStatuses": [
+    "pending",
+    "in-progress",
+    "awaiting-user",
+    "approved",
+    "blocked",
+    "invalidated"
+  ],
+  "locks": {
+    "contentLockVersion": null,
+    "directorPlanVersion": null,
+    "canonicalEdlVersion": null,
+    "styleProfileVersion": null,
+    "rightsManifestVersion": null,
+    "masterVersion": null
+  },
+  "stages": [
+    "00-intake-preflight",
+    "01-asr-transcript",
+    "02-content-lock",
+    "03-director-plan",
+    "04-chatcut-rough-cut-review",
+    "05-canonical-edl",
+    "06-ffmpeg-precise-aroll",
+    "07-rough-cut-approval",
+    "08-visual-beat-sheet",
+    "09-style-preview",
+    "10-assets-and-rights",
+    "11-shot-routing-and-fine-edit",
+    "12-captions-transitions-audio",
+    "13-targeted-checks",
+    "14-master-and-full-qa",
+    "15-delivery-and-feedback"
+  ],
+  "history": []
+}

@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "decisionStatus": "draft",
+  "evaluatedAt": "YYYY-MM-DD",
+  "identity": {
+    "name": "",
+    "kind": "tool|model|runtime|skill|service|asset-library",
+    "version": "",
+    "revision": "",
+    "officialSource": ""
+  },
+  "workflowRole": {
+    "stage": "",
+    "function": "",
+    "output": "",
+    "execution": "deterministic|generative|control-only",
+    "location": "local|cloud|hybrid"
+  },
+  "licensing": {
+    "software": {
+      "license": "unknown",
+      "source": "",
+      "openSource": "unknown",
+      "commercialUse": "unknown",
+      "conditions": []
+    },
+    "modelWeights": {
+      "license": "not-applicable|unknown",
+      "source": "",
+      "commercialUse": "not-applicable|unknown",
+      "conditions": []
+    },
+    "transitiveDependencies": {
+      "auditStatus": "not-audited",
+      "knownRestrictions": [],
+      "distributionAction": ""
+    }
+  },
+  "cost": {
+    "licenseFee": "unknown",
+    "apiFee": "unknown",
+    "credits": "unknown",
+    "localCompute": "unknown",
+    "storage": "unknown",
+    "maintenance": "unknown",
+    "freeConclusion": "unknown"
+  },
+  "access": {
+    "account": "unknown",
+    "apiKey": "unknown",
+    "network": "unknown",
+    "hardware": "unknown",
+    "region": "unknown",
+    "organizationLimits": "unknown"
+  },
+  "rightsAndPrivacy": {
+    "uploadsUserMedia": "unknown",
+    "biometricData": "unknown",
+    "consentRequired": true,
+    "retention": "unknown",
+    "outputRightsBoundary": "",
+    "aiLabeling": ""
+  },
+  "stability": {
+    "maturity": "unknown",
+    "reproducibility": "unknown",
+    "knownFailureModes": [],
+    "vendorLockIn": "unknown"
+  },
+  "evidence": {
+    "testStatus": "untested",
+    "scope": "",
+    "hardware": "",
+    "versions": {},
+    "metrics": {},
+    "artifacts": []
+  },
+  "recommendation": {
+    "priority": "P1|P2|P3|excluded",
+    "allowedRole": "",
+    "blockedRole": "",
+    "reason": "",
+    "recheckTriggers": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "contentLockVersion": 1,
+  "status": "awaiting-user",
+  "roughCut": {
+    "retentionRules": [],
+    "removalRules": [],
+    "joinAcceptance": [
+      "meaning remains intact",
+      "speech sounds natural",
+      "visual continuity is acceptable"
+    ]
+  },
+  "visualBeats": [],
+  "evidenceNeeded": [],
+  "stylePreview": {
+    "keyframes": 3,
+    "motionSampleSeconds": 3,
+    "options": []
+  },
+  "risks": [],
+  "approvedAt": null
+}
