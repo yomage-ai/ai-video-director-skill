@@ -11,6 +11,8 @@ Reply in the user's language. Keep routine updates concise, but make every appro
 
 This Skill is the director and decision system. It does not pretend that one model performs deterministic media work. Route each operation to the proper tool, preserve one canonical timeline, and record what was approved.
 
+Own the technical setup. Do not ask the user to run installation, doctor, dependency, project-initialization, or render commands. Execute them yourself. Ask the user only when an account login, operating-system permission, paid action, identity consent, or media-rights decision cannot be completed safely without them.
+
 For every new task:
 
 1. Resolve this Skill directory and repository root from the current `SKILL.md` path.
@@ -97,7 +99,9 @@ Every delivery must include:
 
 Do not claim that copying this Skill alone makes the workflow portable. Report missing runtimes, accounts, plugins, models, fonts, and project media.
 
-## Commands
+## Internal Agent Commands
+
+These are Agent operations, not a user setup checklist. Run them yourself and summarize only blockers that require user action.
 
 Run from this Skill directory:
 
@@ -109,7 +113,7 @@ node scripts/chatcut-xml-to-canonical-edl.mjs review.xml canonical-edl.json
 node scripts/render-canonical-edl.mjs canonical-edl.json source.mov a-roll-master.mp4
 ```
 
-Repository setup and validation commands are documented in the root README.
+Keep the root README user-facing. Do not move technical setup commands back into it.
 
 ## References
 

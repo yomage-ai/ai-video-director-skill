@@ -6,6 +6,33 @@
 
 This repository is private and intended for the owner's repeated real-world testing. Version `0.1.0` has passed the Skill schema check, six core regressions, a real FFmpeg synthetic-media render, Mermaid rendering, and the privacy scan. It does not yet grant a public-use license.
 
+## How To Use
+
+Attach the video, script, or supporting files to a Codex or other coding-agent task, then paste this prompt:
+
+```text
+Use the AI Video Director Skill from this repository to process my video:
+https://github.com/yomage-ai/ai-video-director-skill
+
+Handle Skill retrieval, environment checks, dependencies, project initialization, and tool setup yourself. Do not ask me to run installation commands.
+Ask me briefly only when account login, system permission, payment approval, or media-rights confirmation genuinely requires my action.
+
+First inspect my footage, script, and references. Then show me only:
+1. A compact content-lock card;
+2. A director plan;
+3. Any essential missing information.
+
+Do not start full production or consume paid credits before I approve. After approval, continue through rough cut, style preview, fine edit, QA, and editable delivery according to the Skill.
+```
+
+When the Skill is already available, the shorter form is enough:
+
+```text
+Use $ai-video-director to process this talking-head video. Inspect the material first, then show me the content-lock card and director plan.
+```
+
+The user supplies the material, target platform, and any important style request, then approves the key content, rough-cut, visual, cost/rights, and final-output gates. The Agent owns dependency checks, file organization, timeline conversion, rendering, and QA.
+
 ## Current Workflow
 
 ```mermaid
@@ -39,47 +66,10 @@ The process uses a renovation model: content lock is the construction drawing; A
 
 The tested scope, current licenses, costs, privacy boundaries, strengths, failures, and excluded alternatives are recorded in [tool-selection.md](skill/ai-video-director/references/tool-selection.md). The eight public-case union and controlled component evidence are in [research-and-tests.md](skill/ai-video-director/references/research-and-tests.md).
 
-## Install
-
-Requirements: Git, Node.js 20+, npm, FFmpeg, and ffprobe. ChatCut, ASR, HyperFrames, Remotion, and local voice cloning are checked or activated only when their stage is used.
-
-```bash
-npm install
-npm run doctor
-npm run install-skill
-```
-
-Restart Codex after installation, then invoke:
-
-```text
-Use $ai-video-director to process this talking-head video.
-Inspect the inputs first, then show me a compact content-lock card and director plan.
-```
-
-Initialize a project outside this repository:
-
-```bash
-npm run init-project -- --id my-video --root ~/Documents/ai-video-projects
-```
-
 ASR means automatic speech recognition: speech is converted into text with timestamps so cuts and captions can be checked against the recording. It proposes evidence; it does not replace full listening.
 
-Private preferences are explicitly managed rather than silently learned:
-
-```bash
-npm run memory -- show
-npm run memory -- record --project my-video --category captions --feedback "Use restrained caption motion"
-```
-
-Feedback remains project-only until an explicit promotion command records user approval.
+Private preferences are explicitly managed rather than silently learned. Feedback remains project-only until the user explicitly approves promoting it to the private base profile.
 
 ## Data Boundary
 
-The repository stores the Skill, scripts, templates, governance records, and anonymous tests only. Put footage, faces, voices, credentials, unpublished renders, project files, and personal preferences outside Git. Set `AI_VIDEO_DIRECTOR_DATA_DIR` for the private profile and feedback log.
-
-Before committing:
-
-```bash
-npm test
-npm run privacy-scan
-```
+The repository stores the Skill, scripts, templates, governance records, and anonymous tests only. The Agent must keep footage, faces, voices, credentials, unpublished renders, project files, and personal preferences outside this Git repository.

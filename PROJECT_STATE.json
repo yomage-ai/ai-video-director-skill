@@ -41,6 +41,24 @@
     "videoProjectsLocation": "outside this repository",
     "publicRelease": "not-approved"
   },
+  "userExperience": {
+    "entryPoint": "paste-the-repository-url-and-a-natural-language-video-request-into-a-coding-agent",
+    "manualInstallationCommandsExpectedFromUser": false,
+    "agentOwnedSetup": [
+      "skill-retrieval",
+      "environment-checks",
+      "dependency-preparation",
+      "project-initialization",
+      "tool-routing"
+    ],
+    "userInterventionOnlyFor": [
+      "content-and-style-decisions",
+      "account-login-or-system-permission",
+      "payment-approval",
+      "media-rights-confirmation",
+      "final-approval"
+    ]
+  },
   "validation": {
     "skillCreator": "pass",
     "coreTests": "6/6 pass",

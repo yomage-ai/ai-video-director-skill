@@ -16,6 +16,8 @@ Use visual choices for style: three representative stills plus one motion sample
 
 ## Do Not Ask Twice
 
+- Do not ask the user to install dependencies, run doctor commands, initialize folders, convert timelines, or invoke render scripts. Those are Agent-owned operations.
+- Ask for user action only when login, system permission, payment, identity consent, or media rights genuinely require it.
 - Do not reconfirm information already explicit in the user input.
 - Ask only when the choice changes meaning, rights, cost, identity, or substantial compute.
 - For nonblocking details, select the safest default and record the assumption.
