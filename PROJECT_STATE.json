@@ -43,6 +43,17 @@
   },
   "userExperience": {
     "entryPoint": "paste-the-repository-url-and-a-natural-language-video-request-into-a-coding-agent",
+    "supportedLanguages": [
+      "zh-CN",
+      "en"
+    ],
+    "readmeAudience": "end-user-only",
+    "readmePrimaryContent": [
+      "copy-paste-natural-language-invocation",
+      "required-user-inputs",
+      "unavoidable-user-approvals",
+      "essential-rights-and-privacy-disclosures"
+    ],
     "manualInstallationCommandsExpectedFromUser": false,
     "agentOwnedSetup": [
       "skill-retrieval",

@@ -113,7 +113,7 @@ node scripts/chatcut-xml-to-canonical-edl.mjs review.xml canonical-edl.json
 node scripts/render-canonical-edl.mjs canonical-edl.json source.mov a-roll-master.mp4
 ```
 
-Keep the root README user-facing. Do not move technical setup commands back into it.
+Keep the root README limited to bilingual natural-language invocation, inputs the user must provide, unavoidable approval points, and essential rights/privacy disclosures. Do not move internal workflow, tool selection, technical setup, or maintainer commands back into it.
 
 ## References
 
