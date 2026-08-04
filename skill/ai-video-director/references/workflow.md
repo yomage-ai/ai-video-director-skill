@@ -50,7 +50,7 @@ flowchart TD
 | 01 | Turn speech into word-timed text, correct it against the recording, and listen through the source | ASR, ChatCut transcript, human listening | corrected transcript and word timing |
 | 02 | Confirm what the video says | LLM plus user | one primary claim, at most two supports, order, real-evidence cold open |
 | 03 | Decide what to remove, retain, prove, and visualize | director reasoning | approved director plan |
-| 04 | Remove mistakes, repeats, dead sections, and bad takes while watching and listening | ChatCut | reviewed timeline and FCP XML |
+| 04 | Remove mistakes, repeats, dead sections, and bad takes while watching and listening; compare repeated takes quality-first and use the later take only as a tie-breaker | ChatCut | reviewed timeline, take-selection decisions, and FCP XML |
 | 05 | Convert the reviewed edit into one machine-readable timing truth | XML bridge | canonical EDL |
 | 06 | Rebuild A-roll exactly from the best source | FFmpeg precise re-encode | A-roll master and captions aligned to it |
 | 07 | Watch and listen from start to finish | media checks plus human | locked rough cut |

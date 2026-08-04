@@ -26,6 +26,24 @@ Rough cut is complete only when all of the following are true:
 
 Zooms, B-roll, caption styling, motion graphics, transitions, music, and semantic sound effects are fine edit. Transcript correction is rough cut; how the captions look is fine edit.
 
+## Repeated Take Selection
+
+Never keep the last occurrence merely because it was recorded later. ASR and transcript similarity identify repeated-take candidates; they do not decide which take survives.
+
+Compare every candidate against the original audio and video, then select in this order:
+
+1. Semantic correctness, completeness, and fit with the approved content role.
+2. Delivery quality: fluency, confidence, emotion, pacing, gaze, expression, and gesture.
+3. Technical usability: clean speech, usable picture, no clipped onset, distortion, or distracting interruption.
+4. Natural connection to the preceding and following material.
+5. If the candidates remain materially equal, prefer the later occurrence as a tie-breaker because it is often the speaker's correction.
+
+Do not remove intentional repetition when the occurrences serve different content roles. Preserve enough breath, consonant onset, room tone, and visual handle for a natural join; determine the handle from the waveform and full-speed listening rather than a universal millisecond value.
+
+Record the selected range, rejected range, and reason in the edit decision record. Listen to the resulting join and then review the complete rough cut before locking the canonical EDL.
+
+Example: if the first greeting is complete and natural while the later greeting is only a restart, keep the first. If the first is a false start and the later version is complete and better delivered, keep the later version.
+
 ## Fine Edit Standard
 
 - Start from a visual beat sheet: what must the viewer see, understand, or believe at each beat?

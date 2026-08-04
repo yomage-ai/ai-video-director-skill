@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-03",
+  "updatedAt": "2026-08-04",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "private",
   "status": "internal-v0.1.0-validated",
-  "validatedAt": "2026-08-03",
+  "validatedAt": "2026-08-04",
   "release": "0.1.0",
   "skill": {
     "id": "ai-video-director",
@@ -12,8 +12,25 @@
     "legacySkill": "ai-auto-editing-director-disabled"
   },
   "activeWorkflow": "governed-talking-head-video-v1",
+  "roughCutPolicy": {
+    "repeatedTakeSelection": {
+      "default": "quality-first",
+      "laterOccurrence": "tie-breaker-only",
+      "asrRole": "candidate-detection-only",
+      "priority": [
+        "semantic-correctness-completeness-and-intended-role",
+        "delivery-and-visual-performance-quality",
+        "audio-video-technical-usability",
+        "natural-contextual-join"
+      ],
+      "intentionalRepetition": "preserve-when-it-has-a-distinct-content-role",
+      "editHandles": "contextual-by-waveform-and-full-speed-listening-not-a-universal-duration",
+      "decisionRecord": "record-selected-range-rejected-range-and-reason"
+    }
+  },
   "approvedCapabilities": [
     "content-lock-and-director-plan",
+    "quality-first-repeated-take-selection",
     "chatcut-visual-rough-cut-review",
     "chatcut-fcp-xml-to-canonical-edl",
     "ffmpeg-copy-preview",
@@ -72,7 +89,7 @@
   },
   "validation": {
     "skillCreator": "pass",
-    "coreTests": "6/6 pass",
+    "coreTests": "7/7 pass",
     "testedMediaPath": "synthetic source -> ChatCut XML fixture -> canonical EDL -> FFmpeg precise render",
     "mermaidDiagrams": "3/3 render",
     "privacyScan": "pass",

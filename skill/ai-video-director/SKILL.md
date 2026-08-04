@@ -34,7 +34,7 @@ Use the stage order and return paths in [workflow.md](references/workflow.md):
 2. ASR with word timing, transcript correction, and full-source listening.
 3. Compact content lock: one primary claim, at most two supporting points, order, and real-evidence cold open.
 4. Director plan: retain/remove rules, rough-cut intent, visual beats, evidence needs, and risks.
-5. ChatCut visual rough-cut review; edit on a multitrack timeline and listen through every join.
+5. ChatCut visual rough-cut review; edit on a multitrack timeline and listen through every join. For repeated takes, select quality-first rather than keeping the last occurrence by default; use a later occurrence only as a tie-breaker when the candidates are materially equal. Follow [production-standard.md](references/production-standard.md).
 6. Export Final Cut Pro XML and convert it to the sole canonical EDL.
 7. Render exact A-roll from original-quality media with FFmpeg, then approve and lock the rough cut.
 8. Produce three style keyframes and one short motion sample; ask the user to choose or adjust them.

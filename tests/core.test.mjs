@@ -113,3 +113,25 @@ test('doctor passes required local dependencies with isolated private paths', ()
   assert.equal(output.ok, true);
   assert.equal(output.checks.filter((check) => check.required && check.status !== 'pass').length, 0);
 });
+
+test('repeated takes use quality-first selection rather than a latest-take default', () => {
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const policy = state.roughCutPolicy.repeatedTakeSelection;
+  assert.equal(policy.default, 'quality-first');
+  assert.equal(policy.laterOccurrence, 'tie-breaker-only');
+  assert.equal(policy.asrRole, 'candidate-detection-only');
+  assert.deepEqual(policy.priority, [
+    'semantic-correctness-completeness-and-intended-role',
+    'delivery-and-visual-performance-quality',
+    'audio-video-technical-usability',
+    'natural-contextual-join',
+  ]);
+
+  const standard = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'),
+    'utf8',
+  );
+  assert.match(standard, /Never keep the last occurrence merely because it was recorded later/);
+  assert.match(standard, /prefer the later occurrence as a tie-breaker/);
+  assert.match(standard, /Do not remove intentional repetition/);
+});
