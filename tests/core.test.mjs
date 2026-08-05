@@ -199,6 +199,10 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.captions.semanticPunctuation.inventOrSubstituteSymbols, false);
   assert.equal(plan.finishingPass.chapterProgress.defaultEnabled, true);
   assert.equal(plan.finishingPass.chapterProgress.segmentWidth, 'duration-proportional');
+  assert.equal(plan.finishingPass.chapterProgress.defaultVisualGrammar,
+    'transparent-edge-to-edge-bottom-line-with-divider-ticks-no-chapter-boxes');
+  assert.equal(plan.finishingPass.chapterProgress.verticalPlacement,
+    'below-captions-close-to-bottom-edge');
   assert.equal(plan.finishingPass.chapterProgress.fallbackWithoutMeaningfulChapters,
     'single-unsegmented-progress-bar');
   assert.equal(plan.finishingPass.chapterProgress.renderedOverlayIsInteractive, false);
@@ -362,13 +366,23 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   const chapterProgress = state.roughCutPolicy.finishingPass.chapterProgress;
   assert.equal(chapterProgress.default, 'enabled-after-structural-timing-lock');
   assert.equal(chapterProgress.segmentWidth, 'duration-proportional');
+  assert.equal(chapterProgress.defaultVisualGrammar,
+    'transparent-edge-to-edge-bottom-line-with-divider-ticks-no-chapter-boxes');
+  assert.equal(chapterProgress.platformUiOcclusionPolicy,
+    'allowed-for-auxiliary-overlay-never-displace-primary-content');
   assert.equal(chapterProgress.renderedOverlayInteractive, false);
   assert.equal(chapterProgress.recomputeAfterStructuralTimingChange, true);
   assert.ok(state.approvedCapabilities.includes(
     'time-driven-semantic-chapter-progress-with-plain-bar-fallback',
   ));
+  assert.ok(state.approvedCapabilities.includes(
+    'edge-to-edge-bottom-chapter-strip-with-divider-only-segments',
+  ));
   assert.match(standard, /Derive its sections from the approved semantic structure/);
   assert.match(standard, /use one unsegmented progress bar instead of inventing chapters/);
+  assert.match(standard, /one transparent, continuous line that spans the full composition width/);
+  assert.match(standard, /do not wrap every section in a card or leave decorative gaps/);
+  assert.match(standard, /It may sit inside an area later covered by platform descriptions or controls/);
   assert.match(standard, /rendered progress strip is visual orientation, not an interactive seek target/);
   assert.match(standard, /Verify early, middle, late, and every chapter boundary/);
 
@@ -383,6 +397,7 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /Page-final question and exclamation marks are always preserved/);
   assert.match(qaTemplate, /## Semantic Chapter Progress/);
   assert.match(qaTemplate, /duration-proportional boundaries/);
+  assert.match(qaTemplate, /sections use divider ticks rather than boxed cards/);
   assert.match(qaTemplate, /visual orientation only/);
 });
 

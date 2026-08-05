@@ -175,12 +175,15 @@
         "chapterSource": "approved-semantic-structure",
         "segmentCount": "two-to-seven-when-meaningful-otherwise-one-plain-bar",
         "segmentWidth": "duration-proportional",
+        "defaultVisualGrammar": "transparent-edge-to-edge-bottom-line-with-divider-ticks-no-chapter-boxes",
+        "verticalPlacement": "below-captions-close-to-bottom-edge",
+        "platformUiOcclusionPolicy": "allowed-for-auxiliary-overlay-never-displace-primary-content",
         "playhead": "actual-local-frame-over-final-duration",
         "renderedOverlayInteractive": false,
         "actualSeeking": "platform-native-scrubber-or-separate-chapter-metadata",
         "recomputeAfterStructuralTimingChange": true,
-        "safeAreaReview": "captions-platform-ui-pip-and-information-cards",
-        "verification": "early-middle-late-every-boundary-and-seek-rerender"
+        "primaryContentCollisionReview": "captions-pip-and-information-cards",
+        "verification": "early-middle-late-every-boundary-seek-rerender-full-width-and-below-caption-placement"
       },
       "designAudit": {
         "requiredBeforeFinalRender": true,
@@ -234,6 +237,7 @@
     "page-aware-caption-punctuation-with-final-question-and-exclamation-preservation",
     "explicit-finishing-design-audit-including-no-treatment-decisions",
     "time-driven-semantic-chapter-progress-with-plain-bar-fallback",
+    "edge-to-edge-bottom-chapter-strip-with-divider-only-segments",
     "must-keep-spoken-or-screen-coverage-audit",
     "local-opaque-redaction-before-cloud-upload",
     "precise-screenshot-focus-cues",

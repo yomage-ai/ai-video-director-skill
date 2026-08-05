@@ -156,14 +156,16 @@
       },
       "segmentWidth": "duration-proportional",
       "labels": "short-and-phone-readable",
+      "defaultVisualGrammar": "transparent-edge-to-edge-bottom-line-with-divider-ticks-no-chapter-boxes",
+      "verticalPlacement": "below-captions-close-to-bottom-edge",
+      "platformUiOcclusionPolicy": "allowed-only-because-overlay-is-auxiliary-never-move-primary-content-for-it",
       "playhead": "actual-timeline-frame-over-final-duration",
       "fallbackWithoutMeaningfulChapters": "single-unsegmented-progress-bar",
       "renderedOverlayIsInteractive": false,
       "actualSeeking": "platform-native-scrubber-or-separate-chapter-metadata",
       "recomputeAfterStructuralTimingChange": true,
-      "safeAreaReview": [
+      "primaryContentCollisionReview": [
         "captions",
-        "platform-description-and-controls",
         "picture-in-picture",
         "information-cards"
       ],

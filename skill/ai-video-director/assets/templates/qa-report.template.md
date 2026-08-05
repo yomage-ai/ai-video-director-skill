@@ -65,7 +65,8 @@
 - Segment labels and duration-proportional boundaries:
 - Fallback is one unsegmented bar when no meaningful multi-section structure exists:
 - Filled progress and playhead use actual timeline time; early, middle, late, and every chapter boundary were rendered and checked:
-- Dedicated lower safe band clears captions, platform UI, evidence, and picture-in-picture at native and phone size:
+- Transparent edge-to-edge line sits below captions near the bottom edge; sections use divider ticks rather than boxed cards:
+- Primary captions, evidence, and picture-in-picture remain clear; any platform-UI occlusion is an intentional auxiliary-overlay tradeoff:
 - Rendered strip is visual orientation only; native player scrubbing or separate platform chapter metadata provides actual seeking:
 
 ## Finishing Design Audit
