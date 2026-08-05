@@ -81,6 +81,7 @@
 - First reusable version received still and motion-preview approval; private-profile promotion is recorded:
 - Owned or explicitly approved identity art is used; generic third-party sticker is not the default:
 - Identity and encouragement cues, motion, hold, optional sound, and final speech synchronization:
+- Approved identity variant and contextual accessories stayed fixed; any wink/blink passed open-before, closed-peak, open-after, and phone-size review without reading as a glitch:
 - Face, final caption, semantic progress strip, and platform UI remain unobstructed at native and phone scale:
 
 ## Finishing Design Audit

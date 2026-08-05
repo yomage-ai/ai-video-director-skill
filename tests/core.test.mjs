@@ -240,6 +240,11 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.signatureOutro.genericThirdPartyStickerDefault, false);
   assert.equal(plan.finishingPass.signatureOutro.firstReusableLockRequiresStillAndMotionPreview,
     true);
+  assert.equal(plan.finishingPass.signatureOutro.microExpressionRule,
+    'optional-single-motivated-beat-not-entrance');
+  assert.deepEqual(plan.finishingPass.signatureOutro.microExpressionProof,
+    ['open-before', 'closed-peak', 'open-after', 'phone-size']);
+  assert.deepEqual(plan.finishingPass.signatureOutro.contextualAccessories, []);
   assert.equal(plan.finishingPass.signatureOutro.privateProfilePromotionRequiresExplicitApproval,
     true);
   assert.equal(plan.finishingPass.chapterProgress.fallbackWithoutMeaningfulChapters,
