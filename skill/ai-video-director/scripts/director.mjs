@@ -272,6 +272,7 @@ function initProject(args) {
     ['new-video-intake.template.json', 'intake.json'],
     ['content-lock.template.json', 'analysis/content-lock.json'],
     ['director-plan.template.json', 'analysis/director-plan.json'],
+    ['rough-cut-review.template.json', 'analysis/rough-cut-review.json'],
     ['project-state.template.json', 'project-state.json'],
     ['rights-manifest.template.json', 'analysis/rights-manifest.json'],
   ];

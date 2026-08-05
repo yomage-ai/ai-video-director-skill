@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "canonicalEdlVersion": null,
+  "status": "in-progress",
+  "takeSelectionPolicy": {
+    "principle": "quality-first",
+    "laterOccurrence": "tie-breaker-only",
+    "asrRole": "candidate-detection-only"
+  },
+  "takeDecisions": [],
+  "hybridSplices": [],
+  "pauseEdits": [],
+  "coverageAudit": [],
+  "joinReview": {
+    "everyChangedBoundaryReviewedAtFullSpeed": false,
+    "clippedOnsets": [],
+    "repeatedSyllablesOrRestarts": [],
+    "unnaturalVisualResets": []
+  },
+  "audibleDuplicateAudit": {
+    "crossSegmentAndClipBoundariesScanned": false,
+    "displayOnlyCaptionFixesUsedAsAudioEdits": false,
+    "verifiedWindows": []
+  },
+  "structuralEditReadback": {
+    "clipCountAndDurationChecked": false,
+    "sourceOffsetsChecked": false,
+    "intentionalTransitionsChecked": false,
+    "downstreamBRollAlignmentChecked": false
+  },
+  "fullCutReview": {
+    "watchedFromStartToFinish": false,
+    "listenedFromStartToFinish": false,
+    "reviewer": "",
+    "unresolvedIssues": []
+  },
+  "approvedAt": null
+}

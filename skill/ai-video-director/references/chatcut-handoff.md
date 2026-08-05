@@ -15,6 +15,20 @@ The rule is:
 5. Make all downstream captions, visuals, sound, and rendering consume that EDL.
 6. If cut points change, return to ChatCut and regenerate the EDL; do not hand-patch downstream copies.
 
+## Frame-Rate Conform
+
+Frame numbers are not portable between timebases. A boundary at frame 120 on a 60 fps canonical EDL is two seconds; placing frame 120 unchanged on a 30 fps ChatCut timeline moves it to four seconds.
+
+Before duplicating or rebuilding a timeline:
+
+1. Record the canonical/source frame rate, target timeline frame rate, source duration, expected target duration, and item count.
+2. Convert each shared boundary once with `targetFrame = round(sourceFrame * targetFps / sourceFps)`.
+3. Build every clip from adjacent converted endpoints so `duration = nextBoundary - currentBoundary` and neighboring clips remain contiguous.
+4. Re-read the target timeline and verify its first boundary, last boundary, duration in seconds, clip order, item count, and pairwise contiguity.
+5. Inspect at least the opening, one middle join, and the ending in composed timeline frames before adding fine-edit layers.
+
+Never change the locked canonical EDL to compensate for an incorrectly configured fine-edit timeline. Repair or recreate the working duplicate instead.
+
 ## Commands
 
 ```bash

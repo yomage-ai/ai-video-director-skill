@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-04",
+  "updatedAt": "2026-08-05",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "private",
   "status": "internal-v0.1.0-validated",
-  "validatedAt": "2026-08-04",
+  "validatedAt": "2026-08-05",
   "release": "0.1.0",
   "skill": {
     "id": "ai-video-director",
@@ -25,12 +25,224 @@
       ],
       "intentionalRepetition": "preserve-when-it-has-a-distinct-content-role",
       "editHandles": "contextual-by-waveform-and-full-speed-listening-not-a-universal-duration",
-      "decisionRecord": "record-selected-range-rejected-range-and-reason"
+      "decisionRecord": "record-selected-range-rejected-range-and-reason",
+      "hybridSplice": "allowed-only-when-meaning-and-both-boundaries-pass-full-speed-review",
+      "approvalReview": "start-to-finish-after-the-last-cut-change"
+    },
+    "pauseAndJoin": {
+      "ordinaryBreaths": "preserve",
+      "excessiveDeadAir": "compress-contextually",
+      "restartGaps": "remove-with-failed-words",
+      "universalPauseDuration": "forbidden"
+    },
+    "audibleDuplicateAudit": {
+      "scope": "cross-segment-and-cross-clip-boundaries",
+      "captionDisplayOverrideRemovesAudio": false,
+      "editPath": "speech-linked-structural-edit",
+      "verification": "render-exact-audio-window-and-count-audible-occurrences"
+    },
+    "structuralEditReadback": {
+      "requiredAfter": "script-or-transcript-linked-timeline-edit",
+      "checks": [
+        "clip-count-and-duration",
+        "source-offsets",
+        "intentional-audio-transitions",
+        "downstream-b-roll-alignment"
+      ],
+      "restoreOnlyIntentionalTransitions": true
+    },
+    "bRollContinuity": {
+      "coverageRunClassification": {
+        "mergeAdjacentOrNearAdjacentBeats": true,
+        "durationBasis": "aggregate-viewer-visible-run",
+        "modes": [
+          "A-only",
+          "B-only",
+          "AB-live-PiP"
+        ],
+        "longRunDefault": "AB-live-PiP-unless-evidence-or-platform-collision",
+        "intentionalARollResetRequiresReadableHold": true
+      },
+      "continuousRunInteriorBoundary": "full-alpha-coverage",
+      "pairedInteriorFadeMayExposeARoll": "forbidden",
+      "shortGapDecision": "abut-b-roll-or-hold-a-roll-intentionally",
+      "transitionGrammar": {
+        "continuousExplanationInterior": "direct-cuts-by-default",
+        "presentationModeChanges": "short-restrained-dissolve-when-motivated",
+        "synchronizeBrollAndPip": true,
+        "blanketPresetAcrossAllBoundaries": "forbidden"
+      },
+      "seamVerification": "composed-frames-before-on-and-after-boundary"
+    },
+    "informationCoverage": {
+      "mustKeepRouting": [
+        "spoken",
+        "on-screen",
+        "both"
+      ],
+      "screenOnlyRequirement": "complete-readable-and-held-long-enough",
+      "coverageAuditRequiredBeforeLock": true
+    },
+    "claimFraming": {
+      "distinguish": [
+        "verified-general-rule",
+        "personal-experience",
+        "institution-specific-result",
+        "time-or-location-sensitive-guidance"
+      ],
+      "unsupportedAbsoluteLanguage": "cut-or-scope-with-explicit-screen-copy"
+    },
+    "screenshotEvidence": {
+      "focusCueWhenNotObvious": "one-precise-circle-underline-or-short-arrow",
+      "avoid": [
+        "unmarked-small-proof",
+        "decorating-every-field",
+        "covering-the-evidence",
+        "implying-an-unsupported-relationship"
+      ]
+    },
+    "presentationSafety": {
+      "presenterInsertEntryFrame": "normal-expression-eyes-open",
+      "shortProofCutaway": "presenter-optional",
+      "longFullScreenExplanation": "live-time-aligned-picture-in-picture-when-continuity-benefits",
+      "pictureInPictureDesign": {
+        "scaledUncroppedSourceDefault": "forbidden",
+        "cropIntent": "declare-subject-framing-and-headroom",
+        "shapeRadiusAndSize": "declare-and-review",
+        "fixedGlobalSize": "forbidden",
+        "sizeSelection": "per-card-and-coverage-run-composition",
+        "positionSelection": "per-card-content-occupancy-map",
+        "preferredCorner": "default-only-not-a-rule",
+        "stability": "hold-size-and-position-within-run-change-only-at-semantic-or-layout-boundary",
+        "visibleBoxProof": "inspect-visible-crop-not-only-stored-item-frame",
+        "proof": "source-crop-and-composed-frame-at-native-and-phone-size"
+      },
+      "platformUiExclusionZonesRequired": true,
+      "captionInformationCollisionCheckRequired": true
+    },
+    "finishingPass": {
+      "voiceIsolation": {
+        "scope": "spoken-human-voice-only",
+        "strengthDefault": "conservative-and-sample-verified",
+        "sourceRangeHandling": "process-each-audible-clip-range-separately",
+        "reuseShortDerivativeAcrossDifferentSourceOffsets": "forbidden",
+        "verification": "early-and-late-timeline-audible-samples"
+      },
+      "color": {
+        "order": "neutralize-cast-before-creative-look",
+        "continuousRecordingCorrectionScope": "source-track-or-global-first",
+        "perClipCorrectionDefault": "forbidden-without-real-source-condition-change",
+        "sameParametersProvePerceptualConsistency": false,
+        "nonlinearMaskDriftAudit": [
+          "early",
+          "middle",
+          "late",
+          "cut-boundaries"
+        ],
+        "rollbackIfInconsistent": "remove-correction-and-keep-stable-source",
+        "preserve": [
+          "skin-texture",
+          "white-clothing-detail",
+          "highlights"
+        ],
+        "comparison": "representative-decoded-frames"
+      },
+      "captions": {
+        "scaleChange": "requires-reflow-and-box-resize",
+        "verification": "longest-two-line-page-with-pip-cards-and-platform-safe-areas",
+        "semanticPagination": "completed-thought-and-next-thought-use-separate-cards",
+        "forcedBreakPolicy": "re-read-after-structural-edit-then-force-only-if-still-needed",
+        "semanticPunctuation": {
+          "sourceOfTruth": "supplied-manuscript",
+          "pageAwareDisplay": true,
+          "internalPunctuation": "preserve",
+          "pageFinalDetachableSeparators": "omit-by-style",
+          "pageFinalQuestionAndExclamation": "always-preserve",
+          "pairedStructuralMarks": "always-preserve",
+          "punctuationEmbeddedInTermsNumbersAndUnits": "preserve",
+          "rerunAfterPaginationChange": true,
+          "globalHidePunctuationWhenExceptionsExist": false,
+          "preserve": "enumeration-quotes-title-marks-units-and-symbols",
+          "semanticAndStructuralMarks": "must-match-manuscript",
+          "inventOrSubstituteSymbols": "forbidden",
+          "globalRemovalWithoutExceptionAudit": "forbidden",
+          "verification": "composed-pixels-not-metadata-only",
+          "fallback": "exact-glyph-renderer-or-authored-caption-otherwise-meaning-based-page-separation-without-invented-symbols"
+        }
+      },
+      "chapterProgress": {
+        "default": "enabled-after-structural-timing-lock",
+        "chapterSource": "approved-semantic-structure",
+        "segmentCount": "two-to-seven-when-meaningful-otherwise-one-plain-bar",
+        "segmentWidth": "duration-proportional",
+        "playhead": "actual-local-frame-over-final-duration",
+        "renderedOverlayInteractive": false,
+        "actualSeeking": "platform-native-scrubber-or-separate-chapter-metadata",
+        "recomputeAfterStructuralTimingChange": true,
+        "safeAreaReview": "captions-platform-ui-pip-and-information-cards",
+        "verification": "early-middle-late-every-boundary-and-seek-rerender"
+      },
+      "designAudit": {
+        "requiredBeforeFinalRender": true,
+        "unreviewedCountsAsOff": false,
+        "categories": [
+          "background-music",
+          "sound-effects",
+          "entry-exit-animation",
+          "transitions",
+          "decorative-effects"
+        ],
+        "decisionRequirement": "record-decision-and-reason-including-off-or-none",
+        "decisionBasis": [
+          "content",
+          "tone",
+          "rhythm",
+          "speech-intelligibility",
+          "attention-cost",
+          "platform-context",
+          "rights"
+        ]
+      }
+    },
+    "timebaseIntegrity": {
+      "rawFrameNumbersAcrossDifferentFps": "forbidden",
+      "boundaryConversion": "targetFrame=round(sourceFrame*targetFps/sourceFps)",
+      "durationDerivation": "adjacent-converted-endpoints",
+      "postConformVerification": [
+        "expected-duration-seconds",
+        "first-and-last-boundary",
+        "item-count-and-order",
+        "pairwise-contiguity",
+        "opening-middle-ending-composed-frames"
+      ],
+      "lockedCanonicalEdl": "preserve-and-repair-working-copy-only"
     }
   },
   "approvedCapabilities": [
     "content-lock-and-director-plan",
     "quality-first-repeated-take-selection",
+    "contextual-pause-and-join-review",
+    "cross-boundary-audible-duplicate-audit",
+    "post-script-transition-and-b-roll-readback",
+    "continuous-b-roll-alpha-coverage-and-seam-frame-proof",
+    "aggregate-b-roll-run-classification-and-long-run-live-pip",
+    "designed-pip-crop-shape-and-content-safe-dynamic-position",
+    "composition-responsive-pip-size-with-run-level-stability",
+    "content-driven-transition-grammar",
+    "semantic-caption-pagination",
+    "manuscript-authoritative-semantic-punctuation",
+    "page-aware-caption-punctuation-with-final-question-and-exclamation-preservation",
+    "explicit-finishing-design-audit-including-no-treatment-decisions",
+    "time-driven-semantic-chapter-progress-with-plain-bar-fallback",
+    "must-keep-spoken-or-screen-coverage-audit",
+    "local-opaque-redaction-before-cloud-upload",
+    "precise-screenshot-focus-cues",
+    "presenter-insert-and-platform-safe-area-review",
+    "per-source-range-voice-isolation-and-late-audio-proof",
+    "caption-scale-reflow-and-safe-area-reverification",
+    "neutral-color-cast-correction-before-beauty-look",
+    "continuous-recording-global-color-consistency-and-rollback",
+    "cross-fps-timeline-timebase-conform-and-verification",
     "chatcut-visual-rough-cut-review",
     "chatcut-fcp-xml-to-canonical-edl",
     "ffmpeg-copy-preview",
@@ -89,7 +301,7 @@
   },
   "validation": {
     "skillCreator": "pass",
-    "coreTests": "7/7 pass",
+    "coreTests": "14/14 pass",
     "testedMediaPath": "synthetic source -> ChatCut XML fixture -> canonical EDL -> FFmpeg precise render",
     "mermaidDiagrams": "3/3 render",
     "privacyScan": "pass",

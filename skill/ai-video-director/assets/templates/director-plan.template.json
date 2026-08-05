@@ -6,13 +6,227 @@
   "roughCut": {
     "retentionRules": [],
     "removalRules": [],
+    "takeSelection": {
+      "principle": "quality-first",
+      "laterOccurrence": "tie-breaker-only",
+      "candidateAuditRequired": true,
+      "hybridSpliceRequiresFullSpeedReview": true
+    },
+    "pauseTreatment": {
+      "ordinaryBreaths": "preserve",
+      "excessiveDeadAir": "compress-contextually",
+      "falseStartGaps": "remove-with-failed-words",
+      "universalDurationMilliseconds": null
+    },
     "joinAcceptance": [
       "meaning remains intact",
       "speech sounds natural",
-      "visual continuity is acceptable"
+      "visual continuity is acceptable",
+      "consonant and breath onsets are not clipped",
+      "the complete cut passes a start-to-finish review"
+    ],
+    "audibleDuplicateAudit": {
+      "scanAcrossSegmentAndClipBoundaries": true,
+      "captionDisplayOverrideCountsAsAudioRemoval": false,
+      "renderExactWindowAndCountOccurrences": true
+    },
+    "structuralEditReadback": {
+      "requiredAfterScriptEdit": true,
+      "checks": [
+        "clip count and duration",
+        "source offsets",
+        "intentional audio transitions",
+        "downstream B-roll alignment"
+      ]
+    }
+  },
+  "bRollContinuity": {
+    "coverageRunClassification": {
+      "mergeAdjacentOrNearAdjacentBeats": true,
+      "durationBasis": "aggregate-viewer-visible-run",
+      "modes": ["A-only", "B-only", "AB-live-PiP"],
+      "longRunDefault": "AB-live-PiP-unless-evidence-or-platform-collision",
+      "intentionalARollResetRequiresReadableHold": true
+    },
+    "continuousRunInteriorAlphaCoverage": "required",
+    "pairedInteriorFadesMayRevealARoll": false,
+    "shortGapsMustBeIntentional": true,
+    "transitionGrammar": {
+      "continuousExplanationInterior": "direct-cuts-by-default",
+      "presentationModeChanges": "short-restrained-dissolve-when-motivated",
+      "synchronizeBrollAndPip": true,
+      "blanketPresetAcrossAllBoundaries": false
+    },
+    "seamFrames": [
+      "before",
+      "on-boundary",
+      "after"
     ]
   },
+  "informationCoverage": [],
+  "claimFraming": {
+    "generalRules": [],
+    "personalOrInstitutionSpecificResults": [],
+    "timeOrLocationSensitiveDetails": []
+  },
   "visualBeats": [],
+  "privacyPlan": {
+    "localDerivativeOnly": true,
+    "cropBeforeRedaction": true,
+    "criticalIdentifiersUseOpaqueMasks": true,
+    "focusCueWhenEvidenceIsNotObvious": "required",
+    "cloudUploadOnlyAfterRedaction": true
+  },
+  "presentationSafety": {
+    "presenterInsertEntryFrame": "normal-expression-eyes-open",
+    "shortProofCutaway": "presenter-optional",
+    "longFullScreenExplanation": "use-live-picture-in-picture-only-when-it-helps-continuity",
+    "pictureInPictureDesign": {
+      "scaledUncroppedSourceDefault": false,
+      "cropIntent": "head-neck-and-upper-shoulders-when-appropriate",
+      "shapeAndRadiusMustBeDeclared": true,
+      "contentOccupancyMapRequired": true,
+      "preferredCornerIsOnlyADefault": true,
+      "fixedGlobalSizeDefault": false,
+      "sizeSelectionBasis": [
+        "card-content-occupancy",
+        "available-negative-space",
+        "presenter-role",
+        "coverage-run-duration",
+        "caption-and-platform-safe-areas",
+        "phone-scale-legibility"
+      ],
+      "geometryStableWithinCoverageRun": true,
+      "sizeMayChangeAtSemanticOrLayoutBoundaries": true,
+      "visibleCropBoxVerificationRequired": true,
+      "positionMayChangeAtSemanticBoundaries": true,
+      "sourceCropAndComposedFrameReviewRequired": true
+    },
+    "platformUiExclusionZonesRequired": true,
+    "captionInformationCollisionCheckRequired": true
+  },
+  "finishingPass": {
+    "voiceIsolation": {
+      "speechOnly": true,
+      "strength": null,
+      "processEachSourceRangeSeparately": true,
+      "reuseDerivedAudioAcrossDifferentSourceRanges": false,
+      "earlyAndLateAudibleSampleRequired": true
+    },
+    "color": {
+      "neutralizeCastBeforeCreativeLook": true,
+      "representativeFrameComparisonRequired": true,
+      "preserveSkinTextureAndHighlights": true,
+      "continuousRecordingCorrectionScope": "source-track-or-global-first",
+      "perClipCorrectionDefault": false,
+      "sameParametersProvePerceptualConsistency": false,
+      "nonlinearMaskDriftAudit": ["early", "middle", "late", "cut-boundaries"],
+      "rollbackIfInconsistent": "remove-correction-and-keep-stable-source"
+    },
+    "captions": {
+      "requestedScale": 1,
+      "reflowAfterScaling": true,
+      "longestTwoLineAndSafeAreaRecheckRequired": true,
+      "separateCompletedThoughtFromNextThought": true,
+      "forceBreakOnlyAfterPaginationReadback": true,
+      "semanticPunctuation": {
+        "sourceOfTruth": "supplied-manuscript",
+        "pageAwareDisplay": true,
+        "internalPunctuation": "preserve",
+        "pageFinalDetachableSeparators": "omit-by-style",
+        "pageFinalQuestionAndExclamation": "always-preserve",
+        "pairedStructuralMarks": "always-preserve",
+        "punctuationEmbeddedInTermsNumbersAndUnits": "preserve",
+        "rerunAfterPaginationChange": true,
+        "globalHidePunctuationWhenExceptionsExist": false,
+        "preserveEnumerationQuotesTitlesUnitsAndSymbols": true,
+        "semanticAndStructuralPunctuationMustMatchManuscript": true,
+        "inventOrSubstituteSymbols": false,
+        "globalPunctuationRemovalWithoutExceptionAudit": false,
+        "renderedPixelVerificationRequired": true,
+        "fallbackWhenRendererStrips": "preserve-exact-glyph-via-renderer-style-or-authored-caption-otherwise-separate-pages-without-inventing-symbols"
+      }
+    },
+    "chapterProgress": {
+      "defaultEnabled": true,
+      "chapterSource": "approved-semantic-structure-after-timing-lock",
+      "meaningfulSegmentCount": {
+        "minimum": 2,
+        "maximum": 7
+      },
+      "segmentWidth": "duration-proportional",
+      "labels": "short-and-phone-readable",
+      "playhead": "actual-timeline-frame-over-final-duration",
+      "fallbackWithoutMeaningfulChapters": "single-unsegmented-progress-bar",
+      "renderedOverlayIsInteractive": false,
+      "actualSeeking": "platform-native-scrubber-or-separate-chapter-metadata",
+      "recomputeAfterStructuralTimingChange": true,
+      "safeAreaReview": [
+        "captions",
+        "platform-description-and-controls",
+        "picture-in-picture",
+        "information-cards"
+      ],
+      "renderedFrameVerification": [
+        "early",
+        "middle",
+        "late",
+        "chapter-boundaries"
+      ]
+    },
+    "designAudit": {
+      "requiredBeforeFinalRender": true,
+      "unreviewedIsNotOff": true,
+      "decisionBasis": [
+        "content",
+        "tone",
+        "rhythm",
+        "speech-intelligibility",
+        "attention-cost",
+        "platform-context",
+        "rights"
+      ],
+      "categories": {
+        "backgroundMusic": {
+          "decision": null,
+          "reason": null,
+          "speechIntelligibilityWins": true,
+          "rightsRequiredWhenEnabled": true
+        },
+        "soundEffects": {
+          "decision": null,
+          "reason": null,
+          "cueList": []
+        },
+        "entryExitAnimation": {
+          "decision": null,
+          "reason": null
+        },
+        "transitions": {
+          "decision": null,
+          "reason": null
+        },
+        "decorativeEffects": {
+          "decision": null,
+          "reason": null
+        }
+      }
+    }
+  },
+  "timebaseIntegrity": {
+    "sourceFps": null,
+    "targetFps": null,
+    "boundaryConversion": "targetFrame = round(sourceFrame * targetFps / sourceFps)",
+    "deriveDurationsFromAdjacentConvertedEndpoints": true,
+    "copyRawFrameNumbersAcrossDifferentFps": false,
+    "postConformChecks": [
+      "expected duration in seconds",
+      "first and last boundary",
+      "item count and order",
+      "pairwise contiguity",
+      "opening middle and ending composed frames"
+    ]
+  },
   "evidenceNeeded": [],
   "stylePreview": {
     "keyframes": 3,
