@@ -120,6 +120,33 @@
       "platformUiExclusionZonesRequired": true,
       "captionInformationCollisionCheckRequired": true
     },
+    "sourceColorNormalization": {
+      "workflowStage": "rough-cut-before-approval",
+      "order": "neutralize-cast-before-creative-look",
+      "continuousRecordingCorrectionScope": "source-track-or-global-first",
+      "perClipCorrectionDefault": "forbidden-without-real-source-condition-change",
+      "sameParametersProvePerceptualConsistency": false,
+      "representativeFrameAudit": [
+        "early",
+        "middle",
+        "late",
+        "cut-boundaries"
+      ],
+      "rollbackIfInconsistent": "remove-correction-and-keep-last-stable-source",
+      "stageUpdateAfterRollback": "required-with-attempt-result-rollback-and-next-decision",
+      "fineEditReprocessingDefault": "forbidden",
+      "fineEditExceptions": [
+        "new-explicit-user-request",
+        "documented-source-condition-change"
+      ],
+      "preserve": [
+        "natural-skin",
+        "skin-texture",
+        "white-clothing-detail",
+        "highlights"
+      ],
+      "comparison": "representative-decoded-frames-through-one-color-managed-path"
+    },
     "finishingPass": {
       "voiceIsolation": {
         "scope": "spoken-human-voice-only",
@@ -128,30 +155,23 @@
         "reuseShortDerivativeAcrossDifferentSourceOffsets": "forbidden",
         "verification": "early-and-late-timeline-audible-samples"
       },
-      "color": {
-        "order": "neutralize-cast-before-creative-look",
-        "continuousRecordingCorrectionScope": "source-track-or-global-first",
-        "perClipCorrectionDefault": "forbidden-without-real-source-condition-change",
-        "sameParametersProvePerceptualConsistency": false,
-        "nonlinearMaskDriftAudit": [
-          "early",
-          "middle",
-          "late",
-          "cut-boundaries"
-        ],
-        "rollbackIfInconsistent": "remove-correction-and-keep-stable-source",
-        "preserve": [
-          "skin-texture",
-          "white-clothing-detail",
-          "highlights"
-        ],
-        "comparison": "representative-decoded-frames"
-      },
       "captions": {
         "scaleChange": "requires-reflow-and-box-resize",
         "verification": "longest-two-line-page-with-pip-cards-and-platform-safe-areas",
         "semanticPagination": "completed-thought-and-next-thought-use-separate-cards",
         "forcedBreakPolicy": "re-read-after-structural-edit-then-force-only-if-still-needed",
+        "visualBaseline": {
+          "mode": "fixed-neutral-across-video-or-approved-style-profile",
+          "text": "white-semibold-or-bold",
+          "contrastPlate": "compact-translucent-charcoal-hugging-rendered-text",
+          "fullWidthOpaqueBandDefault": "forbidden",
+          "strokeAndShadow": "restrained-dark",
+          "wordHighlightDefault": "off",
+          "positionDefault": "stable-lower-third-bottom-center",
+          "topPlacementDefault": "exception-only",
+          "relocationRule": "whole-continuous-run-only-for-documented-hard-collision",
+          "verification": "a-roll-bright-b-roll-dark-b-roll-longest-two-line-native-and-phone-scale"
+        },
         "semanticPunctuation": {
           "sourceOfTruth": "supplied-manuscript",
           "pageAwareDisplay": true,
@@ -244,8 +264,9 @@
     "presenter-insert-and-platform-safe-area-review",
     "per-source-range-voice-isolation-and-late-audio-proof",
     "caption-scale-reflow-and-safe-area-reverification",
-    "neutral-color-cast-correction-before-beauty-look",
-    "continuous-recording-global-color-consistency-and-rollback",
+    "rough-cut-source-color-normalization-before-fine-edit",
+    "continuous-recording-global-color-consistency-with-stage-update-and-rollback",
+    "fixed-neutral-lower-third-caption-baseline-with-cross-background-proof",
     "cross-fps-timeline-timebase-conform-and-verification",
     "chatcut-visual-rough-cut-review",
     "chatcut-fcp-xml-to-canonical-edl",

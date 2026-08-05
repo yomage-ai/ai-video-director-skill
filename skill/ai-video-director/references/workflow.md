@@ -19,7 +19,8 @@ flowchart TD
   B --> C["02 Content lock"]
   C --> D["03 Director plan"]
   D --> E["04 ChatCut rough-cut review"]
-  E --> F["05 FCP XML to canonical EDL"]
+  E --> E2["04b Source-level A-roll color normalization"]
+  E2 --> F["05 FCP XML to canonical EDL"]
   F --> G["06 FFmpeg precise A-roll"]
   G --> H{"07 Rough cut approved?"}
   H -->|"No"| E
@@ -50,15 +51,15 @@ flowchart TD
 | 01 | Turn speech into word-timed text, correct it against the recording, and listen through the source | ASR, ChatCut transcript, human listening | corrected transcript and word timing |
 | 02 | Confirm what the video says | LLM plus user | one primary claim, at most two supports, order, real-evidence cold open |
 | 03 | Decide what to remove, retain, prove, and visualize | director reasoning | approved director plan |
-| 04 | Remove mistakes, repeats, dead sections, and bad takes while watching and listening; compare repeated takes quality-first, audit duplicate tokens across segment boundaries, classify pauses by function, and use the later take only as a tie-breaker | ChatCut | reviewed timeline, exact audio-window proof for changed word joins, `rough-cut-review.json` with take/join/coverage audit, and FCP XML |
+| 04 | Remove mistakes, repeats, dead sections, and bad takes while watching and listening; compare repeated takes quality-first, audit duplicate tokens across segment boundaries, classify pauses by function, use the later take only as a tie-breaker, then normalize original A-roll color once at source/track/global scope and roll back with a stage update if it drifts | ChatCut, decoded-frame comparison | reviewed timeline, exact audio-window proof for changed word joins, source-color decision and representative-frame proof in `rough-cut-review.json`, and FCP XML |
 | 05 | Convert the reviewed edit into one machine-readable timing truth | XML bridge | canonical EDL |
 | 06 | Rebuild A-roll exactly from the best source | FFmpeg precise re-encode | A-roll master and captions aligned to it |
-| 07 | Watch and listen from start to finish after the last cut change | media checks plus human | locked rough cut and canonical EDL version |
+| 07 | Watch and listen from start to finish after the last cut change; approve the source-level color decision | media checks plus human | locked rough cut and canonical EDL version whose A-roll color fine edit must inherit |
 | 08 | Map each spoken section to evidence or a visual role | LLM plus real artifacts | visual beat sheet |
 | 09 | Preview style cheaply before full production | HyperFrames or Remotion | three stills and one short motion sample approved by user |
 | 10 | Collect only usable assets and record their rights | owned files, rights-checked libraries | asset list and rights manifest |
 | 11 | Pick the simplest suitable engine for each shot | HyperFrames, Remotion, real media, FFmpeg | editable visual shots |
-| 12 | Style captions; add a timing-locked semantic chapter progress strip or its single-bar fallback using the default edge-to-edge bottom line and divider-only chapter grammar; then explicitly audit, decide, and record background music, sound effects, entry/exit animation, transitions, and decorative effects, including reasoned `off`/`none` decisions | selected renderer, FFmpeg | caption layout, chapter-progress plan and composed-frame proof, finishing-design decision record, and any approved audio/motion treatment |
+| 12 | Style captions with one stable cross-background baseline in the lower third; add a timing-locked semantic chapter progress strip or its single-bar fallback using the default edge-to-edge bottom line and divider-only chapter grammar; verify inherited A-roll color rather than reprocessing it; then explicitly audit, decide, and record background music, sound effects, entry/exit animation, transitions, and decorative effects, including reasoned `off`/`none` decisions | selected renderer, FFmpeg | caption layout and bright/dark/A-roll proof, chapter-progress plan and composed-frame proof, finishing-design decision record, and any approved audio/motion treatment |
 | 13 | Test the risky pieces, not the whole video | targeted renders and probes | audible changed-word windows, B-roll seam frames, caption pagination, layout/keyframe/transition/color checks |
 | 14 | Render once checks pass, then inspect the whole result | renderer, FFmpeg, human review | master and QA report |
 | 15 | Package editable sources and learn only approved preferences | archive and memory scripts | delivery package and feedback record |
@@ -69,6 +70,7 @@ flowchart TD
 |---|---|---|
 | Spoken content, claim, order, or newly recorded material | 01 | content lock and everything after it |
 | Deleted words, cut points, clip order, or audio joins | 04 | canonical EDL and everything after it |
+| Original A-roll exposure, white balance, or natural-skin normalization | 04 | precise A-roll, rough-cut approval, and every downstream visual/QA artifact |
 | Visual direction, composition, palette, or motion behavior | 08 | visual work and everything after it |
 | B-roll, screenshots, documents, or asset license | 10 | affected shots, downstream composite and QA |
 | Caption style, effects, music, or mix | 12 | audio/caption output and final QA |

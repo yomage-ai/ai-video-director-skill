@@ -38,6 +38,20 @@
         "intentional audio transitions",
         "downstream B-roll alignment"
       ]
+    },
+    "sourceColorNormalization": {
+      "workflowStage": "rough-cut-before-approval",
+      "correctionScope": "source-track-or-global-first",
+      "neutralizeCastBeforeCreativeLook": true,
+      "creativeLookDefault": false,
+      "preserveSkinTextureAndHighlights": true,
+      "perClipCorrectionDefault": false,
+      "sameParametersProvePerceptualConsistency": false,
+      "representativeFrameAudit": ["early", "middle", "late", "cut-boundaries"],
+      "rollbackIfInconsistent": "remove-correction-and-keep-last-stable-source",
+      "stageUpdateRequiredAfterRollback": true,
+      "fineEditReprocessingDefault": false,
+      "fineEditExceptions": ["new-explicit-user-request", "documented-source-condition-change"]
     }
   },
   "bRollContinuity": {
@@ -113,22 +127,26 @@
       "reuseDerivedAudioAcrossDifferentSourceRanges": false,
       "earlyAndLateAudibleSampleRequired": true
     },
-    "color": {
-      "neutralizeCastBeforeCreativeLook": true,
-      "representativeFrameComparisonRequired": true,
-      "preserveSkinTextureAndHighlights": true,
-      "continuousRecordingCorrectionScope": "source-track-or-global-first",
-      "perClipCorrectionDefault": false,
-      "sameParametersProvePerceptualConsistency": false,
-      "nonlinearMaskDriftAudit": ["early", "middle", "late", "cut-boundaries"],
-      "rollbackIfInconsistent": "remove-correction-and-keep-stable-source"
-    },
     "captions": {
       "requestedScale": 1,
       "reflowAfterScaling": true,
       "longestTwoLineAndSafeAreaRecheckRequired": true,
       "separateCompletedThoughtFromNextThought": true,
       "forceBreakOnlyAfterPaginationReadback": true,
+      "visualBaseline": {
+        "mode": "fixed-neutral-across-video",
+        "text": "white-semibold-or-bold",
+        "contrastPlate": "compact-translucent-charcoal-hugging-text",
+        "fullWidthOpaqueBandDefault": false,
+        "strokeAndShadow": "restrained-dark",
+        "wordHighlightDefault": false,
+        "positionDefault": "stable-lower-third-bottom-center",
+        "topPlacementDefault": false,
+        "moveOnlyForDocumentedHardCollision": true,
+        "geometryStableWithinContinuousRun": true,
+        "verificationFrames": ["a-roll", "bright-b-roll", "dark-b-roll", "longest-two-line-page"],
+        "nativeAndPhoneScaleVerification": true
+      },
       "semanticPunctuation": {
         "sourceOfTruth": "supplied-manuscript",
         "pageAwareDisplay": true,

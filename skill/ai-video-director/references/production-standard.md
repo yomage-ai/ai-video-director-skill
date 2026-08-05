@@ -20,11 +20,12 @@ Rough cut is complete only when all of the following are true:
 - Every join sounds and looks natural in context.
 - Dialogue order and meaning match the approved content lock.
 - Transcript text is correct, with timing accurate enough for downstream captions.
+- The original talking-head color is normalized or explicitly left unchanged at source, track, or global scope, with a natural-skin review and any failed correction rolled back.
 - The complete locked A-roll has been watched and listened to, not spot-checked.
 - The canonical EDL is versioned and accepted.
 - Resolution, orientation, frame cadence, color, and audio have no unexplained degradation.
 
-Zooms, B-roll, caption styling, motion graphics, transitions, music, and semantic sound effects are fine edit. Transcript correction is rough cut; how the captions look is fine edit.
+Zooms, B-roll, caption styling, motion graphics, transitions, music, and semantic sound effects are fine edit. Transcript correction and original A-roll color normalization are rough cut; how the captions look is fine edit.
 
 ## Repeated Take Selection
 
@@ -61,6 +62,16 @@ Classify silence by function before changing it:
 Do not normalize every pause to one duration. A pause edit is invalid when it clips a consonant or breath onset, makes adjacent phrases collide, changes emphasis, or creates a visibly abrupt posture jump. Review each changed boundary at normal speed with the preceding and following sentence, then include the full cut in the approval preview.
 
 After any structural Script or transcript-linked timeline edit, re-read the active timeline before continuing. Confirm clip count, duration, source offsets, intended audio transitions, and downstream B-roll alignment. Some editors rebuild speech clips and can drop attached transitions even when clip ids or visible timing appear stable; restore only the transitions that were present by design, then recheck the edited audio window.
+
+## Rough-Cut Source Color Normalization
+
+- Normalize the recorded talking-head source during rough cut, after the intended A-roll structure is stable enough to judge and before rough-cut approval. Fine edit should inherit this approved color rather than reopening it by default.
+- Treat one continuously recorded A-roll under unchanged lighting as one color source. Prefer one source-, track-, or global-level correction; applying the same settings as separate per-clip effects does not prove perceptual consistency.
+- Correct exposure and white balance conservatively, reduce an unwanted cast, preserve skin texture, white clothing, and highlights, and aim for believable natural skin rather than conspicuous whitening, smoothing, or a creative LUT.
+- Inspect decoded early, middle, late, and cut-boundary frames through the same color-managed path. Nonlinear hue, saturation, midtone, or skin masks may react differently as the face, exposure, and background change even when every clip receives identical parameters.
+- If the result drifts gray, red, clipped, or otherwise inconsistent, remove the correction and keep the last stable source state. Send a stage update that states what was attempted, what failed, what was rolled back, and whether a new decision is still needed.
+- Use per-clip color only when the recorded lighting or camera state actually differs. Document that reason and verify both sides of every affected transition.
+- Reopen color during fine edit only for a new explicit user request or a documented source-condition mismatch. A normal fine-edit pass verifies inherited continuity; it does not add another A-roll color treatment.
 
 ## Information Coverage And Claim Framing
 
@@ -147,10 +158,12 @@ Separate verified general rules from personal experience, a single institution's
 - Use speech isolation only on clips that contain spoken human voice. Start conservatively, preserve natural consonants and room tone, and listen for metallic or pumping artifacts before increasing strength.
 - A voice-isolated derivative is valid only for the source range that produced it. On a recut with different `sourceStart` values, process each audible clip range separately; never attach one short derivative to unrelated clips merely because they share the same source asset.
 - Verify denoise routing with an exported or locally rendered audio sample from both an early and a late timeline section. A timeline property such as `denoiseStrength` is not proof that the later clips still contain audio.
-- Neutralize a visible color cast before adding a look. Compare representative decoded frames, keep skin texture, protect white clothing and highlights from clipping, and prefer a mild correction over conspicuous whitening or beauty smoothing.
-- Treat one continuously recorded A-roll under unchanged lighting as one color source. Prefer one source-, track-, or global-level correction; applying the same settings as separate per-clip effects does not prove perceptual consistency.
-- Nonlinear hue, saturation, or skin masks may react differently as the face, exposure, or background changes. Inspect early, middle, late, and cut-boundary frames after the correction. If the result drifts between gray, red, or otherwise inconsistent skin tones, remove the correction and keep the stable source instead of shipping an unstable look.
-- Use per-clip color only when the recorded lighting or camera state actually differs, document that reason, and verify the transition on both sides.
+- Inherit the rough-cut-approved A-roll color. Verify continuity at representative returns from B-roll, but do not add a second color treatment unless the documented fine-edit exception applies.
+- Keep one stable neutral caption baseline across a video or approved style profile instead of flipping text or plate colors for each background. The default is white semibold/bold text, a compact translucent charcoal plate that hugs the rendered text, a restrained dark stroke and shadow, and no karaoke or word highlight.
+- The contrast plate must stay compact and translucent rather than becoming an opaque full-width subtitle bar. Tune it to protect readability without covering more evidence than necessary.
+- Keep captions in one stable lower-third/bottom-center band above platform controls and the semantic progress strip. Top placement is not the default because it competes with faces, eye lines, and B-roll headings; move a whole continuous caption run only for a documented hard collision rather than making every card jump.
+- A user-approved visual language may change the exact font, weight, color, or plate treatment, but cross-background readability and position stability remain invariant.
+- Verify the chosen caption baseline on representative A-roll, bright B-roll, dark B-roll, and the longest two-line page at native and phone scale.
 - When caption size changes, treat it as a layout change: recalculate line capacity and box height, then inspect the longest two-line page together with picture-in-picture, evidence cards, and platform UI exclusion zones.
 - Pagination follows meaning as well as width. A completed thought and the next thought should not share one card merely because both fit; split at the first word of the new thought. Re-read pagination after structural speech edits because the engine may resolve the boundary automatically, and use a forced page break only when the viewer-facing pages still combine them.
 - Treat the supplied manuscript as the punctuation source of truth, and decide display punctuation only after viewer-facing pagination is locked. Preserve every manuscript punctuation mark that remains inside one caption page. If a detachable separator or terminator is the page's final character, omit it by caption style; this includes commas, periods, semicolons, colons, and enumeration commas in either Chinese or ASCII form.

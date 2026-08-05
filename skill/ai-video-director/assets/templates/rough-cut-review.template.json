@@ -29,6 +29,23 @@
     "intentionalTransitionsChecked": false,
     "downstreamBRollAlignmentChecked": false
   },
+  "sourceColorNormalization": {
+    "workflowStage": "rough-cut-before-approval",
+    "scope": null,
+    "creativeLookApplied": false,
+    "naturalSkinAndExposurePass": false,
+    "representativeFramesChecked": {
+      "early": false,
+      "middle": false,
+      "late": false,
+      "cutBoundaries": false
+    },
+    "perClipCorrectionJustified": false,
+    "rollbackOccurred": false,
+    "stageUpdateSentAfterRollback": false,
+    "fineEditReprocessingRequired": false,
+    "notes": []
+  },
   "fullCutReview": {
     "watchedFromStartToFinish": false,
     "listenedFromStartToFinish": false,

@@ -11,8 +11,9 @@
 - Duration/dimensions/frame rate/codecs:
 - Timeline/EDL timebases declared and shared boundaries converted by time:
 - First/last boundary, item count/order, pairwise contiguity, and expected duration preserved:
-- Color path/source-output comparison:
+- Rough-cut source-color decision and source/output comparison; fine edit inherited the approved A-roll color without a second treatment:
 - Continuous-recording color scope is source/track/global unless real lighting changes are documented; early/middle/late and cut-boundary frames remain perceptually consistent:
+- Any gray/red/inconsistent correction was rolled back to the last stable source and the rough-cut stage update was sent:
 - Audio channels/loudness/sync:
 - Speech isolation strength, per-source-range routing, and early/late audible samples:
 - Blank/frozen/corrupt frame checks:
@@ -27,6 +28,9 @@
 - Ordinary breaths preserved and excessive dead air handled contextually:
 - Transcript/caption correctness:
 - Caption scale, reflow, box height, safe area, and longest two-line page:
+- Caption visual baseline stays fixed across the video: white semibold/bold text, compact translucent charcoal contrast plate, restrained dark stroke/shadow, and no word highlight by default:
+- Caption position stays in one lower-third/bottom-center band above platform UI and progress; any top/run-level relocation has a documented hard-collision reason:
+- Caption baseline passed A-roll, bright B-roll, dark B-roll, longest-two-line, native-size, and phone-size review:
 - Final viewer-facing pagination was locked before punctuation styling, and the punctuation audit was repeated after every reflow, forced break, merge, scale change, or Script edit:
 - Every manuscript punctuation mark inside a caption page is preserved; detachable commas, periods, semicolons, colons, and enumeration commas are omitted only when they are the page's final character:
 - Page-final question and exclamation marks are always preserved; paired structural closers and punctuation embedded in numbers, units, names, or terms are not stripped:

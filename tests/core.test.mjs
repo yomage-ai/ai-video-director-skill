@@ -72,6 +72,9 @@ test('project scaffold stays outside the repository and includes decision artifa
   assert.equal(roughCutReview.fullCutReview.listenedFromStartToFinish, false);
   assert.equal(roughCutReview.audibleDuplicateAudit.crossSegmentAndClipBoundariesScanned, false);
   assert.equal(roughCutReview.structuralEditReadback.intentionalTransitionsChecked, false);
+  assert.equal(roughCutReview.sourceColorNormalization.workflowStage,
+    'rough-cut-before-approval');
+  assert.equal(roughCutReview.sourceColorNormalization.fineEditReprocessingRequired, false);
   assert.equal(state.currentStageId, '00-intake-preflight');
   assert.equal(path.relative(repoRoot, project).startsWith('..'), true);
 });
@@ -162,7 +165,10 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.voiceIsolation.reuseDerivedAudioAcrossDifferentSourceRanges, false);
   assert.equal(plan.finishingPass.captions.reflowAfterScaling, true);
   assert.equal(plan.finishingPass.captions.separateCompletedThoughtFromNextThought, true);
-  assert.equal(plan.finishingPass.color.neutralizeCastBeforeCreativeLook, true);
+  assert.equal(plan.roughCut.sourceColorNormalization.workflowStage,
+    'rough-cut-before-approval');
+  assert.equal(plan.roughCut.sourceColorNormalization.neutralizeCastBeforeCreativeLook, true);
+  assert.equal(plan.roughCut.sourceColorNormalization.fineEditReprocessingDefault, false);
   assert.equal(plan.roughCut.audibleDuplicateAudit.captionDisplayOverrideCountsAsAudioRemoval, false);
   assert.equal(plan.roughCut.structuralEditReadback.requiredAfterScriptEdit, true);
   assert.equal(plan.bRollContinuity.continuousRunInteriorAlphaCoverage, 'required');
@@ -197,6 +203,13 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.captions.semanticPunctuation.globalHidePunctuationWhenExceptionsExist,
     false);
   assert.equal(plan.finishingPass.captions.semanticPunctuation.inventOrSubstituteSymbols, false);
+  assert.equal(plan.finishingPass.captions.visualBaseline.mode,
+    'fixed-neutral-across-video');
+  assert.equal(plan.finishingPass.captions.visualBaseline.fullWidthOpaqueBandDefault, false);
+  assert.equal(plan.finishingPass.captions.visualBaseline.positionDefault,
+    'stable-lower-third-bottom-center');
+  assert.equal(plan.finishingPass.captions.visualBaseline.topPlacementDefault, false);
+  assert.equal(plan.finishingPass.captions.visualBaseline.nativeAndPhoneScaleVerification, true);
   assert.equal(plan.finishingPass.chapterProgress.defaultEnabled, true);
   assert.equal(plan.finishingPass.chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(plan.finishingPass.chapterProgress.defaultVisualGrammar,
@@ -221,17 +234,26 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.deepEqual(plan.informationCoverage, []);
 });
 
-test('finishing pass guards audio routing, caption reflow and natural color', () => {
+test('rough cut owns natural color while finishing guards audio and caption layout', () => {
   const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
   const finishing = state.roughCutPolicy.finishingPass;
+  const color = state.roughCutPolicy.sourceColorNormalization;
   assert.equal(finishing.voiceIsolation.reuseShortDerivativeAcrossDifferentSourceOffsets, 'forbidden');
   assert.equal(finishing.voiceIsolation.verification, 'early-and-late-timeline-audible-samples');
   assert.equal(finishing.captions.scaleChange, 'requires-reflow-and-box-resize');
-  assert.equal(finishing.color.order, 'neutralize-cast-before-creative-look');
-  assert.equal(finishing.color.continuousRecordingCorrectionScope, 'source-track-or-global-first');
-  assert.equal(finishing.color.sameParametersProvePerceptualConsistency, false);
-  assert.equal(finishing.color.rollbackIfInconsistent,
-    'remove-correction-and-keep-stable-source');
+  assert.equal(color.workflowStage, 'rough-cut-before-approval');
+  assert.equal(color.order, 'neutralize-cast-before-creative-look');
+  assert.equal(color.continuousRecordingCorrectionScope, 'source-track-or-global-first');
+  assert.equal(color.sameParametersProvePerceptualConsistency, false);
+  assert.equal(color.rollbackIfInconsistent,
+    'remove-correction-and-keep-last-stable-source');
+  assert.equal(color.fineEditReprocessingDefault, 'forbidden');
+  assert.equal(color.stageUpdateAfterRollback,
+    'required-with-attempt-result-rollback-and-next-decision');
+  assert.equal(finishing.captions.visualBaseline.positionDefault,
+    'stable-lower-third-bottom-center');
+  assert.equal(finishing.captions.visualBaseline.topPlacementDefault, 'exception-only');
+  assert.equal(finishing.captions.visualBaseline.fullWidthOpaqueBandDefault, 'forbidden');
 
   const standard = readFileSync(
     path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'),
@@ -240,9 +262,15 @@ test('finishing pass guards audio routing, caption reflow and natural color', ()
   assert.match(standard, /never attach one short derivative to unrelated clips/);
   assert.match(standard, /early and a late timeline section/);
   assert.match(standard, /When caption size changes, treat it as a layout change/);
-  assert.match(standard, /Neutralize a visible color cast before adding a look/);
+  assert.match(standard, /Normalize the recorded talking-head source during rough cut/);
   assert.match(standard, /applying the same settings as separate per-clip effects does not prove perceptual consistency/);
-  assert.match(standard, /remove the correction and keep the stable source/);
+  assert.match(standard, /remove the correction and keep the last stable source state/);
+  assert.match(standard, /Send a stage update that states what was attempted/);
+  assert.match(standard, /Fine edit should inherit this approved color/);
+  assert.match(standard, /stable neutral caption baseline across a video/);
+  assert.match(standard, /compact translucent charcoal plate that hugs the rendered text/);
+  assert.match(standard, /Top placement is not the default/);
+  assert.match(standard, /representative A-roll, bright B-roll, dark B-roll/);
 });
 
 test('timeline handoff requires time-based boundary conversion across frame rates', () => {
@@ -334,6 +362,12 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.ok(state.approvedCapabilities.includes(
     'page-aware-caption-punctuation-with-final-question-and-exclamation-preservation',
   ));
+  assert.ok(state.approvedCapabilities.includes(
+    'rough-cut-source-color-normalization-before-fine-edit',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
+    'fixed-neutral-lower-third-caption-baseline-with-cross-background-proof',
+  ));
 
   const designAudit = state.roughCutPolicy.finishingPass.designAudit;
   assert.equal(designAudit.requiredBeforeFinalRender, true);
@@ -395,6 +429,9 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /No semantic punctuation was invented or replaced/);
   assert.match(qaTemplate, /Every manuscript punctuation mark inside a caption page is preserved/);
   assert.match(qaTemplate, /Page-final question and exclamation marks are always preserved/);
+  assert.match(qaTemplate, /fine edit inherited the approved A-roll color without a second treatment/);
+  assert.match(qaTemplate, /Caption visual baseline stays fixed across the video/);
+  assert.match(qaTemplate, /A-roll, bright B-roll, dark B-roll, longest-two-line/);
   assert.match(qaTemplate, /## Semantic Chapter Progress/);
   assert.match(qaTemplate, /duration-proportional boundaries/);
   assert.match(qaTemplate, /sections use divider ticks rather than boxed cards/);
