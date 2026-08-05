@@ -258,8 +258,10 @@
         "include": ["scale", "translation", "rotation", "transform-origin", "internal-accents", "overshoot"],
         "topTrackPreventsSelfClipping": false,
         "hiddenOverflowDefault": false,
-        "naturalBoxOrOverflowMustContainEveryExtreme": true,
-        "verificationFrames": ["entrance-extreme", "overshoot", "settled", "encouragement-peak", "micro-expression-peak", "exit"],
+        "visibleOverflowAloneIsSufficient": false,
+        "staticOuterNaturalBoxPreferred": true,
+        "paddedInnerAnimatedStageContainsEveryVisibleExtreme": true,
+        "verificationFrames": ["first-visible", "entrance-extreme", "overshoot", "settled", "encouragement-peak", "micro-expression-peak", "reopen", "final-visible"],
         "verificationScales": ["native", "phone"]
       },
       "collisionReview": ["face", "final-caption", "chapter-progress", "platform-ui"],

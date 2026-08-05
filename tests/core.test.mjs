@@ -249,9 +249,18 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
     true);
   assert.equal(plan.finishingPass.signatureOutro.motionEnvelope.topTrackPreventsSelfClipping, false);
   assert.equal(plan.finishingPass.signatureOutro.motionEnvelope.hiddenOverflowDefault, false);
+  assert.equal(plan.finishingPass.signatureOutro.motionEnvelope.visibleOverflowAloneIsSufficient,
+    false);
+  assert.equal(plan.finishingPass.signatureOutro.motionEnvelope.staticOuterNaturalBoxPreferred,
+    true);
+  assert.equal(
+    plan.finishingPass.signatureOutro.motionEnvelope
+      .paddedInnerAnimatedStageContainsEveryVisibleExtreme,
+    true,
+  );
   assert.deepEqual(plan.finishingPass.signatureOutro.motionEnvelope.verificationFrames,
-    ['entrance-extreme', 'overshoot', 'settled', 'encouragement-peak',
-      'micro-expression-peak', 'exit']);
+    ['first-visible', 'entrance-extreme', 'overshoot', 'settled', 'encouragement-peak',
+      'micro-expression-peak', 'reopen', 'final-visible']);
   assert.equal(plan.finishingPass.dialogueLoudness.measurementSource,
     'actual-rendered-timeline-after-cuts-denoise-fades-and-gain');
   assert.equal(plan.finishingPass.dialogueLoudness.clippedOutliersDefineTarget, false);

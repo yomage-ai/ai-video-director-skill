@@ -82,7 +82,7 @@
 - Owned or explicitly approved identity art is used; generic third-party sticker is not the default:
 - Identity and encouragement cues, motion, hold, optional sound, and final speech synchronization:
 - Approved identity variant and contextual accessories stayed fixed; any wink/blink passed open-before, closed-peak, open-after, and phone-size review without reading as a glitch:
-- Motion envelope includes scale, translation, rotation, transform origin, internal marks, and overshoot; entrance extreme, overshoot, settle, encouragement peak, micro-expression peak, and exit show the complete silhouette without self-clipping at native or phone scale:
+- Motion envelope includes scale, translation, rotation, transform origin, internal marks, and overshoot; a static outer natural box and padded inner animated stage contain every visible extreme without relying only on overflow; first-visible, entrance, overshoot, settle, encouragement, micro-expression, reopen, and final-visible frames show the complete silhouette at native or phone scale:
 - Face, final caption, semantic progress strip, and platform UI remain unobstructed at native and phone scale:
 
 ## Finishing Design Audit

@@ -237,7 +237,9 @@
         "motionEnvelope": "scale-translation-rotation-transform-origin-internal-accents-and-overshoot",
         "topTrackPreventsSelfClipping": false,
         "hiddenOverflowDefault": "forbidden-unless-intentional-approved-mask",
-        "extremeFrameProof": "entrance-overshoot-settle-encouragement-micro-expression-exit-native-and-phone-scale",
+        "visibleOverflowAloneIsSufficient": false,
+        "preferredContainment": "static-outer-natural-box-with-padded-inner-animated-stage",
+        "extremeFrameProof": "first-visible-entrance-overshoot-settle-encouragement-micro-expression-reopen-final-visible-native-and-phone-scale",
         "privateProfilePromotion": "explicit-approval-required",
         "postApprovalAdaptation": "speech-sync-aspect-ratio-safe-placement-and-documented-collisions-only",
         "collisionReview": "face-final-caption-chapter-progress-and-platform-ui"
