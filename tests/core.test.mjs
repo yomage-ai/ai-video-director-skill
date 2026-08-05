@@ -214,18 +214,26 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.chapterProgress.defaultEnabled, true);
   assert.equal(plan.finishingPass.chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(plan.finishingPass.chapterProgress.defaultVisualGrammar,
-    'narrow-translucent-neutral-edge-to-edge-bottom-strip-with-divider-ticks-no-chapter-boxes');
+    'narrow-translucent-neutral-edge-to-edge-strip-with-divider-ticks-no-chapter-boxes');
   assert.equal(plan.finishingPass.chapterProgress.verticalPlacement,
-    'below-captions-close-to-bottom-edge');
+    'platform-validated-edge-band-bottom-first');
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.semanticLayer,
     'chapter-progress-not-caption-track');
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.contrastSurface,
     'narrow-full-width-translucent-neutral-strip');
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.perChapterBoxesDefault, false);
-  assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.topPlacementDefault, false);
+  assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.topPlacementDefault,
+    'conditional-when-bottom-is-occluded-or-collides');
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.sceneBySceneColorInversion, false);
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.nativeAndPhoneScaleVerification,
     true);
+  assert.equal(
+    plan.finishingPass.chapterProgress.labelVisualBaseline.publishedTargetDeviceScreenshotVerification,
+    true,
+  );
+  assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.topBandReflowRequired, true);
+  assert.equal(plan.finishingPass.chapterProgress.platformUiOcclusionPolicy,
+    'semantic-label-occlusion-forbidden-relocate-strip-and-reflow-nearby-content');
   assert.equal(plan.finishingPass.chapterProgress.labelApproval.proposalStage,
     'director-plan-before-style-preview');
   assert.equal(plan.finishingPass.chapterProgress.labelApproval.approvalGate,
@@ -315,9 +323,9 @@ test('rough cut owns natural color while finishing separates captions from progr
     'preserve-unless-explicit-caption-redesign');
   assert.equal(finishing.captions.progressLayerRequests, 'must-not-restyle-captions');
   assert.equal(finishing.chapterProgress.labelVisualBaseline.positionDefault,
-    'bottom-below-captions-close-to-edge');
+    'bottom-first-after-platform-exclusion-validation');
   assert.equal(finishing.chapterProgress.labelVisualBaseline.topPlacementDefault,
-    'forbidden-by-default');
+    'conditional-after-platform-proof');
   assert.equal(finishing.chapterProgress.labelVisualBaseline.perChapterBoxesDefault, 'forbidden');
 
   const standard = readFileSync(
@@ -335,7 +343,8 @@ test('rough cut owns natural color while finishing separates captions from progr
   assert.match(standard, /Preserve the approved caption visual language/);
   assert.match(standard, /separate semantic layer from captions/);
   assert.match(standard, /narrow, full-width translucent neutral strip/);
-  assert.match(standard, /Do not move it to the top merely to solve background contrast/);
+  assert.match(standard, /A reserved top-safe band is the preferred fallback/);
+  assert.match(standard, /Validate against screenshots from the actual published phone, tablet, and player surfaces/);
   assert.match(standard, /representative A-roll, bright B-roll, and dark B-roll/);
 });
 
@@ -435,7 +444,7 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
     'progress-label-layer-separation-from-captions',
   ));
   assert.ok(state.approvedCapabilities.includes(
-    'fixed-neutral-bottom-progress-label-baseline-with-cross-background-proof',
+    'platform-validated-progress-label-baseline-with-cross-background-and-device-proof',
   ));
 
   const designAudit = state.roughCutPolicy.finishingPass.designAudit;
@@ -470,9 +479,9 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.equal(chapterProgress.default, 'enabled-after-structural-timing-lock');
   assert.equal(chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(chapterProgress.defaultVisualGrammar,
-    'narrow-translucent-neutral-edge-to-edge-bottom-strip-with-divider-ticks-no-chapter-boxes');
+    'narrow-translucent-neutral-edge-to-edge-strip-with-divider-ticks-no-chapter-boxes');
   assert.equal(chapterProgress.platformUiOcclusionPolicy,
-    'allowed-for-auxiliary-overlay-never-displace-primary-content');
+    'semantic-label-occlusion-forbidden-relocate-strip-and-reflow-nearby-content');
   assert.equal(chapterProgress.renderedOverlayInteractive, false);
   assert.equal(chapterProgress.recomputeAfterStructuralTimingChange, true);
   assert.equal(chapterProgress.labelVisualBaseline.semanticLayer,
@@ -488,7 +497,7 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
     'time-driven-semantic-chapter-progress-with-plain-bar-fallback',
   ));
   assert.ok(state.approvedCapabilities.includes(
-    'edge-to-edge-bottom-chapter-strip-with-divider-only-segments',
+    'platform-safe-edge-band-chapter-strip-with-divider-only-segments',
   ));
   assert.ok(state.approvedCapabilities.includes(
     'chapter-label-director-plan-approval-before-style-lock',
@@ -505,7 +514,9 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /use one unsegmented progress bar instead of inventing chapters/);
   assert.match(standard, /narrow, full-width translucent neutral strip that spans the composition/);
   assert.match(standard, /do not wrap every section in a card or leave decorative gaps/);
-  assert.match(standard, /It may sit inside an area later covered by platform descriptions or controls/);
+  assert.match(standard, /Do not accept platform descriptions, controls, or action rails covering them/);
+  assert.match(standard, /reserved top-safe band/);
+  assert.match(standard, /real target-device screenshots/);
   assert.match(standard, /rendered progress strip is visual orientation, not an interactive seek target/);
   assert.match(standard, /Verify early, middle, late, and every chapter boundary/);
   assert.match(standard, /named private style profile may lock the exact surface color/);
@@ -538,6 +549,8 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /duration-proportional boundaries/);
   assert.match(qaTemplate, /separates sections with divider ticks rather than boxed cards/);
   assert.match(qaTemplate, /A-roll, bright B-roll, dark B-roll, chapter-boundary/);
+  assert.match(qaTemplate, /platform-validated edge band/);
+  assert.match(qaTemplate, /Published target-device screenshots prove/);
   assert.match(qaTemplate, /visual orientation only/);
   assert.match(qaTemplate, /Chapter labels, order, and one-sentence scopes were shown/);
   assert.match(qaTemplate, /## Signature Outro/);

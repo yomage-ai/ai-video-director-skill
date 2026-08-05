@@ -69,10 +69,10 @@
 - Fallback is one unsegmented bar when no meaningful multi-section structure exists:
 - Filled progress and playhead use actual timeline time; early, middle, late, and every chapter boundary were rendered and checked:
 - Progress labels were audited separately from subtitles; no progress-label request silently restyled the caption track:
-- A narrow full-width translucent neutral strip sits below captions near the bottom edge, uses light labels with a restrained dark shadow or stroke, and separates sections with divider ticks rather than boxed cards:
+- A narrow full-width translucent neutral strip occupies a platform-validated edge band, uses light labels with a restrained dark shadow or stroke, and separates sections with divider ticks rather than boxed cards:
 - Current, past, and future hierarchy uses weight, opacity, fill, and playhead rather than scene-by-scene color inversion:
 - Progress-label readability passed representative A-roll, bright B-roll, dark B-roll, chapter-boundary, native-size, and phone-size review:
-- Primary captions, evidence, and picture-in-picture remain clear; any platform-UI occlusion is an intentional auxiliary-overlay tradeoff:
+- Published target-device screenshots prove that platform descriptions, controls, and action rails do not cover semantic progress labels; when the top fallback is used, headings, evidence, and picture-in-picture were reflowed below or around it while the approved caption lane remained intact:
 - Rendered strip is visual orientation only; native player scrubbing or separate platform chapter metadata provides actual seeking:
 
 ## Signature Outro
