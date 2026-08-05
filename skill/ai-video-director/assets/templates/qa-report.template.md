@@ -28,9 +28,7 @@
 - Ordinary breaths preserved and excessive dead air handled contextually:
 - Transcript/caption correctness:
 - Caption scale, reflow, box height, safe area, and longest two-line page:
-- Caption visual baseline stays fixed across the video: white semibold/bold text, compact translucent charcoal contrast plate, restrained dark stroke/shadow, and no word highlight by default:
-- Caption position stays in one lower-third/bottom-center band above platform UI and progress; any top/run-level relocation has a documented hard-collision reason:
-- Caption baseline passed A-roll, bright B-roll, dark B-roll, longest-two-line, native-size, and phone-size review:
+- Approved caption visual style was preserved unless an explicit caption redesign was requested; progress-label requests did not alter the caption track:
 - Final viewer-facing pagination was locked before punctuation styling, and the punctuation audit was repeated after every reflow, forced break, merge, scale change, or Script edit:
 - Every manuscript punctuation mark inside a caption page is preserved; detachable commas, periods, semicolons, colons, and enumeration commas are omitted only when they are the page's final character:
 - Page-final question and exclamation marks are always preserved; paired structural closers and punctuation embedded in numbers, units, names, or terms are not stripped:
@@ -69,7 +67,10 @@
 - Segment labels and duration-proportional boundaries:
 - Fallback is one unsegmented bar when no meaningful multi-section structure exists:
 - Filled progress and playhead use actual timeline time; early, middle, late, and every chapter boundary were rendered and checked:
-- Transparent edge-to-edge line sits below captions near the bottom edge; sections use divider ticks rather than boxed cards:
+- Progress labels were audited separately from subtitles; no progress-label request silently restyled the caption track:
+- A narrow full-width translucent neutral strip sits below captions near the bottom edge, uses light labels with a restrained dark shadow or stroke, and separates sections with divider ticks rather than boxed cards:
+- Current, past, and future hierarchy uses weight, opacity, fill, and playhead rather than scene-by-scene color inversion:
+- Progress-label readability passed representative A-roll, bright B-roll, dark B-roll, chapter-boundary, native-size, and phone-size review:
 - Primary captions, evidence, and picture-in-picture remain clear; any platform-UI occlusion is an intentional auxiliary-overlay tradeoff:
 - Rendered strip is visual orientation only; native player scrubbing or separate platform chapter metadata provides actual seeking:
 

@@ -203,19 +203,23 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.captions.semanticPunctuation.globalHidePunctuationWhenExceptionsExist,
     false);
   assert.equal(plan.finishingPass.captions.semanticPunctuation.inventOrSubstituteSymbols, false);
-  assert.equal(plan.finishingPass.captions.visualBaseline.mode,
-    'fixed-neutral-across-video');
-  assert.equal(plan.finishingPass.captions.visualBaseline.fullWidthOpaqueBandDefault, false);
-  assert.equal(plan.finishingPass.captions.visualBaseline.positionDefault,
-    'stable-lower-third-bottom-center');
-  assert.equal(plan.finishingPass.captions.visualBaseline.topPlacementDefault, false);
-  assert.equal(plan.finishingPass.captions.visualBaseline.nativeAndPhoneScaleVerification, true);
+  assert.equal(plan.finishingPass.captions.preserveApprovedVisualStyleUnlessExplicitChange, true);
+  assert.equal(plan.finishingPass.captions.progressLayerRequestsDoNotRestyleCaptions, true);
   assert.equal(plan.finishingPass.chapterProgress.defaultEnabled, true);
   assert.equal(plan.finishingPass.chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(plan.finishingPass.chapterProgress.defaultVisualGrammar,
-    'transparent-edge-to-edge-bottom-line-with-divider-ticks-no-chapter-boxes');
+    'narrow-translucent-neutral-edge-to-edge-bottom-strip-with-divider-ticks-no-chapter-boxes');
   assert.equal(plan.finishingPass.chapterProgress.verticalPlacement,
     'below-captions-close-to-bottom-edge');
+  assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.semanticLayer,
+    'chapter-progress-not-caption-track');
+  assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.contrastSurface,
+    'narrow-full-width-translucent-neutral-strip');
+  assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.perChapterBoxesDefault, false);
+  assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.topPlacementDefault, false);
+  assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.sceneBySceneColorInversion, false);
+  assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.nativeAndPhoneScaleVerification,
+    true);
   assert.equal(plan.finishingPass.chapterProgress.fallbackWithoutMeaningfulChapters,
     'single-unsegmented-progress-bar');
   assert.equal(plan.finishingPass.chapterProgress.renderedOverlayIsInteractive, false);
@@ -234,7 +238,7 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.deepEqual(plan.informationCoverage, []);
 });
 
-test('rough cut owns natural color while finishing guards audio and caption layout', () => {
+test('rough cut owns natural color while finishing separates captions from progress labels', () => {
   const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
   const finishing = state.roughCutPolicy.finishingPass;
   const color = state.roughCutPolicy.sourceColorNormalization;
@@ -250,10 +254,14 @@ test('rough cut owns natural color while finishing guards audio and caption layo
   assert.equal(color.fineEditReprocessingDefault, 'forbidden');
   assert.equal(color.stageUpdateAfterRollback,
     'required-with-attempt-result-rollback-and-next-decision');
-  assert.equal(finishing.captions.visualBaseline.positionDefault,
-    'stable-lower-third-bottom-center');
-  assert.equal(finishing.captions.visualBaseline.topPlacementDefault, 'exception-only');
-  assert.equal(finishing.captions.visualBaseline.fullWidthOpaqueBandDefault, 'forbidden');
+  assert.equal(finishing.captions.approvedVisualStyle,
+    'preserve-unless-explicit-caption-redesign');
+  assert.equal(finishing.captions.progressLayerRequests, 'must-not-restyle-captions');
+  assert.equal(finishing.chapterProgress.labelVisualBaseline.positionDefault,
+    'bottom-below-captions-close-to-edge');
+  assert.equal(finishing.chapterProgress.labelVisualBaseline.topPlacementDefault,
+    'forbidden-by-default');
+  assert.equal(finishing.chapterProgress.labelVisualBaseline.perChapterBoxesDefault, 'forbidden');
 
   const standard = readFileSync(
     path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'),
@@ -267,10 +275,11 @@ test('rough cut owns natural color while finishing guards audio and caption layo
   assert.match(standard, /remove the correction and keep the last stable source state/);
   assert.match(standard, /Send a stage update that states what was attempted/);
   assert.match(standard, /Fine edit should inherit this approved color/);
-  assert.match(standard, /stable neutral caption baseline across a video/);
-  assert.match(standard, /compact translucent charcoal plate that hugs the rendered text/);
-  assert.match(standard, /Top placement is not the default/);
-  assert.match(standard, /representative A-roll, bright B-roll, dark B-roll/);
+  assert.match(standard, /Preserve the approved caption visual language/);
+  assert.match(standard, /separate semantic layer from captions/);
+  assert.match(standard, /narrow, full-width translucent neutral strip/);
+  assert.match(standard, /Do not move it to the top merely to solve background contrast/);
+  assert.match(standard, /representative A-roll, bright B-roll, and dark B-roll/);
 });
 
 test('timeline handoff requires time-based boundary conversion across frame rates', () => {
@@ -366,7 +375,10 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
     'rough-cut-source-color-normalization-before-fine-edit',
   ));
   assert.ok(state.approvedCapabilities.includes(
-    'fixed-neutral-lower-third-caption-baseline-with-cross-background-proof',
+    'progress-label-layer-separation-from-captions',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
+    'fixed-neutral-bottom-progress-label-baseline-with-cross-background-proof',
   ));
 
   const designAudit = state.roughCutPolicy.finishingPass.designAudit;
@@ -401,11 +413,14 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.equal(chapterProgress.default, 'enabled-after-structural-timing-lock');
   assert.equal(chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(chapterProgress.defaultVisualGrammar,
-    'transparent-edge-to-edge-bottom-line-with-divider-ticks-no-chapter-boxes');
+    'narrow-translucent-neutral-edge-to-edge-bottom-strip-with-divider-ticks-no-chapter-boxes');
   assert.equal(chapterProgress.platformUiOcclusionPolicy,
     'allowed-for-auxiliary-overlay-never-displace-primary-content');
   assert.equal(chapterProgress.renderedOverlayInteractive, false);
   assert.equal(chapterProgress.recomputeAfterStructuralTimingChange, true);
+  assert.equal(chapterProgress.labelVisualBaseline.semanticLayer,
+    'chapter-progress-not-caption-track');
+  assert.equal(chapterProgress.labelVisualBaseline.sceneBySceneColorInversion, 'forbidden');
   assert.ok(state.approvedCapabilities.includes(
     'time-driven-semantic-chapter-progress-with-plain-bar-fallback',
   ));
@@ -414,7 +429,7 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   ));
   assert.match(standard, /Derive its sections from the approved semantic structure/);
   assert.match(standard, /use one unsegmented progress bar instead of inventing chapters/);
-  assert.match(standard, /one transparent, continuous line that spans the full composition width/);
+  assert.match(standard, /narrow, full-width translucent neutral strip that spans the composition/);
   assert.match(standard, /do not wrap every section in a card or leave decorative gaps/);
   assert.match(standard, /It may sit inside an area later covered by platform descriptions or controls/);
   assert.match(standard, /rendered progress strip is visual orientation, not an interactive seek target/);
@@ -430,11 +445,12 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /Every manuscript punctuation mark inside a caption page is preserved/);
   assert.match(qaTemplate, /Page-final question and exclamation marks are always preserved/);
   assert.match(qaTemplate, /fine edit inherited the approved A-roll color without a second treatment/);
-  assert.match(qaTemplate, /Caption visual baseline stays fixed across the video/);
-  assert.match(qaTemplate, /A-roll, bright B-roll, dark B-roll, longest-two-line/);
+  assert.match(qaTemplate, /Approved caption visual style was preserved/);
+  assert.match(qaTemplate, /Progress labels were audited separately from subtitles/);
   assert.match(qaTemplate, /## Semantic Chapter Progress/);
   assert.match(qaTemplate, /duration-proportional boundaries/);
-  assert.match(qaTemplate, /sections use divider ticks rather than boxed cards/);
+  assert.match(qaTemplate, /separates sections with divider ticks rather than boxed cards/);
+  assert.match(qaTemplate, /A-roll, bright B-roll, dark B-roll, chapter-boundary/);
   assert.match(qaTemplate, /visual orientation only/);
 });
 
