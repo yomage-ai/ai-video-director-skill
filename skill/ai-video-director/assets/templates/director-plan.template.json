@@ -164,6 +164,17 @@
       "labels": "short-and-phone-readable",
       "defaultVisualGrammar": "narrow-translucent-neutral-edge-to-edge-bottom-strip-with-divider-ticks-no-chapter-boxes",
       "verticalPlacement": "below-captions-close-to-bottom-edge",
+      "labelApproval": {
+        "proposalStage": "director-plan-before-style-preview",
+        "proposalIncludes": ["label", "order", "one-sentence-scope", "narrative-anchor"],
+        "approvalGate": "director-plan-approval",
+        "separateBlockingQuestionDefault": false,
+        "separateQuestionExceptions": ["ambiguous", "high-stakes", "meaning-changing"],
+        "exactBoundaryStage": "after-rough-cut-timing-lock",
+        "motionPreviewRequired": true,
+        "wordingOnlyChangeRequiresRecut": false,
+        "structuralTimingChangeRequiresBoundaryRecompute": true
+      },
       "labelVisualBaseline": {
         "semanticLayer": "chapter-progress-not-caption-track",
         "mode": "fixed-neutral-across-backgrounds",
@@ -194,6 +205,21 @@
         "late",
         "chapter-boundaries"
       ]
+    },
+    "signatureOutro": {
+      "recurringSpokenSignoff": null,
+      "candidateDetectedDuringContentLock": false,
+      "namedReusableComponent": true,
+      "ownedIdentityAssetPreferred": true,
+      "genericThirdPartyStickerDefault": false,
+      "preserveLiveFaceVoiceAndDelivery": true,
+      "firstReusableLockRequiresStillAndMotionPreview": true,
+      "identityPhraseCue": null,
+      "encouragementPhraseCue": null,
+      "collisionReview": ["face", "final-caption", "chapter-progress", "platform-ui"],
+      "soundDecision": null,
+      "privateProfilePromotionRequiresExplicitApproval": true,
+      "postApprovalAdaptations": ["speech-sync", "aspect-ratio-safe-placement", "documented-collision-handling"]
     },
     "designAudit": {
       "requiredBeforeFinalRender": true,

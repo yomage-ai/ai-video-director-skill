@@ -64,6 +64,7 @@
 ## Semantic Chapter Progress
 
 - Progress source is the approved semantic structure after final timing lock; no arbitrary or fabricated chapters:
+- Chapter labels, order, and one-sentence scopes were shown in the director plan and approved before style lock; every label maps to a contiguous transcript or narrative range without invented or exaggerated meaning:
 - Segment labels and duration-proportional boundaries:
 - Fallback is one unsegmented bar when no meaningful multi-section structure exists:
 - Filled progress and playhead use actual timeline time; early, middle, late, and every chapter boundary were rendered and checked:
@@ -73,6 +74,14 @@
 - Progress-label readability passed representative A-roll, bright B-roll, dark B-roll, chapter-boundary, native-size, and phone-size review:
 - Primary captions, evidence, and picture-in-picture remain clear; any platform-UI occlusion is an intentional auxiliary-overlay tradeoff:
 - Rendered strip is visual orientation only; native player scrubbing or separate platform chapter metadata provides actual seeking:
+
+## Signature Outro
+
+- Recurring sign-off detected and treated as a named component rather than an ordinary final subtitle:
+- First reusable version received still and motion-preview approval; private-profile promotion is recorded:
+- Owned or explicitly approved identity art is used; generic third-party sticker is not the default:
+- Identity and encouragement cues, motion, hold, optional sound, and final speech synchronization:
+- Face, final caption, semantic progress strip, and platform UI remain unobstructed at native and phone scale:
 
 ## Finishing Design Audit
 

@@ -187,6 +187,16 @@
         "segmentWidth": "duration-proportional",
         "defaultVisualGrammar": "narrow-translucent-neutral-edge-to-edge-bottom-strip-with-divider-ticks-no-chapter-boxes",
         "verticalPlacement": "below-captions-close-to-bottom-edge",
+        "labelApproval": {
+          "proposalStage": "director-plan-before-style-preview",
+          "proposalContent": "label-order-one-sentence-scope-and-narrative-anchor",
+          "approvalGate": "director-plan-approval",
+          "separateBlockingQuestionDefault": false,
+          "separateQuestionExceptions": "ambiguous-high-stakes-or-meaning-changing",
+          "exactBoundaryStage": "after-rough-cut-timing-lock",
+          "wordingOnlyChangeRequiresRecut": false,
+          "structuralTimingChangeRequiresBoundaryRecompute": true
+        },
         "labelVisualBaseline": {
           "semanticLayer": "chapter-progress-not-caption-track",
           "mode": "fixed-neutral-across-backgrounds",
@@ -206,6 +216,16 @@
         "recomputeAfterStructuralTimingChange": true,
         "primaryContentCollisionReview": "captions-pip-and-information-cards",
         "verification": "early-middle-late-every-boundary-seek-rerender-full-width-and-below-caption-placement"
+      },
+      "signatureOutro": {
+        "recurringSignoff": "named-reusable-component",
+        "preferredAssetSource": "owned-or-explicitly-approved-identity-art",
+        "genericThirdPartyStickerDefault": "forbidden",
+        "preserveLivePerformance": true,
+        "firstReusableLock": "one-still-and-one-motion-sample-plus-user-approval",
+        "privateProfilePromotion": "explicit-approval-required",
+        "postApprovalAdaptation": "speech-sync-aspect-ratio-safe-placement-and-documented-collisions-only",
+        "collisionReview": "face-final-caption-chapter-progress-and-platform-ui"
       },
       "designAudit": {
         "requiredBeforeFinalRender": true,
@@ -270,6 +290,9 @@
     "continuous-recording-global-color-consistency-with-stage-update-and-rollback",
     "progress-label-layer-separation-from-captions",
     "fixed-neutral-bottom-progress-label-baseline-with-cross-background-proof",
+    "chapter-label-director-plan-approval-before-style-lock",
+    "private-profile-deterministic-progress-component",
+    "owned-identity-signature-outro-with-preview-before-reuse",
     "cross-fps-timeline-timebase-conform-and-verification",
     "chatcut-visual-rough-cut-review",
     "chatcut-fcp-xml-to-canonical-edl",

@@ -6,6 +6,12 @@
   "primaryClaim": "",
   "supportingPoints": [],
   "narrativeOrder": [],
+  "recurringSignatureOutro": {
+    "detected": false,
+    "spokenText": "",
+    "durableCreatorPattern": false,
+    "candidateForStylePreview": false
+  },
   "realEvidenceColdOpen": {
     "artifact": "",
     "claimProved": "",

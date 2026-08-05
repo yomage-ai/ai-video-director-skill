@@ -151,11 +151,17 @@ test('repeated takes use quality-first selection rather than a latest-take defau
 });
 
 test('director plan schema carries reusable rough-cut and privacy guardrails', () => {
+  const contentLock = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates', 'content-lock.template.json'),
+    'utf8',
+  ));
   const plan = JSON.parse(readFileSync(
     path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates', 'director-plan.template.json'),
     'utf8',
   ));
   assert.equal(plan.roughCut.takeSelection.laterOccurrence, 'tie-breaker-only');
+  assert.equal(contentLock.recurringSignatureOutro.detected, false);
+  assert.equal(contentLock.recurringSignatureOutro.candidateForStylePreview, false);
   assert.equal(plan.roughCut.pauseTreatment.universalDurationMilliseconds, null);
   assert.equal(plan.privacyPlan.criticalIdentifiersUseOpaqueMasks, true);
   assert.equal(plan.privacyPlan.focusCueWhenEvidenceIsNotObvious, 'required');
@@ -219,6 +225,22 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.topPlacementDefault, false);
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.sceneBySceneColorInversion, false);
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.nativeAndPhoneScaleVerification,
+    true);
+  assert.equal(plan.finishingPass.chapterProgress.labelApproval.proposalStage,
+    'director-plan-before-style-preview');
+  assert.equal(plan.finishingPass.chapterProgress.labelApproval.approvalGate,
+    'director-plan-approval');
+  assert.equal(plan.finishingPass.chapterProgress.labelApproval.separateBlockingQuestionDefault,
+    false);
+  assert.equal(plan.finishingPass.chapterProgress.labelApproval.exactBoundaryStage,
+    'after-rough-cut-timing-lock');
+  assert.equal(plan.finishingPass.chapterProgress.labelApproval.wordingOnlyChangeRequiresRecut,
+    false);
+  assert.equal(plan.finishingPass.signatureOutro.ownedIdentityAssetPreferred, true);
+  assert.equal(plan.finishingPass.signatureOutro.genericThirdPartyStickerDefault, false);
+  assert.equal(plan.finishingPass.signatureOutro.firstReusableLockRequiresStillAndMotionPreview,
+    true);
+  assert.equal(plan.finishingPass.signatureOutro.privateProfilePromotionRequiresExplicitApproval,
     true);
   assert.equal(plan.finishingPass.chapterProgress.fallbackWithoutMeaningfulChapters,
     'single-unsegmented-progress-bar');
@@ -421,19 +443,47 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.equal(chapterProgress.labelVisualBaseline.semanticLayer,
     'chapter-progress-not-caption-track');
   assert.equal(chapterProgress.labelVisualBaseline.sceneBySceneColorInversion, 'forbidden');
+  assert.equal(chapterProgress.labelApproval.proposalStage,
+    'director-plan-before-style-preview');
+  assert.equal(chapterProgress.labelApproval.approvalGate, 'director-plan-approval');
+  assert.equal(chapterProgress.labelApproval.separateBlockingQuestionDefault, false);
+  assert.equal(chapterProgress.labelApproval.exactBoundaryStage,
+    'after-rough-cut-timing-lock');
   assert.ok(state.approvedCapabilities.includes(
     'time-driven-semantic-chapter-progress-with-plain-bar-fallback',
   ));
   assert.ok(state.approvedCapabilities.includes(
     'edge-to-edge-bottom-chapter-strip-with-divider-only-segments',
   ));
+  assert.ok(state.approvedCapabilities.includes(
+    'chapter-label-director-plan-approval-before-style-lock',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
+    'private-profile-deterministic-progress-component',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
+    'owned-identity-signature-outro-with-preview-before-reuse',
+  ));
   assert.match(standard, /Derive its sections from the approved semantic structure/);
+  assert.match(standard, /Propose the label, order, and one-sentence scope of every section/);
+  assert.match(standard, /Map every approved label to a contiguous transcript or narrative range/);
   assert.match(standard, /use one unsegmented progress bar instead of inventing chapters/);
   assert.match(standard, /narrow, full-width translucent neutral strip that spans the composition/);
   assert.match(standard, /do not wrap every section in a card or leave decorative gaps/);
   assert.match(standard, /It may sit inside an area later covered by platform descriptions or controls/);
   assert.match(standard, /rendered progress strip is visual orientation, not an interactive seek target/);
   assert.match(standard, /Verify early, middle, late, and every chapter boundary/);
+  assert.match(standard, /named private style profile may lock the exact surface color/);
+  assert.match(standard, /## Recurring Signature Outro/);
+  assert.match(standard, /Prefer owned or explicitly approved identity artwork/);
+  assert.match(standard, /one still plus one short motion sample/);
+
+  const signatureOutro = state.roughCutPolicy.finishingPass.signatureOutro;
+  assert.equal(signatureOutro.preferredAssetSource,
+    'owned-or-explicitly-approved-identity-art');
+  assert.equal(signatureOutro.genericThirdPartyStickerDefault, 'forbidden');
+  assert.equal(signatureOutro.preserveLivePerformance, true);
+  assert.equal(signatureOutro.privateProfilePromotion, 'explicit-approval-required');
 
   const qaTemplate = readFileSync(
     path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates', 'qa-report.template.md'),
@@ -452,6 +502,9 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /separates sections with divider ticks rather than boxed cards/);
   assert.match(qaTemplate, /A-roll, bright B-roll, dark B-roll, chapter-boundary/);
   assert.match(qaTemplate, /visual orientation only/);
+  assert.match(qaTemplate, /Chapter labels, order, and one-sentence scopes were shown/);
+  assert.match(qaTemplate, /## Signature Outro/);
+  assert.match(qaTemplate, /Owned or explicitly approved identity art is used/);
 });
 
 test('bilingual trigger forward tests cover realistic Chinese and English edit requests', () => {
