@@ -127,6 +127,21 @@
       "reuseDerivedAudioAcrossDifferentSourceRanges": false,
       "earlyAndLateAudibleSampleRequired": true
     },
+    "dialogueLoudness": {
+      "measurementSource": "actual-rendered-timeline-after-cuts-denoise-fades-and-gain",
+      "metrics": ["integrated-lufs", "true-peak-dbtp", "loudness-range-lu"],
+      "referencePolicy": "prefer-recent-clean-format-matched-private-profile-references",
+      "clippedOutliersDefineTarget": false,
+      "fallbackStartingBandLufs": {
+        "minimum": -18,
+        "maximum": -15
+      },
+      "fallbackTruePeakMaximumDbtp": -1,
+      "continuousSameSessionGainScope": "uniform-source-track-or-all-derived-aroll-clips",
+      "perCutIndependentNormalizationDefault": false,
+      "postAdjustmentFullRenderRemeasureRequired": true,
+      "creatorSpecificTargetStorage": "private-profile-only"
+    },
     "captions": {
       "requestedScale": 1,
       "reflowAfterScaling": true,
@@ -152,6 +167,23 @@
         "renderedPixelVerificationRequired": true,
         "fallbackWhenRendererStrips": "preserve-exact-glyph-via-renderer-style-or-authored-caption-otherwise-separate-pages-without-inventing-symbols"
       }
+    },
+    "fontGovernance": {
+      "rendererCatalogLookupRequired": true,
+      "canonicalFamilyNameRequired": true,
+      "systemFontStacksAllowedInProductionMotionGraphics": false,
+      "rightsBasisRequired": "verified-open-license-or-documented-user-commercial-license",
+      "freeDownloadIsLicenseProof": false,
+      "neutralSimplifiedChineseDefaultWhenSuitable": "Noto Sans SC",
+      "unsupportedFontWarningPolicy": "block-replace-and-reopen-export-preflight",
+      "postReplacementProof": [
+        "warning-absent",
+        "early-frame",
+        "middle-frame",
+        "late-frame",
+        "longest-label",
+        "densest-layout"
+      ]
     },
     "chapterProgress": {
       "defaultEnabled": true,
@@ -222,6 +254,14 @@
       "microExpressionCue": null,
       "microExpressionRule": "optional-single-motivated-beat-not-entrance",
       "microExpressionProof": ["open-before", "closed-peak", "open-after", "phone-size"],
+      "motionEnvelope": {
+        "include": ["scale", "translation", "rotation", "transform-origin", "internal-accents", "overshoot"],
+        "topTrackPreventsSelfClipping": false,
+        "hiddenOverflowDefault": false,
+        "naturalBoxOrOverflowMustContainEveryExtreme": true,
+        "verificationFrames": ["entrance-extreme", "overshoot", "settled", "encouragement-peak", "micro-expression-peak", "exit"],
+        "verificationScales": ["native", "phone"]
+      },
       "collisionReview": ["face", "final-caption", "chapter-progress", "platform-ui"],
       "soundDecision": null,
       "privateProfilePromotionRequiresExplicitApproval": true,

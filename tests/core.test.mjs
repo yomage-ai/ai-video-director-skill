@@ -247,6 +247,27 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.deepEqual(plan.finishingPass.signatureOutro.contextualAccessories, []);
   assert.equal(plan.finishingPass.signatureOutro.privateProfilePromotionRequiresExplicitApproval,
     true);
+  assert.equal(plan.finishingPass.signatureOutro.motionEnvelope.topTrackPreventsSelfClipping, false);
+  assert.equal(plan.finishingPass.signatureOutro.motionEnvelope.hiddenOverflowDefault, false);
+  assert.deepEqual(plan.finishingPass.signatureOutro.motionEnvelope.verificationFrames,
+    ['entrance-extreme', 'overshoot', 'settled', 'encouragement-peak',
+      'micro-expression-peak', 'exit']);
+  assert.equal(plan.finishingPass.dialogueLoudness.measurementSource,
+    'actual-rendered-timeline-after-cuts-denoise-fades-and-gain');
+  assert.equal(plan.finishingPass.dialogueLoudness.clippedOutliersDefineTarget, false);
+  assert.equal(plan.finishingPass.dialogueLoudness.perCutIndependentNormalizationDefault, false);
+  assert.equal(plan.finishingPass.dialogueLoudness.postAdjustmentFullRenderRemeasureRequired, true);
+  assert.equal(plan.finishingPass.dialogueLoudness.creatorSpecificTargetStorage,
+    'private-profile-only');
+  assert.equal(plan.finishingPass.fontGovernance.rendererCatalogLookupRequired, true);
+  assert.equal(plan.finishingPass.fontGovernance.canonicalFamilyNameRequired, true);
+  assert.equal(plan.finishingPass.fontGovernance.systemFontStacksAllowedInProductionMotionGraphics,
+    false);
+  assert.equal(plan.finishingPass.fontGovernance.freeDownloadIsLicenseProof, false);
+  assert.equal(plan.finishingPass.fontGovernance.neutralSimplifiedChineseDefaultWhenSuitable,
+    'Noto Sans SC');
+  assert.equal(plan.finishingPass.fontGovernance.unsupportedFontWarningPolicy,
+    'block-replace-and-reopen-export-preflight');
   assert.equal(plan.finishingPass.chapterProgress.fallbackWithoutMeaningfulChapters,
     'single-unsegmented-progress-bar');
   assert.equal(plan.finishingPass.chapterProgress.renderedOverlayIsInteractive, false);
@@ -480,6 +501,8 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /Verify early, middle, late, and every chapter boundary/);
   assert.match(standard, /named private style profile may lock the exact surface color/);
   assert.match(standard, /## Recurring Signature Outro/);
+  assert.match(standard, /## Dialogue Loudness Calibration/);
+  assert.match(standard, /full motion envelope/);
   assert.match(standard, /Prefer owned or explicitly approved identity artwork/);
   assert.match(standard, /one still plus one short motion sample/);
 

@@ -14,7 +14,7 @@
 - Rough-cut source-color decision and source/output comparison; fine edit inherited the approved A-roll color without a second treatment:
 - Continuous-recording color scope is source/track/global unless real lighting changes are documented; early/middle/late and cut-boundary frames remain perceptually consistent:
 - Any gray/red/inconsistent correction was rolled back to the last stable source and the rough-cut stage update was sent:
-- Audio channels/loudness/sync:
+- Audio channels/loudness/sync; actual rendered-timeline before/after integrated LUFS, true peak, LRA, applied uniform gain, accepted clean references, and rejected clipped outliers:
 - Speech isolation strength, per-source-range routing, and early/late audible samples:
 - Blank/frozen/corrupt frame checks:
 
@@ -82,6 +82,7 @@
 - Owned or explicitly approved identity art is used; generic third-party sticker is not the default:
 - Identity and encouragement cues, motion, hold, optional sound, and final speech synchronization:
 - Approved identity variant and contextual accessories stayed fixed; any wink/blink passed open-before, closed-peak, open-after, and phone-size review without reading as a glitch:
+- Motion envelope includes scale, translation, rotation, transform origin, internal marks, and overshoot; entrance extreme, overshoot, settle, encouragement peak, micro-expression peak, and exit show the complete silhouette without self-clipping at native or phone scale:
 - Face, final caption, semantic progress strip, and platform UI remain unobstructed at native and phone scale:
 
 ## Finishing Design Audit
@@ -93,6 +94,12 @@ Record a decision and reason for every category. `Off`/`none` is valid; `unrevie
 - Entry/exit animation decision/reason and treated boundaries:
 - Transition decision/reason and relationship conveyed at each treated boundary:
 - Decorative effects decision/reason; functional focus cues distinguished from ornament:
+
+## Font Governance
+
+- Every Motion Graphic font uses the renderer catalog's canonical family name; no production `-apple-system`, `BlinkMacSystemFont`, `PingFang SC`, or other local system stack remains:
+- Every font has a verified open-license or documented user commercial-license basis; "free download" was not treated as permission:
+- Unsupported-font export preflight is clear after replacement; early, middle, late, longest-label, and densest-layout frames preserve width, wrapping, weight, and collision safety:
 
 ## Rights And Delivery
 
