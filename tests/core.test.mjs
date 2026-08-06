@@ -214,7 +214,7 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.chapterProgress.defaultEnabled, true);
   assert.equal(plan.finishingPass.chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(plan.finishingPass.chapterProgress.defaultVisualGrammar,
-    'narrow-translucent-neutral-edge-to-edge-strip-with-divider-ticks-no-chapter-boxes');
+    'shared-two-lane-clean-track-with-label-boundary-dividers-only');
   assert.equal(plan.finishingPass.chapterProgress.component.id,
     'rmcu.semantic-progress.v1');
   assert.equal(plan.finishingPass.chapterProgress.component.scope,
@@ -227,6 +227,15 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
     'single-line-ellipsis');
   assert.equal(plan.finishingPass.chapterProgress.component.activeOverflow,
     'loop-marquee-only-when-overflowing');
+  assert.equal(plan.finishingPass.chapterProgress.component.sameVisualGrammarAcrossOrientations,
+    true);
+  assert.equal(plan.finishingPass.chapterProgress.component.upperProgressTrack,
+    'continuous-without-chapter-ticks');
+  assert.equal(plan.finishingPass.chapterProgress.component.lowerLabelRow,
+    'dividers-only-between-adjacent-chapters');
+  assert.equal(plan.finishingPass.chapterProgress.component.leadingLabelMarks, false);
+  assert.equal(plan.finishingPass.chapterProgress.component.chapterNumbers, false);
+  assert.equal(plan.finishingPass.chapterProgress.component.activeSegmentPanel, false);
   assert.equal(plan.finishingPass.chapterProgress.component.personalIdentityAssetRequired, false);
   assert.equal(plan.finishingPass.chapterProgress.verticalPlacement,
     'platform-validated-edge-band-bottom-first');
@@ -497,7 +506,7 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.equal(chapterProgress.default, 'enabled-after-structural-timing-lock');
   assert.equal(chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(chapterProgress.defaultVisualGrammar,
-    'narrow-translucent-neutral-edge-to-edge-strip-with-divider-ticks-no-chapter-boxes');
+    'shared-two-lane-clean-track-with-label-boundary-dividers-only');
   assert.equal(chapterProgress.platformUiOcclusionPolicy,
     'semantic-label-occlusion-forbidden-relocate-strip-and-reflow-nearby-content');
   assert.equal(chapterProgress.renderedOverlayInteractive, false);
@@ -520,17 +529,33 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.equal(chapterProgress.component.inactiveOverflow, 'single-line-ellipsis');
   assert.equal(chapterProgress.component.activeOverflow,
     'loop-marquee-only-when-overflowing');
+  assert.equal(chapterProgress.component.sameVisualGrammarAcrossOrientations, true);
+  assert.equal(chapterProgress.component.upperProgressTrack,
+    'continuous-without-chapter-ticks');
+  assert.equal(chapterProgress.component.lowerLabelRow,
+    'dividers-only-between-adjacent-chapters');
+  assert.equal(chapterProgress.component.leadingLabelMarks, 'forbidden');
+  assert.equal(chapterProgress.component.chapterNumbers, 'forbidden-by-default');
+  assert.equal(chapterProgress.component.activeSegmentPanel, 'forbidden-by-default');
   assert.equal(chapterProgress.component.personalIdentityAssetRequired, false);
   assert.equal(rmcuTemplate.componentId, 'rmcu.semantic-progress.v1');
   assert.equal(rmcuTemplate.behavior.activeOverflow.onlyWhenOverflowing, true);
   assert.equal(rmcuTemplate.behavior.activeOverflow.layoutBoxRemainsStable, true);
+  assert.equal(rmcuTemplate.behavior.sameAcrossOrientations, true);
+  assert.equal(rmcuTemplate.visual.upperProgressTrack,
+    'continuous-clean-no-chapter-ticks');
+  assert.equal(rmcuTemplate.visual.lowerLabelRow,
+    'boundary-dividers-only-between-adjacent-segments');
+  assert.equal(rmcuTemplate.visual.leadingLabelMarks, false);
+  assert.equal(rmcuTemplate.variants.landscape.lanes, 2);
+  assert.equal(rmcuTemplate.variants.portrait.lanes, 2);
   assert.equal(rmcuTemplate.variants.portrait.walkingMascotDefault, false);
   assert.equal(rmcuTemplate.verification.preserveReversibleBaselineUntilApproval, true);
   assert.ok(state.approvedCapabilities.includes(
     'time-driven-semantic-chapter-progress-with-plain-bar-fallback',
   ));
   assert.ok(state.approvedCapabilities.includes(
-    'platform-safe-edge-band-chapter-strip-with-divider-only-segments',
+    'platform-safe-edge-band-chapter-strip-with-clean-track-and-label-only-dividers',
   ));
   assert.ok(state.approvedCapabilities.includes(
     'chapter-label-director-plan-approval-before-style-lock',
@@ -540,6 +565,9 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   ));
   assert.ok(state.approvedCapabilities.includes(
     'inactive-ellipsis-and-active-only-overflow-marquee',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
+    'orientation-consistent-progress-grammar-without-track-ticks-or-leading-label-marks',
   ));
   assert.ok(state.approvedCapabilities.includes(
     'private-profile-progress-token-or-identity-marker-overrides-only',
@@ -552,7 +580,9 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /Map every approved label to a contiguous transcript or narrative range/);
   assert.match(standard, /use one unsegmented progress bar instead of inventing chapters/);
   assert.match(standard, /narrow, full-width translucent neutral strip that spans the composition/);
-  assert.match(standard, /do not wrap every section in a card or leave decorative gaps/);
+  assert.match(standard, /one uninterrupted progress track above one semantic label row/);
+  assert.match(standard, /Do not add chapter ticks to the track, leading label dashes/);
+  assert.match(standard, /Landscape and portrait share the same two-lane visual grammar/);
   assert.match(standard, /Do not accept platform descriptions, controls, or action rails covering them/);
   assert.match(standard, /reserved top-safe band/);
   assert.match(standard, /real target-device screenshots/);
@@ -589,13 +619,14 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /Progress labels were audited separately from subtitles/);
   assert.match(qaTemplate, /## Semantic Chapter Progress/);
   assert.match(qaTemplate, /duration-proportional boundaries/);
-  assert.match(qaTemplate, /separates sections with divider ticks rather than boxed cards/);
+  assert.match(qaTemplate, /one uninterrupted progress track without chapter ticks/);
+  assert.match(qaTemplate, /No leading label dashes, chapter numbers, active-segment panels/);
   assert.match(qaTemplate, /A-roll, bright B-roll, dark B-roll, chapter-boundary/);
   assert.match(qaTemplate, /platform-validated edge band/);
   assert.match(qaTemplate, /Published target-device screenshots prove/);
   assert.match(qaTemplate, /visual orientation only/);
   assert.match(qaTemplate, /Chapter labels, order, and one-sentence scopes were shown/);
-  assert.match(qaTemplate, /RMCU variant and canvas orientation were recorded/);
+  assert.match(qaTemplate, /Landscape and portrait use the same two-lane grammar/);
   assert.match(qaTemplate, /Only the active overflowing label loops/);
   assert.match(qaTemplate, /generic component uses a neutral playhead/);
   assert.match(qaTemplate, /## Signature Outro/);
@@ -620,7 +651,7 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
   assert.match(chineseProgressRequest, /竖屏口播/);
   assert.match(englishProgressRequest, /portrait RMCU/);
   assert.match(skill, /rmcu\.semantic-progress\.v1/);
-  assert.match(skill, /inactive long labels use ellipsis/);
+  assert.match(skill, /Inactive long labels use ellipsis/);
   assert.match(skill, /Reply in the user's language/);
   assert.match(readmeEn, /generic RMCU semantic progress component/);
   assert.match(readmeEn, /loop only the active label when it overflows/);

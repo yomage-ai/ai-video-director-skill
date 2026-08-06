@@ -27,6 +27,7 @@
       "layoutBoxRemainsStable": true
     },
     "playhead": "actual-local-frame-over-final-duration",
+    "sameAcrossOrientations": true,
     "fallbackWithoutMeaningfulChapters": "single-unsegmented-progress-bar",
     "renderedOverlayIsInteractive": false
   },
@@ -39,6 +40,13 @@
     "currentState": "accent-fill-stronger-weight-and-opacity",
     "futureState": "reduced-opacity",
     "perChapterBoxes": false,
+    "lanes": 2,
+    "upperProgressTrack": "continuous-clean-no-chapter-ticks",
+    "lowerLabelRow": "boundary-dividers-only-between-adjacent-segments",
+    "leadingLabelMarks": false,
+    "chapterNumbers": false,
+    "activeSegmentPanel": false,
+    "duplicateSeparators": false,
     "defaultMarker": "neutral-playhead",
     "personalIdentityAssetRequired": false
   },
@@ -46,7 +54,9 @@
     "landscape": {
       "canvasRatio": "16:9",
       "placement": "compact-full-width-top-rail",
-      "lanes": 1,
+      "lanes": 2,
+      "upperLane": "continuous-track-and-neutral-playhead-without-chapter-ticks",
+      "lowerLane": "semantic-labels-with-boundary-dividers-only",
       "inactiveLabel": "ellipsis-when-overflowing",
       "activeLabel": "loop-marquee-when-overflowing"
     },
@@ -54,8 +64,8 @@
       "canvasRatio": "9:16",
       "placement": "platform-validated-top-safe-band-when-bottom-is-occluded",
       "lanes": 2,
-      "upperLane": "noncritical-track-and-neutral-playhead",
-      "lowerLane": "semantic-labels-must-remain-readable",
+      "upperLane": "continuous-track-and-neutral-playhead-without-chapter-ticks",
+      "lowerLane": "semantic-labels-with-boundary-dividers-only-and-must-remain-readable",
       "walkingMascotDefault": false
     }
   },

@@ -33,7 +33,7 @@ Use $ai-video-director to process the attached talking-head video. Inspect the m
 For the reusable semantic-progress component, you can add:
 
 ```text
-Use the generic RMCU semantic progress component. Choose its landscape or portrait variant from the target canvas, keep inactive long chapter labels ellipsized, and loop only the active label when it overflows.
+Use the generic RMCU semantic progress component. Choose its landscape or portrait variant from the target canvas, keep the same clean two-lane style in both orientations, ellipsize inactive long chapter labels, and loop only the active label when it overflows.
 ```
 
 ## What The User Provides

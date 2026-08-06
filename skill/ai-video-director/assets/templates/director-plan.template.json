@@ -194,7 +194,7 @@
       },
       "segmentWidth": "duration-proportional",
       "labels": "short-and-phone-readable",
-      "defaultVisualGrammar": "narrow-translucent-neutral-edge-to-edge-strip-with-divider-ticks-no-chapter-boxes",
+      "defaultVisualGrammar": "shared-two-lane-clean-track-with-label-boundary-dividers-only",
       "component": {
         "id": "rmcu.semantic-progress.v1",
         "scope": "repository-generic-non-personal",
@@ -203,6 +203,12 @@
         "portrait": "platform-safe-two-lane-top-band",
         "inactiveOverflow": "single-line-ellipsis",
         "activeOverflow": "loop-marquee-only-when-overflowing",
+        "sameVisualGrammarAcrossOrientations": true,
+        "upperProgressTrack": "continuous-without-chapter-ticks",
+        "lowerLabelRow": "dividers-only-between-adjacent-chapters",
+        "leadingLabelMarks": false,
+        "chapterNumbers": false,
+        "activeSegmentPanel": false,
         "defaultMarker": "neutral-playhead",
         "personalIdentityAssetRequired": false,
         "parameterTemplate": "assets/templates/semantic-progress-rmcu.template.json"

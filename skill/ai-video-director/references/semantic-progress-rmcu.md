@@ -13,12 +13,14 @@
 - Keep labels on one line. Past and future labels remain static and use an ellipsis only when they overflow their own segment.
 - Only the active label may move. Start a deterministic loop marquee only when the measured or conservatively estimated text width exceeds the available label viewport. Reset its local clock at the chapter boundary, hold before motion, move at constant speed, and repeat with a readable gap. Do not animate text that already fits.
 - Preserve one stable layout box. Label changes, ellipsis, active weight, and marquee motion must not resize the component or shift neighboring content.
+- Apply the same visual grammar and overflow behavior in landscape and portrait. Orientation may change placement, scale, and safe-area geometry, but not chapter behavior or decorative structure.
+- Use two clean lanes in both variants: one uninterrupted progress track with no chapter ticks, then one label row with dividers only between adjacent chapter segments. Do not add leading dashes, per-label status marks, chapter numbers, active-segment panels, or duplicate separators by default.
 - Use a neutral playhead by default. Creator characters, logos, or personal-IP markers are optional adapters and never part of the repository default.
 - Treat the overlay as visual orientation only. Seeking remains the platform player's responsibility.
 
 ### Landscape Variant
 
-- Use a compact full-width top rail on a 16:9 canvas. Keep chapter segments in one stable row with duration-proportional dividers, a continuous progress line, and a restrained active surface.
+- Use a compact full-width top rail on a 16:9 canvas. Keep the clean progress track above the semantic label row, with dividers only in the label row.
 - Clip every label to its segment. Inactive overflow uses an ellipsis; active overflow uses the shared loop-marquee rule inside that same segment.
 - Keep the rail close to the top edge of the horizontal program. When the horizontal program is letterboxed inside a vertical platform, validate against the actual player crop and controls rather than a generic safe-area diagram.
 
@@ -52,12 +54,14 @@
 - 标题固定单行。过去和未来章节保持静止，仅在超出各自分段宽度时显示省略号。
 - 只有当前章节标题可以移动，而且只有溢出时才启动确定性的循环滚动。进入章节后先停留，再匀速滚动，并以清晰间距循环；章节切换时重置局部时钟，能够完整显示的标题不得滚动。
 - 组件外框和各分段尺寸始终稳定。文字切换、省略号、当前字重和滚动都不能推挤相邻内容。
+- 横屏与竖屏必须使用同一套视觉语法和溢出行为。方向只允许改变摆放、安全区和缩放，不得改变章节行为或装饰结构。
+- 两种方向都采用干净的双层结构：上层是一条没有章节刻度的连续进度轨道，下层是只在相邻章节之间保留分隔线的标题行。默认不添加标题开头短横杠、逐项状态标记、章节编号、当前区块底色或重复分隔。
 - 默认使用中性播放头。人物、Logo 或个人 IP 标记只能作为可选适配层，不能进入仓库默认组件。
 - 该图层只负责视觉导航，实际拖动仍由平台播放器完成。
 
 ### 横屏版本
 
-- 在 16:9 画面顶部使用紧凑的满宽导航条，同一稳定行内呈现按时长分配的章节、分隔线、连续进度线和克制的当前状态。
+- 在 16:9 画面顶部使用紧凑的满宽导航条，把干净的连续进度轨道放在语义标题行上方，分隔线只出现在标题行。
 - 每个标题都裁切在自身分段内；未激活标题溢出时省略，当前标题溢出时在自身分段内循环滚动。
 - 横屏内容被嵌入竖屏平台时，必须根据真实播放器裁切和控件复核，不能只依赖通用安全区示意图。
 
