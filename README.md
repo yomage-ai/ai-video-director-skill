@@ -36,6 +36,12 @@ For the reusable semantic-progress component, you can add:
 Use the generic RMCU semantic progress component. Choose its landscape or portrait variant from the target canvas, keep the same clean two-lane style in both orientations, ellipsize inactive long chapter labels, and loop only the active label when it overflows.
 ```
 
+For a multi-device 9:16 talking-head layout, you can add:
+
+```text
+Use the approved portrait talking-head safe layout. Keep crop-tolerant backgrounds full bleed, but keep captions, progress semantics, important B-roll regions, picture-in-picture, and identity marks visible on both narrow phones and wide tablets. Validate the real published player instead of treating the encoded canvas edge as safe.
+```
+
 ## What The User Provides
 
 - Recorded talking-head footage or a script to turn into video, at least one of these.

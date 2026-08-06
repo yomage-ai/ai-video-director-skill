@@ -116,6 +116,25 @@
       "positionMayChangeAtSemanticBoundaries": true,
       "sourceCropAndComposedFrameReviewRequired": true
     },
+    "portraitDeliveryLayout": {
+      "presetId": "layout.portrait-talking-head.safe-v1",
+      "parameterTemplate": "assets/templates/portrait-talking-head-safe-layout.template.json",
+      "status": "approved-reference-baseline-not-universal-hardcode",
+      "referenceCanvas": "2160x3840",
+      "deliveryAspectRatio": "9:16",
+      "sameAspectResolutionChangeSolvesPlayerCrop": false,
+      "fullBleedVisualLayer": "crop-tolerant-backgrounds-and-contrast-surfaces",
+      "semanticForeground": "inside-visible-source-and-band-specific-platform-ui-free-intersection",
+      "declaredBrollCriticalRoiRequired": true,
+      "actualRenderedBoundsVerificationRequired": true,
+      "targetDeviceMatrix": [
+        "narrow-tall-phone",
+        "reference-9-by-16-viewport",
+        "wide-tablet"
+      ],
+      "publishedTargetDeviceScreenshotsOverrideAssumptions": true,
+      "projectSpecificExceptions": []
+    },
     "platformUiExclusionZonesRequired": true,
     "captionInformationCollisionCheckRequired": true
   },
@@ -150,6 +169,9 @@
       "forceBreakOnlyAfterPaginationReadback": true,
       "preserveApprovedVisualStyleUnlessExplicitChange": true,
       "progressLayerRequestsDoNotRestyleCaptions": true,
+      "portraitReferenceLayout": "layout.portrait-talking-head.safe-v1",
+      "actualRenderedGlyphBoundsInsideEffectiveSafeRegion": true,
+      "decorativeOutroUnderline": "below-rendered-caption-ink-move-or-shorten-before-moving-approved-captions",
       "semanticPunctuation": {
         "sourceOfTruth": "supplied-manuscript",
         "pageAwareDisplay": true,
@@ -214,6 +236,7 @@
         "activeSegmentPanel": false,
         "defaultMarker": "neutral-playhead",
         "personalIdentityAssetRequired": false,
+        "portraitDeliveryLayoutPreset": "layout.portrait-talking-head.safe-v1",
         "parameterTemplate": "assets/templates/semantic-progress-rmcu.template.json"
       },
       "verticalPlacement": "platform-validated-edge-band-bottom-first",

@@ -61,6 +61,19 @@
 - Caption pages separate completed thoughts from the next thought after final pagination readback:
 - Native and thumbnail-scale inspection:
 
+## Portrait Multi-Device Safety
+
+- Portrait layout preset and any recorded project-specific deviations:
+- Delivery aspect ratio and pixel dimensions; a same-aspect resolution change was not treated as a crop fix:
+- For every target player, record viewport dimensions, fit behavior, height or cover scale, visible source width, crop or pillarbox per side, and desired visible margin:
+- Effective semantic safe region is the intersection of the visible source region and the band-specific platform-UI-free region, including top, right, and bottom exclusion masks:
+- Crop-tolerant backgrounds and contrast surfaces remain full bleed; caption glyphs, progress semantics, information copy, proof cues, B-roll critical regions, picture-in-picture motion envelopes, logos, and identity marks remain inside the effective semantic safe region:
+- Every screenshot, diagram, and evidence B-roll declares its critical region of interest; unsafe regions were padded, recomposed, cropped to a readable detail, or split rather than blindly shrinking every shot:
+- Actual rendered caption glyphs and stroke, not only the caption item box, remain visible on the narrow-phone simulation and published screenshot:
+- The approved caption lane was preserved when the top progress band was introduced; nearby headings, cards, and picture-in-picture were reflowed instead:
+- Any signature-outro underline remains visibly below the rendered caption ink and was moved or shortened before any approved-caption relocation:
+- Narrow tall phone, reference 9:16 viewport, and wide tablet checks passed at native and phone scale; real published screenshots replaced simulation when available:
+
 ## Semantic Chapter Progress
 
 - Progress source is the approved semantic structure after final timing lock; no arbitrary or fabricated chapters:

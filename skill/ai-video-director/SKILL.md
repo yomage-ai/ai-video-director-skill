@@ -52,6 +52,10 @@ For semantic progress, full bleed applies only to the neutral contrast surface. 
 
 Read [semantic-progress-rmcu.md](references/semantic-progress-rmcu.md) whenever implementing or reviewing the reusable landscape or portrait semantic-progress component family.
 
+For 9:16 talking-head delivery, read [portrait-talking-head-safe-layout.md](references/portrait-talking-head-safe-layout.md) and start from `layout.portrait-talking-head.safe-v1` when the approved design matches it. Treat its `2160x3840` caption and top-progress geometry as a normalized reference baseline, not a universal hardcode. Keep crop-tolerant backgrounds full bleed, but constrain caption glyphs, progress semantics, information copy, declared B-roll critical regions, picture-in-picture motion envelopes, and identity marks to the intersection of the actual visible source region and the platform-UI-free region for their vertical band. Changing pixel dimensions without changing aspect ratio does not solve player crop.
+
+Preserve an approved caption lane when adding or relocating progress. Reflow nearby headings, evidence, and picture-in-picture first. A decorative outro underline must remain visibly below the rendered caption ink; move or shorten the decoration before moving approved captions unless the user explicitly changes the caption layout or a documented hard collision leaves no other valid option.
+
 Do not begin full production until the user approves the content lock and director plan. Do not silently start credit-consuming or paid generation.
 
 ## Tool Routing
@@ -126,6 +130,7 @@ Keep the root README limited to bilingual natural-language invocation, inputs th
 - [workflow.md](references/workflow.md): complete stage graph, artifacts, and restart rules.
 - [production-standard.md](references/production-standard.md): rough/fine boundaries, media handling, QA, and delivery.
 - [semantic-progress-rmcu.md](references/semantic-progress-rmcu.md): generic landscape and portrait RMCU behavior, parameters, and verification.
+- [portrait-talking-head-safe-layout.md](references/portrait-talking-head-safe-layout.md): approved 9:16 caption/progress reference layout and multi-device semantic-safe composition rules.
 - [tool-selection.md](references/tool-selection.md): current priority, strengths, weaknesses, cost, and exclusions.
 - [research-and-tests.md](references/research-and-tests.md): eight-case union and controlled component evidence.
 - [chatcut-handoff.md](references/chatcut-handoff.md): visual timeline to canonical EDL handoff.

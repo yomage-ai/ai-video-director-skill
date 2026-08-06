@@ -111,6 +111,18 @@ Separate verified general rules from personal experience, a single institution's
 - Define platform UI exclusion zones before final layout. Keep critical copy above the bottom description area and away from right-side action controls, then reserve a separate caption band so subtitles never cover information cards, proof labels, or the presenter's face.
 - Verify safe areas with representative frames at native size and phone-thumbnail size. Check the longest caption and densest information card together, not in isolation.
 
+## Portrait Multi-Device Safe Composition
+
+- Keep one 9:16 delivery master unless the target platform explicitly requires another ratio. A same-ratio resize such as `2160x3840` to `1080x1920` changes sampling resolution but cannot change the percentage cropped by a player.
+- Model the actual player rather than the device screen alone. A height-constrained player that preserves aspect ratio clips the left and right of a 9:16 source on a narrower viewport and pillarboxes it on a wider viewport. Compute `heightScale = playerHeight / canvasHeight`, `sourceVisibleWidth = min(canvasWidth, playerWidth / heightScale)`, and `sourceHorizontalCropPerSide = max(0, (canvasWidth - sourceVisibleWidth) / 2)`.
+- Separate a crop-tolerant full-bleed visual layer from a semantic foreground layer. Background color or texture, noncritical image edges, and a contrast surface may bleed; caption glyphs, progress rails and labels, information copy, proof cues, declared B-roll critical regions, picture-in-picture visible boxes and motion envelopes, logos, and identity marks may not.
+- Define the effective semantic safe region as the intersection of the visible source region and the platform-UI-free region for each vertical band. Do not use one symmetric rectangle as a substitute for top search chrome, right action rails, and bottom description or control zones.
+- Do not shrink every B-roll shot by default. Declare the critical region of interest for screenshots, diagrams, and evidence. If it falls outside the effective safe region, contain it with padding, recompose it around the region, crop to a readable detail, or split dense evidence across shots.
+- Use `layout.portrait-talking-head.safe-v1` as an approved reference baseline when its design matches the project. On a `2160x3840` canvas it records the approved caption lane at `left=120`, `top=2700`, `width=1920`, `height=500`, with `Noto Sans SC` at `120px`, and the portrait progress band at `left=0`, `top=220`, `width=2160`, `height=180`. Scale from normalized values on another 9:16 canvas and verify actual rendered bounds.
+- In that reference, the progress contrast surface is full bleed while its semantic rails use a validated `243px` inset per side. This is evidence from one published narrow-phone viewport, not a universal constant; recompute the inset from every target player and add a deliberate visible margin.
+- Preserve the approved caption lane when introducing the top band. Reflow headings, information cards, and picture-in-picture around it. Keep a signature-outro underline visibly below the rendered caption ink, and move or shorten the decoration before relocating approved captions.
+- Simulate at least a narrow tall phone, a reference 9:16 viewport, and a wide tablet. Inspect the longest two-line caption, densest card, B-roll critical regions, picture-in-picture motion extremes, every chapter boundary, and the signature outro at native and phone scale. Replace simulation with real published-device screenshots when available.
+
 ## Transition Grammar
 
 - Define transitions by editorial relationship instead of applying one preset everywhere. A transition should explain a presentation-mode change, not decorate every clip boundary.

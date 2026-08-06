@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "presetId": "layout.portrait-talking-head.safe-v1",
+  "scope": "repository-generic-non-personal",
+  "status": "approved-reference-baseline-not-universal-hardcode",
+  "referenceCanvas": {
+    "widthPx": 2160,
+    "heightPx": 3840,
+    "aspectRatio": "9:16",
+    "normalizedCoordinatesRequiredForOtherCanvasSizes": true
+  },
+  "resolutionPolicy": {
+    "sameAspectPixelResizeChangesCropPercentage": false,
+    "aspectRatioChangeIsUniversalFix": false,
+    "defaultDeliveryAspectRatio": "9:16",
+    "reason": "one-fixed-video-cannot-adapt-its-layout-to-every-player-viewport"
+  },
+  "playerGeometry": {
+    "observedBehavior": "height-constrained-preserve-aspect-with-horizontal-overflow-clipped-on-narrow-viewports-and-pillarbox-on-wide-viewports",
+    "heightScaleFormula": "playerHeight/canvasHeight",
+    "displayedVideoWidthFormula": "canvasWidth*heightScale",
+    "sourceVisibleWidthFormula": "min(canvasWidth,playerWidth/heightScale)",
+    "sourceHorizontalCropPerSideFormula": "max(0,(canvasWidth-sourceVisibleWidth)/2)",
+    "playerPillarboxPerSideFormula": "max(0,(playerWidth-displayedVideoWidth)/2)",
+    "effectiveSemanticSafeRegion": "intersection-of-visible-source-region-and-band-specific-platform-ui-free-region",
+    "publishedTargetDeviceScreenshotsOverrideAssumptions": true,
+    "validatedNarrowPhoneExample": {
+      "playerWidthPx": 1206,
+      "playerHeightPx": 2622,
+      "sourceVisibleWidthPx": 1766.224256,
+      "sourceHorizontalCropPerSidePx": 196.887872,
+      "sourceHorizontalCropPerSideRatio": 0.091151793,
+      "referenceSemanticInsetPx": 243,
+      "referenceSemanticInsetRatio": 0.1125,
+      "remainingVisibleMarginPerSidePx": 46.112128,
+      "evidenceRole": "validated-example-not-a-universal-device-constant"
+    }
+  },
+  "layerModel": {
+    "fullBleedVisualLayer": {
+      "mayReachCanvasEdges": true,
+      "mayBeCropped": true,
+      "eligibleContent": [
+        "background-color-or-texture",
+        "noncritical-photo-or-video-edges",
+        "progress-contrast-surface"
+      ]
+    },
+    "semanticForegroundLayer": {
+      "mustRemainInsideEffectiveSafeRegion": true,
+      "content": [
+        "caption-glyphs-and-stroke",
+        "progress-track-playhead-labels-and-dividers",
+        "information-card-copy-and-proof",
+        "declared-b-roll-critical-roi",
+        "presenter-pip-visible-box-and-motion-envelope",
+        "logos-callouts-and-identity-marks"
+      ]
+    }
+  },
+  "captionBaseline": {
+    "geometryPx": {
+      "left": 120,
+      "top": 2700,
+      "width": 1920,
+      "height": 500
+    },
+    "geometryNormalized": {
+      "left": 0.055555556,
+      "top": 0.703125,
+      "width": 0.888888889,
+      "height": 0.130208333
+    },
+    "typography": {
+      "fontFamily": "Noto Sans SC",
+      "fontSizePx": 120,
+      "fontSizeToCanvasWidth": 0.055555556,
+      "fontWeight": 700,
+      "fill": "rgba(255,255,255,1)",
+      "stroke": "rgba(17,20,24,1)",
+      "strokeWidthPx": 8,
+      "shadow": "0 3px 10px rgba(0,0,0,0.66)",
+      "background": "none",
+      "highlight": "none"
+    },
+    "pagination": {
+      "maximumLines": 2,
+      "referenceMaximumCharactersPerPage": 15,
+      "pacing": "auto",
+      "actualRenderedGlyphBoundsMustFitEffectiveSafeRegion": true,
+      "reflowBeforeFontShrink": true
+    },
+    "preserveUnless": [
+      "explicit-user-caption-change",
+      "documented-hard-collision"
+    ],
+    "projectSpecificGeometryExceptionsBelongInProjectOverrides": true
+  },
+  "progressBaseline": {
+    "componentId": "rmcu.semantic-progress.v1",
+    "behaviorTemplate": "assets/templates/semantic-progress-rmcu.template.json",
+    "geometryPx": {
+      "left": 0,
+      "top": 220,
+      "width": 2160,
+      "height": 180
+    },
+    "geometryNormalized": {
+      "left": 0,
+      "top": 0.057291667,
+      "width": 1,
+      "height": 0.046875
+    },
+    "outerContrastSurface": "full-bleed-horizontal",
+    "semanticRailInset": {
+      "referencePx": 243,
+      "referenceRatio": 0.1125,
+      "policy": "derive-from-target-player-crop-plus-visible-margin-do-not-hardcode-reference-for-every-platform"
+    },
+    "display": {
+      "lanes": 2,
+      "upperLane": "continuous-track-without-chapter-ticks",
+      "lowerLane": "labels-with-dividers-only-between-adjacent-chapters",
+      "inactiveOverflow": "single-line-ellipsis",
+      "activeOverflow": "loop-marquee-only-when-overflowing",
+      "leadingLabelMarks": false,
+      "chapterNumbers": false,
+      "activeSegmentPanel": false
+    }
+  },
+  "bRollAndOverlaySafety": {
+    "criticalRoiRequiredForEvidenceAndScreenContent": true,
+    "unsafeCriticalRoiTreatments": [
+      "contain-with-padding",
+      "recompose-around-declared-roi",
+      "crop-to-a-readable-detail-shot",
+      "split-dense-evidence-across-shots"
+    ],
+    "shrinkingEveryFullBleedVisualByDefault": false,
+    "verifyActualRenderedBoundsNotOnlyItemFrames": true
+  },
+  "collisionPriority": {
+    "preserveApprovedCaptionLane": true,
+    "progressMoveReflowsNearbyHeadingsCardsAndPip": true,
+    "decorativeUnderlineMustRemainBelowRenderedCaptionInkWithVisibleGap": true,
+    "moveOrShortenDecorationBeforeMovingApprovedCaptions": true,
+    "recordEveryNecessaryExceptionAsAProjectOverride": true
+  },
+  "verification": {
+    "deviceClasses": [
+      "narrow-tall-phone",
+      "reference-9-by-16-viewport",
+      "wide-tablet"
+    ],
+    "frames": [
+      "early",
+      "middle",
+      "late",
+      "every-chapter-boundary",
+      "longest-two-line-caption",
+      "densest-information-card",
+      "largest-pip-motion-extreme",
+      "signature-outro-decoration"
+    ],
+    "scales": [
+      "native",
+      "phone"
+    ],
+    "publishedScreenshotRequiredWhenAvailable": true,
+    "recheckAfterAnyGeometryPaginationOrPlatformPlacementChange": true
+  }
+}

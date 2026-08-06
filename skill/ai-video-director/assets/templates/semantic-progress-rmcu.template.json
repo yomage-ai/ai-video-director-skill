@@ -2,6 +2,9 @@
   "schemaVersion": 1,
   "componentId": "rmcu.semantic-progress.v1",
   "scope": "repository-generic-non-personal",
+  "relatedLayoutPresets": {
+    "portraitTalkingHead": "layout.portrait-talking-head.safe-v1"
+  },
   "variant": null,
   "timeline": {
     "fps": null,
@@ -81,6 +84,7 @@
     "portrait": {
       "canvasRatio": "9:16",
       "placement": "platform-validated-top-safe-band-when-bottom-is-occluded",
+      "approvedReferenceLayout": "layout.portrait-talking-head.safe-v1",
       "lanes": 2,
       "upperLane": "continuous-track-and-neutral-playhead-without-chapter-ticks",
       "lowerLane": "semantic-labels-with-boundary-dividers-only-and-must-remain-readable",

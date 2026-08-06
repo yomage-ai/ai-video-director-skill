@@ -6,6 +6,8 @@
 
 `rmcu.semantic-progress.v1` is the repository-owned, non-personal component contract for burned-in semantic chapter progress. RMCU means Reusable Motion Component Unit. It defines behavior and verification independently of one creator, project, editor timeline, or identity asset.
 
+When this component is used inside a 9:16 talking-head composition, also read [portrait-talking-head-safe-layout.md](portrait-talking-head-safe-layout.md) for the approved combined caption/progress reference and multi-device semantic-safe rules.
+
 ### Shared Contract
 
 - Accept an ordered list of two to seven approved chapters with `label`, `startFrame`, and `endFrameExclusive`. Use one unsegmented bar when meaningful chapters do not exist.
@@ -49,6 +51,8 @@
 ## 简体中文
 
 `rmcu.semantic-progress.v1` 是仓库级、非个人化的烧录式语义章节进度组件契约。RMCU 指 Reusable Motion Component Unit（可复用动效组件单元）。它只定义通用行为与验收方法，不绑定某位创作者、某条视频、某个剪辑时间线或个人形象资产。
+
+当该组件用于 9:16 真人口播联合版式时，还要读取 [portrait-talking-head-safe-layout.md](portrait-talking-head-safe-layout.md)，使用其中已确认的字幕/进度条参考基线和多设备语义安全规则。
 
 ### 通用契约
 

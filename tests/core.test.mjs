@@ -661,6 +661,107 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /Owned or explicitly approved identity art is used/);
 });
 
+test('approved portrait layout separates crop-tolerant bleed from multi-device semantic safety', () => {
+  const template = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'portrait-talking-head-safe-layout.template.json'),
+    'utf8',
+  ));
+  const plan = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'director-plan.template.json'),
+    'utf8',
+  ));
+  const rmcuTemplate = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'semantic-progress-rmcu.template.json'),
+    'utf8',
+  ));
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const standard = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'),
+    'utf8',
+  );
+  const reference = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references',
+      'portrait-talking-head-safe-layout.md'),
+    'utf8',
+  );
+  const qaTemplate = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'qa-report.template.md'),
+    'utf8',
+  );
+
+  assert.equal(template.presetId, 'layout.portrait-talking-head.safe-v1');
+  assert.equal(template.scope, 'repository-generic-non-personal');
+  assert.equal(template.referenceCanvas.widthPx, 2160);
+  assert.equal(template.referenceCanvas.heightPx, 3840);
+  assert.equal(template.resolutionPolicy.sameAspectPixelResizeChangesCropPercentage, false);
+  assert.equal(template.playerGeometry.publishedTargetDeviceScreenshotsOverrideAssumptions, true);
+  assert.equal(template.layerModel.fullBleedVisualLayer.mayBeCropped, true);
+  assert.equal(template.layerModel.semanticForegroundLayer.mustRemainInsideEffectiveSafeRegion, true);
+  assert.deepEqual(template.captionBaseline.geometryPx,
+    {left: 120, top: 2700, width: 1920, height: 500});
+  assert.equal(template.captionBaseline.typography.fontFamily, 'Noto Sans SC');
+  assert.equal(template.captionBaseline.typography.fontSizePx, 120);
+  assert.equal(template.captionBaseline.typography.strokeWidthPx, 8);
+  assert.equal(template.captionBaseline.pagination.maximumLines, 2);
+  assert.equal(template.captionBaseline.pagination.actualRenderedGlyphBoundsMustFitEffectiveSafeRegion,
+    true);
+  assert.deepEqual(template.progressBaseline.geometryPx,
+    {left: 0, top: 220, width: 2160, height: 180});
+  assert.equal(template.progressBaseline.semanticRailInset.referencePx, 243);
+  assert.equal(template.progressBaseline.semanticRailInset.referenceRatio, 0.1125);
+  assert.equal(template.progressBaseline.display.inactiveOverflow, 'single-line-ellipsis');
+  assert.equal(template.progressBaseline.display.activeOverflow,
+    'loop-marquee-only-when-overflowing');
+  assert.equal(template.bRollAndOverlaySafety.criticalRoiRequiredForEvidenceAndScreenContent, true);
+  assert.equal(template.bRollAndOverlaySafety.shrinkingEveryFullBleedVisualByDefault, false);
+  assert.equal(template.collisionPriority.moveOrShortenDecorationBeforeMovingApprovedCaptions, true);
+  assert.deepEqual(template.verification.deviceClasses,
+    ['narrow-tall-phone', 'reference-9-by-16-viewport', 'wide-tablet']);
+
+  const example = template.playerGeometry.validatedNarrowPhoneExample;
+  const heightScale = example.playerHeightPx / template.referenceCanvas.heightPx;
+  const visibleSourceWidth = example.playerWidthPx / heightScale;
+  const cropPerSide = (template.referenceCanvas.widthPx - visibleSourceWidth) / 2;
+  assert.ok(Math.abs(visibleSourceWidth - example.sourceVisibleWidthPx) < 0.000001);
+  assert.ok(Math.abs(cropPerSide - example.sourceHorizontalCropPerSidePx) < 0.000001);
+  assert.ok(example.referenceSemanticInsetPx > cropPerSide);
+
+  assert.equal(plan.presentationSafety.portraitDeliveryLayout.presetId,
+    'layout.portrait-talking-head.safe-v1');
+  assert.equal(plan.presentationSafety.portraitDeliveryLayout.declaredBrollCriticalRoiRequired, true);
+  assert.equal(plan.finishingPass.captions.portraitReferenceLayout,
+    'layout.portrait-talking-head.safe-v1');
+  assert.equal(plan.finishingPass.captions.actualRenderedGlyphBoundsInsideEffectiveSafeRegion, true);
+  assert.equal(plan.finishingPass.chapterProgress.component.portraitDeliveryLayoutPreset,
+    'layout.portrait-talking-head.safe-v1');
+  assert.equal(rmcuTemplate.relatedLayoutPresets.portraitTalkingHead,
+    'layout.portrait-talking-head.safe-v1');
+  assert.equal(rmcuTemplate.variants.portrait.approvedReferenceLayout,
+    'layout.portrait-talking-head.safe-v1');
+  assert.equal(state.roughCutPolicy.presentationSafety.portraitDeliveryLayout.presetId,
+    'layout.portrait-talking-head.safe-v1');
+  assert.ok(state.approvedCapabilities.includes(
+    'multi-device-portrait-safe-region-for-captions-b-roll-pip-and-overlays'));
+  assert.ok(state.approvedCapabilities.includes(
+    'full-bleed-visual-layer-with-crop-safe-semantic-foreground'));
+
+  assert.match(standard, /same-ratio resize.*cannot change the percentage cropped/);
+  assert.match(standard, /effective semantic safe region as the intersection/);
+  assert.match(standard, /Do not shrink every B-roll shot by default/);
+  assert.match(standard, /move or shorten the decoration before relocating approved captions/);
+  assert.match(reference, /## English/);
+  assert.match(reference, /## 简体中文/);
+  assert.match(reference, /changing `2160x3840` to `1080x1920`/i);
+  assert.match(reference, /把 `2160x3840` 改成 `1080x1920`/);
+  assert.match(qaTemplate, /## Portrait Multi-Device Safety/);
+  assert.match(qaTemplate, /declares its critical region of interest/);
+  assert.match(qaTemplate, /underline remains visibly below the rendered caption ink/);
+});
+
 test('bilingual trigger forward tests cover realistic Chinese and English edit requests', () => {
   const skill = readFileSync(
     path.join(repoRoot, 'skill', 'ai-video-director', 'SKILL.md'),
@@ -672,17 +773,24 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
   const englishRequest = 'Continue editing this talking-head video and fix cross-segment repeated words and B-roll flashes.';
   const chineseProgressRequest = '给这条竖屏口播加通用 RMCU 章节进度条，未激活长标题省略，当前标题溢出才循环滚动。';
   const englishProgressRequest = 'Add the generic portrait RMCU chapter progress component; ellipsize inactive overflow and marquee only the active overflow.';
+  const chineseSafeLayoutRequest = '使用已确认的竖屏口播安全版式，让字幕、B-roll 重要信息和进度条在 iPhone 与 iPad 都可见。';
+  const englishSafeLayoutRequest = 'Use the approved portrait talking-head safe layout and keep captions, critical B-roll, and progress visible on narrow phones and wide tablets.';
   assert.match(chineseRequest, /口播/);
   assert.match(englishRequest, /talking-head/);
   assert.match(skill, /真人口播自动剪辑/);
   assert.match(skill, /talking-head editing/);
   assert.match(chineseProgressRequest, /竖屏口播/);
   assert.match(englishProgressRequest, /portrait RMCU/);
+  assert.match(chineseSafeLayoutRequest, /竖屏口播安全版式/);
+  assert.match(englishSafeLayoutRequest, /portrait talking-head safe layout/);
   assert.match(skill, /rmcu\.semantic-progress\.v1/);
+  assert.match(skill, /layout\.portrait-talking-head\.safe-v1/);
   assert.match(skill, /Inactive long labels use ellipsis/);
   assert.match(skill, /Reply in the user's language/);
   assert.match(readmeEn, /generic RMCU semantic progress component/);
   assert.match(readmeEn, /loop only the active label when it overflows/);
   assert.match(readmeZh, /通用 RMCU 语义进度组件/);
   assert.match(readmeZh, /只有当前标题溢出时才循环滚动/);
+  assert.match(readmeEn, /approved portrait talking-head safe layout/);
+  assert.match(readmeZh, /已确认的竖屏口播安全版式/);
 });

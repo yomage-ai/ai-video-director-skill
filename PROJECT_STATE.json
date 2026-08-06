@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-06",
+  "updatedAt": "2026-08-07",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "private",
   "status": "internal-v0.1.0-validated",
-  "validatedAt": "2026-08-06",
+  "validatedAt": "2026-08-07",
   "release": "0.1.0",
   "skill": {
     "id": "ai-video-director",
@@ -117,6 +117,19 @@
         "visibleBoxProof": "inspect-visible-crop-not-only-stored-item-frame",
         "proof": "source-crop-and-composed-frame-at-native-and-phone-size"
       },
+      "portraitDeliveryLayout": {
+        "presetId": "layout.portrait-talking-head.safe-v1",
+        "parameterTemplate": "assets/templates/portrait-talking-head-safe-layout.template.json",
+        "status": "approved-reference-baseline-not-universal-hardcode",
+        "referenceCanvas": "2160x3840",
+        "deliveryAspectRatio": "9:16",
+        "sameAspectResolutionChangeSolvesPlayerCrop": false,
+        "layerModel": "full-bleed-crop-tolerant-visuals-and-crop-safe-semantic-foreground",
+        "effectiveSafeRegion": "visible-source-intersect-band-specific-platform-ui-free-region",
+        "brollCriticalRoi": "required-for-evidence-screenshots-and-diagrams",
+        "targetDeviceMatrix": "narrow-phone-reference-portrait-and-wide-tablet",
+        "publishedTargetDeviceScreenshotsOverrideAssumptions": true
+      },
       "platformUiExclusionZonesRequired": true,
       "captionInformationCollisionCheckRequired": true
     },
@@ -173,6 +186,9 @@
         "forcedBreakPolicy": "re-read-after-structural-edit-then-force-only-if-still-needed",
         "approvedVisualStyle": "preserve-unless-explicit-caption-redesign",
         "progressLayerRequests": "must-not-restyle-captions",
+        "portraitReferenceLayout": "layout.portrait-talking-head.safe-v1",
+        "renderedGlyphSafety": "actual-glyph-and-stroke-bounds-inside-effective-semantic-safe-region",
+        "decorativeOutroUnderline": "below-caption-ink-move-or-shorten-decoration-before-approved-caption",
         "semanticPunctuation": {
           "sourceOfTruth": "supplied-manuscript",
           "pageAwareDisplay": true,
@@ -218,6 +234,7 @@
           "stableSegmentGeometry": true,
           "defaultMarker": "neutral-playhead",
           "personalIdentityAssetRequired": false,
+          "portraitDeliveryLayoutPreset": "layout.portrait-talking-head.safe-v1",
           "parameterTemplate": "assets/templates/semantic-progress-rmcu.template.json",
           "implementation": "inline-editor-motion-graphic-code-not-staged-in-repository"
         },
@@ -327,6 +344,10 @@
     "inactive-ellipsis-and-active-only-overflow-marquee",
     "orientation-consistent-progress-grammar-without-track-ticks-or-leading-label-marks",
     "player-cover-aware-semantic-progress-safe-inset-with-full-bleed-surface",
+    "approved-portrait-talking-head-caption-and-progress-reference-layout",
+    "multi-device-portrait-safe-region-for-captions-b-roll-pip-and-overlays",
+    "full-bleed-visual-layer-with-crop-safe-semantic-foreground",
+    "narrow-phone-reference-portrait-and-wide-tablet-viewport-proof",
     "must-keep-spoken-or-screen-coverage-audit",
     "local-opaque-redaction-before-cloud-upload",
     "precise-screenshot-focus-cues",
