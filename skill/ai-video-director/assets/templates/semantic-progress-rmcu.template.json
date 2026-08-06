@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "componentId": "rmcu.semantic-progress.v1",
+  "scope": "repository-generic-non-personal",
+  "variant": null,
+  "timeline": {
+    "fps": null,
+    "durationInFrames": null
+  },
+  "chapters": [
+    {
+      "label": "",
+      "startFrame": 0,
+      "endFrameExclusive": null
+    }
+  ],
+  "behavior": {
+    "segmentWidth": "duration-proportional",
+    "inactiveOverflow": "single-line-ellipsis",
+    "activeOverflow": {
+      "mode": "loop-marquee",
+      "onlyWhenOverflowing": true,
+      "resetAtChapterBoundary": true,
+      "initialHoldSeconds": 0.8,
+      "speedLogicalPixelsPerSecond": 42,
+      "repeatGapEm": 1.5,
+      "layoutBoxRemainsStable": true
+    },
+    "playhead": "actual-local-frame-over-final-duration",
+    "fallbackWithoutMeaningfulChapters": "single-unsegmented-progress-bar",
+    "renderedOverlayIsInteractive": false
+  },
+  "visual": {
+    "fontFamily": "Noto Sans SC",
+    "surface": "translucent-neutral",
+    "text": "light-with-restrained-dark-shadow-or-stroke",
+    "accent": null,
+    "pastState": "reduced-opacity",
+    "currentState": "accent-fill-stronger-weight-and-opacity",
+    "futureState": "reduced-opacity",
+    "perChapterBoxes": false,
+    "defaultMarker": "neutral-playhead",
+    "personalIdentityAssetRequired": false
+  },
+  "variants": {
+    "landscape": {
+      "canvasRatio": "16:9",
+      "placement": "compact-full-width-top-rail",
+      "lanes": 1,
+      "inactiveLabel": "ellipsis-when-overflowing",
+      "activeLabel": "loop-marquee-when-overflowing"
+    },
+    "portrait": {
+      "canvasRatio": "9:16",
+      "placement": "platform-validated-top-safe-band-when-bottom-is-occluded",
+      "lanes": 2,
+      "upperLane": "noncritical-track-and-neutral-playhead",
+      "lowerLane": "semantic-labels-must-remain-readable",
+      "walkingMascotDefault": false
+    }
+  },
+  "verification": {
+    "frames": [
+      "early",
+      "middle",
+      "late",
+      "every-chapter-boundary",
+      "longest-inactive-label",
+      "active-marquee-hold",
+      "active-marquee-motion",
+      "active-marquee-wrap",
+      "seek-rerender"
+    ],
+    "backgrounds": [
+      "a-roll",
+      "bright-b-roll",
+      "dark-b-roll"
+    ],
+    "scales": [
+      "native",
+      "phone"
+    ],
+    "collisions": [
+      "platform-ui",
+      "captions",
+      "headings",
+      "evidence",
+      "picture-in-picture"
+    ],
+    "preserveReversibleBaselineUntilApproval": true
+  }
+}

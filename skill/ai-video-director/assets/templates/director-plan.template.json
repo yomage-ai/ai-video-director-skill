@@ -195,6 +195,18 @@
       "segmentWidth": "duration-proportional",
       "labels": "short-and-phone-readable",
       "defaultVisualGrammar": "narrow-translucent-neutral-edge-to-edge-strip-with-divider-ticks-no-chapter-boxes",
+      "component": {
+        "id": "rmcu.semantic-progress.v1",
+        "scope": "repository-generic-non-personal",
+        "variant": null,
+        "landscape": "compact-full-width-top-rail",
+        "portrait": "platform-safe-two-lane-top-band",
+        "inactiveOverflow": "single-line-ellipsis",
+        "activeOverflow": "loop-marquee-only-when-overflowing",
+        "defaultMarker": "neutral-playhead",
+        "personalIdentityAssetRequired": false,
+        "parameterTemplate": "assets/templates/semantic-progress-rmcu.template.json"
+      },
       "verticalPlacement": "platform-validated-edge-band-bottom-first",
       "labelApproval": {
         "proposalStage": "director-plan-before-style-preview",

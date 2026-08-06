@@ -30,6 +30,12 @@ If the Skill already appears in Codex, the short form is enough:
 Use $ai-video-director to process the attached talking-head video. Inspect the material first, then show me the content-lock card and director plan. Continue only after I approve.
 ```
 
+For the reusable semantic-progress component, you can add:
+
+```text
+Use the generic RMCU semantic progress component. Choose its landscape or portrait variant from the target canvas, keep inactive long chapter labels ellipsized, and loop only the active label when it overflows.
+```
+
 ## What The User Provides
 
 - Recorded talking-head footage or a script to turn into video, at least one of these.

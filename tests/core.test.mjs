@@ -215,6 +215,19 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(plan.finishingPass.chapterProgress.defaultVisualGrammar,
     'narrow-translucent-neutral-edge-to-edge-strip-with-divider-ticks-no-chapter-boxes');
+  assert.equal(plan.finishingPass.chapterProgress.component.id,
+    'rmcu.semantic-progress.v1');
+  assert.equal(plan.finishingPass.chapterProgress.component.scope,
+    'repository-generic-non-personal');
+  assert.equal(plan.finishingPass.chapterProgress.component.landscape,
+    'compact-full-width-top-rail');
+  assert.equal(plan.finishingPass.chapterProgress.component.portrait,
+    'platform-safe-two-lane-top-band');
+  assert.equal(plan.finishingPass.chapterProgress.component.inactiveOverflow,
+    'single-line-ellipsis');
+  assert.equal(plan.finishingPass.chapterProgress.component.activeOverflow,
+    'loop-marquee-only-when-overflowing');
+  assert.equal(plan.finishingPass.chapterProgress.component.personalIdentityAssetRequired, false);
   assert.equal(plan.finishingPass.chapterProgress.verticalPlacement,
     'platform-validated-edge-band-bottom-first');
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.semanticLayer,
@@ -476,6 +489,11 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /an unreviewed category is not the same as an intentional omission/);
 
   const chapterProgress = state.roughCutPolicy.finishingPass.chapterProgress;
+  const rmcuTemplate = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'semantic-progress-rmcu.template.json'),
+    'utf8',
+  ));
   assert.equal(chapterProgress.default, 'enabled-after-structural-timing-lock');
   assert.equal(chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(chapterProgress.defaultVisualGrammar,
@@ -493,6 +511,21 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.equal(chapterProgress.labelApproval.separateBlockingQuestionDefault, false);
   assert.equal(chapterProgress.labelApproval.exactBoundaryStage,
     'after-rough-cut-timing-lock');
+  assert.equal(chapterProgress.component.id, 'rmcu.semantic-progress.v1');
+  assert.equal(chapterProgress.component.scope, 'repository-generic-non-personal');
+  assert.equal(chapterProgress.component.variants.landscape,
+    'compact-full-width-top-rail');
+  assert.equal(chapterProgress.component.variants.portrait,
+    'platform-safe-two-lane-top-band');
+  assert.equal(chapterProgress.component.inactiveOverflow, 'single-line-ellipsis');
+  assert.equal(chapterProgress.component.activeOverflow,
+    'loop-marquee-only-when-overflowing');
+  assert.equal(chapterProgress.component.personalIdentityAssetRequired, false);
+  assert.equal(rmcuTemplate.componentId, 'rmcu.semantic-progress.v1');
+  assert.equal(rmcuTemplate.behavior.activeOverflow.onlyWhenOverflowing, true);
+  assert.equal(rmcuTemplate.behavior.activeOverflow.layoutBoxRemainsStable, true);
+  assert.equal(rmcuTemplate.variants.portrait.walkingMascotDefault, false);
+  assert.equal(rmcuTemplate.verification.preserveReversibleBaselineUntilApproval, true);
   assert.ok(state.approvedCapabilities.includes(
     'time-driven-semantic-chapter-progress-with-plain-bar-fallback',
   ));
@@ -503,7 +536,13 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
     'chapter-label-director-plan-approval-before-style-lock',
   ));
   assert.ok(state.approvedCapabilities.includes(
-    'private-profile-deterministic-progress-component',
+    'repository-owned-rmcu-semantic-progress-landscape-and-portrait',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
+    'inactive-ellipsis-and-active-only-overflow-marquee',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
+    'private-profile-progress-token-or-identity-marker-overrides-only',
   ));
   assert.ok(state.approvedCapabilities.includes(
     'owned-identity-signature-outro-with-preview-before-reuse',
@@ -519,7 +558,10 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /real target-device screenshots/);
   assert.match(standard, /rendered progress strip is visual orientation, not an interactive seek target/);
   assert.match(standard, /Verify early, middle, late, and every chapter boundary/);
-  assert.match(standard, /named private style profile may lock the exact surface color/);
+  assert.match(standard, /repository-owned `rmcu\.semantic-progress\.v1` contract/);
+  assert.match(standard, /Only the active label may move/);
+  assert.match(standard, /Walking characters, logos, and personal-IP markers are optional private adapters/);
+  assert.match(standard, /private style profile may lock only creator-specific token overrides/);
   assert.match(standard, /## Recurring Signature Outro/);
   assert.match(standard, /## Dialogue Loudness Calibration/);
   assert.match(standard, /full motion envelope/);
@@ -553,6 +595,9 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /Published target-device screenshots prove/);
   assert.match(qaTemplate, /visual orientation only/);
   assert.match(qaTemplate, /Chapter labels, order, and one-sentence scopes were shown/);
+  assert.match(qaTemplate, /RMCU variant and canvas orientation were recorded/);
+  assert.match(qaTemplate, /Only the active overflowing label loops/);
+  assert.match(qaTemplate, /generic component uses a neutral playhead/);
   assert.match(qaTemplate, /## Signature Outro/);
   assert.match(qaTemplate, /Owned or explicitly approved identity art is used/);
 });
@@ -562,11 +607,23 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
     path.join(repoRoot, 'skill', 'ai-video-director', 'SKILL.md'),
     'utf8',
   );
+  const readmeEn = readFileSync(path.join(repoRoot, 'README.md'), 'utf8');
+  const readmeZh = readFileSync(path.join(repoRoot, 'README.zh-CN.md'), 'utf8');
   const chineseRequest = '请继续处理这段口播视频，修掉跨片段重复词和 B-roll 闪帧。';
   const englishRequest = 'Continue editing this talking-head video and fix cross-segment repeated words and B-roll flashes.';
+  const chineseProgressRequest = '给这条竖屏口播加通用 RMCU 章节进度条，未激活长标题省略，当前标题溢出才循环滚动。';
+  const englishProgressRequest = 'Add the generic portrait RMCU chapter progress component; ellipsize inactive overflow and marquee only the active overflow.';
   assert.match(chineseRequest, /口播/);
   assert.match(englishRequest, /talking-head/);
   assert.match(skill, /真人口播自动剪辑/);
   assert.match(skill, /talking-head editing/);
+  assert.match(chineseProgressRequest, /竖屏口播/);
+  assert.match(englishProgressRequest, /portrait RMCU/);
+  assert.match(skill, /rmcu\.semantic-progress\.v1/);
+  assert.match(skill, /inactive long labels use ellipsis/);
   assert.match(skill, /Reply in the user's language/);
+  assert.match(readmeEn, /generic RMCU semantic progress component/);
+  assert.match(readmeEn, /loop only the active label when it overflows/);
+  assert.match(readmeZh, /通用 RMCU 语义进度组件/);
+  assert.match(readmeZh, /只有当前标题溢出时才循环滚动/);
 });

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-05",
+  "updatedAt": "2026-08-06",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "private",
   "status": "internal-v0.1.0-validated",
-  "validatedAt": "2026-08-05",
+  "validatedAt": "2026-08-06",
   "release": "0.1.0",
   "skill": {
     "id": "ai-video-director",
@@ -197,6 +197,21 @@
         "segmentCount": "two-to-seven-when-meaningful-otherwise-one-plain-bar",
         "segmentWidth": "duration-proportional",
         "defaultVisualGrammar": "narrow-translucent-neutral-edge-to-edge-strip-with-divider-ticks-no-chapter-boxes",
+        "component": {
+          "id": "rmcu.semantic-progress.v1",
+          "scope": "repository-generic-non-personal",
+          "variants": {
+            "landscape": "compact-full-width-top-rail",
+            "portrait": "platform-safe-two-lane-top-band"
+          },
+          "inactiveOverflow": "single-line-ellipsis",
+          "activeOverflow": "loop-marquee-only-when-overflowing",
+          "stableSegmentGeometry": true,
+          "defaultMarker": "neutral-playhead",
+          "personalIdentityAssetRequired": false,
+          "parameterTemplate": "assets/templates/semantic-progress-rmcu.template.json",
+          "implementation": "inline-editor-motion-graphic-code-not-staged-in-repository"
+        },
         "verticalPlacement": "platform-validated-edge-band-bottom-first",
         "labelApproval": {
           "proposalStage": "director-plan-before-style-preview",
@@ -299,6 +314,8 @@
     "explicit-finishing-design-audit-including-no-treatment-decisions",
     "time-driven-semantic-chapter-progress-with-plain-bar-fallback",
     "platform-safe-edge-band-chapter-strip-with-divider-only-segments",
+    "repository-owned-rmcu-semantic-progress-landscape-and-portrait",
+    "inactive-ellipsis-and-active-only-overflow-marquee",
     "must-keep-spoken-or-screen-coverage-audit",
     "local-opaque-redaction-before-cloud-upload",
     "precise-screenshot-focus-cues",
@@ -310,7 +327,7 @@
     "progress-label-layer-separation-from-captions",
     "platform-validated-progress-label-baseline-with-cross-background-and-device-proof",
     "chapter-label-director-plan-approval-before-style-lock",
-    "private-profile-deterministic-progress-component",
+    "private-profile-progress-token-or-identity-marker-overrides-only",
     "owned-identity-signature-outro-with-preview-before-reuse",
     "motion-envelope-proof-for-authored-identity-animation",
     "rendered-timeline-dialogue-loudness-calibration-with-private-reference-baseline",

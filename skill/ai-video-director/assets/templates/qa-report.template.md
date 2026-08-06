@@ -70,6 +70,9 @@
 - Filled progress and playhead use actual timeline time; early, middle, late, and every chapter boundary were rendered and checked:
 - Progress labels were audited separately from subtitles; no progress-label request silently restyled the caption track:
 - A narrow full-width translucent neutral strip occupies a platform-validated edge band, uses light labels with a restrained dark shadow or stroke, and separates sections with divider ticks rather than boxed cards:
+- RMCU variant and canvas orientation were recorded; landscape uses a compact top rail, while portrait uses separate noncritical track/playhead and semantic-label lanes:
+- Past and future overflowing labels use a static ellipsis. Only the active overflowing label loops inside its unchanged segment; hold, motion, wrap, chapter reset, and seek/re-render frames were checked:
+- The generic component uses a neutral playhead and has no required creator identity asset; any private marker adapter is documented separately:
 - Current, past, and future hierarchy uses weight, opacity, fill, and playhead rather than scene-by-scene color inversion:
 - Progress-label readability passed representative A-roll, bright B-roll, dark B-roll, chapter-boundary, native-size, and phone-size review:
 - Published target-device screenshots prove that platform descriptions, controls, and action rails do not cover semantic progress labels; when the top fallback is used, headings, evidence, and picture-in-picture were reflowed below or around it while the approved caption lane remained intact:
