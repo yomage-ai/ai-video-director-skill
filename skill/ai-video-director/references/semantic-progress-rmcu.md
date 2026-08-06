@@ -15,21 +15,23 @@
 - Preserve one stable layout box. Label changes, ellipsis, active weight, and marquee motion must not resize the component or shift neighboring content.
 - Apply the same visual grammar and overflow behavior in landscape and portrait. Orientation may change placement, scale, and safe-area geometry, but not chapter behavior or decorative structure.
 - Use two clean lanes in both variants: one uninterrupted progress track with no chapter ticks, then one label row with dividers only between adjacent chapter segments. Do not add leading dashes, per-label status marks, chapter numbers, active-segment panels, or duplicate separators by default.
-- Give both the continuous track and the duration-proportional label rail zero horizontal inset so they meet the composition's left and right edges. Keep the playhead body inside the canvas by clamping the marker itself, never by shortening the track.
+- Let the neutral contrast surface bleed to both composition edges, but treat the progress track, playhead, duration-proportional label rail, and dividers as semantic foreground. Give those foreground rails one shared horizontal safe inset derived from the actual published player fit and crop; do not assume the composition edge is visible.
+- For a `cover` player, compute `coverScale = max(playerWidth / canvasWidth, playerHeight / canvasHeight)`, `visibleCompositionWidth = playerWidth / coverScale`, and `horizontalCropPerSide = max(0, (canvasWidth - visibleCompositionWidth) / 2)`. Use a semantic inset of at least `horizontalCropPerSide + desiredVisibleMargin / coverScale`. Zero inset is allowed only when the target published player proves that it does not crop the foreground horizontally.
+- Keep the playhead body inside the same semantic-safe rail by clamping the marker itself. The outer surface may remain full bleed; never confuse a full-width background with permission to place readable information at a cropped edge.
 - Use a neutral playhead by default. Creator characters, logos, or personal-IP markers are optional adapters and never part of the repository default.
 - Treat the overlay as visual orientation only. Seeking remains the platform player's responsibility.
 
 ### Landscape Variant
 
-- Use a compact full-width top rail on a 16:9 canvas. Keep the clean progress track above the semantic label row, with dividers only in the label row.
+- Use a compact top rail on a 16:9 canvas. The contrast surface may remain full width; the track and semantic label row share the measured player-safe inset, with dividers only in the label row.
 - Clip every label to its segment. Inactive overflow uses an ellipsis; active overflow uses the shared loop-marquee rule inside that same segment.
-- Keep the rail close to the top edge of the horizontal program. When the horizontal program is letterboxed inside a vertical platform, validate against the actual player crop and controls rather than a generic safe-area diagram.
+- Keep the rail close to the top edge of the horizontal program. Landscape playback commonly uses `contain` and therefore may not reproduce portrait left/right crop, but any `cover`, zoom, embedded-player, or vertical-platform presentation can crop another axis. Validate the actual player instead of assuming orientation makes the edges safe.
 
 ### Portrait Variant
 
 - Use a platform-validated top-safe band when bottom descriptions or controls obscure semantic labels.
 - Split the band into two lanes: a noncritical marker/track lane above and a semantic label lane below. Platform search chrome may overlap the noncritical lane only when the labels remain fully readable.
-- Keep the component full width and compact. Reflow nearby headings, evidence, and picture-in-picture instead of allowing them to sit under the semantic lane.
+- Keep the component compact. Its contrast surface may remain full width, while the foreground rail uses the measured player-safe inset. Reflow nearby headings, evidence, and picture-in-picture instead of allowing them to sit under the semantic lane.
 - Do not add a walking mascot by default. A neutral playhead preserves reuse across finance, tutorials, product explainers, and other speech-led formats.
 
 ### ChatCut Authoring
@@ -41,7 +43,7 @@
 ### Verification
 
 - Render early, middle, late, every chapter boundary, the longest inactive label, the active marquee before motion, during motion, at its wrap point, and after a seek/re-render.
-- Check A-roll, bright B-roll, dark B-roll, native size, phone size, the actual platform UI, full-width alignment, stable segment geometry, monotonic playhead motion, and collisions with captions, headings, evidence, and picture-in-picture.
+- Check A-roll, bright B-roll, dark B-roll, native size, phone size, the actual platform UI, full-bleed surface alignment, semantic-rail inset, stable segment geometry, monotonic playhead motion, and collisions with captions, headings, evidence, and picture-in-picture. Before publication, simulate the target player's `contain` or `cover` viewport; after publication, replace the assumption with a real target-device screenshot.
 - Preserve the previous timeline or another reversible baseline until the user approves the new component.
 
 ## 简体中文
@@ -57,21 +59,23 @@
 - 组件外框和各分段尺寸始终稳定。文字切换、省略号、当前字重和滚动都不能推挤相邻内容。
 - 横屏与竖屏必须使用同一套视觉语法和溢出行为。方向只允许改变摆放、安全区和缩放，不得改变章节行为或装饰结构。
 - 两种方向都采用干净的双层结构：上层是一条没有章节刻度的连续进度轨道，下层是只在相邻章节之间保留分隔线的标题行。默认不添加标题开头短横杠、逐项状态标记、章节编号、当前区块底色或重复分隔。
-- 连续轨道和按时长分段的标题栏都使用零水平内边距，直接连接画面左右边缘。播放头本体通过自身边缘钳制留在画布内，不能靠缩短轨道来腾出空间。
+- 中性对比底带可以铺满画面左右边缘，但进度轨道、播放头、按时长分段的标题栏和分隔线都属于语义前景。它们必须共用一个根据真实发布播放器适配与裁切计算出的水平安全内边距，不能默认认为合成画布边缘一定可见。
+- 对采用 `cover` 的播放器，计算 `coverScale = max(playerWidth / canvasWidth, playerHeight / canvasHeight)`、`visibleCompositionWidth = playerWidth / coverScale` 和 `horizontalCropPerSide = max(0, (canvasWidth - visibleCompositionWidth) / 2)`；语义内边距至少为 `horizontalCropPerSide + desiredVisibleMargin / coverScale`。只有真实发布播放器证明不会横向裁切语义前景时，才允许使用零内边距。
+- 播放头本体要钳制在同一条语义安全轨道内。外层底带可以满宽，但不能把“背景铺满”误当成“可读信息可以顶到被裁切的画布边缘”。
 - 默认使用中性播放头。人物、Logo 或个人 IP 标记只能作为可选适配层，不能进入仓库默认组件。
 - 该图层只负责视觉导航，实际拖动仍由平台播放器完成。
 
 ### 横屏版本
 
-- 在 16:9 画面顶部使用紧凑的满宽导航条，把干净的连续进度轨道放在语义标题行上方，分隔线只出现在标题行。
+- 在 16:9 画面顶部使用紧凑导航条；对比底带可以满宽，进度轨道与语义标题行则共用实测播放器安全内边距，分隔线只出现在标题行。
 - 每个标题都裁切在自身分段内；未激活标题溢出时省略，当前标题溢出时在自身分段内循环滚动。
-- 横屏内容被嵌入竖屏平台时，必须根据真实播放器裁切和控件复核，不能只依赖通用安全区示意图。
+- 横屏播放通常采用 `contain`，不一定复现竖屏的左右裁切；但任何 `cover`、放大、嵌入式播放器或横屏嵌入竖屏平台的呈现，都可能裁掉其他方向。必须复核真实播放器，不能因为横屏方向就默认边缘安全。
 
 ### 竖屏版本
 
 - 当底部说明和控件遮挡章节文字时，使用经过平台验证的顶部安全带。
 - 顶部安全带分为两层：上层放非关键信息的轨道与播放头，下层放必须完整可读的章节语义。只有在标题完全不受影响时，平台搜索框才可以覆盖上层的一部分。
-- 组件保持满宽且紧凑。附近标题、证据卡和人物画中画必须绕开语义层，不能压在其下方。
+- 组件保持紧凑；对比底带可以满宽，语义前景轨道使用实测播放器安全内边距。附近标题、证据卡和人物画中画必须绕开语义层，不能压在其下方。
 - 默认不加入走路小人；中性播放头更适合金融、教程、产品讲解等不同口播类型。
 
 ### ChatCut 编写规则
@@ -83,5 +87,5 @@
 ### 验证要求
 
 - 检查开头、中段、结尾、每个章节边界、最长未激活标题，以及当前滚动标题的停留、滚动、循环接点和跳转后重渲染。
-- 覆盖真人画面、亮色 B-roll、暗色 B-roll、原始尺寸、手机缩略尺寸、真实平台 UI、满宽对齐、分段稳定性、播放头单调前进，以及与字幕、标题、证据和人物画中画的碰撞。
+- 覆盖真人画面、亮色 B-roll、暗色 B-roll、原始尺寸、手机缩略尺寸、真实平台 UI、满宽底带、语义轨道内边距、分段稳定性、播放头单调前进，以及与字幕、标题、证据和人物画中画的碰撞。发布前模拟目标播放器的 `contain` 或 `cover` 视口，发布后用真实目标设备截图替换假设。
 - 用户确认新组件前，保留旧时间线或其他可逆基线。

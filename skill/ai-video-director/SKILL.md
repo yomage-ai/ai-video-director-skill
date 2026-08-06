@@ -48,6 +48,8 @@ Use the stage order and return paths in [workflow.md](references/workflow.md):
 
 Progress placement safety overrides the bottom-first candidate described above. A semantic chapter strip must remain readable on the actual delivery surface; platform UI exclusion zones are constraints, not acceptable occlusion. Validate published screenshots on the target phone, tablet, and player surfaces. If bottom descriptions or controls obscure the strip, relocate it to a reserved top-safe band or another proven safe band, then reflow headings, picture-in-picture, and information cards below or around it while preserving the approved caption lane. Never solve the move by laying progress labels over existing headings.
 
+For semantic progress, full bleed applies only to the neutral contrast surface. Derive one shared horizontal safe inset for the track, playhead, duration-proportional label rail, and dividers from the actual player `contain`/`cover` behavior; zero semantic inset requires published-player proof. Simulate the target viewport before publication, then replace that assumption with real target-device screenshots when available. See [semantic-progress-rmcu.md](references/semantic-progress-rmcu.md) for the bilingual formula and orientation rules.
+
 Read [semantic-progress-rmcu.md](references/semantic-progress-rmcu.md) whenever implementing or reviewing the reusable landscape or portrait semantic-progress component family.
 
 Do not begin full production until the user approves the content lock and director plan. Do not silently start credit-consuming or paid generation.

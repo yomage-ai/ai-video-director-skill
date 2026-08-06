@@ -534,6 +534,11 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
     'continuous-without-chapter-ticks');
   assert.equal(chapterProgress.component.lowerLabelRow,
     'dividers-only-between-adjacent-chapters');
+  assert.equal(chapterProgress.component.outerSurfaceHorizontalInset,
+    'zero-full-bleed-allowed');
+  assert.equal(chapterProgress.component.semanticHorizontalInset,
+    'platform-player-validated-cover-aware');
+  assert.equal(chapterProgress.component.semanticRailsShareInset, true);
   assert.equal(chapterProgress.component.leadingLabelMarks, 'forbidden');
   assert.equal(chapterProgress.component.chapterNumbers, 'forbidden-by-default');
   assert.equal(chapterProgress.component.activeSegmentPanel, 'forbidden-by-default');
@@ -544,12 +549,21 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.equal(rmcuTemplate.behavior.sameAcrossOrientations, true);
   assert.equal(rmcuTemplate.visual.upperProgressTrack,
     'continuous-clean-no-chapter-ticks');
-  assert.equal(rmcuTemplate.visual.upperProgressTrackHorizontalInsetPx, 0);
+  assert.equal(rmcuTemplate.visual.outerSurfaceHorizontalInsetPx, 0);
+  assert.equal(rmcuTemplate.visual.semanticHorizontalInsetPolicy,
+    'platform-player-validated-cover-aware');
+  assert.equal(rmcuTemplate.visual.semanticHorizontalInsetPx, null);
+  assert.equal(rmcuTemplate.visual.upperProgressTrackHorizontalInsetPx, null);
   assert.equal(rmcuTemplate.visual.lowerLabelRow,
     'boundary-dividers-only-between-adjacent-segments');
-  assert.equal(rmcuTemplate.visual.lowerLabelRailHorizontalInsetPx, 0);
+  assert.equal(rmcuTemplate.visual.lowerLabelRailHorizontalInsetPx, null);
+  assert.equal(rmcuTemplate.visual.semanticRailsShareInset, true);
   assert.equal(rmcuTemplate.visual.markerEdgePolicy,
-    'clamp-marker-body-inside-canvas-without-shortening-track');
+    'clamp-marker-body-inside-semantic-safe-rail');
+  assert.equal(rmcuTemplate.playerViewport.horizontalCropPerSideFormula,
+    'max(0,(canvasWidth-visibleCompositionWidth)/2)');
+  assert.equal(rmcuTemplate.playerViewport.zeroSemanticInsetAllowedOnlyAfterPublishedPlayerProof,
+    true);
   assert.equal(rmcuTemplate.visual.leadingLabelMarks, false);
   assert.equal(rmcuTemplate.variants.landscape.lanes, 2);
   assert.equal(rmcuTemplate.variants.portrait.lanes, 2);
@@ -574,6 +588,9 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
     'orientation-consistent-progress-grammar-without-track-ticks-or-leading-label-marks',
   ));
   assert.ok(state.approvedCapabilities.includes(
+    'player-cover-aware-semantic-progress-safe-inset-with-full-bleed-surface',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
     'private-profile-progress-token-or-identity-marker-overrides-only',
   ));
   assert.ok(state.approvedCapabilities.includes(
@@ -585,8 +602,10 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /use one unsegmented progress bar instead of inventing chapters/);
   assert.match(standard, /narrow, full-width translucent neutral strip that spans the composition/);
   assert.match(standard, /one uninterrupted progress track above one semantic label row/);
-  assert.match(standard, /track and duration-proportional label rail use zero horizontal inset/);
-  assert.match(standard, /clamp the marker body inside the canvas without shortening the track/);
+  assert.match(standard, /contrast surface may bleed to both composition edges/i);
+  assert.match(standard, /track, playhead, duration-proportional label rail, and dividers must share a horizontal safe inset/);
+  assert.match(standard, /Permit zero semantic inset only after published-player proof/);
+  assert.match(standard, /Clamp the marker body inside that semantic-safe rail/);
   assert.match(standard, /Do not add chapter ticks to the track, leading label dashes/);
   assert.match(standard, /Landscape and portrait share the same two-lane visual grammar/);
   assert.match(standard, /Do not accept platform descriptions, controls, or action rails covering them/);
@@ -626,6 +645,9 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /## Semantic Chapter Progress/);
   assert.match(qaTemplate, /duration-proportional boundaries/);
   assert.match(qaTemplate, /one uninterrupted progress track without chapter ticks/);
+  assert.match(qaTemplate, /contrast surface is allowed to bleed to both composition edges/i);
+  assert.match(qaTemplate, /share one platform\/player-validated horizontal safe inset/);
+  assert.match(qaTemplate, /zero semantic inset was used only with published-player proof/);
   assert.match(qaTemplate, /No leading label dashes, chapter numbers, active-segment panels/);
   assert.match(qaTemplate, /A-roll, bright B-roll, dark B-roll, chapter-boundary/);
   assert.match(qaTemplate, /platform-validated edge band/);
