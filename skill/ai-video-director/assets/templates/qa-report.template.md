@@ -71,6 +71,7 @@
 - Progress labels were audited separately from subtitles; no progress-label request silently restyled the caption track:
 - A narrow full-width translucent neutral strip occupies a platform-validated edge band and uses light labels with a restrained dark shadow or stroke:
 - Landscape and portrait use the same two-lane grammar: one uninterrupted progress track without chapter ticks above one label row whose dividers appear only between adjacent chapters:
+- The progress track and duration-proportional label rail have zero horizontal inset and meet both composition edges; the playhead body is clamped inside the canvas without shortening the track:
 - No leading label dashes, chapter numbers, active-segment panels, duplicate separators, or boxed chapter cards were added by default:
 - Past and future overflowing labels use a static ellipsis. Only the active overflowing label loops inside its unchanged segment; hold, motion, wrap, chapter reset, and seek/re-render frames were checked:
 - The generic component uses a neutral playhead and has no required creator identity asset; any private marker adapter is documented separately:

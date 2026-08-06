@@ -42,12 +42,15 @@
     "perChapterBoxes": false,
     "lanes": 2,
     "upperProgressTrack": "continuous-clean-no-chapter-ticks",
+    "upperProgressTrackHorizontalInsetPx": 0,
     "lowerLabelRow": "boundary-dividers-only-between-adjacent-segments",
+    "lowerLabelRailHorizontalInsetPx": 0,
     "leadingLabelMarks": false,
     "chapterNumbers": false,
     "activeSegmentPanel": false,
     "duplicateSeparators": false,
     "defaultMarker": "neutral-playhead",
+    "markerEdgePolicy": "clamp-marker-body-inside-canvas-without-shortening-track",
     "personalIdentityAssetRequired": false
   },
   "variants": {

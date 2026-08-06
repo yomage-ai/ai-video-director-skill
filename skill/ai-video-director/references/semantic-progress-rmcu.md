@@ -15,6 +15,7 @@
 - Preserve one stable layout box. Label changes, ellipsis, active weight, and marquee motion must not resize the component or shift neighboring content.
 - Apply the same visual grammar and overflow behavior in landscape and portrait. Orientation may change placement, scale, and safe-area geometry, but not chapter behavior or decorative structure.
 - Use two clean lanes in both variants: one uninterrupted progress track with no chapter ticks, then one label row with dividers only between adjacent chapter segments. Do not add leading dashes, per-label status marks, chapter numbers, active-segment panels, or duplicate separators by default.
+- Give both the continuous track and the duration-proportional label rail zero horizontal inset so they meet the composition's left and right edges. Keep the playhead body inside the canvas by clamping the marker itself, never by shortening the track.
 - Use a neutral playhead by default. Creator characters, logos, or personal-IP markers are optional adapters and never part of the repository default.
 - Treat the overlay as visual orientation only. Seeking remains the platform player's responsibility.
 
@@ -56,6 +57,7 @@
 - 组件外框和各分段尺寸始终稳定。文字切换、省略号、当前字重和滚动都不能推挤相邻内容。
 - 横屏与竖屏必须使用同一套视觉语法和溢出行为。方向只允许改变摆放、安全区和缩放，不得改变章节行为或装饰结构。
 - 两种方向都采用干净的双层结构：上层是一条没有章节刻度的连续进度轨道，下层是只在相邻章节之间保留分隔线的标题行。默认不添加标题开头短横杠、逐项状态标记、章节编号、当前区块底色或重复分隔。
+- 连续轨道和按时长分段的标题栏都使用零水平内边距，直接连接画面左右边缘。播放头本体通过自身边缘钳制留在画布内，不能靠缩短轨道来腾出空间。
 - 默认使用中性播放头。人物、Logo 或个人 IP 标记只能作为可选适配层，不能进入仓库默认组件。
 - 该图层只负责视觉导航，实际拖动仍由平台播放器完成。
 

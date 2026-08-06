@@ -544,8 +544,12 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.equal(rmcuTemplate.behavior.sameAcrossOrientations, true);
   assert.equal(rmcuTemplate.visual.upperProgressTrack,
     'continuous-clean-no-chapter-ticks');
+  assert.equal(rmcuTemplate.visual.upperProgressTrackHorizontalInsetPx, 0);
   assert.equal(rmcuTemplate.visual.lowerLabelRow,
     'boundary-dividers-only-between-adjacent-segments');
+  assert.equal(rmcuTemplate.visual.lowerLabelRailHorizontalInsetPx, 0);
+  assert.equal(rmcuTemplate.visual.markerEdgePolicy,
+    'clamp-marker-body-inside-canvas-without-shortening-track');
   assert.equal(rmcuTemplate.visual.leadingLabelMarks, false);
   assert.equal(rmcuTemplate.variants.landscape.lanes, 2);
   assert.equal(rmcuTemplate.variants.portrait.lanes, 2);
@@ -581,6 +585,8 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /use one unsegmented progress bar instead of inventing chapters/);
   assert.match(standard, /narrow, full-width translucent neutral strip that spans the composition/);
   assert.match(standard, /one uninterrupted progress track above one semantic label row/);
+  assert.match(standard, /track and duration-proportional label rail use zero horizontal inset/);
+  assert.match(standard, /clamp the marker body inside the canvas without shortening the track/);
   assert.match(standard, /Do not add chapter ticks to the track, leading label dashes/);
   assert.match(standard, /Landscape and portrait share the same two-lane visual grammar/);
   assert.match(standard, /Do not accept platform descriptions, controls, or action rails covering them/);
