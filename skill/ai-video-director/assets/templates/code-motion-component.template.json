@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "componentId": "replace-with-stable-id",
+  "version": 1,
+  "classification": [
+    "T"
+  ],
+  "semanticRole": "replace-with-viewer-task",
+  "renderer": "frame-addressable-renderer",
+  "naturalBox": {
+    "width": null,
+    "height": null,
+    "overflowPolicy": "contained"
+  },
+  "layers": {
+    "generalMechanism": {
+      "id": "replace-with-general-mechanism-id",
+      "neutralDefaultRequired": true,
+      "privateDependenciesAllowed": false,
+      "projectDependenciesAllowed": false
+    },
+    "privateAdapter": {
+      "enabled": false,
+      "id": null,
+      "approvalRecordRequired": true,
+      "storedOutsideGenericRepository": true
+    },
+    "projectInstance": {
+      "storedInVideoProject": true,
+      "copy": {},
+      "claims": [],
+      "mediaRoles": []
+    }
+  },
+  "parameters": {
+    "content": {},
+    "timing": {
+      "cueFrames": {},
+      "ranges": []
+    },
+    "layout": {
+      "safeRegionId": "replace-with-safe-region-id",
+      "semanticAnchor": null,
+      "markerFootprint": null
+    },
+    "style": {},
+    "media": [],
+    "motion": {
+      "travelClock": "timeline-frame",
+      "actionClock": null,
+      "cycleFrames": null
+    }
+  },
+  "contentFit": {
+    "viewerTask": "replace-with-orientation-evidence-comparison-causality-emphasis-or-identity",
+    "authorizedSemanticRange": "replace-with-spoken-claim-or-range",
+    "metaphorFitsContentAndTone": false,
+    "informationValueExceedsAttentionCost": false,
+    "completeMotionEnvelopeFitsSafeLayout": false,
+    "rightsAndSourcesApproved": false
+  },
+  "governance": {
+    "sourceRelationships": [],
+    "privateDataAllowed": false
+  },
+  "qa": {
+    "changeAllowlist": [],
+    "invariantList": [],
+    "requiredFrameWindows": [],
+    "sameFrameSamePixels": false,
+    "normalSpeedMotionReviewed": false,
+    "completeFootprintContained": false,
+    "contactPointErrorMaximumCompositionPx": 1,
+    "actualExportReviewed": false
+  },
+  "replacement": {
+    "supersedes": null,
+    "supersededClassification": null,
+    "reversibleBaselinePreserved": true
+  }
+}

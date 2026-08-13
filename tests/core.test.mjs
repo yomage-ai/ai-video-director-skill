@@ -999,6 +999,8 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
   const englishProgressRequest = 'Add the generic portrait RMCU chapter progress component; ellipsize inactive overflow and marquee only the active overflow.';
   const chineseSafeLayoutRequest = '使用已确认的竖屏口播安全版式，让字幕、B-roll 重要信息和进度条在 iPhone 与 iPad 都可见。';
   const englishSafeLayoutRequest = 'Use the approved portrait talking-head safe layout and keep captions, critical B-roll, and progress visible on narrow phones and wide tablets.';
+  const chineseComponentRequest = '把这些代码动画分成通用机制、私人适配、题材模板、历史归档和错误样本，再沉淀可复用部分。';
+  const englishComponentRequest = 'Classify these code motion graphics as general mechanisms, private adapters, topic templates, archives, or error samples before reuse.';
   assert.match(chineseRequest, /口播/);
   assert.match(englishRequest, /talking-head/);
   assert.match(skill, /真人口播自动剪辑/);
@@ -1007,8 +1009,11 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
   assert.match(englishProgressRequest, /portrait RMCU/);
   assert.match(chineseSafeLayoutRequest, /竖屏口播安全版式/);
   assert.match(englishSafeLayoutRequest, /portrait talking-head safe layout/);
+  assert.match(chineseComponentRequest, /代码动画/);
+  assert.match(englishComponentRequest, /code motion graphics/);
   assert.match(skill, /rmcu\.semantic-progress\.v1/);
   assert.match(skill, /layout\.portrait-talking-head\.safe-v1/);
+  assert.match(skill, /code-motion-components\.md/);
   assert.match(skill, /Inactive long labels use ellipsis/);
   assert.match(skill, /Reply in the user's language/);
   assert.match(readmeEn, /generic RMCU semantic progress component/);
@@ -1017,4 +1022,58 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
   assert.match(readmeZh, /只有当前标题溢出时才循环滚动/);
   assert.match(readmeEn, /approved portrait talking-head safe layout/);
   assert.match(readmeZh, /已确认的竖屏口播安全版式/);
+  assert.match(readmeEn, /code motion component system/);
+  assert.match(readmeEn, /general mechanisms, private creator adapters, topic templates, archives, or error samples/);
+  assert.match(readmeZh, /代码动画组件体系/);
+  assert.match(readmeZh, /通用机制、私人创作者适配、题材模板、历史归档和错误样本/);
+});
+
+test('code motion component reference defines reusable layers and fail-closed QA bilingually', () => {
+  const reference = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references',
+      'code-motion-components.md'),
+    'utf8',
+  );
+  const skill = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'SKILL.md'),
+    'utf8',
+  );
+  const template = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'code-motion-component.template.json'),
+    'utf8',
+  ));
+
+  assert.match(reference, /## English/);
+  assert.match(reference, /## 简体中文/);
+  assert.match(reference, /\| `G` \| General mechanism/);
+  assert.match(reference, /\| `P` \| Private adapter/);
+  assert.match(reference, /\| `T` \| Topic template/);
+  assert.match(reference, /\| `A` \| Archive/);
+  assert.match(reference, /\| `X` \| Error sample/);
+  assert.match(reference, /General mechanism:[\s\S]*Private adapter:[\s\S]*Project instance data:/);
+  assert.match(reference, /通用机制层：[\s\S]*私人适配层：[\s\S]*单片实例层：/);
+  assert.match(reference, /type CodeMotionComponentSpec/);
+  assert.match(reference, /privateDataAllowed: false/);
+  assert.match(reference, /method-only/);
+  assert.match(reference, /requestAnimationFrame/);
+  assert.match(reference, /same frame must reproduce the same pixels/);
+  assert.match(reference, /同一帧必须得到相同像素/);
+  assert.match(reference, /within one composition pixel/);
+  assert.match(reference, /一个合成像素内/);
+  assert.match(reference, /expectedFailure/);
+  assert.match(reference, /Verification is fail-closed/);
+  assert.match(reference, /验收默认不通过/);
+  assert.match(skill, /code-motion-components\.md/);
+  assert.match(skill, /classify the component as `G`, `P`, `T`, `A`, or `X`/);
+  assert.equal(template.schemaVersion, 1);
+  assert.equal(template.layers.generalMechanism.privateDependenciesAllowed, false);
+  assert.equal(template.layers.generalMechanism.projectDependenciesAllowed, false);
+  assert.equal(template.layers.privateAdapter.storedOutsideGenericRepository, true);
+  assert.equal(template.layers.projectInstance.storedInVideoProject, true);
+  assert.equal(template.parameters.motion.travelClock, 'timeline-frame');
+  assert.equal(template.governance.privateDataAllowed, false);
+  assert.equal(template.qa.contactPointErrorMaximumCompositionPx, 1);
+  assert.equal(template.replacement.reversibleBaselinePreserved, true);
+  assert.match(reference, /code-motion-component\.template\.json/);
 });

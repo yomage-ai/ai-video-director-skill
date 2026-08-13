@@ -46,6 +46,12 @@ For a multi-device 9:16 talking-head layout, you can add:
 Use the approved portrait talking-head safe layout. Keep crop-tolerant backgrounds full bleed, but keep captions, progress semantics, important B-roll regions, picture-in-picture, and identity marks visible on both narrow phones and wide tablets. Validate the real published player instead of treating the encoded canvas edge as safe.
 ```
 
+For reusable code-authored motion graphics, you can add:
+
+```text
+Use the code motion component system. Audit existing components as general mechanisms, private creator adapters, topic templates, archives, or error samples. Keep general behavior separate from private assets and this video's copy, timing, and media. Reuse or promote a component only after content-fit, seek-safe motion, layout, rights, and real-export checks pass.
+```
+
 ## What The User Provides
 
 - Recorded talking-head footage or a script to turn into video, at least one of these.
