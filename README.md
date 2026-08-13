@@ -30,6 +30,10 @@ If the Skill already appears in Codex, the short form is enough:
 Use $ai-video-director to process the attached talking-head video. Inspect the material first, then show me the content-lock card and director plan. Continue only after I approve.
 ```
 
+For a dialogue recut, the Skill also audits every real clip boundary against the manuscript: complete first/last words, natural pause length, no retained swallow or mouth noise, and rendered normal-speed proof before rough-cut approval.
+
+For app or dashboard evidence, the Skill locks the exact page/tab/subtab state, derives each crop from source semantics instead of guessing from a screenshot thumbnail, records an ROI manifest, and blocks export when an adjacent view or approximate callout is shown. An approved signature outro also keeps its full motion contract, including any tilt and blink/wink, unless a new version is explicitly approved.
+
 For the reusable semantic-progress component, you can add:
 
 ```text

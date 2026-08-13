@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-07",
+  "updatedAt": "2026-08-13",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "private",
   "status": "internal-v0.1.0-validated",
@@ -33,7 +33,27 @@
       "ordinaryBreaths": "preserve",
       "excessiveDeadAir": "compress-contextually",
       "restartGaps": "remove-with-failed-words",
-      "universalPauseDuration": "forbidden"
+      "universalPauseDuration": "forbidden",
+      "compactJoinCandidateRangeSeconds": "0.20-0.40-review-only",
+      "swallowLipSmackAndMouthResetAtChangedJoin": "remove",
+      "expectedBoundaryTokensRecorded": true,
+      "renderedNormalSpeedWindowRequired": true,
+      "unexplainedLongPauseScanSeconds": "0.60-review-candidate-not-auto-cut",
+      "crossfadeRole": "click-protection-after-correct-boundary-not-boundary-repair",
+      "acceptancePriority": [
+        "intended-word-intelligibility",
+        "natural-pause-and-mouth-noise-cleanup",
+        "picture-continuity"
+      ],
+      "repeatedBoundaryWordPolicy": "preserve-complete-retained-occurrence-from-source-timing-and-verify-rendered-word-window"
+    },
+    "playbackSpeed": {
+      "defaultStartingPoint": "1.00x",
+      "fixedHouseRate": "forbidden",
+      "denseExplainerCandidateRange": "1.02x-1.06x-review-only",
+      "selectionBasis": "content-and-actual-performance",
+      "continuousSameSessionRate": "stable-unless-documented-semantic-or-performance-change",
+      "verification": "representative-render-then-rerun-manuscript-boundary-audit"
     },
     "audibleDuplicateAudit": {
       "scope": "cross-segment-and-cross-clip-boundaries",
@@ -94,6 +114,15 @@
     },
     "screenshotEvidence": {
       "focusCueWhenNotObvious": "one-precise-circle-underline-or-short-arrow",
+      "exactStatePath": "required-page-primary-tab-subtab-view-filter-expansion-scroll-and-demo-privacy-state",
+      "rejectedAdjacentStates": "record-when-ambiguous-and-block-if-visible",
+      "semanticRoiSourceOrder": "dom-accessibility-bounds-then-design-geometry-then-user-confirmed-pixels",
+      "thumbnailOrVisualGuessing": "forbidden",
+      "roiManifest": "claim-state-path-viewport-requested-bounds-actual-output-proof-labels-privacy-and-pixel-review",
+      "stableStateCapture": "still-preferred",
+      "interactionCapture": "recording-only-when-interaction-or-change-is-the-evidence",
+      "aspectRatio": "preserve-source-and-recompose-for-phone-readability",
+      "sentenceLockedReveal": true,
       "avoid": [
         "unmarked-small-proof",
         "decorating-every-field",
@@ -158,7 +187,10 @@
         "white-clothing-detail",
         "highlights"
       ],
-      "comparison": "representative-decoded-frames-through-one-color-managed-path"
+      "comparison": "representative-decoded-frames-through-one-color-managed-path",
+      "approvedCreatorBaseline": "exact-private-profile-parameters-with-reference-render-and-source-condition-scope",
+      "reuseCondition": "comparable-camera-lighting-exposure-and-white-balance",
+      "differentSourceCondition": "starting-candidate-only-revalidate-skin-whites-and-highlights"
     },
     "finishingPass": {
       "voiceIsolation": {
@@ -177,7 +209,11 @@
         "continuousSameSessionGainScope": "uniform-source-track-or-all-derived-aroll-clips",
         "perCutIndependentNormalization": "forbidden-by-default",
         "verification": "full-timeline-reexport-and-remeasurement",
-        "creatorSpecificTargets": "private-profile-only"
+        "creatorSpecificTargets": "private-profile-only",
+        "primaryMatchMetric": "integrated-lufs",
+        "supportingConstraints": "loudness-range-and-true-peak",
+        "uiSliderOrPeakOnlyMatch": "invalid",
+        "referenceFileAndVersion": "required"
       },
       "captions": {
         "scaleChange": "requires-reflow-and-box-resize",
@@ -283,6 +319,9 @@
         "visibleOverflowAloneIsSufficient": false,
         "preferredContainment": "static-outer-natural-box-with-padded-inner-animated-stage",
         "extremeFrameProof": "first-visible-entrance-overshoot-settle-encouragement-micro-expression-reopen-final-visible-native-and-phone-scale",
+        "approvedMotionContract": "exact-tilt-blink-or-wink-timing-scale-envelope-placement-and-collision-behavior",
+        "simplifiedRebuildMayDropMotionBeats": false,
+        "redesignRequiresExplicitApproval": true,
         "privateProfilePromotion": "explicit-approval-required",
         "postApprovalAdaptation": "speech-sync-aspect-ratio-safe-placement-and-documented-collisions-only",
         "collisionReview": "face-final-caption-chapter-progress-and-platform-ui"
@@ -324,6 +363,8 @@
     }
   },
   "approvedCapabilities": [
+    "exact-ui-state-and-semantic-roi-evidence-audit",
+    "approved-signature-outro-motion-contract-inheritance",
     "content-lock-and-director-plan",
     "quality-first-repeated-take-selection",
     "contextual-pause-and-join-review",

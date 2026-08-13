@@ -32,7 +32,7 @@
 - Final viewer-facing pagination was locked before punctuation styling, and the punctuation audit was repeated after every reflow, forced break, merge, scale change, or Script edit:
 - Every manuscript punctuation mark inside a caption page is preserved; detachable commas, periods, semicolons, colons, and enumeration commas are omitted only when they are the page's final character:
 - Page-final question and exclamation marks are always preserved; paired structural closers and punctuation embedded in numbers, units, names, or terms are not stripped:
-- Global punctuation hiding remains off whenever an internal, question/exclamation, or paired-structure exception exists:
+- Any `hidePunctuation` setting was verified to be page-aware, removing only detachable page-final punctuation while preserving internal, question/exclamation, and paired-structure exceptions; a renderer that strips all punctuation was not used:
 - No semantic punctuation was invented or replaced with a different visible symbol; any renderer limitation was handled by exact-glyph rendering, an authored caption/card, or meaning-based page separation:
 
 ## Information And Privacy
@@ -42,6 +42,11 @@
 - Only locally redacted screenshot derivatives used:
 - Opaque-mask and mobile-scale redaction inspection:
 - Screenshot focus cues point to the exact evidence without covering or overstating it:
+- Exact evidence state path (page, tab, subtab, view, filter/date, expansion, scroll) is recorded; plausible but wrong adjacent states are named and absent:
+- Every critical ROI was derived from DOM/accessibility text bounds, design geometry, or user-confirmed pixels rather than guessed from a thumbnail:
+- ROI manifest records claim, source state, viewport, requested bounds, actual output dimensions, proof labels, module allowlist, forbidden-string scan, and pixel review:
+- Stable-state evidence uses a still; screen recording is used only when interaction or change over time is part of the proof:
+- Evidence keeps source aspect ratio, remains readable at phone scale, and appears on the matching spoken phrase instead of as an all-at-once information dump:
 
 ## Visuals
 
@@ -102,6 +107,7 @@
 - Owned or explicitly approved identity art is used; generic third-party sticker is not the default:
 - Identity and encouragement cues, motion, hold, optional sound, and final speech synchronization:
 - Approved identity variant and contextual accessories stayed fixed; any wink/blink passed open-before, closed-peak, open-after, and phone-size review without reading as a glitch:
+- The exact approved tilt, blink/wink, timing, scale envelope, placement, and collision behavior were inherited; no simplified rebuild silently removed a motion beat:
 - Motion envelope includes scale, translation, rotation, transform origin, internal marks, and overshoot; a static outer natural box and padded inner animated stage contain every visible extreme without relying only on overflow; first-visible, entrance, overshoot, settle, encouragement, micro-expression, reopen, and final-visible frames show the complete silhouette at native or phone scale:
 - Face, final caption, semantic progress strip, and platform UI remain unobstructed at native and phone scale:
 

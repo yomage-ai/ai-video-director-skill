@@ -18,6 +18,14 @@
       "falseStartGaps": "remove-with-failed-words",
       "universalDurationMilliseconds": null
     },
+    "playbackSpeed": {
+      "sourceRate": 1,
+      "candidateRates": [],
+      "selectedRate": null,
+      "contentAndPerformanceRationale": "",
+      "inheritRateFromAnotherVideo": false,
+      "boundaryAuditAfterSelectionRequired": true
+    },
     "joinAcceptance": [
       "meaning remains intact",
       "speech sounds natural",
@@ -52,6 +60,12 @@
       "stageUpdateRequiredAfterRollback": true,
       "fineEditReprocessingDefault": false,
       "fineEditExceptions": ["new-explicit-user-request", "documented-source-condition-change"]
+    },
+    "creatorColorBaseline": {
+      "privateProfileOnly": true,
+      "baselineId": null,
+      "exactParameterReuseRequiresComparableSourceConditions": true,
+      "differentConditionsRequireRevalidation": true
     }
   },
   "bRollContinuity": {
@@ -89,7 +103,34 @@
     "cropBeforeRedaction": true,
     "criticalIdentifiersUseOpaqueMasks": true,
     "focusCueWhenEvidenceIsNotObvious": "required",
-    "cloudUploadOnlyAfterRedaction": true
+    "cloudUploadOnlyAfterRedaction": true,
+    "uiEvidenceCapture": {
+      "exactStatePathRequired": true,
+      "stateSelectors": [
+        "route-or-document",
+        "primary-tab",
+        "subtab",
+        "view-or-report-type",
+        "date-range-or-filter",
+        "expanded-modules",
+        "scroll-position",
+        "demo-data-and-privacy-state"
+      ],
+      "rejectedAdjacentStatesRequiredWhenAmbiguous": true,
+      "semanticRoiSourceOrder": [
+        "dom-accessibility-text-and-control-bounds",
+        "design-layer-geometry",
+        "user-confirmed-reference-pixels",
+        "manual-pixels-after-semantic-identification"
+      ],
+      "thumbnailGuessingAllowed": false,
+      "roiManifestRequired": true,
+      "preserveSourceAspectRatio": true,
+      "stillForStableState": true,
+      "recordingOnlyWhenInteractionOrChangeIsEvidence": true,
+      "sentenceLockedReveal": true,
+      "captionLaneAndPlatformCollisionBlocksExport": true
+    }
   },
   "presentationSafety": {
     "presenterInsertEntryFrame": "normal-expression-eyes-open",
@@ -159,6 +200,9 @@
       "continuousSameSessionGainScope": "uniform-source-track-or-all-derived-aroll-clips",
       "perCutIndependentNormalizationDefault": false,
       "postAdjustmentFullRenderRemeasureRequired": true,
+      "integratedLufsIsPrimaryMatchMetric": true,
+      "uiSliderOrPeakOnlyMatchIsValid": false,
+      "referenceFileAndVersionRequired": true,
       "creatorSpecificTargetStorage": "private-profile-only"
     },
     "captions": {
@@ -302,6 +346,12 @@
       "microExpressionCue": null,
       "microExpressionRule": "optional-single-motivated-beat-not-entrance",
       "microExpressionProof": ["open-before", "closed-peak", "open-after", "phone-size"],
+      "approvedMotionContract": {
+        "reuseExactApprovedComponent": true,
+        "includes": ["tilt", "blink-or-wink", "timing", "scale-envelope", "placement", "collision-behavior"],
+        "simplifiedRebuildMayDropMotionBeats": false,
+        "redesignRequiresExplicitApproval": true
+      },
       "motionEnvelope": {
         "include": ["scale", "translation", "rotation", "transform-origin", "internal-accents", "overshoot"],
         "topTrackPreventsSelfClipping": false,

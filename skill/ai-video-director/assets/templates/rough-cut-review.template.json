@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "projectId": "replace-with-project-id",
   "canonicalEdlVersion": null,
   "status": "in-progress",
@@ -11,12 +11,51 @@
   "takeDecisions": [],
   "hybridSplices": [],
   "pauseEdits": [],
+  "playbackSpeedReview": {
+    "sourceRate": 1,
+    "testedRates": [],
+    "selectedRate": null,
+    "contentAndPerformanceRationale": "",
+    "representativeRenderedPassageReviewed": false,
+    "boundaryAuditRerunAfterRateSelection": false
+  },
   "coverageAudit": [],
   "joinReview": {
+    "allPlacedItemBoundariesEnumerated": false,
     "everyChangedBoundaryReviewedAtFullSpeed": false,
+    "normalSpeedRenderedWindows": [],
     "clippedOnsets": [],
+    "clippedOrSwallowedTails": [],
     "repeatedSyllablesOrRestarts": [],
+    "retainedSwallowsLipSmacksOrMouthResets": [],
+    "unexplainedLongPauseCandidates": [],
     "unnaturalVisualResets": []
+  },
+  "manuscriptAudibilityAudit": {
+    "acceptancePriority": [
+      "intended-word-intelligibility",
+      "natural-pause-and-mouth-noise-cleanup",
+      "picture-continuity"
+    ],
+    "openingWordsAudible": false,
+    "closingWordsAudible": false,
+    "everyChangedBoundaryHasExpectedTokens": false,
+    "verifiedBoundaries": [
+      {
+        "timelineTimeSeconds": null,
+        "expectedLastToken": "",
+        "expectedFirstToken": "",
+        "audibleLastToken": "",
+        "audibleFirstToken": "",
+        "retainedOccurrenceHasCompleteOnset": false,
+        "pauseSeconds": null,
+        "mouthNoise": "none",
+        "visualState": "unreviewed",
+        "normalSpeedAuditioned": false,
+        "status": "pending",
+        "notes": []
+      }
+    ]
   },
   "audibleDuplicateAudit": {
     "crossSegmentAndClipBoundariesScanned": false,
@@ -45,6 +84,27 @@
     "stageUpdateSentAfterRollback": false,
     "fineEditReprocessingRequired": false,
     "notes": []
+  },
+  "creatorColorBaseline": {
+    "privateProfileOnly": true,
+    "baselineId": null,
+    "exactParameters": null,
+    "referenceRender": null,
+    "sourceConditionsComparable": false,
+    "representativeFrameMeasurements": []
+  },
+  "dialogueLoudnessMatch": {
+    "referenceFileAndVersion": null,
+    "referenceIntegratedLufs": null,
+    "referenceLoudnessRangeLu": null,
+    "referenceTruePeakDbtp": null,
+    "currentBeforeIntegratedLufs": null,
+    "appliedUniformGainDb": null,
+    "currentAfterIntegratedLufs": null,
+    "currentAfterLoudnessRangeLu": null,
+    "currentAfterTruePeakDbtp": null,
+    "integratedLufsMatchedFirst": false,
+    "peakOnlyMatchUsed": false
   },
   "fullCutReview": {
     "watchedFromStartToFinish": false,

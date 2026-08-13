@@ -69,7 +69,19 @@ test('project scaffold stays outside the repository and includes decision artifa
   assert.equal(intake.projectId, 'test-video');
   assert.equal(roughCutReview.projectId, 'test-video');
   assert.equal(roughCutReview.takeSelectionPolicy.principle, 'quality-first');
+  assert.equal(roughCutReview.schemaVersion, 2);
   assert.equal(roughCutReview.fullCutReview.listenedFromStartToFinish, false);
+  assert.equal(roughCutReview.joinReview.allPlacedItemBoundariesEnumerated, false);
+  assert.equal(roughCutReview.manuscriptAudibilityAudit.openingWordsAudible, false);
+  assert.equal(roughCutReview.manuscriptAudibilityAudit.verifiedBoundaries[0].normalSpeedAuditioned,
+    false);
+  assert.deepEqual(roughCutReview.manuscriptAudibilityAudit.acceptancePriority, [
+    'intended-word-intelligibility',
+    'natural-pause-and-mouth-noise-cleanup',
+    'picture-continuity',
+  ]);
+  assert.equal(roughCutReview.playbackSpeedReview.sourceRate, 1);
+  assert.equal(roughCutReview.dialogueLoudnessMatch.integratedLufsMatchedFirst, false);
   assert.equal(roughCutReview.audibleDuplicateAudit.crossSegmentAndClipBoundariesScanned, false);
   assert.equal(roughCutReview.structuralEditReadback.intentionalTransitionsChecked, false);
   assert.equal(roughCutReview.sourceColorNormalization.workflowStage,
@@ -150,6 +162,79 @@ test('repeated takes use quality-first selection rather than a latest-take defau
   assert.match(standard, /map every `mustKeep` point to `spoken`, `on-screen`, or `both`/);
 });
 
+test('dialogue joins require manuscript audibility and rendered mouth-noise review', () => {
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const policy = state.roughCutPolicy.pauseAndJoin;
+  assert.equal(policy.universalPauseDuration, 'forbidden');
+  assert.equal(policy.compactJoinCandidateRangeSeconds, '0.20-0.40-review-only');
+  assert.equal(policy.swallowLipSmackAndMouthResetAtChangedJoin, 'remove');
+  assert.equal(policy.expectedBoundaryTokensRecorded, true);
+  assert.equal(policy.renderedNormalSpeedWindowRequired, true);
+  assert.equal(policy.crossfadeRole,
+    'click-protection-after-correct-boundary-not-boundary-repair');
+  assert.deepEqual(policy.acceptancePriority, [
+    'intended-word-intelligibility',
+    'natural-pause-and-mouth-noise-cleanup',
+    'picture-continuity',
+  ]);
+  assert.match(policy.repeatedBoundaryWordPolicy, /preserve-complete-retained-occurrence/);
+
+  const standard = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'),
+    'utf8',
+  );
+  const audit = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'dialogue-join-audit.md'),
+    'utf8',
+  );
+  assert.match(standard, /expected last token and expected first token/);
+  assert.match(standard, /crossfades as finishing protection, not boundary repair/);
+  assert.match(standard, /normal-speed audio playback is unavailable, mark the rough cut unverified/);
+  assert.match(audit, /Every intended sentence opening and closing word is fully audible/);
+  assert.match(audit, /吞咽、咂嘴、口腔复位/);
+  assert.match(audit, /0\.20-0\.40 s/);
+  assert.match(audit, /intended word intelligibility -> natural pause and mouth-noise cleanup -> picture continuity/);
+  assert.match(audit, /striking the first written occurrence preserves the second spoken onset/);
+  assert.match(audit, /transcript strike may map to the wrong acoustic event/);
+  assert.match(audit, /choose one acoustic occurrence before adding any crossfade/);
+});
+
+test('speed, creator color and loudness baselines are content- and evidence-driven', () => {
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  assert.equal(state.roughCutPolicy.playbackSpeed.defaultStartingPoint, '1.00x');
+  assert.equal(state.roughCutPolicy.playbackSpeed.fixedHouseRate, 'forbidden');
+  assert.equal(state.roughCutPolicy.playbackSpeed.denseExplainerCandidateRange,
+    '1.02x-1.06x-review-only');
+  assert.match(state.roughCutPolicy.sourceColorNormalization.approvedCreatorBaseline,
+    /exact-private-profile-parameters/);
+  assert.equal(state.roughCutPolicy.finishingPass.dialogueLoudness.primaryMatchMetric,
+    'integrated-lufs');
+  assert.equal(state.roughCutPolicy.finishingPass.dialogueLoudness.uiSliderOrPeakOnlyMatch,
+    'invalid');
+
+  const plan = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'director-plan.template.json'),
+    'utf8',
+  ));
+  assert.equal(plan.roughCut.playbackSpeed.inheritRateFromAnotherVideo, false);
+  assert.equal(plan.roughCut.creatorColorBaseline.privateProfileOnly, true);
+  assert.equal(plan.finishingPass.dialogueLoudness.integratedLufsIsPrimaryMatchMetric, true);
+  assert.equal(plan.finishingPass.dialogueLoudness.uiSliderOrPeakOnlyMatchIsValid, false);
+
+  const standard = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'),
+    'utf8',
+  );
+  assert.match(standard, /Begin at `1\.00x`/);
+  assert.match(standard, /test range, not a default/);
+  assert.match(standard, /store its exact deterministic parameters/);
+  assert.match(standard, /never substitute a remembered, rounded, or visually estimated variant/);
+  assert.match(standard, /representative Y\/U\/V or equivalent measurements/);
+  assert.match(standard, /integrated LUFS first/);
+  assert.match(standard, /UI slider value, waveform height, or peak-only match/);
+});
+
 test('director plan schema carries reusable rough-cut and privacy guardrails', () => {
   const contentLock = JSON.parse(readFileSync(
     path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates', 'content-lock.template.json'),
@@ -165,6 +250,12 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.roughCut.pauseTreatment.universalDurationMilliseconds, null);
   assert.equal(plan.privacyPlan.criticalIdentifiersUseOpaqueMasks, true);
   assert.equal(plan.privacyPlan.focusCueWhenEvidenceIsNotObvious, 'required');
+  assert.equal(plan.privacyPlan.uiEvidenceCapture.exactStatePathRequired, true);
+  assert.equal(plan.privacyPlan.uiEvidenceCapture.thumbnailGuessingAllowed, false);
+  assert.equal(plan.privacyPlan.uiEvidenceCapture.roiManifestRequired, true);
+  assert.equal(plan.privacyPlan.uiEvidenceCapture.preserveSourceAspectRatio, true);
+  assert.equal(plan.privacyPlan.uiEvidenceCapture.recordingOnlyWhenInteractionOrChangeIsEvidence,
+    true);
   assert.equal(plan.presentationSafety.presenterInsertEntryFrame, 'normal-expression-eyes-open');
   assert.equal(plan.presentationSafety.platformUiExclusionZonesRequired, true);
   assert.equal(plan.finishingPass.voiceIsolation.processEachSourceRangeSeparately, true);
@@ -275,6 +366,14 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.deepEqual(plan.finishingPass.signatureOutro.microExpressionProof,
     ['open-before', 'closed-peak', 'open-after', 'phone-size']);
   assert.deepEqual(plan.finishingPass.signatureOutro.contextualAccessories, []);
+  assert.equal(
+    plan.finishingPass.signatureOutro.approvedMotionContract.reuseExactApprovedComponent,
+    true,
+  );
+  assert.equal(
+    plan.finishingPass.signatureOutro.approvedMotionContract.simplifiedRebuildMayDropMotionBeats,
+    false,
+  );
   assert.equal(plan.finishingPass.signatureOutro.privateProfilePromotionRequiresExplicitApproval,
     true);
   assert.equal(plan.finishingPass.signatureOutro.motionEnvelope.topTrackPreventsSelfClipping, false);
@@ -323,6 +422,63 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.timebaseIntegrity.copyRawFrameNumbersAcrossDifferentFps, false);
   assert.equal(plan.timebaseIntegrity.deriveDurationsFromAdjacentConvertedEndpoints, true);
   assert.deepEqual(plan.informationCoverage, []);
+});
+
+test('app evidence uses exact state paths and semantic ROI instead of guessed callouts', () => {
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const evidence = state.roughCutPolicy.screenshotEvidence;
+  assert.match(evidence.exactStatePath, /page-primary-tab-subtab/);
+  assert.equal(evidence.thumbnailOrVisualGuessing, 'forbidden');
+  assert.match(evidence.roiManifest, /actual-output/);
+  assert.equal(evidence.stableStateCapture, 'still-preferred');
+  assert.equal(evidence.interactionCapture,
+    'recording-only-when-interaction-or-change-is-the-evidence');
+
+  const standard = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'),
+    'utf8',
+  );
+  const audit = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references',
+      'evidence-state-roi-audit.md'),
+    'utf8',
+  );
+  const qa = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'qa-report.template.md'),
+    'utf8',
+  );
+  assert.match(standard, /## Exact UI Evidence And Semantic ROI/);
+  assert.match(standard, /DOM\/accessibility text and control bounds first/);
+  assert.match(standard, /Never guess a rectangle from a thumbnail/);
+  assert.match(standard, /requested bounds, actual output dimensions/);
+  assert.match(audit, /rejected state `Monthly Report`/);
+  assert.match(audit, /Keep requested and output bounds separate/);
+  assert.match(audit, /before\/on\/after frames of every state or image transition/);
+  assert.match(audit, /禁止从编辑器缩略图/);
+  assert.match(qa, /Exact evidence state path/);
+  assert.match(qa, /Every critical ROI was derived/);
+});
+
+test('approved signature outro inherits the complete motion contract', () => {
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const outro = state.roughCutPolicy.finishingPass.signatureOutro;
+  assert.match(outro.approvedMotionContract, /tilt-blink-or-wink/);
+  assert.equal(outro.simplifiedRebuildMayDropMotionBeats, false);
+  assert.equal(outro.redesignRequiresExplicitApproval, true);
+
+  const standard = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'),
+    'utf8',
+  );
+  const qa = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'qa-report.template.md'),
+    'utf8',
+  );
+  assert.match(standard, /tilt, blink\/wink, timing, scale envelope, placement/);
+  assert.match(standard, /simplified reconstruction.*regression/);
+  assert.match(qa, /no simplified rebuild silently removed a motion beat/);
 });
 
 test('rough cut owns natural color while finishing separates captions from progress labels', () => {
@@ -490,7 +646,8 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /Always preserve a question or exclamation mark even when it is page-final/);
   assert.match(standard, /Preserve paired structural closers/);
   assert.match(standard, /Pagination changes invalidate the punctuation decision/);
-  assert.match(standard, /Do not use a global punctuation-hide switch/);
+  assert.match(standard, /Do not use a renderer switch that strips every punctuation mark/);
+  assert.match(standard, /setting named `hidePunctuation` is acceptable only when its verified contract is page-aware/);
   assert.match(standard, /Caption metadata is not visual proof/);
   assert.match(standard, /supplied manuscript as the punctuation source of truth/);
   assert.match(standard, /Do not invent title marks, replace enumeration commas with vertical bars/);
