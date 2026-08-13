@@ -12,6 +12,9 @@ Before changing the workflow or a tool decision:
 
 Hard rules:
 
+- Treat `origin/main` as the shared versioned source of truth. After a user-approved reusable rule
+  or workflow change, run the required validation, commit, push, and verify that local `HEAD` and
+  `origin/main` are identical in the same task. Never leave a completed Skill iteration local-only.
 - Never commit personal footage, faces, voices, transcripts, unpublished renders, credentials, account identifiers, cookies, API keys, model caches, or absolute user media paths.
 - Keep personal preferences and feedback outside Git under `AI_VIDEO_DIRECTOR_DATA_DIR`.
 - Keep every video project outside this repository and initialize it with the provided project command.
