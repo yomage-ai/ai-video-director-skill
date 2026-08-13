@@ -124,6 +124,37 @@ test('private feedback needs explicit approval before base-profile promotion', (
   assert.equal(profile.promotionHistory[0].sourceFeedbackId, record.event.id);
 });
 
+test('approved revisions are isolated and deliverables preserve source lineage', () => {
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const plan = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'director-plan.template.json'),
+    'utf8',
+  ));
+  const standard = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references',
+      'production-standard.md'),
+    'utf8',
+  );
+  const qa = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'qa-report.template.md'),
+    'utf8',
+  );
+
+  assert.equal(state.roughCutPolicy.finishingPass.approvalChangeIsolation
+    .approvedTimelineDuplicatedBeforeRevision, true);
+  assert.equal(state.roughCutPolicy.finishingPass.approvalChangeIsolation
+    .approvedReusableAssetOverwrittenInPlace, false);
+  assert.equal(plan.finishingPass.chapterProgress.component.markerSelection
+    .newAssetRequiresStillAndMotionPreview, true);
+  assert.match(standard, /Any unexplained difference blocks export/);
+  assert.match(standard, /Platform compatibility and source-quality mastery are separate gates/);
+  assert.match(standard, /Do not convert a `30 fps` edit to `60 fps` through frame duplication/);
+  assert.match(qa, /Last approved timeline, reusable assets, and export were preserved/);
+  assert.match(qa, /Platform compatibility was verified separately from source-quality mastery/);
+});
+
 test('doctor passes required local dependencies with isolated private paths', () => {
   const temp = mkdtempSync(path.join(os.tmpdir(), 'ai-video-doctor-'));
   const output = JSON.parse(runNode('director.mjs', ['doctor'], {
@@ -302,7 +333,12 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.captions.semanticPunctuation.inventOrSubstituteSymbols, false);
   assert.equal(plan.finishingPass.captions.preserveApprovedVisualStyleUnlessExplicitChange, true);
   assert.equal(plan.finishingPass.captions.progressLayerRequestsDoNotRestyleCaptions, true);
-  assert.equal(plan.finishingPass.chapterProgress.defaultEnabled, true);
+  assert.equal(plan.finishingPass.chapterProgress.defaultEnabled, null);
+  assert.equal(plan.finishingPass.chapterProgress.selectionMode, 'content-driven');
+  assert.equal(plan.finishingPass.chapterProgress.enableWhen,
+    'defensible-sections-or-approved-recurring-series-format');
+  assert.equal(plan.finishingPass.chapterProgress.omitWhen,
+    'decorative-only-or-attention-cost-exceeds-navigation-value');
   assert.equal(plan.finishingPass.chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(plan.finishingPass.chapterProgress.defaultVisualGrammar,
     'shared-two-lane-clean-track-with-label-boundary-dividers-only');
@@ -660,7 +696,11 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
       'semantic-progress-rmcu.template.json'),
     'utf8',
   ));
-  assert.equal(chapterProgress.default, 'enabled-after-structural-timing-lock');
+  assert.equal(chapterProgress.default, 'content-driven-after-structural-timing-lock');
+  assert.equal(chapterProgress.enableWhen,
+    'defensible-sections-or-approved-recurring-series-format');
+  assert.equal(chapterProgress.omitWhen,
+    'decorative-only-or-attention-cost-exceeds-navigation-value');
   assert.equal(chapterProgress.segmentWidth, 'duration-proportional');
   assert.equal(chapterProgress.defaultVisualGrammar,
     'shared-two-lane-clean-track-with-label-boundary-dividers-only');
@@ -700,6 +740,13 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.equal(chapterProgress.component.chapterNumbers, 'forbidden-by-default');
   assert.equal(chapterProgress.component.activeSegmentPanel, 'forbidden-by-default');
   assert.equal(chapterProgress.component.personalIdentityAssetRequired, false);
+  assert.equal(chapterProgress.component.markerSelection.basis,
+    'content-meaning-creator-fit-and-attention-budget');
+  assert.equal(chapterProgress.component.markerSelection.semanticContactPointAnchorRequired, true);
+  assert.equal(chapterProgress.component.markerSelection.markerOnlyChangePreservesAllOtherApprovedLayers,
+    true);
+  assert.equal(chapterProgress.component.markerSelection.approvedAssetPreservedUntilReplacementPasses,
+    true);
   assert.equal(rmcuTemplate.componentId, 'rmcu.semantic-progress.v1');
   assert.equal(rmcuTemplate.behavior.activeOverflow.onlyWhenOverflowing, true);
   assert.equal(rmcuTemplate.behavior.activeOverflow.layoutBoxRemainsStable, true);
@@ -751,6 +798,15 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
     'private-profile-progress-token-or-identity-marker-overrides-only',
   ));
   assert.ok(state.approvedCapabilities.includes(
+    'content-driven-progress-selection-and-semantic-marker-anchor',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
+    'approved-version-duplication-change-allowlist-and-post-edit-diff',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
+    'review-proxy-platform-release-and-source-quality-master-classification',
+  ));
+  assert.ok(state.approvedCapabilities.includes(
     'owned-identity-signature-outro-with-preview-before-reuse',
   ));
   assert.match(standard, /Derive its sections from the approved semantic structure/);
@@ -773,6 +829,13 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /repository-owned `rmcu\.semantic-progress\.v1` contract/);
   assert.match(standard, /Only the active label may move/);
   assert.match(standard, /Walking characters, logos, and personal-IP markers are optional private adapters/);
+  assert.match(standard, /Choose the marker role from the content, creator identity, and attention budget/);
+  assert.match(standard, /visible tip must coincide with the filled rail endpoint within one composition pixel/);
+  assert.match(standard, /Replacing only a marker does not authorize a redesign/);
+  assert.match(standard, /## Approval Memory And Change Isolation/);
+  assert.match(standard, /Write a change allowlist and an invariant list before editing/);
+  assert.match(standard, /Classify each render as `review-proxy`, `platform-release`, or `source-quality-master`/);
+  assert.match(standard, /Never upscale or rename the proxy to imply source-quality mastery/);
   assert.match(standard, /private style profile may lock only creator-specific token overrides/);
   assert.match(standard, /## Recurring Signature Outro/);
   assert.match(standard, /## Dialogue Loudness Calibration/);
@@ -814,6 +877,10 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(qaTemplate, /Landscape and portrait use the same two-lane grammar/);
   assert.match(qaTemplate, /Only the active overflowing label loops/);
   assert.match(qaTemplate, /generic component uses a neutral playhead/);
+  assert.match(qaTemplate, /## Approved-Version Change Isolation/);
+  assert.match(qaTemplate, /Marker choice is justified by content meaning/);
+  assert.match(qaTemplate, /visible contact point matches the filled-rail endpoint within one composition pixel/);
+  assert.match(qaTemplate, /Deliverable classification \(`review-proxy\|platform-release\|source-quality-master`\)/);
   assert.match(qaTemplate, /## Signature Outro/);
   assert.match(qaTemplate, /Owned or explicitly approved identity art is used/);
 });

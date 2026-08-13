@@ -252,7 +252,10 @@
       ]
     },
     "chapterProgress": {
-      "defaultEnabled": true,
+      "defaultEnabled": null,
+      "selectionMode": "content-driven",
+      "enableWhen": "defensible-sections-or-approved-recurring-series-format",
+      "omitWhen": "decorative-only-or-attention-cost-exceeds-navigation-value",
       "chapterSource": "approved-semantic-structure-after-timing-lock",
       "meaningfulSegmentCount": {
         "minimum": 2,
@@ -280,6 +283,12 @@
         "activeSegmentPanel": false,
         "defaultMarker": "neutral-playhead",
         "personalIdentityAssetRequired": false,
+        "markerSelection": {
+          "basis": "content-meaning-creator-fit-and-attention-budget",
+          "newAssetRequiresStillAndMotionPreview": true,
+          "semanticContactPointAnchorRequired": true,
+          "markerOnlyChangePreservesAllOtherApprovedLayers": true
+        },
         "portraitDeliveryLayoutPreset": "layout.portrait-talking-head.safe-v1",
         "parameterTemplate": "assets/templates/semantic-progress-rmcu.template.json"
       },

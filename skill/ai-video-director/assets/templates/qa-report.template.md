@@ -18,6 +18,14 @@
 - Speech isolation strength, per-source-range routing, and early/late audible samples:
 - Blank/frozen/corrupt frame checks:
 
+## Approved-Version Change Isolation
+
+- Last approved timeline, reusable assets, and export were preserved; the revision used a duplicated timeline and new asset version rather than an in-place overwrite:
+- Declared change allowlist (tracks/items/assets/ranges/parameters allowed to change):
+- Declared invariants (caption pages and punctuation, audio, color, timing, B-roll, layout, outro, and other approved layers that must not change):
+- Post-edit diff of timeline structure, track/item counts, ranges, asset references, captions, audio identity or measured mix, and representative unaffected pixels:
+- Every observed difference is explained by the allowlist; otherwise result is `fail`:
+
 ## Dialogue And Captions
 
 - Full dialogue listened:
@@ -95,6 +103,9 @@
 - No leading label dashes, chapter numbers, active-segment panels, duplicate separators, or boxed chapter cards were added by default:
 - Past and future overflowing labels use a static ellipsis. Only the active overflowing label loops inside its unchanged segment; hold, motion, wrap, chapter reset, and seek/re-render frames were checked:
 - The generic component uses a neutral playhead and has no required creator identity asset; any private marker adapter is documented separately:
+- Marker choice is justified by content meaning, creator fit, and attention budget rather than asset availability; alternatives that imply the wrong mood were rejected:
+- Any pen/nib or other semantic-contact marker declares its anchor; the visible contact point matches the filled-rail endpoint within one composition pixel, uses continuous travel, does not reset at chapter boundaries, and keeps micro-motion on a separate seek-safe clock:
+- A marker-only replacement preserved the approved track, background, labels, chapter boundaries, safe inset, captions, and nearby layout; the previous approved marker asset remains recoverable:
 - Current, past, and future hierarchy uses weight, opacity, fill, and playhead rather than scene-by-scene color inversion:
 - Progress-label readability passed representative A-roll, bright B-roll, dark B-roll, chapter-boundary, native-size, and phone-size review:
 - Published target-device screenshots prove that platform descriptions, controls, and action rails do not cover semantic progress labels; when the top fallback is used, headings, evidence, and picture-in-picture were reflowed below or around it while the approved caption lane remained intact:
@@ -132,6 +143,11 @@ Record a decision and reason for every category. `Off`/`none` is valid; `unrevie
 - Rights manifest complete:
 - Editable project opens:
 - Canonical EDL and captions included:
+- Deliverable classification (`review-proxy|platform-release|source-quality-master`), source lineage, resolution, frame cadence, codec, and limitations:
+- Platform compatibility was verified separately from source-quality mastery using current authoritative requirements:
+- A lower-resolution review proxy was not upscaled or renamed as the master; any higher-quality original was conformed through the approved timing:
+- Frame cadence is intentional and verified; no duplicated-frame `30 fps` to `60 fps` relabeling:
+- The actual delivered file was probed for dimensions, duration, frame count, codecs, color, audio, loudness, true peak, sync, blank/frozen frames, and lineage:
 - Known limitations:
 
 ## Decision
