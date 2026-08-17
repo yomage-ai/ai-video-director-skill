@@ -32,6 +32,12 @@ Use $ai-video-director to process the attached talking-head video. Inspect the m
 
 For a dialogue recut, the Skill also audits every real clip boundary against the manuscript: complete first/last words, natural pause length, no retained swallow or mouth noise, and rendered normal-speed proof before rough-cut approval.
 
+For short-card captions, you can add:
+
+```text
+Use the comma-and-sentence short-card caption profile. Start a new card after every comma, period, semicolon, colon, question mark, and exclamation mark. Keep enumeration commas only in short lists and split long lists by meaning. Never use a fixed character count to cut a Chinese word, English term, or product name, and never start a card with detached punctuation.
+```
+
 For app or dashboard evidence, the Skill locks the exact page/tab/subtab state, derives each crop from source semantics instead of guessing from a screenshot thumbnail, records an ROI manifest, and blocks export when an adjacent view or approximate callout is shown. An approved signature outro also keeps its full motion contract, including any tilt and blink/wink, unless a new version is explicitly approved.
 
 For the reusable semantic-progress component, you can add:
@@ -43,13 +49,19 @@ Use the generic RMCU semantic progress component. Choose its landscape or portra
 For a multi-device 9:16 talking-head layout, you can add:
 
 ```text
-Use the approved portrait talking-head safe layout. Keep crop-tolerant backgrounds full bleed, but keep captions, progress semantics, important B-roll regions, picture-in-picture or presenter cutouts, and identity marks visible on both narrow phones and wide tablets. Validate the real published player instead of treating the encoded canvas edge as safe.
+Use the approved portrait talking-head safe layout. Keep crop-tolerant backgrounds full bleed, but keep captions, progress semantics, important B-roll regions, bounded picture-in-picture, and every required presenter region such as the face, gesture, or identity mark visible on both narrow phones and wide tablets. Validate the real published player instead of treating the encoded canvas edge as safe.
 ```
 
 For the outlined live-presenter cutout style, you can add:
 
 ```text
-Use B-roll as the base and keep the time-aligned presenter visible as an outlined transparent cutout when the actual moving matte passes. Use HyperFrames background removal locally on the clean locked A-roll, keep dialogue on the canonical audio track, and fall back to a designed PiP or full-screen evidence instead of keeping broken edges.
+Use B-roll as the base and keep the time-aligned presenter visible as an outlined transparent cutout when the actual moving matte passes. Declare the presenter as foreground, supporting, or background, then independently choose a container-bottom or canvas-bottom anchor. Keep foreground people and bounded PiP clear of other UI; a deliberately low-salience background cutout may sit behind captions or platform copy when the face, required gesture, critical evidence, and identity marks remain readable. Use HyperFrames background removal locally on the clean locked A-roll, keep dialogue on the canonical audio track, and fall back to a designed PiP or full-screen evidence instead of keeping broken edges.
+```
+
+To prevent source cuts and B-roll layouts from flashing as separate states, you can add:
+
+```text
+Conform source cuts and layout boundaries. When a new take should already be inside a B-roll/PiP layout, make both changes on the same program frame. Use integer frame indices as the canonical timing source and derive seconds from frame/fps without six-decimal rounding. Keep one presenter layer across a continuous information run, forbid brief A-roll bridges, and require an intentional A-roll reset to hold at least two seconds. Allow shorter layouts only for a declared token-synchronized mode demo, then audit the boundary frames before export.
 ```
 
 For reusable code-authored motion graphics, you can add:

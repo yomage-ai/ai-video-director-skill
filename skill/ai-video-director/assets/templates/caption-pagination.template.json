@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "profileId": "comma-and-sentence-short-card-v1",
+  "maxUnits": 26,
+  "forceBreakPunctuation": ["，", "。", "；", "：", "！", "？", ",", ".", ";", ":", "!", "?"],
+  "protectedTerms": ["HyperFrames", "Remotion", "FFmpeg", "A-roll", "B-roll"],
+  "segments": [
+    {
+      "id": "segment-001",
+      "sourceText": "先选 HyperFrames、Remotion，然后输出。",
+      "pages": [
+        {
+          "rawText": "先选 HyperFrames、Remotion，",
+          "displayText": "先选 HyperFrames、Remotion"
+        },
+        {
+          "rawText": "然后输出。",
+          "displayText": "然后输出"
+        }
+      ]
+    }
+  ]
+}

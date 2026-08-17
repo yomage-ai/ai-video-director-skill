@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {execFileSync, spawnSync} from 'node:child_process';
-import {mkdtempSync, readFileSync, realpathSync} from 'node:fs';
+import {mkdtempSync, readFileSync, realpathSync, writeFileSync} from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -649,6 +649,15 @@ test('continuous B-roll planning classifies aggregate runs before individual car
     'AB-split',
   ]);
   assert.equal(policy.layoutAxis, 'ab-live-composition');
+  assert.equal(policy.presenterPriorityAxis, 'semantic-visual-layer-independent-of-layout');
+  assert.deepEqual(policy.presenterPriorities, ['foreground', 'supporting', 'background']);
+  assert.equal(policy.presenterAnchorAxis, 'placement-independent-of-priority');
+  assert.deepEqual(policy.presenterAnchors, [
+    'container-bottom',
+    'canvas-bottom',
+    'bounded-pip-region',
+    'other-declared-anchor',
+  ]);
   assert.deepEqual(policy.legacyModeAliases['AB-live-PiP'], {
     mode: 'AB-live',
     layout: 'B-base-A-PiP',
@@ -686,6 +695,12 @@ test('presenter cutout is governed, bilingual and fail-closed', () => {
   assert.equal(cutout.outline.implementation,
     'single-hyperframes-video-with-svg-feMorphology-and-feComposite');
   assert.equal(cutout.outline.mustTrackTheSameAlpha, true);
+  assert.equal(cutout.placement.visualPriorityRequired, true);
+  assert.deepEqual(cutout.placement.visualPriorityValues,
+    ['foreground', 'supporting', 'background']);
+  assert.equal(cutout.placement.anchorRequired, true);
+  assert.match(cutout.placement.backgroundCollisionPolicy,
+    /captions-and-platform-copy-may-overlay-nonessential-body-area/);
   assert.equal(cutout.placement.geometryStableWithinCoverageRun, true);
 
   const guide = readFileSync(
@@ -701,6 +716,11 @@ test('presenter cutout is governed, bilingual and fail-closed', () => {
   assert.match(guide, /feMorphology/);
   assert.match(guide, /feComposite/);
   assert.match(guide, /The gate passes only when the intended shot is acceptable as moving video/);
+  assert.match(guide, /### Presenter Visual Priority/);
+  assert.match(guide, /container-bottom anchor/);
+  assert.match(guide, /`background`/);
+  assert.match(guide, /### 人物视觉层级/);
+  assert.match(guide, /字幕和平台说明可以有意叠在非关键身体区/);
   assert.match(guide, /模型下载、环境诊断、预处理和缓存都由 Agent 完成/);
 
   const governance = JSON.parse(readFileSync(
@@ -734,6 +754,7 @@ test('presenter cutout is governed, bilingual and fail-closed', () => {
   assert.match(qa, /Moving matte proof over bright, dark, and busy backgrounds/);
   assert.match(qa, /cutout layer was muted/);
   assert.match(qa, /derived from the same alpha/);
+  assert.match(qa, /Every presenter run records `foreground`, `supporting`, or `background`/);
 });
 
 test('PiP, transitions and semantic punctuation are planned from composed content', () => {
@@ -741,6 +762,8 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   const safety = state.roughCutPolicy.presentationSafety.pictureInPictureDesign;
   const transition = state.roughCutPolicy.bRollContinuity.transitionGrammar;
   const punctuation = state.roughCutPolicy.finishingPass.captions.semanticPunctuation;
+  assert.equal(safety.defaultVisualPriority, 'foreground-or-supporting');
+  assert.equal(safety.boundedWindowMayBeTreatedAsDisposableBackground, false);
   assert.equal(safety.scaledUncroppedSourceDefault, 'forbidden');
   assert.equal(safety.fixedGlobalSize, 'forbidden');
   assert.equal(safety.sizeSelection, 'per-card-and-coverage-run-composition');
@@ -1198,4 +1221,133 @@ test('code motion component reference defines reusable layers and fail-closed QA
   assert.equal(template.qa.contactPointErrorMaximumCompositionPx, 1);
   assert.equal(template.replacement.reversibleBaselinePreserved, true);
   assert.match(reference, /code-motion-component\.template\.json/);
+});
+
+test('caption pagination profile is bilingual and fails closed on punctuation and token splits', () => {
+  const reference = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references',
+      'caption-semantic-pagination.md'),
+    'utf8',
+  );
+  const skill = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'SKILL.md'),
+    'utf8',
+  );
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const templatePath = path.join(repoRoot, 'skill', 'ai-video-director', 'assets',
+    'templates', 'caption-pagination.template.json');
+
+  const valid = JSON.parse(runNode('audit-caption-pages.mjs', [templatePath]));
+  assert.equal(valid.result, 'pass');
+  assert.equal(valid.pages, 2);
+
+  const temp = mkdtempSync(path.join(os.tmpdir(), 'ai-video-caption-audit-'));
+  const invalidPath = path.join(temp, 'invalid.json');
+  writeFileSync(invalidPath, JSON.stringify({
+    schemaVersion: 1,
+    profileId: 'comma-and-sentence-short-card-v1',
+    maxUnits: 26,
+    forceBreakPunctuation: ['，', '。', ',', '.'],
+    protectedTerms: ['Remotion'],
+    segments: [{
+      id: 'bad',
+      sourceText: '选择 Remotion，然后输出。',
+      pages: [
+        {rawText: '选择 Remot', displayText: '选择 Remot'},
+        {rawText: 'ion，然后输出。', displayText: 'ion，然后输出'},
+      ],
+    }],
+  }));
+  const invalid = spawnSync(process.execPath, [
+    path.join(scripts, 'audit-caption-pages.mjs'), invalidPath,
+  ], {cwd: repoRoot, encoding: 'utf8'});
+  assert.notEqual(invalid.status, 0);
+  assert.match(invalid.stdout, /boundary splits a Latin token/);
+  assert.match(invalid.stdout, /force-break punctuation/);
+  assert.match(invalid.stdout, /protected term/);
+
+  const captions = state.roughCutPolicy.finishingPass.captions;
+  assert.equal(captions.fixedWidthCodePointSplit, 'forbidden');
+  assert.equal(captions.paginationProfiles.commaAndSentenceShortCard
+    .commaPeriodSemicolonColonQuestionExclamation, 'force-new-card');
+  assert.ok(state.approvedCapabilities.includes(
+    'audited-caption-pagination-with-no-fixed-width-code-point-splits'));
+  assert.match(reference, /fixed-width code-point fallback/);
+  assert.match(reference, /固定字符数硬切/);
+  assert.match(reference, /Every comma, period, semicolon, colon/);
+  assert.match(reference, /每个逗号、句号、分号、冒号/);
+  assert.match(skill, /caption-semantic-pagination\.md/);
+  assert.match(skill, /audit-caption-pages\.mjs/);
+});
+
+test('coverage boundary audit blocks short A-roll bridges and unsnapped source-cut layout changes', () => {
+  const reference = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references',
+      'presenter-coverage-modes.md'),
+    'utf8',
+  );
+  const skill = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'SKILL.md'),
+    'utf8',
+  );
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const templatePath = path.join(repoRoot, 'skill', 'ai-video-director', 'assets',
+    'templates', 'coverage-boundary-audit.template.json');
+
+  const valid = JSON.parse(runNode('audit-coverage-boundaries.mjs', [templatePath]));
+  assert.equal(valid.result, 'pass');
+  assert.equal(valid.aggregateRuns, 4);
+  assert.ok(valid.frameBoundaryChecks >= 8);
+
+  const temp = mkdtempSync(path.join(os.tmpdir(), 'ai-video-coverage-audit-'));
+  const invalidPath = path.join(temp, 'invalid.json');
+  writeFileSync(invalidPath, JSON.stringify({
+    schemaVersion: 1,
+    fps: 30,
+    durationSeconds: 8,
+    minimumIntentionalDwellSeconds: 2,
+    nearSourceCutSeconds: 1,
+    sourceCuts: [0, 4, 8],
+    sourceCutFrames: [0, 120, 240],
+    runs: [
+      {id: 'b-before', startSec: 0, endSec: 3.8, startFrame: 0, endFrame: 114, mode: 'AB-live', layout: 'B-base-A-PiP'},
+      {id: 'flash', startSec: 3.800001, endSec: 4.2, startFrame: 114, endFrame: 126, mode: 'A-only'},
+      {id: 'b-after', startSec: 4.2, endSec: 8, startFrame: 126, endFrame: 240, mode: 'AB-live', layout: 'B-base-A-PiP'},
+    ],
+    continuousRuns: [{
+      id: 'broken-cards',
+      startSec: 0,
+      endSec: 8,
+      presenterRequired: true,
+      presenter: {id: 'short-pip', startSec: 0, endSec: 3.8},
+      cards: [
+        {id: 'a', startSec: 0, endSec: 3.8},
+        {id: 'b', startSec: 4.2, endSec: 8},
+      ],
+    }],
+  }));
+  const invalid = spawnSync(process.execPath, [
+    path.join(scripts, 'audit-coverage-boundaries.mjs'), invalidPath,
+  ], {cwd: repoRoot, encoding: 'utf8'});
+  assert.notEqual(invalid.status, 0);
+  assert.match(invalid.stdout, /dwell is below/);
+  assert.match(invalid.stdout, /becomes runtime frame/);
+  assert.match(invalid.stdout, /A-only\/layout boundary/);
+  assert.match(invalid.stdout, /card gap\/overlap/);
+  assert.match(invalid.stdout, /stable presenter interval/);
+
+  const continuity = state.roughCutPolicy.bRollContinuity;
+  assert.equal(continuity.coverageRunClassification.minimumIntentionalARollResetSeconds, 2);
+  assert.equal(continuity.coverageBoundaryAudit.continuousCardRunsForbidAOnlyBridge, true);
+  assert.equal(continuity.coverageBoundaryAudit.canonicalBoundaryUnit,
+    'integer-frame-index');
+  assert.equal(continuity.coverageBoundaryAudit.runtimeFrameResolutionAudit, true);
+  assert.ok(state.approvedCapabilities.includes(
+    'source-cut-and-layout-boundary-conformance-audit'));
+  assert.match(reference, /Source-Cut And Layout-Boundary Conformance/);
+  assert.match(reference, /源片剪点与版式边界统一/);
+  assert.match(reference, /same program frame/);
+  assert.match(reference, /150\.666667/);
+  assert.match(reference, /同一个节目帧/);
+  assert.match(skill, /audit-coverage-boundaries\.mjs/);
 });

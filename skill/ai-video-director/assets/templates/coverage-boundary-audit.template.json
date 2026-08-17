@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "fps": 30,
+  "durationSeconds": 12,
+  "minimumIntentionalDwellSeconds": 2,
+  "nearSourceCutSeconds": 1,
+  "sourceCuts": [0, 4, 8, 12],
+  "sourceCutFrames": [0, 120, 240, 360],
+  "runs": [
+    {
+      "id": "opening-a-only",
+      "startSec": 0,
+      "endSec": 4,
+      "startFrame": 0,
+      "endFrame": 120,
+      "mode": "A-only"
+    },
+    {
+      "id": "long-ab-run",
+      "startSec": 4,
+      "endSec": 8,
+      "startFrame": 120,
+      "endFrame": 240,
+      "mode": "AB-live",
+      "layout": "B-base-A-PiP",
+      "boundaryPolicy": "source-cut-snap"
+    },
+    {
+      "id": "token-demo-a-only",
+      "startSec": 8,
+      "endSec": 9.2,
+      "startFrame": 240,
+      "endFrame": 276,
+      "mode": "A-only",
+      "boundaryPolicy": "source-cut-snap",
+      "exception": "token-synchronized-demo",
+      "tokenWindow": {
+        "startSec": 8,
+        "endSec": 9.2,
+        "firstToken": "pure",
+        "lastToken": "A-roll"
+      }
+    },
+    {
+      "id": "closing-b-only",
+      "startSec": 9.2,
+      "endSec": 12,
+      "startFrame": 276,
+      "endFrame": 360,
+      "mode": "B-only"
+    }
+  ],
+  "continuousRuns": [
+    {
+      "id": "long-ab-run",
+      "startSec": 4,
+      "endSec": 8,
+      "presenterRequired": true,
+      "presenter": {
+        "id": "presenter-pip",
+        "startSec": 4,
+        "endSec": 8
+      },
+      "cards": [
+        {"id": "card-a", "startSec": 4, "endSec": 6},
+        {"id": "card-b", "startSec": 6, "endSec": 8}
+      ]
+    }
+  ]
+}

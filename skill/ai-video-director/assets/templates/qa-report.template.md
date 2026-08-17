@@ -35,6 +35,9 @@
 - Quality-first retake decisions and any hybrid splices audited:
 - Ordinary breaths preserved and excessive dead air handled contextually:
 - Transcript/caption correctness:
+- Caption break profile and audit report; raw fixed-width code-point splitting is absent:
+- Raw pages reconstruct the manuscript, protected terms remain atomic, and no card starts with detached punctuation or an orphaned function particle:
+- Under a comma-and-sentence short-card profile, every comma/period/semicolon/colon/question/exclamation boundary creates a new card; long enumeration-comma lists are split semantically:
 - Caption scale, reflow, box height, safe area, and longest two-line page:
 - Approved caption visual style was preserved unless an explicit caption redesign was requested; progress-label requests did not alter the caption track:
 - Final viewer-facing pagination was locked before punctuation styling, and the punctuation audit was repeated after every reflow, forced break, merge, scale change, or Script edit:
@@ -68,11 +71,17 @@
 - HyperFrames version, model SHA-256, device/provider, quality, output format, source/output duration, frame rate, frame count, first/last frame, and cut-boundary alignment:
 - Moving matte proof over bright, dark, and busy backgrounds covered early/middle/late and every cut boundary; hair, glasses, hands/fingers, motion blur, foreground props, leakage, holes, halos, and temporal edge flicker passed:
 - Any presenter outline was derived from the same alpha, held stable with the cutout, and used for styling rather than to conceal a broken matte:
-- Cutout silhouette, complete motion envelope, intentional bottom bleed, scale, anchor, and side passed native, phone, caption, evidence, progress, and platform-UI collision checks:
+- Every presenter run records `foreground`, `supporting`, or `background` priority independently from its layout and anchor; bounded PiP was not treated as disposable background:
+- Cutout silhouette, complete motion envelope, intentional bottom bleed, scale, anchor, side, and declared priority passed native, phone, evidence, progress, and platform-UI collision checks. Any intentional caption/platform-copy overlap on a background cutout affects only nonessential body area and preserves face, required gesture, critical evidence, and identity marks:
 - Per-card content-occupancy map and chosen negative-space position; no primary evidence is covered:
 - Platform UI exclusion zones and caption/information-card collision:
 - Keyframes and animation seek stability:
 - Continuous B-roll runs retain full interior coverage; before/on/after seam frames show no accidental A-roll flash:
+- Coverage-boundary manifest and `audit-coverage-boundaries.mjs` report; source cuts, aggregate mode runs, continuous card spans, presenter spans, and token-demo exceptions are complete:
+- A layout intended to enter or exit on a new take shares the exact program frame with that source cut; no nearby unsnapped A-only/B-roll boundary creates three visible states inside one second:
+- Every snapped boundary records canonical integer `startFrame`/`endFrame`; authored seconds were derived from `frame / fps`, and the audit confirms those decimals resolve to the same runtime frames rather than slipping by one frame:
+- Every intentional A-only reset holds at least two seconds unless a token-synchronized comparison/mode demo explicitly records matching first and last spoken-token boundaries:
+- Entry motion is pre-rolled behind the hidden clip so the first active frame is fully covered; every changed seam passed two-before, one-before, on, one-after, and two-after rendered-frame review:
 - Adjacent B-roll beats were merged into aggregate coverage runs and each run was first classified as `A-only`, `B-only`, or `AB-live`; every `AB-live` run separately records `B-base-A-PiP`, `A-base-B-overlay`, `B-base-A-cutout`, or `AB-split`:
 - Transition grammar distinguishes continuous-card direct cuts from motivated presentation-mode changes; B-roll and its live presenter layer entrances/exits are synchronized:
 - Transitions/layout/overlap:
@@ -85,7 +94,7 @@
 - Delivery aspect ratio and pixel dimensions; a same-aspect resolution change was not treated as a crop fix:
 - For every target player, record viewport dimensions, fit behavior, height or cover scale, visible source width, crop or pillarbox per side, and desired visible margin:
 - Effective semantic safe region is the intersection of the visible source region and the band-specific platform-UI-free region, including top, right, and bottom exclusion masks:
-- Crop-tolerant backgrounds and contrast surfaces remain full bleed; caption glyphs, progress semantics, information copy, proof cues, B-roll critical regions, picture-in-picture boxes, presenter-cutout silhouettes and motion envelopes, logos, and identity marks remain inside the effective semantic safe region:
+- Crop-tolerant backgrounds and contrast surfaces remain full bleed; caption glyphs, progress semantics, information copy, proof cues, B-roll critical regions, bounded picture-in-picture boxes, required presenter regions, logos, and identity marks remain inside the effective semantic safe region. A declared background cutout may extend behind caption/platform-copy zones only under its recorded collision policy:
 - Every screenshot, diagram, and evidence B-roll declares its critical region of interest; unsafe regions were padded, recomposed, cropped to a readable detail, or split rather than blindly shrinking every shot:
 - Actual rendered caption glyphs and stroke, not only the caption item box, remain visible on the narrow-phone simulation and published screenshot:
 - The approved caption lane was preserved when the top progress band was introduced; nearby headings, cards, picture-in-picture, and presenter cutouts were reflowed instead:

@@ -38,6 +38,30 @@ Use two axes instead of treating every composition as one flat list. The first a
 3. Use `B-base-A-cutout` only after the actual transparent result passes its matte gate. A style preference does not override broken edges or covered evidence.
 4. Hold the chosen geometry throughout one continuous run. Change layout only at a semantic or layout boundary.
 
+### Source-Cut And Layout-Boundary Conformance
+
+Plan three clocks together: the canonical A-roll source cut, the viewer-visible coverage/layout boundary, and the first/last spoken token that permits the visual state.
+
+- When a new take is meant to begin or end under a different layout, snap the source cut and layout boundary to the same program frame. Do not show the new take full-screen for a few frames before its PiP/B-roll layout arrives, or expose the old take after that layout exits.
+- Treat integer frame indices as canonical at every snap boundary. Derive seconds from `frame / fps` without independently rounding to six decimals: at 30 fps, an authored `150.666667` starts on runtime frame 4521, while frame 4520 is `150.66666666666666`. Record `startFrame`/`endFrame` in the boundary manifest and let the audit reject a decimal that resolves to a different runtime frame.
+- Merge adjacent information cards into one aggregate coverage run before judging duration. Inside a continuous B-roll run, cut directly between cards and keep one presenter PiP/cutout item spanning the run when its geometry is unchanged. A one-frame or sub-second A-only bridge is a failure.
+- An intentional return to `A-only` must normally hold at least `2.0 s`. The creator profile may require longer. A shorter state is allowed only for a declared token-synchronized comparison or mode demonstration whose manifest records the exact first and last spoken tokens.
+- Pre-roll entry animation while the clip is hidden so the first viewer-visible frame already contains the complete intended card and presenter geometry. An opacity-zero card on its first active frame is not covered.
+- Do not create three visible states inside one second by separating a source cut from a nearby `A-only`/B-roll boundary. After any structural A-roll trim, rebase captions, B-roll, PiP/cutouts, progress, SFX, and outro cues from one canonical time transform.
+- Build a boundary manifest and run `scripts/audit-coverage-boundaries.mjs`. Inspect at least two frames before, one before, on, one after, and two after every changed boundary in the actual render.
+
+### Presenter Visual Priority
+
+Classify the presenter's visual priority before placing or collision-routing it. This priority is independent of `PiP` versus `cutout` and of container-bottom versus canvas-bottom anchoring.
+
+| Priority | Meaning | Occlusion rule |
+|---|---|---|
+| `foreground` | The face, expression, or gesture is part of the current claim | Protect the face, required gesture, silhouette, and readable container from captions, platform controls, crop reserves, and evidence |
+| `supporting` | Presenter continuity matters but the interface or evidence is primary | Protect the face, required gesture, and bounded PiP; small planned overlap on nonessential body area is acceptable only when readability remains clear |
+| `background` | The presenter is a low-salience continuity or atmosphere layer behind a large interface explanation | Captions and platform copy may intentionally overlay nonessential body area or bottom bleed; still protect the face, required gesture, critical evidence, and any identity mark that must be read |
+
+Use a container-bottom anchor when the presenter should feel attached to a panel or interface stage. Use a canvas-bottom anchor when the presenter should grow from the frame edge. Neither anchor implies one priority: declare both the anchor and priority in the shot plan. A bounded PiP normally remains `foreground` or `supporting`; do not treat its window as disposable background merely because it is small.
+
 ## HyperFrames Cutout Contract
 
 ### Source And Timing
@@ -86,7 +110,7 @@ npx --yes hyperframes@0.7.109 remove-background locked-a-roll.mp4 \
 
 - White is the default only when the approved style supports it. A reference-derived width of about `0.007-0.009` of canvas width is a starting candidate, not a universal constant.
 - An outline may soften small edge noise but may not be used to disguise missing fingers, clipped hair, a leaking background, or unstable matte timing.
-- Build a content-occupancy map for the B-roll. Bottom-left or bottom-right is a starting candidate, not a rule. Avoid captions, proof, faces, platform action rails, and progress semantics.
+- Build a content-occupancy map for the B-roll. Bottom-left or bottom-right is a starting candidate, not a rule. Apply the declared presenter-priority rule: foreground and bounded PiP reserve their readable region; a background cutout may sit behind captions or platform copy, but never hide critical proof or sacrifice the face or required gesture.
 - Intentional bottom bleed is allowed when the body crop reads naturally. Keep the visible silhouette and its full motion envelope inside the effective semantic safe region everywhere else.
 - Keep scale, anchor, side, and outline stable inside one coverage run. Do not make the presenter jump from corner to corner as B-roll cards change.
 
@@ -138,6 +162,30 @@ The gate passes only when the intended shot is acceptable as moving video, not m
 3. `B-base-A-cutout` 必须先让真实透明视频通过抠像验收。风格偏好不能覆盖破碎边缘或证据遮挡。
 4. 同一个连续区间内保持几何稳定，只在语义边界或版式边界改变。
 
+### 源片剪点与版式边界统一
+
+导演方案必须同时管理三套时钟：统一 A-roll 的真实剪点、观众看到的覆盖/版式边界，以及允许该画面出现和消失的首尾口播词点。
+
+- 新片段本来就要以另一种版式进入或退出时，源片剪点与版式边界必须落在同一个节目帧。禁止先闪几帧新 A-roll 全屏再进入小窗/B-roll，也禁止版式先退出后又露出几帧旧 A-roll。
+- 所有对齐边界都以整数帧号为准，秒数只能由 `frame / fps` 推导，不能再独立四舍五入到六位小数。例如 30 fps 下写成 `150.666667` 会在运行时第 4521 帧才出现，而第 4520 帧应写成 `150.66666666666666`。边界清单必须记录 `startFrame`/`endFrame`，审计要拒绝会落到另一运行帧的小数。
+- 先把相邻信息卡合并为观众实际看到的连续覆盖区间，再判断时长。连续 B-roll 内部直接切卡；人物几何不变时，优先用一条跨越整段的小窗或抠像素材。任何一帧或不足一秒的 A-roll 回闪都算失败。
+- 有意回到 `A-only` 时，默认至少稳定停留 `2.0 s`；创作者画像可以要求更长。只有明确声明的逐词同步对比或画面模式演示可以更短，而且清单中必须记录允许它出现和结束的准确首尾词。
+- 入场动画要在素材尚未对观众可见时预卷，使第一个可见帧已经具备完整信息卡和人物几何。素材生效首帧仍是透明状态，不算完成覆盖。
+- 不能因为源片剪点与附近的 `A-only`/B-roll 边界没有对齐，而在一秒内制造三种观众可见状态。任何结构性 A-roll 收紧之后，字幕、B-roll、小窗/抠像、进度、音效和片尾都必须通过同一份统一时间变换整体重算。
+- 必须建立边界清单并运行 `scripts/audit-coverage-boundaries.mjs`。真实渲染中，每个修改边界至少检查前两帧、前一帧、边界帧、后一帧和后两帧。
+
+### 人物视觉层级
+
+摆放人物和处理遮挡前，先声明人物的视觉层级。这个层级与“小窗还是抠像”、“贴容器底边还是贴画布底边”是互相独立的决策。
+
+| 层级 | 含义 | 遮挡规则 |
+|---|---|---|
+| `foreground` 前景 | 脸、表情或手势正在承担当前信息 | 脸、必要手势、完整轮廓和可读容器都要避开字幕、平台控件、裁切预留和证据 |
+| `supporting` 辅助 | 需要人物连续性，但界面或证据才是主体 | 保护脸、必要手势和有边界的小窗；只有在可读性不受影响时，才允许少量规划好的非关键身体区重叠 |
+| `background` 背景 | 人物只作为大块界面讲解后的弱存在感或连续层 | 字幕和平台说明可以有意叠在非关键身体区或底部出血上；仍要保护脸、必要手势、关键证据和必须读取的身份标识 |
+
+想让人物像站在面板或界面舞台上时，使用容器底边锚点；想让人物从整个画面左下或右下生长时，使用画布底边锚点。任何锚点都不自动对应某一层级；导演方案必须同时记录锚点和层级。有明确边界的小窗通常是前景或辅助层，不能因为它小就把整个窗口当成可随意遮挡的背景。
+
 ## HyperFrames 人物抠像契约
 
 ### 素材与时序
@@ -169,7 +217,7 @@ npx --yes hyperframes@0.7.109 remove-background locked-a-roll.mp4 \
 - 在 HyperFrames 中，优先让同一个透明 `<video>` 使用基于 Alpha 的 SVG 滤镜，不要用两个可能产生时序差异的视频层。根据画布宽度算出 `outlinePx`，使用英文部分给出的 `feMorphology + feComposite` 结构，并以真实渲染结果验收。
 - 只有已确认风格适合时才默认白色。参考画面可从画布宽度的 `0.007-0.009` 作为描边宽度起点，但不能当成通用常量。
 - 描边可以柔化轻微边缘噪点，不能用来掩盖手指缺失、头发被切、背景泄漏或蒙版时序抖动。
-- 先做 B-roll 内容占用图。左下或右下只是候选位置，不是固定规则；必须避开字幕、证据、人脸、平台操作栏和进度语义。
+- 先做 B-roll 内容占用图。左下或右下只是候选位置，不是固定规则。再按已声明的人物层级处理遮挡：前景人物和有边界小窗要预留完整可读区；背景抠像可以位于字幕或平台文案之后，但不能遮住关键证据，也不能牺牲脸或必要手势。
 - 身体底部有意出血可以保留，但其他可见轮廓及完整动作范围仍须位于有效语义安全区。
 - 同一覆盖区间内保持缩放、锚点、左右位置和描边稳定，不能随着 B-roll 卡片切换让人物来回跳角。
 

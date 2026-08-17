@@ -81,6 +81,17 @@
         "AB-split"
       ],
       "layoutAxis": "ab-live-composition",
+      "presenterPriorityAxis": "semantic-visual-layer-independent-of-layout",
+      "presenterPriorities": ["foreground", "supporting", "background"],
+      "presenterAnchorAxis": "placement-independent-of-priority",
+      "presenterAnchors": ["container-bottom", "canvas-bottom", "bounded-pip-region", "other-declared-anchor"],
+      "coverageRunRecordRequires": [
+        "mode",
+        "layout-when-ab-live",
+        "presenter-priority-when-visible",
+        "presenter-anchor-when-composed",
+        "collision-policy"
+      ],
       "legacyModeAliases": {
         "AB-live-PiP": {
           "mode": "AB-live",
@@ -88,12 +99,32 @@
         }
       },
       "longRunDefault": "AB-live-only-when-presenter-continuity-helps-then-select-layout-by-content-occupancy-style-and-matte-quality",
-      "intentionalARollResetRequiresReadableHold": true
+      "intentionalARollResetRequiresReadableHold": true,
+      "minimumIntentionalARollResetSeconds": 2,
+      "sourceCutLayoutSnap": "same-program-frame-when-the-layout-enters-or-exits-on-the-new-take",
+      "shortLayoutException": "declared-token-synchronized-demo-with-exact-first-and-last-token-window"
     },
     "coverageRuns": [],
     "continuousRunInteriorAlphaCoverage": "required",
     "pairedInteriorFadesMayRevealARoll": false,
     "shortGapsMustBeIntentional": true,
+    "sourceCutAndLayoutBoundaryAudit": {
+      "manifestTemplate": "assets/templates/coverage-boundary-audit.template.json",
+      "script": "scripts/audit-coverage-boundaries.mjs",
+      "exactFrameSnapWhenSameSemanticBoundary": true,
+      "canonicalBoundaryUnit": "integer-frame-index",
+      "secondsDerivation": "frame-divided-by-fps-without-independent-decimal-rounding",
+      "requiredFrameFields": ["startFrame", "endFrame"],
+      "forbidShortAOnlyBridgeInsideContinuousBrollRun": true,
+      "minimumReadableAOnlyResetSeconds": 2,
+      "renderedBoundarySamples": [
+        "two-before",
+        "one-before",
+        "on-boundary",
+        "one-after",
+        "two-after"
+      ]
+    },
     "transitionGrammar": {
       "continuousExplanationInterior": "direct-cuts-by-default",
       "presentationModeChanges": "short-restrained-dissolve-when-motivated",
@@ -152,6 +183,8 @@
     "shortProofCutaway": "presenter-optional",
     "longFullScreenExplanation": "use-ab-live-only-when-presenter-continuity-benefits-and-select-layout-separately",
     "pictureInPictureDesign": {
+      "defaultVisualPriority": "foreground-or-supporting",
+      "boundedWindowMayBeTreatedAsDisposableBackground": false,
       "scaledUncroppedSourceDefault": false,
       "cropIntent": "head-neck-and-upper-shoulders-when-appropriate",
       "shapeAndRadiusMustBeDeclared": true,
@@ -211,9 +244,15 @@
         "mayHideSmallEdgeNoiseButMayNotRepairBrokenMattes": true
       },
       "placement": {
+        "visualPriorityRequired": true,
+        "visualPriorityValues": ["foreground", "supporting", "background"],
+        "anchorRequired": true,
+        "anchorValues": ["container-bottom", "canvas-bottom", "other-declared-anchor"],
         "contentOccupancyMapRequired": true,
         "preferredBottomCornerIsOnlyADefault": true,
         "intentionalBottomBleedAllowed": true,
+        "foregroundAndSupportingCollisionPolicy": "reserve-face-required-gesture-silhouette-and-readable-container",
+        "backgroundCollisionPolicy": "captions-and-platform-copy-may-overlay-nonessential-body-area-while-face-required-gesture-critical-evidence-and-identity-marks-stay-readable",
         "geometryStableWithinCoverageRun": true,
         "changeOnlyAtSemanticOrLayoutBoundary": true
       },

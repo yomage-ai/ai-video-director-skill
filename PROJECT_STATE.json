@@ -88,6 +88,19 @@
           "AB-split"
         ],
         "layoutAxis": "ab-live-composition",
+        "presenterPriorityAxis": "semantic-visual-layer-independent-of-layout",
+        "presenterPriorities": [
+          "foreground",
+          "supporting",
+          "background"
+        ],
+        "presenterAnchorAxis": "placement-independent-of-priority",
+        "presenterAnchors": [
+          "container-bottom",
+          "canvas-bottom",
+          "bounded-pip-region",
+          "other-declared-anchor"
+        ],
         "legacyModeAliases": {
           "AB-live-PiP": {
             "mode": "AB-live",
@@ -95,11 +108,36 @@
           }
         },
         "longRunDefault": "AB-live-only-when-presenter-continuity-helps-then-select-layout-by-content-occupancy-style-and-matte-quality",
-        "intentionalARollResetRequiresReadableHold": true
+        "intentionalARollResetRequiresReadableHold": true,
+        "minimumIntentionalARollResetSeconds": 2,
+        "sourceCutLayoutSnap": "same-program-frame-when-layout-enters-or-exits-on-the-new-take",
+        "shortLayoutException": "declared-token-synchronized-demo-with-exact-first-and-last-token-window"
       },
       "continuousRunInteriorBoundary": "full-alpha-coverage",
       "pairedInteriorFadeMayExposeARoll": "forbidden",
       "shortGapDecision": "abut-b-roll-or-hold-a-roll-intentionally",
+      "coverageBoundaryAudit": {
+        "reference": "references/presenter-coverage-modes.md",
+        "manifestTemplate": "assets/templates/coverage-boundary-audit.template.json",
+        "script": "scripts/audit-coverage-boundaries.mjs",
+        "sourceCutsAndLayoutBoundariesShareFrameWhenSemanticallyLinked": true,
+        "canonicalBoundaryUnit": "integer-frame-index",
+        "requiredFrameFields": [
+          "startFrame",
+          "endFrame"
+        ],
+        "secondsDerivation": "frame-divided-by-fps-without-independent-decimal-rounding",
+        "runtimeFrameResolutionAudit": true,
+        "continuousCardRunsForbidAOnlyBridge": true,
+        "preRollHiddenEntryMotion": true,
+        "renderedFrameWindow": [
+          "two-before",
+          "one-before",
+          "on-boundary",
+          "one-after",
+          "two-after"
+        ]
+      },
       "transitionGrammar": {
         "continuousExplanationInterior": "direct-cuts-by-default",
         "presentationModeChanges": "short-restrained-dissolve-when-motivated",
@@ -149,6 +187,8 @@
       "shortProofCutaway": "presenter-optional",
       "longFullScreenExplanation": "use-ab-live-only-when-presenter-continuity-benefits-and-select-layout-separately",
       "pictureInPictureDesign": {
+        "defaultVisualPriority": "foreground-or-supporting",
+        "boundedWindowMayBeTreatedAsDisposableBackground": false,
         "scaledUncroppedSourceDefault": "forbidden",
         "cropIntent": "declare-subject-framing-and-headroom",
         "shapeRadiusAndSize": "declare-and-review",
@@ -207,9 +247,23 @@
           "mayHideSmallEdgeNoiseButMayNotRepairBrokenMattes": true
         },
         "placement": {
+          "visualPriorityRequired": true,
+          "visualPriorityValues": [
+            "foreground",
+            "supporting",
+            "background"
+          ],
+          "anchorRequired": true,
+          "anchorValues": [
+            "container-bottom",
+            "canvas-bottom",
+            "other-declared-anchor"
+          ],
           "positionSelection": "per-coverage-run-content-occupancy-map",
           "preferredBottomCorner": "default-only-not-a-rule",
           "intentionalBottomBleedAllowed": true,
+          "foregroundAndSupportingCollisionPolicy": "reserve-face-required-gesture-silhouette-and-readable-container",
+          "backgroundCollisionPolicy": "captions-and-platform-copy-may-overlay-nonessential-body-area-while-face-required-gesture-critical-evidence-and-identity-marks-stay-readable",
           "geometryStableWithinCoverageRun": true,
           "changeOnlyAtSemanticOrLayoutBoundary": true
         },
@@ -289,6 +343,21 @@
         "verification": "longest-two-line-page-with-pip-cards-and-platform-safe-areas",
         "semanticPagination": "completed-thought-and-next-thought-use-separate-cards",
         "forcedBreakPolicy": "re-read-after-structural-edit-then-force-only-if-still-needed",
+        "fixedWidthCodePointSplit": "forbidden",
+        "paginationReference": "references/caption-semantic-pagination.md",
+        "auditScript": "scripts/audit-caption-pages.mjs",
+        "paginationProfiles": {
+          "selection": "approved-reference-then-private-profile-then-semantic-card-v1",
+          "semanticCard": "semantic-card-v1",
+          "commaAndSentenceShortCard": {
+            "id": "comma-and-sentence-short-card-v1",
+            "commaPeriodSemicolonColonQuestionExclamation": "force-new-card",
+            "enumerationComma": "keep-only-in-short-list-otherwise-split-semantically",
+            "protectedTerms": "atomic",
+            "leadingDetachedPunctuation": "forbidden",
+            "rawPageReconstruction": "must-match-manuscript"
+          }
+        },
         "approvedVisualStyle": "preserve-unless-explicit-caption-redesign",
         "progressLayerRequests": "must-not-restyle-captions",
         "portraitReferenceLayout": "layout.portrait-talking-head.safe-v1",
@@ -456,6 +525,9 @@
     "cross-boundary-audible-duplicate-audit",
     "post-script-transition-and-b-roll-readback",
     "continuous-b-roll-alpha-coverage-and-seam-frame-proof",
+    "source-cut-and-layout-boundary-conformance-audit",
+    "frame-index-canonical-timing-with-runtime-frame-resolution-audit",
+    "minimum-readable-a-only-reset-with-token-demo-exception",
     "two-axis-coverage-classification-with-a-only-b-only-and-ab-live",
     "ab-live-layout-families-for-pip-b-overlay-cutout-and-split",
     "designed-pip-crop-shape-and-content-safe-dynamic-position",
@@ -464,6 +536,8 @@
     "alpha-derived-presenter-outline-and-run-stable-content-safe-placement",
     "content-driven-transition-grammar",
     "semantic-caption-pagination",
+    "audited-caption-pagination-with-no-fixed-width-code-point-splits",
+    "comma-and-sentence-short-card-caption-profile",
     "manuscript-authoritative-semantic-punctuation",
     "page-aware-caption-punctuation-with-final-question-and-exclamation-preservation",
     "explicit-finishing-design-audit-including-no-treatment-decisions",
