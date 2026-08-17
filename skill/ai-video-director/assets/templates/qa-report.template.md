@@ -64,12 +64,17 @@
 - Picture-in-picture crop intent, aspect/shape/radius, headroom, and source-crop review:
 - Picture-in-picture size and position were chosen from each card or coverage run rather than a fixed global geometry, then held stable inside the run:
 - Intended visible crop box, not only stored item dimensions, passed native and phone-scale composed-frame review:
+- For every `B-base-A-cutout` run, the derivative came from clean locked A-roll without baked captions, cards, logos, or overlays; canonical dialogue remained on its separate approved track and the cutout layer was muted:
+- HyperFrames version, model SHA-256, device/provider, quality, output format, source/output duration, frame rate, frame count, first/last frame, and cut-boundary alignment:
+- Moving matte proof over bright, dark, and busy backgrounds covered early/middle/late and every cut boundary; hair, glasses, hands/fingers, motion blur, foreground props, leakage, holes, halos, and temporal edge flicker passed:
+- Any presenter outline was derived from the same alpha, held stable with the cutout, and used for styling rather than to conceal a broken matte:
+- Cutout silhouette, complete motion envelope, intentional bottom bleed, scale, anchor, and side passed native, phone, caption, evidence, progress, and platform-UI collision checks:
 - Per-card content-occupancy map and chosen negative-space position; no primary evidence is covered:
 - Platform UI exclusion zones and caption/information-card collision:
 - Keyframes and animation seek stability:
 - Continuous B-roll runs retain full interior coverage; before/on/after seam frames show no accidental A-roll flash:
-- Adjacent B-roll beats were merged into aggregate coverage runs and each run was classified as A-only, B-only, or AB-live-PiP:
-- Transition grammar distinguishes continuous-card direct cuts from motivated presentation-mode changes; B-roll and PiP entrances/exits are synchronized:
+- Adjacent B-roll beats were merged into aggregate coverage runs and each run was first classified as `A-only`, `B-only`, or `AB-live`; every `AB-live` run separately records `B-base-A-PiP`, `A-base-B-overlay`, `B-base-A-cutout`, or `AB-split`:
+- Transition grammar distinguishes continuous-card direct cuts from motivated presentation-mode changes; B-roll and its live presenter layer entrances/exits are synchronized:
 - Transitions/layout/overlap:
 - Caption pages separate completed thoughts from the next thought after final pagination readback:
 - Native and thumbnail-scale inspection:
@@ -80,10 +85,10 @@
 - Delivery aspect ratio and pixel dimensions; a same-aspect resolution change was not treated as a crop fix:
 - For every target player, record viewport dimensions, fit behavior, height or cover scale, visible source width, crop or pillarbox per side, and desired visible margin:
 - Effective semantic safe region is the intersection of the visible source region and the band-specific platform-UI-free region, including top, right, and bottom exclusion masks:
-- Crop-tolerant backgrounds and contrast surfaces remain full bleed; caption glyphs, progress semantics, information copy, proof cues, B-roll critical regions, picture-in-picture motion envelopes, logos, and identity marks remain inside the effective semantic safe region:
+- Crop-tolerant backgrounds and contrast surfaces remain full bleed; caption glyphs, progress semantics, information copy, proof cues, B-roll critical regions, picture-in-picture boxes, presenter-cutout silhouettes and motion envelopes, logos, and identity marks remain inside the effective semantic safe region:
 - Every screenshot, diagram, and evidence B-roll declares its critical region of interest; unsafe regions were padded, recomposed, cropped to a readable detail, or split rather than blindly shrinking every shot:
 - Actual rendered caption glyphs and stroke, not only the caption item box, remain visible on the narrow-phone simulation and published screenshot:
-- The approved caption lane was preserved when the top progress band was introduced; nearby headings, cards, and picture-in-picture were reflowed instead:
+- The approved caption lane was preserved when the top progress band was introduced; nearby headings, cards, picture-in-picture, and presenter cutouts were reflowed instead:
 - Any signature-outro underline remains visibly below the rendered caption ink and was moved or shortened before any approved-caption relocation:
 - Narrow tall phone, reference 9:16 viewport, and wide tablet checks passed at native and phone scale; real published screenshots replaced simulation when available:
 

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "decisionStatus": "approved-local-capability",
+  "evaluatedAt": "2026-08-17",
+  "identity": {
+    "name": "HyperFrames remove-background with u2net_human_seg",
+    "kind": "tool-plus-model-runtime",
+    "version": "HyperFrames CLI 0.7.109",
+    "revision": "u2net_human_seg.onnx sha256:01eb6a29a5c4d8edb30b56adad9bb3a2a0535338e480724a213e0acfd2d1c73c",
+    "officialSource": "https://github.com/heygen-com/hyperframes/blob/main/docs/guides/remove-background.mdx"
+  },
+  "workflowRole": {
+    "stage": "fine-edit preprocessing after rough-cut and canonical timing lock",
+    "function": "remove the background from clean time-aligned presenter footage for the B-base-A-cutout layout",
+    "output": "VP9-alpha WebM, ProRes 4444 MOV, or transparent PNG",
+    "execution": "deterministic",
+    "location": "local"
+  },
+  "licensing": {
+    "software": {
+      "license": "Apache-2.0",
+      "source": "https://github.com/heygen-com/hyperframes/blob/main/LICENSE",
+      "openSource": true,
+      "commercialUse": true,
+      "conditions": [
+        "retain the Apache-2.0 license and required notices when redistributing the software",
+        "this repository does not redistribute the HyperFrames runtime"
+      ]
+    },
+    "modelWeights": {
+      "license": "Apache-2.0 based on the upstream U-2-Net repository",
+      "source": "https://github.com/xuebinqin/U-2-Net/blob/master/LICENSE",
+      "commercialUse": true,
+      "conditions": [
+        "retain applicable Apache-2.0 notices if redistributing model materials",
+        "the ONNX file is downloaded from the rembg release host, whose MIT wrapper license does not replace the upstream model license",
+        "HyperFrames documentation currently contains inconsistent MIT and Apache-2.0 labels for the model; use the upstream U-2-Net license as the recorded basis and recheck before model redistribution"
+      ]
+    },
+    "transitiveDependencies": {
+      "auditStatus": "sufficient for current local output use; full SBOM and notices review pending before runtime redistribution",
+      "knownRestrictions": [
+        "the installed FFmpeg build must be assessed separately if it is redistributed",
+        "training-dataset materials are not bundled or redistributed by this Skill"
+      ],
+      "distributionAction": "do not package or publish the runtime, model cache, or FFmpeg build until dependency notices and licenses are collected"
+    }
+  },
+  "cost": {
+    "licenseFee": "CNY 0 for the tested local route",
+    "apiFee": "CNY 0; no API used",
+    "credits": "none",
+    "localCompute": "local inference and VP9 or ProRes encoding time and electricity",
+    "storage": "roughly 168 MB model cache plus npm runtime cache and transparent derivatives",
+    "maintenance": "version and model-hash pinning, matte QA, cache management, and output revalidation",
+    "freeConclusion": "no software or API fee in the tested local route; compute, storage, maintenance, and rights review are not zero-cost"
+  },
+  "access": {
+    "account": "not required for local CLI preprocessing",
+    "apiKey": "not required",
+    "network": "required for first npm package and model download; cached runs can remain local",
+    "hardware": "CPU supported; auto selected CoreML on the tested Apple M3 Max with 36 GB unified memory; CUDA requires a separately configured GPU-enabled ONNX Runtime",
+    "region": "no project-specific restriction identified in the cited open-source licenses",
+    "organizationLimits": "none stated by Apache-2.0"
+  },
+  "rightsAndPrivacy": {
+    "uploadsUserMedia": false,
+    "biometricData": "face, body, and motion imagery remains local but is sensitive personal data",
+    "consentRequired": true,
+    "retention": "keep source footage, transparent derivatives, and model cache outside Git; delete project derivatives according to the project identity and retention record",
+    "outputRightsBoundary": "software and model licenses do not grant portrait, likeness, performance, source-footage, trademark, or publication rights",
+    "aiLabeling": "preserve source and processing provenance and apply current platform or applicable synthetic-media disclosure rules when required"
+  },
+  "stability": {
+    "maturity": "usable local preprocessing path with shot-level fail-closed approval; not a universal production matte",
+    "reproducibility": "version, model SHA-256, device choice, quality preset, source timing, and output probe must be recorded for each accepted derivative",
+    "knownFailureModes": [
+      "the upstream human model is not hair-level accurate",
+      "frame-oriented masks can crawl or flicker over time",
+      "hands, separated fingers, glasses, motion blur, translucent edges, thin props, and foreground objects can be lost or leak",
+      "baked captions, cards, logos, or other foreground graphics can enter the subject mask",
+      "VP9 alpha requires an alpha-aware decoder; generic FFmpeg probing can report yuv420p unless libvpx-vp9 is selected",
+      "CoreML may partition unsupported graph nodes to CPU"
+    ],
+    "vendorLockIn": "low for ProRes 4444 or VP9-alpha outputs; medium for exact CLI and model-cache behavior"
+  },
+  "evidence": {
+    "testStatus": "toolchain-smoke-passed-production-matte-remains-shot-gated",
+    "scope": "one 1.0-second, 30-frame, 720x960 reference excerpt already containing a presenter, graphics, and baked captions; validates local alpha output and exposes why clean A-roll is mandatory, not raw-footage matte quality",
+    "hardware": "Apple M3 Max, 36 GB unified memory",
+    "versions": {
+      "hyperframes": "0.7.109",
+      "onnxRuntimeNode": "1.21.1",
+      "model": "u2net_human_seg",
+      "modelSha256": "01eb6a29a5c4d8edb30b56adad9bb3a2a0535338e480724a213e0acfd2d1c73c",
+      "provider": "CoreML"
+    },
+    "metrics": {
+      "framesProcessed": 30,
+      "sourceDurationSeconds": 1,
+      "reportedProcessingSeconds": 3.77,
+      "reportedAverageMillisecondsPerFrame": 125.7,
+      "processWallSecondsIncludingStartup": 15.25,
+      "maximumResidentSetBytes": 1450082304,
+      "outputBytes": 368051,
+      "outputPixelFormatWithLibvpxDecoder": "yuva420p",
+      "outputAlphaMode": 1,
+      "decodedOutputFrames": 30
+    },
+    "artifacts": [
+      "ephemeral local smoke input and outputs were kept outside Git",
+      "npx --yes hyperframes@0.7.109 remove-background --info --json",
+      "npx --yes hyperframes@0.7.109 remove-background <clean-locked-a-roll> -o <cutout.webm> --device auto --quality best --json"
+    ]
+  },
+  "recommendation": {
+    "priority": "P1-conditional",
+    "allowedRole": "default local engine for a time-aligned presenter cutout made from clean locked A-roll after canonical timing lock, only when the actual moving matte passes bright, dark, busy-background, boundary, collision, and target-device QA",
+    "blockedRole": "baked-caption or already-composited input, unattended approval, broken matte hidden by an outline, replacement for canonical audio or timing, and redistribution of the runtime or model cache without a full notices review",
+    "reason": "the pinned local CLI produced complete frame-aligned alpha media without uploading the source, while known model limits are containable through a fail-closed per-shot gate and explicit layout fallback",
+    "recheckTriggers": [
+      "HyperFrames version or package source changes",
+      "model file or SHA-256 changes",
+      "license or official documentation changes",
+      "new hardware provider or output format",
+      "materially different camera, background, lighting, wardrobe, hair, props, or motion conditions",
+      "runtime, model, or FFmpeg redistribution",
+      "commercial or public use where source-person rights or platform labeling requirements differ"
+    ]
+  }
+}

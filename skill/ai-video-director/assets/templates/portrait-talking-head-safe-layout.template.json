@@ -53,7 +53,7 @@
         "progress-track-playhead-labels-and-dividers",
         "information-card-copy-and-proof",
         "declared-b-roll-critical-roi",
-        "presenter-pip-visible-box-and-motion-envelope",
+        "presenter-pip-visible-box-or-cutout-silhouette-and-motion-envelope",
         "logos-callouts-and-identity-marks"
       ]
     }
@@ -159,7 +159,7 @@
       "every-chapter-boundary",
       "longest-two-line-caption",
       "densest-information-card",
-      "largest-pip-motion-extreme",
+      "largest-presenter-pip-or-cutout-motion-extreme",
       "signature-outro-decoration"
     ],
     "scales": [

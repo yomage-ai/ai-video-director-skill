@@ -126,12 +126,25 @@ function doctor() {
 
   const optionalCommands = [
     ['uv for optional local voice clone', 'uv', ['--version']],
-    ['HyperFrames CLI', 'hyperframes', ['--version']],
   ];
   for (const [name, command, args] of optionalCommands) {
     const version = commandVersion(command, args);
     checks.push({name, required: false, status: version ? 'pass' : 'not-found', version});
   }
+
+  const hyperframesVersion = commandVersion('hyperframes', ['--version']);
+  const npxVersion = commandVersion('npx', ['--version']);
+  checks.push({
+    name: 'HyperFrames CLI',
+    required: false,
+    status: hyperframesVersion ? 'pass' : npxVersion ? 'agent-managed-npx-ready' : 'not-found',
+    version: hyperframesVersion ?? (npxVersion ? `npx ${npxVersion}` : null),
+    note: hyperframesVersion
+      ? 'Installed command is available.'
+      : npxVersion
+        ? 'The Agent can run the governed pinned HyperFrames version with npx; first use may download the package and model.'
+        : 'Install or otherwise provide an approved HyperFrames runtime before a presenter-cutout shot.',
+  });
 
   const possibleSkillRoots = [
     path.join(os.homedir(), '.agents', 'skills'),

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-03",
+  "updatedAt": "2026-08-17",
   "scope": "Current internal workflow; every version, pricing, license, policy, or role change requires recheck.",
   "tools": [
     {
@@ -47,6 +47,18 @@
       "rights": "Apache-2.0 in current official repository",
       "privacy": "local render by default; publishing/cloud features require separate review",
       "source": "https://github.com/heygen-com/hyperframes"
+    },
+    {
+      "id": "hyperframes-remove-background",
+      "kind": "local-video-matting-model-runtime",
+      "testedVersion": "HyperFrames 0.7.109 / pinned u2net_human_seg SHA-256",
+      "priority": "P1-conditional",
+      "activeRole": "transparent time-aligned presenter derivative from clean locked A-roll for B-base-A-cutout after moving matte QA",
+      "blockedRole": "already-composited input, unattended matte approval, canonical audio or timing source, and runtime/model redistribution without notices review",
+      "cost": "no API fee or credits; first model download, local compute, cache storage, maintenance, and QA",
+      "rights": "HyperFrames and upstream U-2-Net are recorded as Apache-2.0; software/model licenses do not grant likeness or source-footage rights",
+      "privacy": "local processing; face, body, motion, and transparent derivatives remain sensitive and outside Git",
+      "source": "governance-hyperframes-background-removal.json"
     },
     {
       "id": "remotion",

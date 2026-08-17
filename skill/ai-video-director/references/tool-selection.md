@@ -1,6 +1,6 @@
 # Current Tool Selection
 
-Status date: 2026-08-03. “Active” means approved only for the stated role and tested scope. It is not a universal ranking.
+Status date: 2026-08-17. “Active” means approved only for the stated role and tested scope. It is not a universal ranking.
 
 ## Production Route
 
@@ -11,7 +11,8 @@ Status date: 2026-08-03. “Active” means approved only for the stated role an
 | One timing truth | ChatCut FCP XML to canonical EDL | Removes the conflict between a visual timeline and local timing map | Tested for straight cuts on a primary track; fine-edit layers are rebuilt downstream |
 | Fast rough look | FFmpeg `-c copy` | Very fast and does not re-encode | Approximate keyframe boundaries only |
 | Locked A-roll and master | FFmpeg precise re-encode | Deterministic cuts and inspectable media pipeline | Must preserve or intentionally convert color; installed build license depends on configuration |
-| Real evidence and simpler programmatic shots | HyperFrames | Direct HTML/media composition, seekable animation, strong validation, editable files | Current repository license is Apache-2.0; renderer/runtime still needs installation |
+| Real evidence and simpler programmatic shots | HyperFrames | Direct HTML/media composition, seekable animation, strong validation, editable files | Current repository license is Apache-2.0; the Agent owns runtime resolution and version checks |
+| Time-aligned presenter cutout | HyperFrames 0.7.109 `remove-background` with `u2net_human_seg` | Local transparent WebM or ProRes 4444, CoreML auto-selection on tested Apple Silicon, no media upload | P1-conditional: clean locked A-roll only; every shot must pass moving matte, boundary, collision, and target-device QA before `B-base-A-cutout` is selected |
 | Complex structured visual shots | Remotion | React components, typed/nested data, conditional layout, reusable variants | Current one-person internal creator use is within the free tier; external automation products or team growth require a new license check |
 | Optional code animation component | React Bits free components | Fast source starting point for abstract relationship/network motion | Use only the free MIT component; Pro assets require a paid developer license; never use decorative motion as evidence |
 | Optional authorized short voice | Qwen3-TTS via MLX-Audio, seed 42 | Local, pinned, reproducible in the accepted test | New voice/long-form/runtime requires retest; human and ASR QA mandatory |
@@ -40,6 +41,16 @@ Current licenses:
 
 - HyperFrames' official repository states Apache-2.0 with no per-render fee.
 - Remotion's current pricing says creators who are individuals or companies up to three people can use the free license commercially. The separate “Remotion for Automators” terms apply when launching an application/system that automates video for others. Recheck before that boundary or team growth.
+
+## HyperFrames Presenter Cutout
+
+Use HyperFrames background removal only for the `B-base-A-cutout` layout defined in [presenter-coverage-modes.md](presenter-coverage-modes.md). Run it after rough-cut and canonical timing lock on the clean A-roll, before captions or other foreground graphics are composited. Keep dialogue on the canonical audio track and mute the transparent derivative.
+
+The governed production command pins HyperFrames `0.7.109`, uses `--device auto`, uses `balanced` for a disposable draft and `best` for final WebM, and emits ProRes 4444 MOV when an editor round trip is required. The first local run may download the roughly 168 MB model; later runs reuse the cache. On the tested Apple M3 Max system, `auto` selected CoreML.
+
+The tool is a default engine, not an automatic layout approval. `u2net_human_seg` is frame-oriented and the upstream project warns that its human model is not hair-level accurate. Inspect moving edges, hands, glasses, props, motion blur, leakage, temporal flicker, source cut boundaries, and bright/dark/busy composites. If the matte fails, switch to designed PiP, A-base B overlay, or `B-only`; an outline is styling, not matte repair.
+
+Governance record: [governance-hyperframes-background-removal.json](governance-hyperframes-background-removal.json).
 
 ## ChatCut And `video-use`
 
@@ -82,6 +93,9 @@ The asset manifest, not this list, decides whether a particular file can be used
 ## Official Sources
 
 - HyperFrames repository and license: https://github.com/heygen-com/hyperframes
+- HyperFrames remove-background guide: https://github.com/heygen-com/hyperframes/blob/main/docs/guides/remove-background.mdx
+- HyperFrames CLI remove-background contract: https://github.com/heygen-com/hyperframes/blob/main/docs/packages/cli.mdx
+- U-2-Net model source and Apache-2.0 license: https://github.com/xuebinqin/U-2-Net
 - Remotion license/pricing: https://www.remotion.dev/license
 - FFmpeg legal: https://ffmpeg.org/legal.html
 - ChatCut Terms, Usage Policy, Credits: https://chatcut.io/terms/ , https://chatcut.io/docs/usage-policy , https://chatcut.io/docs/credits-policy

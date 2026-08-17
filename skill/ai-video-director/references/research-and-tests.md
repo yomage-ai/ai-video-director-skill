@@ -47,6 +47,18 @@ Both rendered the same three 6-second, 720x1280, 30fps cases with the same copy,
 
 Decision: HyperFrames remains first for real assets/fixed/simple-variable shots; Remotion is first for nested data, dynamic rows, conditions, or React reuse. Speed from this sample is not a universal ranking.
 
+### HyperFrames Presenter-Cutout Smoke Test
+
+HyperFrames `0.7.109` background removal was smoke-tested locally on an Apple M3 Max with 36 GB unified memory. The one-second input was 720x960 at 30fps and deliberately already contained a presenter, graphics, and baked captions, so this test validates execution and alpha delivery rather than raw-footage matte quality.
+
+- `--device auto` selected CoreML and processed all `30` frames.
+- The CLI reported `3.77s` processing time and `125.7ms` per frame; total process wall time including startup was `15.25s`.
+- Maximum resident set size was about `1.45 GB`.
+- The 1.0-second output decoded through `libvpx-vp9` as `yuva420p`, retained `30` frames and `alpha_mode=1`, and was `368051` bytes with `--quality best`.
+- Foreground text touching the presenter entered the matte, confirming that production input must be clean locked A-roll without baked captions, cards, or logos.
+
+Decision: the local toolchain is active as the default engine for `B-base-A-cutout`, but each real shot remains fail-closed on moving matte quality. This test does not prove hair, hand, prop, motion-blur, or temporal-edge quality for a different source. See `governance-hyperframes-background-removal.json`.
+
 ## Why Early Outputs Looked Gray
 
 The original source was 2160x3840, about 59.77fps, HEVC Main10 with Dolby Vision Profile 8 and HLG/BT.2020 metadata. The shared review proxy was labeled BT.709 without proper HDR-to-SDR tone mapping. Both FFmpeg and ChatCut-derived comparisons inherited that bad proxy, producing low saturation and an almost black-and-white look.

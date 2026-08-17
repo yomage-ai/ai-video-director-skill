@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-13",
+  "updatedAt": "2026-08-17",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "private",
   "status": "internal-v0.1.0-validated",
@@ -75,12 +75,26 @@
       "coverageRunClassification": {
         "mergeAdjacentOrNearAdjacentBeats": true,
         "durationBasis": "aggregate-viewer-visible-run",
+        "modeAxis": "visible-source-presence",
         "modes": [
           "A-only",
           "B-only",
-          "AB-live-PiP"
+          "AB-live"
         ],
-        "longRunDefault": "AB-live-PiP-unless-evidence-or-platform-collision",
+        "abLiveLayouts": [
+          "B-base-A-PiP",
+          "A-base-B-overlay",
+          "B-base-A-cutout",
+          "AB-split"
+        ],
+        "layoutAxis": "ab-live-composition",
+        "legacyModeAliases": {
+          "AB-live-PiP": {
+            "mode": "AB-live",
+            "layout": "B-base-A-PiP"
+          }
+        },
+        "longRunDefault": "AB-live-only-when-presenter-continuity-helps-then-select-layout-by-content-occupancy-style-and-matte-quality",
         "intentionalARollResetRequiresReadableHold": true
       },
       "continuousRunInteriorBoundary": "full-alpha-coverage",
@@ -89,7 +103,7 @@
       "transitionGrammar": {
         "continuousExplanationInterior": "direct-cuts-by-default",
         "presentationModeChanges": "short-restrained-dissolve-when-motivated",
-        "synchronizeBrollAndPip": true,
+        "synchronizeBrollAndPresenterLayer": true,
         "blanketPresetAcrossAllBoundaries": "forbidden"
       },
       "seamVerification": "composed-frames-before-on-and-after-boundary"
@@ -133,7 +147,7 @@
     "presentationSafety": {
       "presenterInsertEntryFrame": "normal-expression-eyes-open",
       "shortProofCutaway": "presenter-optional",
-      "longFullScreenExplanation": "live-time-aligned-picture-in-picture-when-continuity-benefits",
+      "longFullScreenExplanation": "use-ab-live-only-when-presenter-continuity-benefits-and-select-layout-separately",
       "pictureInPictureDesign": {
         "scaledUncroppedSourceDefault": "forbidden",
         "cropIntent": "declare-subject-framing-and-headroom",
@@ -145,6 +159,61 @@
         "stability": "hold-size-and-position-within-run-change-only-at-semantic-or-layout-boundary",
         "visibleBoxProof": "inspect-visible-crop-not-only-stored-item-frame",
         "proof": "source-crop-and-composed-frame-at-native-and-phone-size"
+      },
+      "presenterCutoutDesign": {
+        "layoutId": "B-base-A-cutout",
+        "defaultEngine": "hyperframes-remove-background",
+        "testedVersion": "0.7.109",
+        "model": "u2net_human_seg",
+        "workflowStage": "after-rough-cut-and-canonical-timing-lock",
+        "sourceRequirement": "clean-locked-a-roll-without-baked-captions-or-overlays",
+        "canonicalAudio": "keep-separate-and-mute-the-cutout-layer",
+        "device": "auto",
+        "draftQuality": "balanced",
+        "finalQuality": "best",
+        "transparentOutputs": [
+          "vp9-alpha-webm-for-hyperframes",
+          "prores-4444-mov-for-editor-round-trip"
+        ],
+        "matteQualityGate": {
+          "requiredBeforeSelection": true,
+          "inspect": [
+            "hair-and-glasses",
+            "hands-and-fingers",
+            "motion-blur",
+            "background-leakage",
+            "temporal-edge-flicker",
+            "alpha-timing-and-color-halo"
+          ],
+          "backgroundProof": [
+            "bright",
+            "dark",
+            "busy"
+          ],
+          "frameProof": [
+            "early",
+            "middle",
+            "late",
+            "every-cut-boundary"
+          ],
+          "failClosed": true
+        },
+        "outline": {
+          "formula": "dilate-alpha-minus-source-alpha",
+          "implementation": "single-hyperframes-video-with-svg-feMorphology-and-feComposite",
+          "defaultColor": "white-only-when-the-approved-style-supports-it",
+          "referenceWidthToCanvasWidth": "0.007-0.009-starting-candidate-not-universal",
+          "mustTrackTheSameAlpha": true,
+          "mayHideSmallEdgeNoiseButMayNotRepairBrokenMattes": true
+        },
+        "placement": {
+          "positionSelection": "per-coverage-run-content-occupancy-map",
+          "preferredBottomCorner": "default-only-not-a-rule",
+          "intentionalBottomBleedAllowed": true,
+          "geometryStableWithinCoverageRun": true,
+          "changeOnlyAtSemanticOrLayoutBoundary": true
+        },
+        "fallback": "use-B-base-A-PiP-A-base-B-overlay-or-B-only-according-to-presenter-value-and-evidence-density"
       },
       "portraitDeliveryLayout": {
         "presetId": "layout.portrait-talking-head.safe-v1",
@@ -387,9 +456,12 @@
     "cross-boundary-audible-duplicate-audit",
     "post-script-transition-and-b-roll-readback",
     "continuous-b-roll-alpha-coverage-and-seam-frame-proof",
-    "aggregate-b-roll-run-classification-and-long-run-live-pip",
+    "two-axis-coverage-classification-with-a-only-b-only-and-ab-live",
+    "ab-live-layout-families-for-pip-b-overlay-cutout-and-split",
     "designed-pip-crop-shape-and-content-safe-dynamic-position",
     "composition-responsive-pip-size-with-run-level-stability",
+    "hyperframes-local-presenter-cutout-with-shot-level-fail-closed-matte-qa",
+    "alpha-derived-presenter-outline-and-run-stable-content-safe-placement",
     "content-driven-transition-grammar",
     "semantic-caption-pagination",
     "manuscript-authoritative-semantic-punctuation",

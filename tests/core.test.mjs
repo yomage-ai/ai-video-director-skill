@@ -166,6 +166,9 @@ test('doctor passes required local dependencies with isolated private paths', ()
   }));
   assert.equal(output.ok, true);
   assert.equal(output.checks.filter((check) => check.required && check.status !== 'pass').length, 0);
+  const hyperframes = output.checks.find((check) => check.name === 'HyperFrames CLI');
+  assert.ok(['pass', 'agent-managed-npx-ready'].includes(hyperframes.status));
+  assert.match(hyperframes.note, /Installed command|governed pinned HyperFrames version/);
 });
 
 test('repeated takes use quality-first selection rather than a latest-take default', () => {
@@ -303,10 +306,23 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.bRollContinuity.pairedInteriorFadesMayRevealARoll, false);
   assert.equal(plan.bRollContinuity.coverageRunClassification.durationBasis,
     'aggregate-viewer-visible-run');
+  assert.equal(plan.bRollContinuity.coverageRunClassification.modeAxis,
+    'visible-source-presence');
+  assert.deepEqual(plan.bRollContinuity.coverageRunClassification.modes,
+    ['A-only', 'B-only', 'AB-live']);
+  assert.deepEqual(plan.bRollContinuity.coverageRunClassification.abLiveLayouts, [
+    'B-base-A-PiP',
+    'A-base-B-overlay',
+    'B-base-A-cutout',
+    'AB-split',
+  ]);
+  assert.equal(plan.bRollContinuity.coverageRunClassification.layoutAxis,
+    'ab-live-composition');
   assert.equal(plan.bRollContinuity.coverageRunClassification.longRunDefault,
-    'AB-live-PiP-unless-evidence-or-platform-collision');
+    'AB-live-only-when-presenter-continuity-helps-then-select-layout-by-content-occupancy-style-and-matte-quality');
   assert.equal(plan.bRollContinuity.transitionGrammar.continuousExplanationInterior,
     'direct-cuts-by-default');
+  assert.equal(plan.bRollContinuity.transitionGrammar.synchronizeBrollAndPresenterLayer, true);
   assert.equal(plan.bRollContinuity.transitionGrammar.blanketPresetAcrossAllBoundaries, false);
   assert.equal(plan.presentationSafety.pictureInPictureDesign.scaledUncroppedSourceDefault, false);
   assert.equal(plan.presentationSafety.pictureInPictureDesign.contentOccupancyMapRequired, true);
@@ -314,6 +330,20 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.presentationSafety.pictureInPictureDesign.fixedGlobalSizeDefault, false);
   assert.equal(plan.presentationSafety.pictureInPictureDesign.geometryStableWithinCoverageRun, true);
   assert.equal(plan.presentationSafety.pictureInPictureDesign.visibleCropBoxVerificationRequired, true);
+  assert.equal(plan.presentationSafety.presenterCutoutDesign.layoutId, 'B-base-A-cutout');
+  assert.equal(plan.presentationSafety.presenterCutoutDesign.defaultEngine,
+    'hyperframes-remove-background');
+  assert.equal(plan.presentationSafety.presenterCutoutDesign.testedVersion, '0.7.109');
+  assert.equal(plan.presentationSafety.presenterCutoutDesign.model, 'u2net_human_seg');
+  assert.equal(plan.presentationSafety.presenterCutoutDesign
+    .cleanLockedARollWithoutBakedCaptionsOrOverlaysRequired, true);
+  assert.equal(plan.presentationSafety.presenterCutoutDesign.cutoutLayerMustBeMuted, true);
+  assert.equal(plan.presentationSafety.presenterCutoutDesign.finalQuality, 'best');
+  assert.equal(plan.presentationSafety.presenterCutoutDesign.matteQualityGate.failClosed, true);
+  assert.equal(plan.presentationSafety.presenterCutoutDesign.outline.formula,
+    'dilate-alpha-minus-source-alpha');
+  assert.equal(plan.presentationSafety.presenterCutoutDesign
+    .placement.geometryStableWithinCoverageRun, true);
   assert.equal(plan.finishingPass.captions.semanticPunctuation.renderedPixelVerificationRequired, true);
   assert.equal(plan.finishingPass.captions.semanticPunctuation.globalPunctuationRemovalWithoutExceptionAudit,
     false);
@@ -610,8 +640,21 @@ test('continuous B-roll planning classifies aggregate runs before individual car
   const policy = state.roughCutPolicy.bRollContinuity.coverageRunClassification;
   assert.equal(policy.mergeAdjacentOrNearAdjacentBeats, true);
   assert.equal(policy.durationBasis, 'aggregate-viewer-visible-run');
-  assert.deepEqual(policy.modes, ['A-only', 'B-only', 'AB-live-PiP']);
-  assert.equal(policy.longRunDefault, 'AB-live-PiP-unless-evidence-or-platform-collision');
+  assert.equal(policy.modeAxis, 'visible-source-presence');
+  assert.deepEqual(policy.modes, ['A-only', 'B-only', 'AB-live']);
+  assert.deepEqual(policy.abLiveLayouts, [
+    'B-base-A-PiP',
+    'A-base-B-overlay',
+    'B-base-A-cutout',
+    'AB-split',
+  ]);
+  assert.equal(policy.layoutAxis, 'ab-live-composition');
+  assert.deepEqual(policy.legacyModeAliases['AB-live-PiP'], {
+    mode: 'AB-live',
+    layout: 'B-base-A-PiP',
+  });
+  assert.equal(policy.longRunDefault,
+    'AB-live-only-when-presenter-continuity-helps-then-select-layout-by-content-occupancy-style-and-matte-quality');
 
   const standard = readFileSync(
     path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'),
@@ -619,7 +662,78 @@ test('continuous B-roll planning classifies aggregate runs before individual car
   );
   assert.match(standard, /merge adjacent or near-adjacent B-roll beats/);
   assert.match(standard, /Measure and classify the aggregate run, not each card in isolation/);
-  assert.match(standard, /A long continuous coverage run.*defaults to `AB-live-PiP`/);
+  assert.match(standard, /Treat `AB-live` as a presence mode, not a synonym for picture-in-picture/);
+  assert.match(standard, /use `AB-live` when both evidence and presenter continuity genuinely help/);
+  assert.match(standard, /`B-base-A-PiP`, `A-base-B-overlay`, `B-base-A-cutout`, or `AB-split`/);
+});
+
+test('presenter cutout is governed, bilingual and fail-closed', () => {
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const cutout = state.roughCutPolicy.presentationSafety.presenterCutoutDesign;
+  assert.equal(cutout.layoutId, 'B-base-A-cutout');
+  assert.equal(cutout.defaultEngine, 'hyperframes-remove-background');
+  assert.equal(cutout.testedVersion, '0.7.109');
+  assert.equal(cutout.model, 'u2net_human_seg');
+  assert.equal(cutout.sourceRequirement,
+    'clean-locked-a-roll-without-baked-captions-or-overlays');
+  assert.equal(cutout.canonicalAudio, 'keep-separate-and-mute-the-cutout-layer');
+  assert.equal(cutout.device, 'auto');
+  assert.equal(cutout.finalQuality, 'best');
+  assert.equal(cutout.matteQualityGate.failClosed, true);
+  assert.ok(cutout.matteQualityGate.inspect.includes('hands-and-fingers'));
+  assert.deepEqual(cutout.matteQualityGate.backgroundProof, ['bright', 'dark', 'busy']);
+  assert.equal(cutout.outline.formula, 'dilate-alpha-minus-source-alpha');
+  assert.equal(cutout.outline.implementation,
+    'single-hyperframes-video-with-svg-feMorphology-and-feComposite');
+  assert.equal(cutout.outline.mustTrackTheSameAlpha, true);
+  assert.equal(cutout.placement.geometryStableWithinCoverageRun, true);
+
+  const guide = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references',
+      'presenter-coverage-modes.md'),
+    'utf8',
+  );
+  assert.match(guide, /## English/);
+  assert.match(guide, /## 简体中文/);
+  assert.match(guide, /`AB-live` means time-aligned A-roll and substantive B-roll/);
+  assert.match(guide, /hyperframes@0\.7\.109 remove-background/);
+  assert.match(guide, /outlineAlpha = dilate\(alpha, radius\) - alpha/);
+  assert.match(guide, /feMorphology/);
+  assert.match(guide, /feComposite/);
+  assert.match(guide, /The gate passes only when the intended shot is acceptable as moving video/);
+  assert.match(guide, /模型下载、环境诊断、预处理和缓存都由 Agent 完成/);
+
+  const governance = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references',
+      'governance-hyperframes-background-removal.json'),
+    'utf8',
+  ));
+  assert.equal(governance.decisionStatus, 'approved-local-capability');
+  assert.equal(governance.identity.version, 'HyperFrames CLI 0.7.109');
+  assert.equal(governance.licensing.software.license, 'Apache-2.0');
+  assert.match(governance.licensing.modelWeights.license, /Apache-2\.0/);
+  assert.equal(governance.rightsAndPrivacy.uploadsUserMedia, false);
+  assert.equal(governance.evidence.metrics.framesProcessed, 30);
+  assert.equal(governance.evidence.metrics.outputPixelFormatWithLibvpxDecoder, 'yuva420p');
+  assert.equal(governance.recommendation.priority, 'P1-conditional');
+  assert.match(governance.recommendation.allowedRole, /clean locked A-roll/);
+
+  const registry = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references', 'tool-registry.json'),
+    'utf8',
+  ));
+  const registryEntry = registry.tools.find((tool) => tool.id === 'hyperframes-remove-background');
+  assert.equal(registryEntry.priority, 'P1-conditional');
+  assert.match(registryEntry.activeRole, /B-base-A-cutout/);
+
+  const qa = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'qa-report.template.md'),
+    'utf8',
+  );
+  assert.match(qa, /Moving matte proof over bright, dark, and busy backgrounds/);
+  assert.match(qa, /cutout layer was muted/);
+  assert.match(qa, /derived from the same alpha/);
 });
 
 test('PiP, transitions and semantic punctuation are planned from composed content', () => {
@@ -999,6 +1113,8 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
   const englishProgressRequest = 'Add the generic portrait RMCU chapter progress component; ellipsize inactive overflow and marquee only the active overflow.';
   const chineseSafeLayoutRequest = '使用已确认的竖屏口播安全版式，让字幕、B-roll 重要信息和进度条在 iPhone 与 iPad 都可见。';
   const englishSafeLayoutRequest = 'Use the approved portrait talking-head safe layout and keep captions, critical B-roll, and progress visible on narrow phones and wide tablets.';
+  const chineseCutoutRequest = '用 B-roll 铺底，把口型同步的人物抠成带白色轮廓的透明贴纸，抠像不合格就回退小窗。';
+  const englishCutoutRequest = 'Put B-roll underneath a time-aligned outlined presenter cutout, and fall back to a designed PiP if the moving matte fails.';
   const chineseComponentRequest = '把这些代码动画分成通用机制、私人适配、题材模板、历史归档和错误样本，再沉淀可复用部分。';
   const englishComponentRequest = 'Classify these code motion graphics as general mechanisms, private adapters, topic templates, archives, or error samples before reuse.';
   assert.match(chineseRequest, /口播/);
@@ -1009,10 +1125,14 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
   assert.match(englishProgressRequest, /portrait RMCU/);
   assert.match(chineseSafeLayoutRequest, /竖屏口播安全版式/);
   assert.match(englishSafeLayoutRequest, /portrait talking-head safe layout/);
+  assert.match(chineseCutoutRequest, /人物抠成带白色轮廓的透明贴纸/);
+  assert.match(englishCutoutRequest, /outlined presenter cutout/);
   assert.match(chineseComponentRequest, /代码动画/);
   assert.match(englishComponentRequest, /code motion graphics/);
   assert.match(skill, /rmcu\.semantic-progress\.v1/);
   assert.match(skill, /layout\.portrait-talking-head\.safe-v1/);
+  assert.match(skill, /presenter-coverage-modes\.md/);
+  assert.match(skill, /B-base-A-cutout/);
   assert.match(skill, /code-motion-components\.md/);
   assert.match(skill, /Inactive long labels use ellipsis/);
   assert.match(skill, /Reply in the user's language/);
@@ -1022,6 +1142,8 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
   assert.match(readmeZh, /只有当前标题溢出时才循环滚动/);
   assert.match(readmeEn, /approved portrait talking-head safe layout/);
   assert.match(readmeZh, /已确认的竖屏口播安全版式/);
+  assert.match(readmeEn, /outlined live-presenter cutout style/);
+  assert.match(readmeZh, /带描边的实时人物抠像/);
   assert.match(readmeEn, /code motion component system/);
   assert.match(readmeEn, /general mechanisms, private creator adapters, topic templates, archives, or error samples/);
   assert.match(readmeZh, /代码动画组件体系/);

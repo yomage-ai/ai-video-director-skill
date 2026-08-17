@@ -43,7 +43,13 @@ Use the generic RMCU semantic progress component. Choose its landscape or portra
 For a multi-device 9:16 talking-head layout, you can add:
 
 ```text
-Use the approved portrait talking-head safe layout. Keep crop-tolerant backgrounds full bleed, but keep captions, progress semantics, important B-roll regions, picture-in-picture, and identity marks visible on both narrow phones and wide tablets. Validate the real published player instead of treating the encoded canvas edge as safe.
+Use the approved portrait talking-head safe layout. Keep crop-tolerant backgrounds full bleed, but keep captions, progress semantics, important B-roll regions, picture-in-picture or presenter cutouts, and identity marks visible on both narrow phones and wide tablets. Validate the real published player instead of treating the encoded canvas edge as safe.
+```
+
+For the outlined live-presenter cutout style, you can add:
+
+```text
+Use B-roll as the base and keep the time-aligned presenter visible as an outlined transparent cutout when the actual moving matte passes. Use HyperFrames background removal locally on the clean locked A-roll, keep dialogue on the canonical audio track, and fall back to a designed PiP or full-screen evidence instead of keeping broken edges.
 ```
 
 For reusable code-authored motion graphics, you can add:

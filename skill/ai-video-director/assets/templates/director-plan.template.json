@@ -72,17 +72,32 @@
     "coverageRunClassification": {
       "mergeAdjacentOrNearAdjacentBeats": true,
       "durationBasis": "aggregate-viewer-visible-run",
-      "modes": ["A-only", "B-only", "AB-live-PiP"],
-      "longRunDefault": "AB-live-PiP-unless-evidence-or-platform-collision",
+      "modeAxis": "visible-source-presence",
+      "modes": ["A-only", "B-only", "AB-live"],
+      "abLiveLayouts": [
+        "B-base-A-PiP",
+        "A-base-B-overlay",
+        "B-base-A-cutout",
+        "AB-split"
+      ],
+      "layoutAxis": "ab-live-composition",
+      "legacyModeAliases": {
+        "AB-live-PiP": {
+          "mode": "AB-live",
+          "layout": "B-base-A-PiP"
+        }
+      },
+      "longRunDefault": "AB-live-only-when-presenter-continuity-helps-then-select-layout-by-content-occupancy-style-and-matte-quality",
       "intentionalARollResetRequiresReadableHold": true
     },
+    "coverageRuns": [],
     "continuousRunInteriorAlphaCoverage": "required",
     "pairedInteriorFadesMayRevealARoll": false,
     "shortGapsMustBeIntentional": true,
     "transitionGrammar": {
       "continuousExplanationInterior": "direct-cuts-by-default",
       "presentationModeChanges": "short-restrained-dissolve-when-motivated",
-      "synchronizeBrollAndPip": true,
+      "synchronizeBrollAndPresenterLayer": true,
       "blanketPresetAcrossAllBoundaries": false
     },
     "seamFrames": [
@@ -135,7 +150,7 @@
   "presentationSafety": {
     "presenterInsertEntryFrame": "normal-expression-eyes-open",
     "shortProofCutaway": "presenter-optional",
-    "longFullScreenExplanation": "use-live-picture-in-picture-only-when-it-helps-continuity",
+    "longFullScreenExplanation": "use-ab-live-only-when-presenter-continuity-benefits-and-select-layout-separately",
     "pictureInPictureDesign": {
       "scaledUncroppedSourceDefault": false,
       "cropIntent": "head-neck-and-upper-shoulders-when-appropriate",
@@ -156,6 +171,53 @@
       "visibleCropBoxVerificationRequired": true,
       "positionMayChangeAtSemanticBoundaries": true,
       "sourceCropAndComposedFrameReviewRequired": true
+    },
+    "presenterCutoutDesign": {
+      "layoutId": "B-base-A-cutout",
+      "defaultEngine": "hyperframes-remove-background",
+      "testedVersion": "0.7.109",
+      "model": "u2net_human_seg",
+      "workflowStage": "after-rough-cut-and-canonical-timing-lock",
+      "cleanLockedARollWithoutBakedCaptionsOrOverlaysRequired": true,
+      "cutoutLayerMustBeMuted": true,
+      "device": "auto",
+      "draftQuality": "balanced",
+      "finalQuality": "best",
+      "transparentOutputs": [
+        "vp9-alpha-webm-for-hyperframes",
+        "prores-4444-mov-for-editor-round-trip"
+      ],
+      "matteQualityGate": {
+        "requiredBeforeSelection": true,
+        "inspect": [
+          "hair-and-glasses",
+          "hands-and-fingers",
+          "motion-blur",
+          "background-leakage",
+          "temporal-edge-flicker",
+          "alpha-timing-and-color-halo"
+        ],
+        "backgroundProof": ["bright", "dark", "busy"],
+        "frameProof": ["early", "middle", "late", "every-cut-boundary"],
+        "failClosed": true,
+        "status": "not-applicable|pending|pass|fail"
+      },
+      "outline": {
+        "formula": "dilate-alpha-minus-source-alpha",
+        "implementation": "single-hyperframes-video-with-svg-feMorphology-and-feComposite",
+        "defaultColor": "white-only-when-the-approved-style-supports-it",
+        "referenceWidthToCanvasWidth": "0.007-0.009-starting-candidate-not-universal",
+        "mustTrackTheSameAlpha": true,
+        "mayHideSmallEdgeNoiseButMayNotRepairBrokenMattes": true
+      },
+      "placement": {
+        "contentOccupancyMapRequired": true,
+        "preferredBottomCornerIsOnlyADefault": true,
+        "intentionalBottomBleedAllowed": true,
+        "geometryStableWithinCoverageRun": true,
+        "changeOnlyAtSemanticOrLayoutBoundary": true
+      },
+      "fallback": "use-B-base-A-PiP-A-base-B-overlay-or-B-only-according-to-presenter-value-and-evidence-density"
     },
     "portraitDeliveryLayout": {
       "presetId": "layout.portrait-talking-head.safe-v1",
