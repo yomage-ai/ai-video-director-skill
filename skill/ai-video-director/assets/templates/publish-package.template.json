@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "status": "draft",
+  "target": {
+    "platform": "replace-with-platform",
+    "jurisdiction": "replace-with-jurisdiction",
+    "accountOrContentType": "replace-if-relevant",
+    "publishDate": null
+  },
+  "rulesVerification": {
+    "checkedAt": null,
+    "officialSources": [],
+    "liveUploadUiChecked": false,
+    "unresolvedAmbiguities": [],
+    "guaranteedCompliantClaimAllowed": false
+  },
+  "releaseMaster": {
+    "classification": "platform-release",
+    "path": null,
+    "sourceLineage": [],
+    "reviewProxyUsed": false,
+    "upscaledReviewProxy": false,
+    "required": {
+      "width": null,
+      "height": null,
+      "aspectRatio": null,
+      "fps": null,
+      "colorIntent": "SDR-or-HDR-to-be-declared",
+      "container": null,
+      "codec": null
+    },
+    "probed": {
+      "width": null,
+      "height": null,
+      "durationSeconds": null,
+      "frameCount": null,
+      "fps": null,
+      "codec": null,
+      "colorMetadata": null,
+      "audioLayout": null,
+      "integratedLufs": null,
+      "truePeakDbtp": null
+    },
+    "exactCandidateQaPassed": false,
+    "exactCandidateApprovedByUser": false,
+    "knownLimitations": []
+  },
+  "aiDisclosure": {
+    "realHumanRecording": null,
+    "realHumanVoice": null,
+    "aiAssistedEditing": null,
+    "aiGeneratedGraphicsOrAnimation": null,
+    "syntheticVoice": null,
+    "faceReplacement": null,
+    "platformDeclarationRequired": "verify-current-rules",
+    "platformDeclarationPlanned": false,
+    "viewerFacingCopy": ""
+  },
+  "variants": [
+    {
+      "id": "direct-result",
+      "coverTitle": "",
+      "postCaption": "",
+      "hashtags": [],
+      "rationale": "",
+      "claimsNeedingEvidenceOrNarrowing": []
+    },
+    {
+      "id": "question-tension",
+      "coverTitle": "",
+      "postCaption": "",
+      "hashtags": [],
+      "rationale": "",
+      "claimsNeedingEvidenceOrNarrowing": []
+    },
+    {
+      "id": "tutorial-process",
+      "coverTitle": "",
+      "postCaption": "",
+      "hashtags": [],
+      "rationale": "",
+      "claimsNeedingEvidenceOrNarrowing": []
+    }
+  ],
+  "campaignTags": [],
+  "campaignEligibilityVerified": false,
+  "rightsPrivacyAndSponsorshipNotes": [],
+  "selectedVariantId": null,
+  "humanReviewRequired": true
+}

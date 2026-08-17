@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-17",
+  "updatedAt": "2026-08-18",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "private",
   "status": "internal-v0.1.0-validated",
@@ -516,6 +516,47 @@
       "lockedCanonicalEdl": "preserve-and-repair-working-copy-only"
     }
   },
+  "releaseAndPublicationPolicy": {
+    "reference": "references/platform-release-and-publish-package.md",
+    "twoPhase": {
+      "early": "lock-platform-jurisdiction-release-spec-ai-use-facts-cover-crop-and-ui-constraints-before-editing",
+      "late": "create-multiple-copy-variants-from-the-exact-qa-passed-release-candidate"
+    },
+    "releaseMaster": {
+      "classifications": [
+        "review-proxy",
+        "platform-release",
+        "source-quality-master"
+      ],
+      "highestQualityApprovedSourceRequired": true,
+      "upscaleReviewProxyAndCallItMaster": "forbidden",
+      "exactRequestedResolutionCandidateQaRequired": true,
+      "exactRequestedResolutionCandidateApprovalRequired": true,
+      "lowerResolutionProxyMayApproveDifferentFinalRender": false
+    },
+    "currentRuleVerification": {
+      "publicationDateOfficialSourcesRequired": true,
+      "platformAgreementCommunityRulesCreatorGuidanceAndLiveUi": true,
+      "regulatorPrimarySourceWhenApplicable": true,
+      "recordCheckedAtJurisdictionUrlsAndAmbiguity": true,
+      "guaranteedComplianceOrDistributionClaim": "forbidden"
+    },
+    "publishPackage": {
+      "template": "assets/templates/publish-package.template.json",
+      "auditScript": "scripts/audit-publish-package.mjs",
+      "minimumVariantCount": 3,
+      "variantFamilies": [
+        "direct-result",
+        "question-tension",
+        "tutorial-process"
+      ],
+      "hashtagRange": "2-8-directly-relevant",
+      "campaignTagRequiresEligibilityProof": true,
+      "openSourceClaimRequiresLivePublicRepositoryAndLicense": true,
+      "aiDisclosureSeparatesReal-recording-ai-edit-generated-media-synthetic-voice-and-face-replacement": true,
+      "humanReviewRequired": true
+    }
+  },
   "approvedCapabilities": [
     "exact-ui-state-and-semantic-roi-evidence-audit",
     "approved-signature-outro-motion-contract-inheritance",
@@ -578,7 +619,13 @@
     "remotion-complex-structured-react-visuals",
     "qwen3-tts-authorized-short-sample-seed-42",
     "full-qa-editable-delivery-and-feedback-memory",
-    "review-proxy-platform-release-and-source-quality-master-classification"
+    "review-proxy-platform-release-and-source-quality-master-classification",
+    "early-release-spec-lock-and-exact-requested-resolution-final-approval",
+    "dated-multi-variant-platform-publication-package-with-ai-disclosure-audit",
+    "token-locked-visual-reveal-and-layout-mode-demonstration",
+    "silent-authored-process-illustration-when-same-voice-comparison-would-sound-broken",
+    "token-locked-single-cycle-micro-cues-for-expressions-and-ctas",
+    "caption-card-relative-opaque-signature-outro-placement"
   ],
   "pausedCapabilities": [
     "digital-human-and-avatar-generation",
@@ -628,10 +675,11 @@
   },
   "validation": {
     "skillCreator": "pass",
-    "coreTests": "20/20 pass",
+    "coreTests": "25/25 pass",
     "testedMediaPath": "synthetic source -> ChatCut XML fixture -> canonical EDL -> FFmpeg precise render",
     "mermaidDiagrams": "3/3 render",
     "privacyScan": "pass",
+    "publishPackageAudit": "pass-with-positive-and-negative-fixtures",
     "installedSkill": "~/.codex/skills/ai-video-director symlink",
     "privateMemory": "initialized outside Git"
   }

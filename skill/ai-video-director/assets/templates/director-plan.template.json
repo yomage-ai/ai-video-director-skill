@@ -3,6 +3,36 @@
   "projectId": "replace-with-project-id",
   "contentLockVersion": 1,
   "status": "awaiting-user",
+  "releaseAndPublicationPlan": {
+    "reference": "references/platform-release-and-publish-package.md",
+    "constraintsLockedAt": "intake-before-editing",
+    "targetPlatform": null,
+    "jurisdiction": null,
+    "releaseSpecification": {
+      "aspectRatio": null,
+      "width": null,
+      "height": null,
+      "fps": null,
+      "colorIntent": null,
+      "container": null,
+      "codec": null
+    },
+    "highestQualityApprovedSourceRequired": true,
+    "reviewProxyMayReceiveFinalPublicationApproval": false,
+    "exactReleaseCandidateQaAndApprovalRequired": true,
+    "coverCropAndPlatformUiConstraints": [],
+    "aiUseFacts": {
+      "realHumanRecording": null,
+      "realHumanVoice": null,
+      "aiAssistedEditing": null,
+      "aiGeneratedGraphicsOrAnimation": null,
+      "syntheticVoice": null,
+      "faceReplacement": null
+    },
+    "finalPublishPackageStage": "after-exact-release-candidate-qa",
+    "multipleCopyVariantsRequired": true,
+    "currentOfficialRulesMustBeRecheckedAtPublication": true
+  },
   "roughCut": {
     "retentionRules": [],
     "removalRules": [],
@@ -144,6 +174,23 @@
     "timeOrLocationSensitiveDetails": []
   },
   "visualBeats": [],
+  "spokenCueSynchronization": {
+    "wordLevelPermissionWindowsRequired": true,
+    "visualMayEnterBeforeFirstPermittingToken": false,
+    "visualMustRemainThroughFinalRequiredToken": true,
+    "appliesTo": [
+      "facts-and-numbers",
+      "interface-states",
+      "evidence",
+      "layout-mode-demonstrations",
+      "micro-cues"
+    ],
+    "sameVoiceBeforeAfterAudition": {
+      "default": "omit-when-it-would-sound-like-a-glitch-or-accidental-repeat",
+      "silentAuthoredIllustrationAllowed": true,
+      "illustrationMayBeRepresentedAsOriginalEvidence": false
+    }
+  },
   "privacyPlan": {
     "localDerivativeOnly": true,
     "cropBeforeRedaction": true,
@@ -472,6 +519,13 @@
         "verificationFrames": ["first-visible", "entrance-extreme", "overshoot", "settled", "encouragement-peak", "micro-expression-peak", "reopen", "final-visible"],
         "verificationScales": ["native", "phone"]
       },
+      "captionRelativePlacement": {
+        "anchor": "active-caption-card-top",
+        "referenceCanvasGapPx": [16, 48],
+        "recalculateAfterCaptionPaginationOrGeometryChange": true,
+        "wholeCharacterBaseRemainsOpaqueDuringExpressionSwap": true,
+        "unrelatedFixedScreenYDefault": false
+      },
       "collisionReview": ["face", "final-caption", "chapter-progress", "platform-ui"],
       "soundDecision": null,
       "privateProfilePromotionRequiresExplicitApproval": true,
@@ -499,7 +553,14 @@
         "soundEffects": {
           "decision": null,
           "reason": null,
-          "cueList": []
+          "cueList": [],
+          "microCueContract": {
+            "exactSpokenTokenRequired": true,
+            "singleBriefAnimationCycle": true,
+            "continuousLoopDefault": false,
+            "dialogueRemainsDominant": true,
+            "rightsRecordRequiredWhenAudioEnabled": true
+          }
         },
         "entryExitAnimation": {
           "decision": null,

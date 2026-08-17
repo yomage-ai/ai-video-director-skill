@@ -17,6 +17,7 @@
 - Audio channels/loudness/sync; actual rendered-timeline before/after integrated LUFS, true peak, LRA, applied uniform gain, accepted clean references, and rejected clipped outliers:
 - Speech isolation strength, per-source-range routing, and early/late audible samples:
 - Blank/frozen/corrupt frame checks:
+- Exact requested-resolution release candidate, not only a lower-resolution review proxy, was the file probed, fully reviewed, and approved for publication:
 
 ## Approved-Version Change Isolation
 
@@ -58,6 +59,8 @@
 - ROI manifest records claim, source state, viewport, requested bounds, actual output dimensions, proof labels, module allowlist, forbidden-string scan, and pixel review:
 - Stable-state evidence uses a still; screen recording is used only when interaction or change over time is part of the proof:
 - Evidence keeps source aspect ratio, remains readable at phone scale, and appears on the matching spoken phrase instead of as an all-at-once information dump:
+- Every authored fact, number, interface state, mode label, and example enters no earlier than its first permitting spoken token and remains through its final required token:
+- Any same-voice before/after audition was either indispensably evidentiary and clearly signposted, or replaced by a silent authored illustration that is not represented as original proof:
 
 ## Visuals
 
@@ -84,6 +87,7 @@
 - Entry motion is pre-rolled behind the hidden clip so the first active frame is fully covered; every changed seam passed two-before, one-before, on, one-after, and two-after rendered-frame review:
 - Adjacent B-roll beats were merged into aggregate coverage runs and each run was first classified as `A-only`, `B-only`, or `AB-live`; every `AB-live` run separately records `B-base-A-PiP`, `A-base-B-overlay`, `B-base-A-cutout`, or `AB-split`:
 - Transition grammar distinguishes continuous-card direct cuts from motivated presentation-mode changes; B-roll and its live presenter layer entrances/exits are synchronized:
+- Every explicit A-roll/B-roll layout demonstration switches on the exact named phrase; no later mode is previewed while the prior mode is still being spoken:
 - Transitions/layout/overlap:
 - Caption pages separate completed thoughts from the next thought after final pagination readback:
 - Native and thumbnail-scale inspection:
@@ -98,6 +102,7 @@
 - Every screenshot, diagram, and evidence B-roll declares its critical region of interest; unsafe regions were padded, recomposed, cropped to a readable detail, or split rather than blindly shrinking every shot:
 - Actual rendered caption glyphs and stroke, not only the caption item box, remain visible on the narrow-phone simulation and published screenshot:
 - The approved caption lane was preserved when the top progress band was introduced; nearby headings, cards, picture-in-picture, and presenter cutouts were reflowed instead:
+- The current approved series caption baseline was evaluated from `left=120`, `top=2748`, `width=1920`, `height=500` on the 2160x3840 reference canvas, with any project override documented:
 - Any signature-outro underline remains visibly below the rendered caption ink and was moved or shortened before any approved-caption relocation:
 - Narrow tall phone, reference 9:16 viewport, and wide tablet checks passed at native and phone scale; real published screenshots replaced simulation when available:
 
@@ -123,6 +128,7 @@
 - Current, past, and future hierarchy uses weight, opacity, fill, and playhead rather than scene-by-scene color inversion:
 - Progress-label readability passed representative A-roll, bright B-roll, dark B-roll, chapter-boundary, native-size, and phone-size review:
 - Published target-device screenshots prove that platform descriptions, controls, and action rails do not cover semantic progress labels; when the top fallback is used, headings, evidence, and picture-in-picture were reflowed below or around it while the approved caption lane remained intact:
+- The progress rail and required marker body are below the actual status/notch obstruction in target-device evidence; any move affected the whole progress system and triggered nearby-layout reflow:
 - Rendered strip is visual orientation only; native player scrubbing or separate platform chapter metadata provides actual seeking:
 
 ## Signature Outro
@@ -135,6 +141,7 @@
 - The exact approved tilt, blink/wink, timing, scale envelope, placement, and collision behavior were inherited; no simplified rebuild silently removed a motion beat:
 - Motion envelope includes scale, translation, rotation, transform origin, internal marks, and overshoot; a static outer natural box and padded inner animated stage contain every visible extreme without relying only on overflow; first-visible, entrance, overshoot, settle, encouragement, micro-expression, reopen, and final-visible frames show the complete silhouette at native or phone scale:
 - Face, final caption, semantic progress strip, and platform UI remain unobstructed at native and phone scale:
+- The lowest visible opaque character pixel is anchored a small explicit gap above the active caption card top, is recalculated after caption changes, and one complete character state remains opaque during every wink/blink swap:
 
 ## Finishing Design Audit
 
@@ -142,6 +149,7 @@ Record a decision and reason for every category. `Off`/`none` is valid; `unrevie
 
 - Background music decision/reason, speech-intelligibility impact, track/rights/mix when enabled:
 - Sound effects decision/reason and exact motivated cue list when enabled:
+- Token-locked micro-cues such as a success badge or comment invitation appear only on the matching word, animate once, remain brief, use rights-cleared low-level audio when enabled, and never compete with dialogue:
 - Entry/exit animation decision/reason and treated boundaries:
 - Transition decision/reason and relationship conveyed at each treated boundary:
 - Decorative effects decision/reason; functional focus cues distinguished from ornament:
@@ -163,6 +171,15 @@ Record a decision and reason for every category. `Off`/`none` is valid; `unrevie
 - Frame cadence is intentional and verified; no duplicated-frame `30 fps` to `60 fps` relabeling:
 - The actual delivered file was probed for dimensions, duration, frame count, codecs, color, audio, loudness, true peak, sync, blank/frozen frames, and lineage:
 - Known limitations:
+
+## Publication Package
+
+- `publish-package.json` was created only after the exact release candidate passed QA:
+- Platform and applicable regulator rules were rechecked from direct official sources on the recorded publication date; no guaranteed-compliance or guaranteed-distribution claim is made:
+- At least three accurate cover-title, post-caption, and directly relevant hashtag variants are present; cover and caption describe the same finished video:
+- AI production facts distinguish real human recording/voice, AI-assisted editing, generated graphics/animation, synthetic voice, and face replacement; the platform-native declaration and any viewer-facing disclosure are planned under current rules:
+- Public/open-source status, campaign eligibility, sponsorship, rights, privacy, and any performance claim are true at posting time and not inferred from an earlier plan:
+- `scripts/audit-publish-package.mjs` result:
 
 ## Decision
 

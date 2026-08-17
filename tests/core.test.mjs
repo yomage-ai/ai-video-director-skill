@@ -65,6 +65,9 @@ test('project scaffold stays outside the repository and includes decision artifa
   const roughCutReview = JSON.parse(
     readFileSync(path.join(project, 'analysis', 'rough-cut-review.json'), 'utf8'),
   );
+  const publishPackage = JSON.parse(
+    readFileSync(path.join(project, 'analysis', 'publish-package.json'), 'utf8'),
+  );
   assert.equal(state.projectId, 'test-video');
   assert.equal(intake.projectId, 'test-video');
   assert.equal(roughCutReview.projectId, 'test-video');
@@ -87,6 +90,9 @@ test('project scaffold stays outside the repository and includes decision artifa
   assert.equal(roughCutReview.sourceColorNormalization.workflowStage,
     'rough-cut-before-approval');
   assert.equal(roughCutReview.sourceColorNormalization.fineEditReprocessingRequired, false);
+  assert.equal(publishPackage.schemaVersion, 1);
+  assert.equal(publishPackage.releaseMaster.upscaledReviewProxy, false);
+  assert.equal(publishPackage.rulesVerification.guaranteedCompliantClaimAllowed, false);
   assert.equal(state.currentStageId, '00-intake-preflight');
   assert.equal(path.relative(repoRoot, project).startsWith('..'), true);
 });
@@ -1063,12 +1069,16 @@ test('approved portrait layout separates crop-tolerant bleed from multi-device s
   assert.equal(template.layerModel.fullBleedVisualLayer.mayBeCropped, true);
   assert.equal(template.layerModel.semanticForegroundLayer.mustRemainInsideEffectiveSafeRegion, true);
   assert.deepEqual(template.captionBaseline.geometryPx,
-    {left: 120, top: 2700, width: 1920, height: 500});
+    {left: 120, top: 2748, width: 1920, height: 500});
   assert.equal(template.captionBaseline.typography.fontFamily, 'Noto Sans SC');
   assert.equal(template.captionBaseline.typography.fontSizePx, 120);
   assert.equal(template.captionBaseline.typography.strokeWidthPx, 8);
   assert.equal(template.captionBaseline.pagination.maximumLines, 2);
   assert.equal(template.captionBaseline.pagination.actualRenderedGlyphBoundsMustFitEffectiveSafeRegion,
+    true);
+  assert.equal(template.progressBaseline.notchAndStatusProof.railMustRemainBelowObstruction, true);
+  assert.equal(template.signatureOutroPlacement.anchor, 'active-caption-card-top');
+  assert.equal(template.signatureOutroPlacement.wholeCharacterBaseRemainsOpaqueDuringExpressionSwap,
     true);
   assert.deepEqual(template.progressBaseline.geometryPx,
     {left: 0, top: 220, width: 2160, height: 180});
@@ -1350,4 +1360,90 @@ test('coverage boundary audit blocks short A-roll bridges and unsnapped source-c
   assert.match(reference, /150\.666667/);
   assert.match(reference, /同一个节目帧/);
   assert.match(skill, /audit-coverage-boundaries\.mjs/);
+});
+
+test('platform publication package locks the exact release master and rejects risky claims', () => {
+  const reference = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'references',
+      'platform-release-and-publish-package.md'),
+    'utf8',
+  );
+  const skill = readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'SKILL.md'),
+    'utf8',
+  );
+  const state = JSON.parse(readFileSync(path.join(repoRoot, 'PROJECT_STATE.json'), 'utf8'));
+  const plan = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'director-plan.template.json'),
+    'utf8',
+  ));
+  const template = JSON.parse(readFileSync(
+    path.join(repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+      'publish-package.template.json'),
+    'utf8',
+  ));
+  const temp = mkdtempSync(path.join(os.tmpdir(), 'ai-video-publish-audit-'));
+  const validPath = path.join(temp, 'valid.json');
+  const valid = structuredClone(template);
+  valid.target.platform = 'douyin';
+  valid.target.jurisdiction = 'CN';
+  valid.rulesVerification.checkedAt = '2026-08-18';
+  valid.rulesVerification.officialSources = [{
+    title: 'Current official rules',
+    url: 'https://example.gov/rules',
+  }];
+  valid.releaseMaster.path = '/outside-repo/release-4k.mp4';
+  valid.releaseMaster.sourceLineage = ['/outside-repo/source-4k.mov'];
+  valid.releaseMaster.required.width = 2160;
+  valid.releaseMaster.required.height = 3840;
+  valid.releaseMaster.probed.width = 2160;
+  valid.releaseMaster.probed.height = 3840;
+  valid.releaseMaster.exactCandidateQaPassed = true;
+  valid.aiDisclosure.realHumanRecording = true;
+  valid.aiDisclosure.realHumanVoice = true;
+  valid.aiDisclosure.aiAssistedEditing = true;
+  valid.aiDisclosure.aiGeneratedGraphicsOrAnimation = true;
+  valid.aiDisclosure.syntheticVoice = false;
+  valid.aiDisclosure.faceReplacement = false;
+  valid.aiDisclosure.platformDeclarationPlanned = true;
+  valid.aiDisclosure.viewerFacingCopy = 'Real recording with AI-assisted editing and graphics.';
+  valid.variants.forEach((variant, index) => {
+    variant.coverTitle = `Accurate cover ${index + 1}`;
+    variant.postCaption = `Accurate finished-video description ${index + 1}`;
+    variant.hashtags = ['#AIVideoEditing', '#VideoCreation'];
+    variant.rationale = 'Matches the finished video.';
+  });
+  writeFileSync(validPath, JSON.stringify(valid));
+  const validResult = JSON.parse(runNode('audit-publish-package.mjs', [validPath]));
+  assert.equal(validResult.ok, true);
+
+  const invalidPath = path.join(temp, 'invalid.json');
+  const invalidData = structuredClone(valid);
+  invalidData.releaseMaster.upscaledReviewProxy = true;
+  invalidData.aiDisclosure.platformDeclarationPlanned = false;
+  invalidData.campaignTags = ['#UnverifiedCampaign'];
+  invalidData.campaignEligibilityVerified = false;
+  invalidData.variants[0].postCaption = '保证不违规，私信领取 https://example.com';
+  writeFileSync(invalidPath, JSON.stringify(invalidData));
+  const invalid = spawnSync(process.execPath, [
+    path.join(scripts, 'audit-publish-package.mjs'), invalidPath,
+  ], {cwd: repoRoot, encoding: 'utf8'});
+  assert.notEqual(invalid.status, 0);
+  assert.match(invalid.stdout, /upscaled review proxy/);
+  assert.match(invalid.stdout, /platform declaration is not planned/);
+  assert.match(invalid.stdout, /prohibited guarantee/);
+  assert.match(invalid.stdout, /Campaign tags require verified eligibility/);
+
+  assert.equal(plan.releaseAndPublicationPlan.reviewProxyMayReceiveFinalPublicationApproval,
+    false);
+  assert.equal(plan.releaseAndPublicationPlan.exactReleaseCandidateQaAndApprovalRequired, true);
+  assert.equal(state.releaseAndPublicationPolicy.publishPackage.minimumVariantCount, 3);
+  assert.equal(state.releaseAndPublicationPolicy.releaseMaster.upscaleReviewProxyAndCallItMaster,
+    'forbidden');
+  assert.match(reference, /Publishing work begins early and finishes late/);
+  assert.match(reference, /发布不是精剪完成后才临时补一句文案/);
+  assert.match(reference, /Do not claim that a workflow is public, open source, free/);
+  assert.match(skill, /platform-release-and-publish-package\.md/);
+  assert.match(skill, /audit-publish-package\.mjs/);
 });

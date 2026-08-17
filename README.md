@@ -21,13 +21,19 @@ Handle the preparation and execution required by the Skill yourself. Inspect the
 3. Any essential missing information.
 
 Continue production only after I approve. Ask for separate approval before any payment, account login, system permission, identity or voice cloning, or use of rights-sensitive media.
-Deliver the final video, editable project, and necessary verification records.
+Deliver the final video, editable project, necessary verification records, and a dated publication package when publishing is in scope.
 ```
 
 If the Skill already appears in Codex, the short form is enough:
 
 ```text
 Use $ai-video-director to process the attached talking-head video. Inspect the material first, then show me the content-lock card and director plan. Continue only after I approve.
+```
+
+For a platform-ready release, state the real target rather than accepting a default proxy:
+
+```text
+Target Douyin, 9:16, true 2160x3840 release. Lock the release specification before editing. Let me review proxies during iteration, but render, probe, and show me the exact 4K release candidate before final approval. After it passes QA, verify the current official rules and give me at least three accurate cover-title, post-caption, hashtag, and AI-disclosure choices.
 ```
 
 For a dialogue recut, the Skill also audits every real clip boundary against the manuscript: complete first/last words, natural pause length, no retained swallow or mouth noise, and rendered normal-speed proof before rough-cut approval.

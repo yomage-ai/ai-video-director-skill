@@ -39,15 +39,16 @@ flowchart TD
   Q --> R["13 Targeted checks"]
   R --> S{"Checks pass?"}
   S -->|"No"| I
-  S -->|"Yes"| T["14 Master and full QA"]
-  T --> U["15 Delivery and private feedback"]
+  S -->|"Yes"| T["14 Exact release master and full QA"]
+  T --> U["15 Publication package"]
+  U --> V["16 Delivery and private feedback"]
 ```
 
 ## Stages And Artifacts
 
 | Stage | Plain-language action | Main tools | Required output/gate |
 |---|---|---|---|
-| 00 | Check whether the source can be handled without changing color, framing, timing, or audio unexpectedly | `ffprobe`, FFmpeg | `source-manifest.json`, review proxy only if needed |
+| 00 | Lock target platform, jurisdiction, aspect ratio, required pixels/cadence/color/codec, AI-disclosure facts, cover crop and platform-UI constraints; then check whether the source can meet them without changing color, framing, timing, or audio unexpectedly | official platform sources, `ffprobe`, FFmpeg | release-spec section in intake, `source-manifest.json`, highest-quality-source decision, review proxy only if needed |
 | 01 | Turn speech into word-timed text, correct it against the recording, and listen through the source | ASR, ChatCut transcript, human listening | corrected transcript and word timing |
 | 02 | Confirm what the video says | LLM plus user | one primary claim, at most two supports, order, real-evidence cold open |
 | 03 | Decide what to remove, retain, prove, and visualize | director reasoning | approved director plan |
@@ -61,8 +62,9 @@ flowchart TD
 | 11 | Pick the simplest suitable engine for each shot; when `B-base-A-cutout` is selected, preprocess the clean locked A-roll with governed HyperFrames background removal and retain canonical audio separately | HyperFrames, Remotion, real media, FFmpeg | editable visual shots and any time-aligned transparent presenter derivative |
 | 12 | Preserve the approved caption style unless the user explicitly changes it; keep progress labels as a separate semantic layer, apply the approved private-profile progress component or the generic fallback, synchronize any approved signature outro, verify inherited A-roll color rather than reprocessing it, and fail closed on cutout matte or outline defects; then explicitly audit, decide, and record background music, sound effects, entry/exit animation, transitions, and decorative effects, including reasoned `off`/`none` decisions | selected renderer, FFmpeg | caption-layout proof, chapter-progress plan plus A-roll/bright-B-roll/dark-B-roll composed-frame proof, cutout matte proof when applicable, signature-outro proof when applicable, finishing-design decision record, and any approved audio/motion treatment |
 | 13 | Test the risky pieces, not the whole video | targeted renders and probes | audible changed-word windows, B-roll seam frames, caption pagination, layout/keyframe/transition/color checks |
-| 14 | Render once checks pass, then inspect the whole result | renderer, FFmpeg, human review | master and QA report |
-| 15 | Package editable sources and learn only approved preferences | archive and memory scripts | delivery package and feedback record |
+| 14 | Render at the already-locked release dimensions from the highest-quality approved sources, then inspect the exact whole result | renderer, FFmpeg, human review | exact release candidate, probe, QA report, and user approval on that file |
+| 15 | Verify current official rules and build several accurate cover-title, caption, hashtag, campaign-tag, and AI-disclosure choices from the approved release candidate | official platform/regulator sources, `audit-publish-package.mjs` | dated `publish-package.json` and selected or alternate publication variants |
+| 16 | Package editable sources and learn only approved preferences | archive and memory scripts | delivery package and feedback record |
 
 ## Return Rules
 
@@ -74,7 +76,8 @@ flowchart TD
 | Visual direction, composition, palette, or motion behavior | 08 | visual work and everything after it |
 | B-roll, screenshots, documents, or asset license | 10 | affected shots, downstream composite and QA |
 | Caption style, effects, music, or mix | 12 | audio/caption output and final QA |
-| Resolution, codec, HDR/SDR, or platform settings | 13 | master and delivery variants |
+| Resolution, codec, HDR/SDR, platform settings, or source-quality requirement | 00 when the composition is affected; otherwise 13 | release candidate, QA, publication package, and delivery variants |
+| Final content, public/open-source status, campaign eligibility, or platform rule changed | 15 | publication copy, tags, disclosures, and upload settings |
 
 When source footage is described as supplementary, preserve the existing source map. Never interpret it as a whole-video replacement unless the user explicitly says so.
 

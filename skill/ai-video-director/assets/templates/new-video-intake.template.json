@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "projectId": "replace-with-project-id",
   "videoType": "talking-head-knowledge",
   "inputs": {
@@ -9,9 +9,26 @@
     "referenceLinks": [],
     "targetPlatform": "douyin",
     "aspectRatio": "9:16",
-    "targetResolution": "1080x1920",
+    "targetResolution": null,
     "targetDuration": "",
-    "language": "zh-CN"
+    "language": "zh-CN",
+    "releaseSpecification": {
+      "jurisdiction": null,
+      "accountOrContentType": null,
+      "width": null,
+      "height": null,
+      "fps": null,
+      "colorIntent": null,
+      "container": null,
+      "codec": null,
+      "coverCropConstraints": [],
+      "platformUiConstraints": []
+    },
+    "publicationScope": {
+      "publishPackageRequested": null,
+      "aiUseFactsRecorded": false,
+      "currentOfficialRulesCheckedAt": null
+    }
   },
   "contentLock": {
     "status": "pending",
@@ -32,6 +49,8 @@
     "keyframes-and-motion-sample",
     "asset-rights",
     "caption-and-audio",
-    "final-master-and-feedback"
+    "exact-release-master",
+    "publication-package-when-in-scope",
+    "feedback-promotion"
   ]
 }

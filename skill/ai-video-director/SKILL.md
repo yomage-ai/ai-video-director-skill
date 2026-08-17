@@ -19,8 +19,9 @@ For every new task:
 2. Run `node scripts/director.mjs doctor` from this Skill directory. Report blockers before media work.
 3. Run `node scripts/memory.mjs init`, then load the private base profile if it exists.
 4. Create or load a project outside this repository. Never put personal media, face/voice references, secrets, unpublished renders, or private preferences in Git.
-5. Inspect source media with `ffprobe` before transcoding. Record dimensions, rotation, frame rate, duration, codecs, audio, and color metadata.
-6. Read only the references needed for the current stage. Always read [workflow.md](references/workflow.md) and [production-standard.md](references/production-standard.md) for a fresh project.
+5. Lock the intended platform release specification before editing: target platform and jurisdiction, aspect ratio, required pixel dimensions, cadence, SDR/HDR, codec/container, AI-disclosure facts, and any platform UI or cover-crop constraints. If publication is in scope, read [platform-release-and-publish-package.md](references/platform-release-and-publish-package.md).
+6. Inspect source media with `ffprobe` before transcoding. Record dimensions, rotation, frame rate, duration, codecs, audio, and color metadata, then identify the highest-quality approved source capable of meeting the release specification.
+7. Read only the references needed for the current stage. Always read [workflow.md](references/workflow.md) and [production-standard.md](references/production-standard.md) for a fresh project.
 
 ### Approved-reference lock / 已通过参考锁
 
@@ -49,7 +50,7 @@ Use the stage order and return paths in [workflow.md](references/workflow.md):
 1. Intake and technical preflight.
 2. ASR with word timing, transcript correction, and full-source listening.
 3. Compact content lock: one primary claim, at most two supporting points, order, and real-evidence cold open.
-4. Director plan: retain/remove rules, rough-cut intent, visual beats, evidence needs, and risks.
+4. Director plan: retain/remove rules, rough-cut intent, visual beats, evidence needs, risks, and the early release/publication constraints that can affect composition.
 5. ChatCut visual rough-cut review; edit on a multitrack timeline and listen through every join. For repeated takes, select quality-first rather than keeping the last occurrence by default; use a later occurrence only as a tie-breaker when the candidates are materially equal. Audit repeated words across segment boundaries against audible playback because caption-only hiding does not remove speech. Before rough-cut approval, run the complete manuscript-head/tail, mouth-noise, and pause audit in [dialogue-join-audit.md](references/dialogue-join-audit.md): intelligibility is the first gate, so the last intended word before each changed boundary and the first intended word after it must both be clearly audible before pause length or visual pose is optimized. When removing a repeated word at a segment edge, explicitly keep the second complete occurrence rather than trusting a transcript strike or segment boundary; render and ASR/listen to the exact word window. Swallow, lip-smack, dead-air, and gaze-reset material is not protected as a "natural breath." Classify pauses by function, audit every must-keep point as spoken/on-screen/both, choose playback speed from content and performance rather than a house preset, and record the result with `assets/templates/rough-cut-review.template.json`. Before rough-cut approval, normalize the original talking-head color once at source, track, or global scope: target natural exposure and skin rather than a beauty look, inspect early/middle/late and cut-boundary frames, and roll back with a stage update if the result drifts gray, red, or otherwise inconsistent. Reuse exact approved creator color parameters only as a named private-profile baseline for comparable camera and lighting conditions; otherwise treat them as a starting point and revalidate. After a structural Script edit, re-read transitions and downstream B-roll timing, then reapply only the intentional audio transitions that the rebuild removed. Match dialogue loudness to recent clean format-matched creator references by rendered integrated LUFS first, keep true-peak headroom, and record both measurements; do not match from a UI volume number or peak alone. Follow [production-standard.md](references/production-standard.md).
 6. Export Final Cut Pro XML and convert it to the sole canonical EDL.
 7. Render exact A-roll from original-quality media with FFmpeg. After the last edit, watch and listen from start to finish, approve the source-level color decision, then lock the rough cut. Fine edit inherits this approved A-roll color and does not reprocess it unless the user makes a new explicit request or the source lighting/camera state genuinely changes.
@@ -61,9 +62,10 @@ Use the stage order and return paths in [workflow.md](references/workflow.md):
    When an approved reference is locked, QA is a fail-closed invariant audit: compare caption `displayMode`, `highlightUnit`, punctuation visibility, pacing/`wordsPerPage`, max lines, max characters, and geometry exactly; reject word-by-word or karaoke behavior unless the reference uses it. Build a collision matrix for every full-frame visual and boundary: top progress band versus headings/PiP, information content versus the caption lane, caption ink versus platform description controls, and outro art versus caption/underline. Sample the middle and both boundary neighborhoods of every visual run, not only one attractive settled frame. For every internal image, state, or label swap, sample the complete transition window; outgoing and incoming visibility must overlap when continuous coverage is intended, and the label must use the same phase as its image. A blank intermediate frame, leaked underlay, or label/image mismatch blocks export. Any critical copy or evidence inside/below the caption lane, any progress strip covering a heading, any unplanned dark/translucent band, or any missing required presenter insert blocks export. Compare the final target contact sheet beside the approved reference contact sheet before claiming QA passed.
 
    已锁定参考片时，验收必须“默认不通过，证据齐全才通过”：逐项比对字幕整句/逐字、强调、标点、分页与位置；为每个画面和边界建立进度条、标题、小窗、信息区、字幕区、平台控件和片尾的碰撞矩阵；每段检查开头、中间、结尾邻域。内部图片、状态或标签切换必须检查完整过渡窗；需要连续覆盖时，出入画透明度必须重叠，标签与图片必须使用同一阶段。空白中间帧、底层漏出或标签画面错配均阻断导出。字幕区内或其下方出现关键信息、进度条压标题、未经批准的暗色透明横条、应有而缺失的人物小窗，任一项都阻断导出。
-13. Render the master, listen to the complete dialogue, inspect representative frames, and verify rights.
-14. Deliver the final video together with the editable project, canonical EDL, captions, decision record, rights manifest, and QA report.
-15. Record feedback privately. Promote it to the base profile only after explicit user approval or repeated confirmation.
+13. Render the exact release candidate at the already-locked required dimensions from the highest-quality approved sources, then listen to the complete dialogue, inspect representative and boundary frames, probe the delivered file, and verify rights. A lower-resolution review proxy may accelerate iteration but may not receive final publication approval on behalf of a different 4K or otherwise higher-spec render.
+14. After that exact candidate passes QA, create the publication package with `assets/templates/publish-package.template.json`: verify current official platform rules, provide multiple accurate cover/caption/tag choices, plan the platform-native AI declaration and viewer-facing disclosure when applicable, and run `scripts/audit-publish-package.mjs`. Do not claim open-source availability, automation, evidence, compliance, or campaign eligibility unless it is true at posting time.
+15. Deliver the final video together with the editable project, canonical EDL, captions, decision record, rights manifest, QA report, and publication package.
+16. Record feedback privately. Promote it to the base profile only after explicit user approval or repeated confirmation.
 
 Progress placement safety overrides the bottom-first candidate described above. A semantic chapter strip must remain readable on the actual delivery surface; platform UI exclusion zones are constraints, not acceptable occlusion. Validate published screenshots on the target phone, tablet, and player surfaces. If bottom descriptions or controls obscure the strip, relocate it to a reserved top-safe band or another proven safe band, then reflow headings, picture-in-picture, and information cards below or around it while preserving the approved caption lane. Never solve the move by laying progress labels over existing headings.
 
@@ -100,7 +102,7 @@ Required gates:
 - Three keyframes and short motion sample.
 - Asset rights and any paid/credit operation.
 - Caption style and optional audio mix.
-- Final master and feedback promotion.
+- Exact release master, publication package, and feedback promotion.
 
 ## Memory
 
@@ -125,6 +127,7 @@ Every delivery must include:
 - Director/edit decisions.
 - Rights manifest.
 - QA report and unresolved limitations.
+- Dated publication package with official-rule sources, alternate cover/caption/tag choices, and the AI-disclosure decision when publishing is in scope.
 
 Classify every rendered file as a `review-proxy`, `platform-release`, or `source-quality-master`. Passing a platform's dimensions and codec rules proves compatibility, not source-quality lineage. When the approved edit was built from a lower-resolution proxy and the original is materially better, render the release/master from the original-quality media; never relabel or upscale the proxy as the master. Preserve the intended timeline cadence instead of manufacturing a higher frame-rate label by duplicating frames. / 每个输出必须明确标注为“审片代理、平台发布版或源质量母版”。平台规格兼容不等于母版质量；原片明显优于代理素材时，发布版应从原片重建，不能把代理文件放大后冒充母版，也不能靠重复帧虚增帧率。
 
@@ -142,6 +145,7 @@ node scripts/director.mjs init-project --id my-video --root ~/Documents/ai-video
 node scripts/memory.mjs show
 node scripts/chatcut-xml-to-canonical-edl.mjs review.xml canonical-edl.json
 node scripts/render-canonical-edl.mjs canonical-edl.json source.mov a-roll-master.mp4
+node scripts/audit-publish-package.mjs publish-package.json
 ```
 
 Keep the root README limited to bilingual natural-language invocation, inputs the user must provide, unavoidable approval points, and essential rights/privacy disclosures. Do not move internal workflow, tool selection, technical setup, or maintainer commands back into it.
@@ -150,6 +154,7 @@ Keep the root README limited to bilingual natural-language invocation, inputs th
 
 - [workflow.md](references/workflow.md): complete stage graph, artifacts, and restart rules.
 - [production-standard.md](references/production-standard.md): rough/fine boundaries, media handling, QA, and delivery.
+- [platform-release-and-publish-package.md](references/platform-release-and-publish-package.md): two-phase platform constraints, exact release-master approval, dated official-rule verification, AI disclosure, and multiple publication-copy variants.
 - [dialogue-join-audit.md](references/dialogue-join-audit.md): bilingual boundary workflow for manuscript audibility, natural pauses, mouth-noise removal, and rendered join proof.
 - [evidence-state-roi-audit.md](references/evidence-state-roi-audit.md): bilingual exact-state and semantic-ROI workflow for app/dashboard screenshots and recordings.
 - [code-motion-components.md](references/code-motion-components.md): bilingual `G/P/T/A/X` classification, three-layer component architecture, parameter schema, content-fit gate, seek-safe clocks, QA, promotion, and error-sample rules for code-authored motion graphics. Start a reusable record from `assets/templates/code-motion-component.template.json` instead of rebuilding its governance fields from memory.

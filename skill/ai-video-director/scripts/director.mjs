@@ -288,6 +288,7 @@ function initProject(args) {
     ['rough-cut-review.template.json', 'analysis/rough-cut-review.json'],
     ['project-state.template.json', 'project-state.json'],
     ['rights-manifest.template.json', 'analysis/rights-manifest.json'],
+    ['publish-package.template.json', 'analysis/publish-package.json'],
   ];
   for (const [templateName, relativeDestination] of files) {
     const destination = path.join(projectDir, relativeDestination);

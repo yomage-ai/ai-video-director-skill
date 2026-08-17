@@ -61,13 +61,13 @@
   "captionBaseline": {
     "geometryPx": {
       "left": 120,
-      "top": 2700,
+      "top": 2748,
       "width": 1920,
       "height": 500
     },
     "geometryNormalized": {
       "left": 0.055555556,
-      "top": 0.703125,
+      "top": 0.715625,
       "width": 0.888888889,
       "height": 0.130208333
     },
@@ -126,7 +126,23 @@
       "leadingLabelMarks": false,
       "chapterNumbers": false,
       "activeSegmentPanel": false
+    },
+    "notchAndStatusProof": {
+      "actualTargetDeviceScreenshotRequiredWhenAvailable": true,
+      "railMustRemainBelowObstruction": true,
+      "moveWholeSystemTogether": true,
+      "reflowNearbyHeadingsCardsPipAndCutouts": true
     }
+  },
+  "signatureOutroPlacement": {
+    "anchor": "active-caption-card-top",
+    "visibleCharacterBottomGapPxAtReferenceCanvas": {
+      "minimum": 16,
+      "maximum": 48
+    },
+    "deriveAgainAfterCaptionPaginationOrGeometryChange": true,
+    "wholeCharacterBaseRemainsOpaqueDuringExpressionSwap": true,
+    "fixedUnrelatedScreenYDefault": false
   },
   "bRollAndOverlaySafety": {
     "criticalRoiRequiredForEvidenceAndScreenContent": true,
