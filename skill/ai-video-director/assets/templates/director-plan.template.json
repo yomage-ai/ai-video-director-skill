@@ -132,7 +132,18 @@
       "intentionalARollResetRequiresReadableHold": true,
       "minimumIntentionalARollResetSeconds": 2,
       "sourceCutLayoutSnap": "same-program-frame-when-the-layout-enters-or-exits-on-the-new-take",
-      "shortLayoutException": "declared-token-synchronized-demo-with-exact-first-and-last-token-window"
+      "shortLayoutException": "declared-token-synchronized-demo-with-exact-first-and-last-token-window",
+      "ordinaryLayoutRequiresSpokenModeName": false,
+      "ordinaryLayoutSelectionBasis": [
+        "content-and-claim",
+        "evidence-density",
+        "presenter-value",
+        "negative-space-and-collisions",
+        "target-device",
+        "approved-direction"
+      ],
+      "semanticStateSynchronizationRequired": true,
+      "exactNamedPhraseSwitchRequiredOnlyWhenLayoutIsEvidence": true
     },
     "coverageRuns": [],
     "continuousRunInteriorAlphaCoverage": "required",
@@ -178,6 +189,9 @@
     "wordLevelPermissionWindowsRequired": true,
     "visualMayEnterBeforeFirstPermittingToken": false,
     "visualMustRemainThroughFinalRequiredToken": true,
+    "ordinaryVisualLayoutMayBeDirectorSelectedWithoutBeingNamed": true,
+    "visibleSemanticStateMustMatchCurrentSpokenClaim": true,
+    "exactNamedModePhraseAppliesOnlyToExplicitModeIntroductionComparisonOrTeaching": true,
     "appliesTo": [
       "facts-and-numbers",
       "interface-states",

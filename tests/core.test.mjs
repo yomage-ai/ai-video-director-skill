@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {execFileSync, spawnSync} from 'node:child_process';
-import {mkdtempSync, readFileSync, realpathSync, writeFileSync} from 'node:fs';
+import {mkdirSync, mkdtempSync, readFileSync, realpathSync, writeFileSync} from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -68,6 +68,12 @@ test('project scaffold stays outside the repository and includes decision artifa
   const publishPackage = JSON.parse(
     readFileSync(path.join(project, 'analysis', 'publish-package.json'), 'utf8'),
   );
+  const learningScope = JSON.parse(
+    readFileSync(path.join(project, 'analysis', 'learning-scope-ledger.json'), 'utf8'),
+  );
+  const deliveryManifest = JSON.parse(
+    readFileSync(path.join(project, 'delivery', 'delivery-manifest.json'), 'utf8'),
+  );
   assert.equal(state.projectId, 'test-video');
   assert.equal(intake.projectId, 'test-video');
   assert.equal(roughCutReview.projectId, 'test-video');
@@ -93,6 +99,10 @@ test('project scaffold stays outside the repository and includes decision artifa
   assert.equal(publishPackage.schemaVersion, 1);
   assert.equal(publishPackage.releaseMaster.upscaledReviewProxy, false);
   assert.equal(publishPackage.rulesVerification.guaranteedCompliantClaimAllowed, false);
+  assert.equal(learningScope.projectId, 'test-video');
+  assert.equal(learningScope.changeTypes.includes('pre-existing-hardened'), true);
+  assert.equal(deliveryManifest.projectId, 'test-video');
+  assert.equal(deliveryManifest.deliveryChecks.sharedWorkspaceRequiresDownload, false);
   assert.equal(state.currentStageId, '00-intake-preflight');
   assert.equal(path.relative(repoRoot, project).startsWith('..'), true);
 });
@@ -1446,4 +1456,124 @@ test('platform publication package locks the exact release master and rejects ri
   assert.match(reference, /Do not claim that a workflow is public, open source, free/);
   assert.match(skill, /platform-release-and-publish-package\.md/);
   assert.match(skill, /audit-publish-package\.mjs/);
+});
+
+test('ordinary visual modes are director-selected while explicit mode demos are token-synchronized', () => {
+  const standard = readFileSync(path.join(
+    repoRoot, 'skill', 'ai-video-director', 'references', 'production-standard.md'), 'utf8');
+  const coverage = readFileSync(path.join(
+    repoRoot, 'skill', 'ai-video-director', 'references', 'presenter-coverage-modes.md'), 'utf8');
+  const plan = JSON.parse(readFileSync(path.join(
+    repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+    'director-plan.template.json'), 'utf8'));
+  assert.match(standard, /Ordinary narration does not need to name a layout/);
+  assert.match(standard, /semantic-state synchronization/);
+  assert.match(standard, /普通视频的画面形式由内容和导演决策决定/);
+  assert.match(coverage, /Do not wait for ordinary narration to say a layout name/);
+  assert.match(coverage, /普通口播不需要先说出版式名称/);
+  assert.equal(plan.bRollContinuity.coverageRunClassification
+    .ordinaryLayoutRequiresSpokenModeName, false);
+  assert.equal(plan.bRollContinuity.coverageRunClassification
+    .semanticStateSynchronizationRequired, true);
+  assert.equal(plan.spokenCueSynchronization
+    .exactNamedModePhraseAppliesOnlyToExplicitModeIntroductionComparisonOrTeaching, true);
+});
+
+test('learning scope and delivery manifests make project handoff auditable', () => {
+  const temp = mkdtempSync(path.join(os.tmpdir(), 'ai-video-delivery-audit-'));
+  const projectDir = path.join(temp, 'editable-project');
+  mkdirSync(projectDir);
+  const files = {};
+  for (const name of ['master.mp4', 'qa.md', 'index.html', 'rough.xml', 'edl.json',
+    'aroll.mp4', 'captions.json', 'storyboard.json', 'director.json', 'rights.json',
+    'publish.json', 'learning.json']) {
+    files[name] = path.join(temp, name);
+    writeFileSync(files[name], 'fixture');
+  }
+
+  const learningTemplate = JSON.parse(readFileSync(path.join(
+    repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+    'learning-scope-ledger.template.json'), 'utf8'));
+  learningTemplate.projectId = 'fixture-project';
+  learningTemplate.updatedAt = '2026-08-18';
+  learningTemplate.entries[0] = {
+    id: 'semantic-state-sync',
+    title: 'Semantic state synchronization',
+    sourceFeedback: 'A later visual state appeared before its matching narration.',
+    changeType: 'corrected-overgeneralization',
+    promotionLayer: 'public-repository',
+    previousContract: 'Explicit mode demonstrations used exact named-phrase timing.',
+    observedFailure: 'The summary made that exception sound universal.',
+    generalizedInvariant: 'Director-selected layouts must match the current claim.',
+    projectSpecificInstance: 'This episode explicitly teaches A-roll and B-roll modes.',
+    implementation: {
+      publicRepositoryFiles: ['references/presenter-coverage-modes.md'],
+      privateProfileKeys: [],
+      projectArtifacts: [files['storyboard.json']],
+    },
+    privacyReason: 'No identity asset or creator-specific coordinate enters the public rule.',
+    evidence: ['user-approved episode review'],
+    approvedByUser: true,
+  };
+  writeFileSync(files['learning.json'], JSON.stringify(learningTemplate));
+  const learningResult = JSON.parse(runNode('audit-learning-scope-ledger.mjs', [files['learning.json']]));
+  assert.equal(learningResult.ok, true);
+
+  const delivery = JSON.parse(readFileSync(path.join(
+    repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
+    'delivery-manifest.template.json'), 'utf8'));
+  delivery.projectId = 'fixture-project';
+  delivery.status = 'ready';
+  delivery.releaseMaster.absolutePath = files['master.mp4'];
+  delivery.releaseMaster.sha256 = 'fixture-sha256';
+  delivery.releaseMaster.qaReportAbsolutePath = files['qa.md'];
+  delivery.editableProjects[0] = {
+    role: 'fine-edit',
+    format: 'HyperFrames',
+    absolutePath: projectDir,
+    entryPointAbsolutePath: files['index.html'],
+    openOrPreviewCommand: 'npm run dev',
+    studioOrProjectUrl: 'http://localhost:3002/#project/editable-project',
+    checkCommand: 'npm run check',
+    renderCommand: 'npm run render -- --resolution portrait-4k',
+    requiredRuntimeOrAccount: ['Node.js'],
+    verifiedOpenable: true,
+  };
+  delivery.roughCut.fcpXmlAbsolutePath = files['rough.xml'];
+  delivery.roughCut.canonicalEdlAbsolutePath = files['edl.json'];
+  delivery.roughCut.lockedArollAbsolutePath = files['aroll.mp4'];
+  delivery.supportingArtifacts = {
+    captionsAbsolutePath: files['captions.json'],
+    storyboardAbsolutePath: files['storyboard.json'],
+    directorPlanAbsolutePath: files['director.json'],
+    rightsManifestAbsolutePath: files['rights.json'],
+    publicationPackageAbsolutePath: files['publish.json'],
+    learningScopeLedgerAbsolutePath: files['learning.json'],
+  };
+  delivery.deliveryChecks = {
+    allDeclaredLocalPathsAreAbsolute: true,
+    allRequiredLocalFilesExist: true,
+    editableProjectOpenedOrChecked: true,
+    renderCommandIsReproducible: true,
+    finalResponseListsPathsAndOpeningInstructions: true,
+    sharedWorkspaceRequiresDownload: false,
+  };
+  const deliveryPath = path.join(temp, 'delivery.json');
+  writeFileSync(deliveryPath, JSON.stringify(delivery));
+  const deliveryResult = JSON.parse(runNode('audit-delivery-manifest.mjs', [deliveryPath]));
+  assert.equal(deliveryResult.ok, true);
+  assert.match(deliveryResult.warnings[0], /not yet been approved/);
+});
+
+test('public repository is Apache-2.0 and contains no personal media or exposed commit email', () => {
+  const packageJson = JSON.parse(readFileSync(path.join(repoRoot, 'package.json'), 'utf8'));
+  const license = readFileSync(path.join(repoRoot, 'LICENSE'), 'utf8');
+  const readme = readFileSync(path.join(repoRoot, 'README.md'), 'utf8');
+  const result = JSON.parse(runNode('audit-public-repository.mjs', []));
+  assert.equal(packageJson.private, true);
+  assert.equal(packageJson.license, 'Apache-2.0');
+  assert.match(license, /Apache License/);
+  assert.match(readme, /License And Privacy Boundary/);
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.errors, []);
 });

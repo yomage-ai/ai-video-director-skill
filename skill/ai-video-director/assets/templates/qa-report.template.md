@@ -87,7 +87,8 @@
 - Entry motion is pre-rolled behind the hidden clip so the first active frame is fully covered; every changed seam passed two-before, one-before, on, one-after, and two-after rendered-frame review:
 - Adjacent B-roll beats were merged into aggregate coverage runs and each run was first classified as `A-only`, `B-only`, or `AB-live`; every `AB-live` run separately records `B-base-A-PiP`, `A-base-B-overlay`, `B-base-A-cutout`, or `AB-split`:
 - Transition grammar distinguishes continuous-card direct cuts from motivated presentation-mode changes; B-roll and its live presenter layer entrances/exits are synchronized:
-- Every explicit A-roll/B-roll layout demonstration switches on the exact named phrase; no later mode is previewed while the prior mode is still being spoken:
+- Ordinary A-roll/B-roll modes were selected from content and director intent without requiring the narration to name them; each visible semantic state agrees with the claim currently being spoken and neither anticipates nor contradictorily outlives it:
+- When, and only when, the video explicitly introduces, compares, or teaches A-roll/B-roll layouts, each demonstrated mode switches inside its exact named-phrase permission window:
 - Transitions/layout/overlap:
 - Caption pages separate completed thoughts from the next thought after final pagination readback:
 - Native and thumbnail-scale inspection:

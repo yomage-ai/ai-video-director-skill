@@ -37,6 +37,7 @@ Use two axes instead of treating every composition as one flat list. The first a
 2. For `AB-live`, choose a layout from evidence density, presenter value, negative space, style fit, captions, platform controls, and target-device readability.
 3. Use `B-base-A-cutout` only after the actual transparent result passes its matte gate. A style preference does not override broken edges or covered evidence.
 4. Hold the chosen geometry throughout one continuous run. Change layout only at a semantic or layout boundary.
+5. Do not wait for ordinary narration to say a layout name. The director chooses the mode from the content and approved visual strategy. Synchronize the visible semantic state with the current claim; exact named-phrase switching is required only when the layout itself is being introduced, compared, or taught as evidence.
 
 ### Source-Cut And Layout-Boundary Conformance
 
@@ -161,6 +162,7 @@ The gate passes only when the intended shot is acceptable as moving video, not m
 2. 只有选择 `AB-live` 后，才根据证据密度、人物价值、留白、风格、字幕、平台控件和目标设备选择具体版式。
 3. `B-base-A-cutout` 必须先让真实透明视频通过抠像验收。风格偏好不能覆盖破碎边缘或证据遮挡。
 4. 同一个连续区间内保持几何稳定，只在语义边界或版式边界改变。
+5. 普通口播不需要先说出版式名称，导演应根据内容和已确认的视觉策略主动选择画面形式。真正必须同步的是观众看到的语义状态与当前口播观点；只有视频本身正在介绍、比较或教学某种版式时，才要求按说到该名称的准确词点切换。
 
 ### 源片剪点与版式边界统一
 

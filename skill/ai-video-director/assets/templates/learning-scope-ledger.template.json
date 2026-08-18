@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "updatedAt": null,
+  "changeTypes": [
+    "pre-existing-confirmed",
+    "pre-existing-hardened",
+    "corrected-overgeneralization",
+    "new-general-rule",
+    "new-private-preference",
+    "project-only-decision"
+  ],
+  "promotionLayers": [
+    "public-repository",
+    "private-profile",
+    "project-only"
+  ],
+  "entries": [
+    {
+      "id": "replace-with-stable-id",
+      "title": "replace-with-short-title",
+      "sourceFeedback": "replace-with-observed-feedback-or-failure",
+      "changeType": "pre-existing-hardened",
+      "promotionLayer": "public-repository",
+      "previousContract": "replace-with-what-existed-before-this-project",
+      "observedFailure": "replace-with-what-the-project-exposed",
+      "generalizedInvariant": "replace-with-the-reusable-rule-without-project-specific identity-or-values",
+      "projectSpecificInstance": "replace-with-the-current-project-choice-or-number",
+      "implementation": {
+        "publicRepositoryFiles": [],
+        "privateProfileKeys": [],
+        "projectArtifacts": []
+      },
+      "privacyReason": "explain-why-any-personal-value-or-asset-stays-outside-the-public-repository",
+      "evidence": [],
+      "approvedByUser": false
+    }
+  ]
+}

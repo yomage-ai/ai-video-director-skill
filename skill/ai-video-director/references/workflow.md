@@ -64,7 +64,7 @@ flowchart TD
 | 13 | Test the risky pieces, not the whole video | targeted renders and probes | audible changed-word windows, B-roll seam frames, caption pagination, layout/keyframe/transition/color checks |
 | 14 | Render at the already-locked release dimensions from the highest-quality approved sources, then inspect the exact whole result | renderer, FFmpeg, human review | exact release candidate, probe, QA report, and user approval on that file |
 | 15 | Verify current official rules and build several accurate cover-title, caption, hashtag, campaign-tag, and AI-disclosure choices from the approved release candidate | official platform/regulator sources, `audit-publish-package.mjs` | dated `publish-package.json` and selected or alternate publication variants |
-| 16 | Package editable sources and learn only approved preferences | archive and memory scripts | delivery package and feedback record |
+| 16 | Package editable sources, write an absolute-path delivery manifest, classify every lesson by change type and promotion layer, and learn only approved private preferences | archive and memory scripts | openable project, `delivery-manifest.json`, `learning-scope-ledger.json`, delivery package, and feedback record |
 
 ## Return Rules
 

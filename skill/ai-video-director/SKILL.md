@@ -113,6 +113,7 @@ Follow [memory-and-feedback.md](references/memory-and-feedback.md). Keep three l
 - Project overrides: choices that apply only to one video.
 
 Never infer a permanent preference from one isolated choice. Record the reason and evidence for every promotion.
+At delivery, also complete `assets/templates/learning-scope-ledger.template.json`. For every lesson, distinguish `pre-existing-confirmed`, `pre-existing-hardened`, `corrected-overgeneralization`, `new-general-rule`, `new-private-preference`, and `project-only-decision`, then state whether it lives in the public repository, private profile, or project only. / 交付时必须逐条说明规则是原有确认、原有加固、纠正过度泛化、新增通用规则、新增私人偏好还是仅本片决定，并标明实际进入公共仓库、私人画像或单片工程，不能把所有清单都说成“这次新加”。
 
 ## Governance And Delivery
 
@@ -128,6 +129,8 @@ Every delivery must include:
 - Rights manifest.
 - QA report and unresolved limitations.
 - Dated publication package with official-rule sources, alternate cover/caption/tag choices, and the AI-disclosure decision when publishing is in scope.
+- Learning-scope ledger that identifies what was pre-existing, hardened, corrected, newly generalized, private, or project-only.
+- Delivery manifest with the absolute local path of every final file and editable project, the editor/project format, entry point, open or preview command, reproducible render command, and any runtime/account dependency. In a shared workspace, link the existing local artifacts instead of telling the user to download another copy.
 
 Classify every rendered file as a `review-proxy`, `platform-release`, or `source-quality-master`. Passing a platform's dimensions and codec rules proves compatibility, not source-quality lineage. When the approved edit was built from a lower-resolution proxy and the original is materially better, render the release/master from the original-quality media; never relabel or upscale the proxy as the master. Preserve the intended timeline cadence instead of manufacturing a higher frame-rate label by duplicating frames. / 每个输出必须明确标注为“审片代理、平台发布版或源质量母版”。平台规格兼容不等于母版质量；原片明显优于代理素材时，发布版应从原片重建，不能把代理文件放大后冒充母版，也不能靠重复帧虚增帧率。
 

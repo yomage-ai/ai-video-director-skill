@@ -86,4 +86,8 @@ Use the code motion component system. Audit existing components as general mecha
 
 The Agent handles all other preparation and execution according to the Skill's internal rules.
 
-This repository is currently for private testing and does not grant a public-use or commercial license. Do not commit private footage, faces, voices, account credentials, or unpublished renders to this Git repository.
+## License And Privacy Boundary
+
+The original code, documentation, scripts, and templates in this repository are available under the [Apache License 2.0](LICENSE). Third-party tools, models, fonts, services, and user-provided media keep their own licenses and rights; this repository's license does not relicense them.
+
+This public repository intentionally contains no creator footage, face or voice files, private project paths, account credentials, unpublished renders, or personal style profile. Keep those artifacts in the external project and private data directories created by the Skill, never in Git.

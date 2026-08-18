@@ -2,8 +2,9 @@
   "schemaVersion": 1,
   "updatedAt": "2026-08-18",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
-  "visibility": "private",
-  "status": "internal-v0.1.0-validated",
+  "visibility": "public",
+  "license": "Apache-2.0",
+  "status": "public-v0.1.0-validated",
   "validatedAt": "2026-08-07",
   "release": "0.1.0",
   "skill": {
@@ -623,9 +624,14 @@
     "early-release-spec-lock-and-exact-requested-resolution-final-approval",
     "dated-multi-variant-platform-publication-package-with-ai-disclosure-audit",
     "token-locked-visual-reveal-and-layout-mode-demonstration",
+    "content-directed-layout-selection-with-semantic-state-synchronization",
+    "exact-named-layout-phrase-only-when-layout-is-evidence",
     "silent-authored-process-illustration-when-same-voice-comparison-would-sound-broken",
     "token-locked-single-cycle-micro-cues-for-expressions-and-ctas",
-    "caption-card-relative-opaque-signature-outro-placement"
+    "caption-card-relative-opaque-signature-outro-placement",
+    "per-project-learning-change-type-and-promotion-layer-ledger",
+    "absolute-path-openable-editable-project-delivery-manifest",
+    "public-repository-current-tree-history-metadata-and-media-audit"
   ],
   "pausedCapabilities": [
     "digital-human-and-avatar-generation",
@@ -640,9 +646,11 @@
   ],
   "dataPolicy": {
     "repositoryContainsPrivateMedia": false,
+    "repositoryHistoryContainsPrivateMedia": false,
+    "repositoryCommitMetadataUsesNoreplyEmail": true,
     "personalMemoryLocation": "AI_VIDEO_DIRECTOR_DATA_DIR outside Git",
     "videoProjectsLocation": "outside this repository",
-    "publicRelease": "not-approved"
+    "publicRelease": "approved-after-history-and-current-tree-privacy-audit"
   },
   "userExperience": {
     "entryPoint": "paste-the-repository-url-and-a-natural-language-video-request-into-a-coding-agent",
@@ -675,11 +683,14 @@
   },
   "validation": {
     "skillCreator": "pass",
-    "coreTests": "25/25 pass",
+    "coreTests": "28/28 pass",
     "testedMediaPath": "synthetic source -> ChatCut XML fixture -> canonical EDL -> FFmpeg precise render",
     "mermaidDiagrams": "3/3 render",
     "privacyScan": "pass",
+    "publicRepositoryAudit": "pass-after-history-email-rewrite",
     "publishPackageAudit": "pass-with-positive-and-negative-fixtures",
+    "deliveryManifestAudit": "pass-with-openable-project-and-absolute-path-fixture",
+    "learningScopeLedgerAudit": "pass-with-change-type-and-promotion-layer-fixture",
     "installedSkill": "~/.codex/skills/ai-video-director symlink",
     "privateMemory": "initialized outside Git"
   }

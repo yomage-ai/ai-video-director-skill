@@ -21,7 +21,7 @@
       "activeRole": "convert reviewed ChatCut straight cuts into the sole timing source",
       "blockedRole": "speed ramps, transitions, multicam, nested sequences, transforms, captions, motion graphics",
       "cost": "local compute only",
-      "rights": "repository-authored code; repository is currently private and unlicensed for redistribution",
+      "rights": "repository-authored bridge code is Apache-2.0; input XML and generated project artifacts retain their own rights",
       "privacy": "local",
       "source": "scripts/chatcut-xml-to-canonical-edl.mjs"
     },

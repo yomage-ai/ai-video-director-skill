@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "updatedAt": null,
+  "status": "draft",
+  "releaseMaster": {
+    "classification": "platform-release",
+    "absolutePath": null,
+    "sha256": null,
+    "probeReportAbsolutePath": null,
+    "qaReportAbsolutePath": null,
+    "exactCandidateApprovedByUser": false
+  },
+  "editableProjects": [
+    {
+      "role": "fine-edit",
+      "format": "replace-with-editor-or-project-format",
+      "absolutePath": null,
+      "entryPointAbsolutePath": null,
+      "openOrPreviewCommand": null,
+      "studioOrProjectUrl": null,
+      "checkCommand": null,
+      "renderCommand": null,
+      "requiredRuntimeOrAccount": [],
+      "verifiedOpenable": false
+    }
+  ],
+  "roughCut": {
+    "editorProjectUrl": null,
+    "fcpXmlAbsolutePath": null,
+    "canonicalEdlAbsolutePath": null,
+    "lockedArollAbsolutePath": null
+  },
+  "supportingArtifacts": {
+    "captionsAbsolutePath": null,
+    "storyboardAbsolutePath": null,
+    "directorPlanAbsolutePath": null,
+    "rightsManifestAbsolutePath": null,
+    "publicationPackageAbsolutePath": null,
+    "learningScopeLedgerAbsolutePath": null
+  },
+  "deliveryChecks": {
+    "allDeclaredLocalPathsAreAbsolute": false,
+    "allRequiredLocalFilesExist": false,
+    "editableProjectOpenedOrChecked": false,
+    "renderCommandIsReproducible": false,
+    "finalResponseListsPathsAndOpeningInstructions": false,
+    "sharedWorkspaceRequiresDownload": false
+  },
+  "knownLimitations": []
+}

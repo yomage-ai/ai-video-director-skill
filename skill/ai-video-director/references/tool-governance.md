@@ -32,4 +32,4 @@ Never turn one clip's benchmark into a universal winner. State the tested hardwa
 - Do not treat “trending” audio from an editing app as reusable outside that app or for commercial publication without checking the exact item terms.
 - Keep proof with the project rights manifest. Recheck terms before public/commercial export.
 
-This repository has no public license. Do not redistribute it or bundled third-party runtimes until a license and notices review is complete.
+The repository-authored Skill code, documentation, scripts, and templates are licensed under Apache-2.0. That license does not relicense any third-party runtime, model, font, hosted service, or user media. Do not bundle or redistribute those dependencies until their exact license and notice obligations are reviewed and satisfied.
