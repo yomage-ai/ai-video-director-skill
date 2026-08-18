@@ -1,6 +1,8 @@
 # AI Video Director Skill
 
-[中文说明](README.zh-CN.md)
+**[简体中文快速开始](README.zh-CN.md)** | English
+
+An open-source, bilingual workflow for turning talking-head footage and a script into an edited, reviewable, platform-ready video. Search the exact repository name `yomage-ai/ai-video-director-skill` when sharing it with someone else.
 
 Attach the video, script, and reference material to a Codex or other coding-agent task, then paste the prompt below.
 
@@ -24,11 +26,33 @@ Continue production only after I approve. Ask for separate approval before any p
 Deliver the final video, editable project, necessary verification records, and a dated publication package when publishing is in scope.
 ```
 
+## Important Behavior
+
+The Skill chooses ordinary visual layouts from the content, director plan, evidence density, presenter value, duration, and target-device safety. The narration does not need to name a layout before it can be used. The invariant is semantic sync: the visible state, evidence, and example must match the spoken claim at that moment. A named layout switches on the spoken anchor only when the video is explicitly teaching or comparing layout modes.
+
+The Agent handles installation, dependency checks, project setup, rendering, and tests. The user only needs to provide the task inputs and approve the gates that genuinely require a human decision.
+
+Use a coding agent that can read local files and run tools, such as Codex or Claude Code. A chat-only interface without filesystem or shell access can discuss the plan, but it cannot directly inspect, edit, render, or deliver local video files.
+
 If the Skill already appears in Codex, the short form is enough:
 
 ```text
 Use $ai-video-director to process the attached talking-head video. Inspect the material first, then show me the content-lock card and director plan. Continue only after I approve.
 ```
+
+## What You Receive
+
+- A content-lock card and director plan before production.
+- A reviewed rough cut plus an editable fine-edit project when the toolchain supports it.
+- Captions, visual coverage, rights/privacy checks, export QA, and absolute local delivery paths.
+- Multiple publication-copy and AI-disclosure options when publishing is part of the request.
+
+The public repository contains reusable rules, scripts, templates, and documentation only. Creator footage, face or voice assets, private preferences, credentials, and project media stay outside Git.
+
+<details>
+<summary><strong>Optional prompt modifiers</strong></summary>
+
+These are optional. Do not paste them unless the current video actually needs that behavior.
 
 For a platform-ready release, state the real target rather than accepting a default proxy:
 
@@ -75,6 +99,8 @@ For reusable code-authored motion graphics, you can add:
 ```text
 Use the code motion component system. Audit existing components as general mechanisms, private creator adapters, topic templates, archives, or error samples. Keep general behavior separate from private assets and this video's copy, timing, and media. Reuse or promote a component only after content-fit, seek-safe motion, layout, rights, and real-export checks pass.
 ```
+
+</details>
 
 ## What The User Provides
 
