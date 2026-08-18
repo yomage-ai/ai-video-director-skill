@@ -1179,18 +1179,10 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
   assert.match(skill, /code-motion-components\.md/);
   assert.match(skill, /Inactive long labels use ellipsis/);
   assert.match(skill, /Reply in the user's language/);
-  assert.match(readmeEn, /generic RMCU semantic progress component/);
-  assert.match(readmeEn, /loop only the active label when it overflows/);
-  assert.match(readmeZh, /通用 RMCU 语义进度组件/);
-  assert.match(readmeZh, /只有当前标题溢出时才循环滚动/);
-  assert.match(readmeEn, /approved portrait talking-head safe layout/);
-  assert.match(readmeZh, /已确认的竖屏口播安全版式/);
-  assert.match(readmeEn, /outlined live-presenter cutout style/);
-  assert.match(readmeZh, /带描边的实时人物抠像/);
-  assert.match(readmeEn, /code motion component system/);
-  assert.match(readmeEn, /general mechanisms, private creator adapters, topic templates, archives, or error samples/);
-  assert.match(readmeZh, /代码动画组件体系/);
-  assert.match(readmeZh, /通用机制、私人创作者适配、题材模板、历史归档和错误样本/);
+  assert.match(readmeEn, /What You Receive/);
+  assert.match(readmeZh, /你会得到什么/);
+  assert.doesNotMatch(readmeEn, /Optional prompt modifiers/);
+  assert.doesNotMatch(readmeZh, /可选提示词补充项/);
 });
 
 test('code motion component reference defines reusable layers and fail-closed QA bilingually', () => {
@@ -1573,7 +1565,7 @@ test('public repository is Apache-2.0 and contains no personal media or exposed 
   assert.equal(packageJson.private, true);
   assert.equal(packageJson.license, 'Apache-2.0');
   assert.match(license, /Apache License/);
-  assert.match(readme, /License And Privacy Boundary/);
+  assert.match(readme, /## License/);
   assert.equal(result.ok, true);
   assert.deepEqual(result.errors, []);
 });
