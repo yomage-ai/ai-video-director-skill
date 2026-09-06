@@ -2,6 +2,7 @@
 
 import {spawnSync} from 'node:child_process';
 import {resolveArtifact} from './lib/media-contract.mjs';
+import {publicStyle} from './lib/style-profile.mjs';
 import {
   cpSync,
   existsSync,
@@ -102,6 +103,12 @@ function doctor(args = {}) {
   checks.push({name: 'fast-xml-parser', required: true, status: xmlStatus});
 
   const dataDir = privateDataDir();
+  try {
+    const defaults = publicStyle();
+    checks.push({name:'Bundled Xiaoxiong editing style',required:true,status:'pass',profileId:defaults.profileId,version:defaults.version,localProfileRequired:false});
+  } catch (error) {
+    checks.push({name:'Bundled Xiaoxiong editing style',required:true,status:'fail',error:error.message});
+  }
   checks.push({
     name: 'private data directory outside repository',
     required: true,
@@ -303,6 +310,10 @@ function initProject(args) {
   }
 
   const date = new Date().toISOString();
+  const styleDestination = path.join(projectDir,'analysis/style-defaults.json');
+  if (!existsSync(styleDestination)) {
+    writeJson(styleDestination,publicStyle());
+  }
   const files = [
     ['new-video-intake.template.json', 'intake.json'],
     ['content-lock.template.json', 'analysis/content-lock.json'],

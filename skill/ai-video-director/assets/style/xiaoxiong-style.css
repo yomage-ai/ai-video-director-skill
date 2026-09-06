@@ -1,0 +1,20 @@
+/* 1080 x 1920 reference tokens. Scale the whole canvas; reflow for another aspect ratio. */
+@font-face{font-family:"Noto Sans SC";src:url("NotoSansSC-VF.ttf") format("truetype");font-weight:100 900;font-display:block}
+.video-canvas{--yellow:#f9d84a;--cobalt:#2f7ce0;--ink:#151515;--white:#fff9e8;--coral:#ff6257;--paper:#f5f1e5;position:relative;width:1080px;height:1920px;overflow:hidden;box-sizing:border-box;font-family:"Noto Sans SC",sans-serif;color:var(--white);background:var(--ink)}
+.video-canvas *{box-sizing:border-box}
+.video-canvas[data-style="warm-notebook-journey-v1"]{--yellow:#f3c94f;--ink:#202721;--white:#fffdf7;--coral:#d46659;--paper:#f7f4ea;--forest:#236349;--graphite:#35373b;background:var(--paper);color:var(--ink)}
+.caption-zone{position:absolute;left:76px;top:1432px;width:888px;height:178px;z-index:90;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.caption-card{max-width:880px;color:var(--white);text-align:center;font-size:50px;line-height:1.18;font-weight:820;white-space:nowrap;-webkit-text-stroke:5px var(--ink);paint-order:stroke fill;text-shadow:0 5px 0 rgba(0,0,0,.28)}
+.caption-card em{color:var(--yellow);font-weight:900;font-style:normal}
+.caption-card.two-lines{white-space:normal}
+[data-style="warm-notebook-journey-v1"] .caption-zone{left:60px;top:1374px;width:960px;height:250px;padding:24px 34px}
+[data-style="warm-notebook-journey-v1"] .caption-card{max-width:940px;padding:18px 28px 22px;border-radius:8px;background:rgba(29,34,31,.72);box-shadow:0 10px 30px rgba(15,20,17,.2);text-shadow:0 2px 5px rgba(0,0,0,.58);font-size:47px;line-height:1.32;font-weight:690;-webkit-text-stroke:0}
+.top-band{position:absolute;left:0;top:0;width:1080px;height:96px;background:var(--yellow);color:var(--ink);padding:24px 140px;font-size:22px;font-weight:900}
+.top-band .rail{position:absolute;left:140px;bottom:0;width:800px;height:8px;background:rgba(21,21,21,.22)}
+.top-band .fill{height:100%;background:var(--cobalt);width:42%}
+.evidence-card{position:absolute;left:140px;top:420px;width:800px;background:var(--paper);color:var(--ink);padding:40px;font-size:34px;border-left:10px solid var(--cobalt)}
+.card-title{position:absolute;left:140px;top:190px;width:800px;font-size:62px;line-height:1.08;font-weight:900}
+.note-card{position:absolute;left:110px;top:340px;width:860px;padding:50px;color:var(--white);background:var(--graphite);font-size:42px;border-radius:10px}
+.note-card strong{color:var(--yellow)}
+.notebook-route{position:absolute;left:110px;top:1020px;width:860px;height:150px;color:var(--forest)}
+.neutral-nib{width:64px;height:64px;position:absolute;left:454px;top:1044px}

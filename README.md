@@ -11,7 +11,7 @@ https://github.com/yomage-ai/ai-video-director-skill
 My material: [attached recording or local path; manuscript and references if available]
 Target platform and aspect ratio: [for example: Douyin, 9:16]
 Main point of the video: [one sentence, or help me refine it]
-Style request or reference: [optional]
+Style request or reference: [optional; use the built-in Xiaoxiong style by default]
 
 Inspect the material locally first and show me a plain-language content-lock card and rough-cut plan in my language. Do not show internal JSON.
 Wait for my approval before continuing production.
@@ -26,6 +26,10 @@ For a rough cut only:
 ```text
 Use $ai-video-director on this recording. Make a rough cut only: remove mistakes, retakes and unnecessary waits while keeping complete words and natural pacing. Show me the content and rough-cut plan first. After I approve the rough cut, deliver it with the editable timing project and captions, then stop.
 ```
+
+The Skill includes Xiaoxiong's approved subtitle look, dialogue loudness, natural-bright color treatment, palettes, screen layout and style priorities. A fresh install needs no separate private style package or old reference videos. The Agent prepares the pinned font automatically. See [the built-in style and portable examples](skill/ai-video-director/references/xiaoxiong-public-style.md).
+
+For Xiaoxiong character art, signature outro or the approved twirl, also install the owner-authorized `xiaoxiong-ip` Skill. Other creators can use this editing style without that identity Skill. Continuing an existing video still requires its source media and editable project.
 
 ## What You Provide
 
@@ -45,7 +49,7 @@ Use $ai-video-director on this recording. Make a rough cut only: remove mistakes
 
 The Agent handles installation, dependency checks, local media inspection, transcription, timing audits, style recommendation, asset planning, rendering, and verification. A style reference is optional: when none is supplied, the Agent compares the public curated styles against the video's content and evidence needs instead of asking you to invent a direction. If the library has no strong match, it plans and produces suitable evidence, generated or code-authored graphics, typography, motion, BGM, and SFX under the normal approval and rights gates. Before the first approval it avoids unnecessary large uploads, cloud retries, full renders, and premature style production.
 
-This version checks actual media, processing settings, approvals and versions. Unsupported editor effects stop the handoff until the Agent arranges a supported explicit conversion or a reviewed high-quality derivative. It never treats filled checkboxes or a successful render as proof of listening quality. Version `0.2.0-rc.1` has passed engineering regression checks and is shared as a release candidate. The next independent real-video trial still needs to validate listening quality, revision effort and full-length resource use. See [the recorded validation state](PROJECT_STATE.json).
+This version checks actual media, processing settings, approvals and versions. Unsupported editor effects stop the handoff until the Agent arranges a supported explicit conversion or a reviewed high-quality derivative. It never treats filled checkboxes or a successful render as proof of listening quality. Version `0.2.0-rc.2` has passed engineering regression checks and is shared as a release candidate. The next independent real-video trial still needs to validate listening quality, revision effort and full-length resource use. See [the recorded validation state](PROJECT_STATE.json).
 
 ## License
 

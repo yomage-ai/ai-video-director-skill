@@ -27,7 +27,7 @@
 - Validate the rail against an actual target-device screenshot when available. The rail and required marker body must remain below the status/notch obstruction; if they do not, move the entire progress system and reflow nearby content rather than shifting only the marker.
 - Preserve the approved caption lane when progress moves to the top. Reflow headings, information cards, picture-in-picture, and presenter cutouts around the top band. Move or shorten a decorative outro underline before moving approved captions, and keep it visibly below the rendered caption ink.
 - Position signature-outro art from the active caption card top. Keep the lowest visible opaque character pixel `16-48px` above that card on the reference canvas, recalculate after pagination or lane changes, and keep one whole-character state opaque during a wink/blink swap.
-- Keep creator-specific caption exceptions, identity art, and one-project collision fixes in private profiles or project overrides, not in this repository baseline.
+- Use the public Xiaoxiong caption presets for the built-in style; their coordinates scale from the documented reference canvas and must pass current-target checks. Identity art belongs to the selected identity Skill; another creator's unshared exceptions and one-project collision fixes remain local.
 
 ### Verification
 
@@ -60,7 +60,7 @@
 - 片尾 IP 的最低可见不透明像素应相对当前字幕卡顶部定位，在参考画布上保留 `16-48px` 间距；字幕分页或位置改变后重新计算。眨眼切换时底层必须始终保留一张完整不透明人物图，禁止透明闪烁。
 - 竖屏进度条：`left=0`、`top=220`、`width=2160`、`height=180`。对比底带保持满宽，语义轨道使用左右各 `243px` 的已验证参考内边距；每个新播放器仍需重新计算，不能把 `243px` 当成所有平台的固定值。
 - 进度条移到顶部时保留已确认字幕轨道，标题、信息卡、人物画中画和人物抠像绕开顶部安全带。片尾装饰下划线应先移动或缩短，并与字幕实际字形保持清晰间距，不能为了装饰线再次移动已确认字幕。
-- 个人化字幕特例、身份形象和单项目碰撞修复只进入私有风格档案或项目覆盖层，不写入仓库通用基线。
+- 已授权共享的小熊字幕参数随公共风格提供并按目标画布缩放。身份形象归选定的 IP Skill；未共享的个人例外和单片碰撞修复留在本地覆盖或工程内。
 
 ### 验证要求
 

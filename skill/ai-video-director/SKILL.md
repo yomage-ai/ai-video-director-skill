@@ -23,10 +23,10 @@ Digital-human/avatar production is paused. Never use SadTalker or the legacy `ai
 
 1. Resolve the real Skill directory. Run `node scripts/director.mjs doctor` once per unchanged environment. Its default result checks local installation, not editor connectivity. Run stage-specific checks only before that stage; see [execution-and-evidence.md](references/execution-and-evidence.md).
 2. Keep projects and private media outside this repository. Create a project with `director.mjs init-project` or load its existing state. Never overwrite approved media, timelines or components; create a new version and retain the old one until the replacement passes.
-3. Read current preferences with `memory.mjs show --stage intake --include-candidates`. Use `--stage rough|fine|release`, `--key`, `--style` and project overrides as needed. History is opt-in. Pending feedback is a proposal, not an effective default. Follow [memory-and-feedback.md](references/memory-and-feedback.md).
+3. Load the bundled Xiaoxiong style described in [xiaoxiong-public-style.md](references/xiaoxiong-public-style.md). Its audio, caption, color, palette, layout and content-fit defaults work without a private profile. Read the effective defaults and optional overrides with `memory.mjs show --stage intake --include-candidates`. Use `--stage rough|fine|release`, `--key`, `--style` and project overrides as needed. When Xiaoxiong identity use is selected, load `$xiaoxiong-ip` and pass its resolved directory with `--identity-skill`; otherwise no Xiaoxiong character or signoff is inserted. Prepare the exact font and neutral reference assets with `prepare-style-assets.mjs --out <external-project>/assets/xiaoxiong-style`. History is opt-in. Pending feedback is a proposal, not an effective default. Follow [memory-and-feedback.md](references/memory-and-feedback.md).
 4. For a fresh project read [workflow.md](references/workflow.md). Read only the current stage's references below; query machine contract sections with `director.mjs contract --section roughCut` (or `bRollContinuity`, `finishingPass`) when needed. Do not load the entire contract or all references by default.
 
-首次核对真实安装、工程位置和当前偏好；续接时复用未变化的环境结果。私有素材不进入公共仓库。按阶段读取规范和有效偏好，历史与待试反馈不能自动覆盖当前决定。
+默认带入公开的小熊字幕、响度、配色和画面风格，新机不需要旧私人画像。小熊形象与片尾才加载 `xiaoxiong-ip`。首次核对真实安装、工程位置和当前偏好；续接时复用未变化的环境结果。私有素材不进入公共仓库。按阶段读取规范和有效偏好，历史与待试反馈不能自动覆盖当前决定。
 
 ## Stage Routing / 阶段路由
 
@@ -46,7 +46,7 @@ Digital-human/avatar production is paused. Never use SadTalker or the legacy `ai
 - UI evidence: [evidence-state-roi-audit.md](references/evidence-state-roi-audit.md). Lock exact navigation and semantic ROI; use isolated demo data and a visible-module allowlist before capture. / 界面证据先锁状态、语义区域和隐私白名单。
 - Presenter and simultaneous A/B coverage: [presenter-coverage-modes.md](references/presenter-coverage-modes.md), then `audit-coverage-boundaries.mjs`. Treat `B-base-A-cutout` independently from PiP; preserve canonical audio and test moving alpha. / 人物小窗、抠像与分屏分开判断，版式切点以整数帧为准。
 - Captions: [caption-semantic-pagination.md](references/caption-semantic-pagination.md), then `audit-caption-pages.mjs`. Portrait short-form starts with one semantic line; readability or exact approved references may justify two. / 竖屏单行是可覆盖的推荐，不是绝对限制。
-- Portrait safe layout: [portrait-talking-head-safe-layout.md](references/portrait-talking-head-safe-layout.md), including `layout.portrait-talking-head.safe-v1` when it matches the approved series. / 精确系列参数从参考配置继承，不套成所有人的坐标。
+- Portrait safe layout: [portrait-talking-head-safe-layout.md](references/portrait-talking-head-safe-layout.md), including `layout.portrait-talking-head.safe-v1` when it matches the approved series. / 小熊风格的可缩放字幕与配色参数已经内置，实际占位按内容和平台复核。
 - Semantic progress: [semantic-progress-rmcu.md](references/semantic-progress-rmcu.md), `rmcu.semantic-progress.v1`. Use only when it helps navigation. Inactive long labels use ellipsis; active overflow follows the component contract. / 进度条按内容需要使用。
 - Code motion reuse: [code-motion-components.md](references/code-motion-components.md); classify the component as `G`, `P`, `T`, `A`, or `X` and separate the general mechanism, private adapter and project instance. / 公共机制、私人适配与单片参数分开。
 - ChatCut: follow its active host's basics, talking-head, transcription, verification and export skills as applicable. HyperFrames authoring reads `$hyperframes`; a renderer owns one shot. / 使用当前宿主支持的工具，不根据插件缓存猜测连接可用。
@@ -69,7 +69,7 @@ Never mark a file reviewed from a successful tool call, an ASR transcript, a che
 
 Use [interaction.md](references/interaction.md) to keep four normal user decisions compact: content, rough cut, audiovisual style and final master. Merge caption/music/presenter decisions into the style sample; inherit existing authorization. Follow [memory-and-feedback.md](references/memory-and-feedback.md) for public rules, curated styles, private preferences and project-only lessons.
 
-优先保留四个清楚的确认点，不把各个样式细节拆成重复审批。已采用的决定不再询问；新公共规则、私人偏好和单片经验分别保存。
+优先保留四个清楚的确认点，不把各个样式细节拆成重复审批。已采用的决定不再询问；已授权共享的小熊风格随公共 Skill 版本维护；个人形象进 IP Skill，其他用户覆盖和单片经验各自保存。
 
 Track the next independent real project with `analysis/trial-metrics.json`: first-card latency, revisions, repeated defects, render count, active time and measured resources. Test results are not proof of stable editing quality. Follow the current recorded promotion decision; publishing source code does not mark a pending real-project trial as completed.
 

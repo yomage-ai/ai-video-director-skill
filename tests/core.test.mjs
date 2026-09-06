@@ -893,7 +893,7 @@ test('speed, creator color and loudness baselines are content- and evidence-driv
   assert.ok(state.roughCutPolicy.playbackSpeed.postRetimeLayers.includes('presenter-or-cutout'));
   assert.ok(state.roughCutPolicy.playbackSpeed.postRetimeLayers.includes('sound-effects'));
   assert.match(state.roughCutPolicy.sourceColorNormalization.approvedCreatorBaseline,
-    /exact-private-profile-parameters/);
+    /exact-bundled-public-style-parameters/);
   assert.equal(state.roughCutPolicy.finishingPass.dialogueLoudness.primaryMatchMetric,
     'integrated-lufs');
   assert.equal(state.roughCutPolicy.finishingPass.dialogueLoudness.uiSliderOrPeakOnlyMatch,
@@ -907,7 +907,7 @@ test('speed, creator color and loudness baselines are content- and evidence-driv
   assert.equal(plan.roughCut.playbackSpeed.compareEarlyMiddleLate, true);
   assert.equal(plan.roughCut.playbackSpeed.postRetimeRevalidationRequired, true);
   assert.ok(plan.roughCut.playbackSpeed.postRetimeLayers.includes('layout-and-motion'));
-  assert.equal(plan.roughCut.creatorColorBaseline.privateProfileOnly, true);
+  assert.equal(plan.roughCut.creatorColorBaseline.privateProfileOnly, false);
   assert.equal(plan.finishingPass.dialogueLoudness.integratedLufsIsPrimaryMatchMetric, true);
   assert.equal(plan.finishingPass.dialogueLoudness.uiSliderOrPeakOnlyMatchIsValid, false);
 
@@ -1192,7 +1192,7 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.dialogueLoudness.perCutIndependentNormalizationDefault, false);
   assert.equal(plan.finishingPass.dialogueLoudness.postAdjustmentFullRenderRemeasureRequired, true);
   assert.equal(plan.finishingPass.dialogueLoudness.creatorSpecificTargetStorage,
-    'private-profile-only');
+    'bundled-public-style-or-explicit-local-override');
   assert.equal(plan.finishingPass.fontGovernance.rendererCatalogLookupRequired, true);
   assert.equal(plan.finishingPass.fontGovernance.canonicalFamilyNameRequired, true);
   assert.equal(plan.finishingPass.fontGovernance.systemFontStacksAllowedInProductionMotionGraphics,
@@ -1692,7 +1692,7 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
     'player-cover-aware-semantic-progress-safe-inset-with-full-bleed-surface',
   ));
   assert.ok(state.approvedCapabilities.includes(
-    'private-profile-progress-token-or-identity-marker-overrides-only',
+    'public-style-tokens-or-identity-skill-marker-overrides',
   ));
   assert.ok(state.approvedCapabilities.includes(
     'content-driven-progress-selection-and-semantic-marker-anchor',
@@ -1733,7 +1733,7 @@ test('PiP, transitions and semantic punctuation are planned from composed conten
   assert.match(standard, /Write a change allowlist and an invariant list before editing/);
   assert.match(standard, /Classify each render as `review-proxy`, `platform-release`, or `source-quality-master`/);
   assert.match(standard, /Never upscale or rename the proxy to imply source-quality mastery/);
-  assert.match(standard, /private style profile may lock only creator-specific token overrides/);
+  assert.match(standard, /public named style may lock scalable palette, type and layout tokens/);
   assert.match(standard, /## Recurring Signature Outro/);
   assert.match(standard, /## Dialogue Loudness Calibration/);
   assert.match(standard, /full motion envelope/);

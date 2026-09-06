@@ -11,7 +11,7 @@ Read this reference after rough-cut lock whenever a talking-head project needs a
 The public repository has two different kinds of reusable knowledge:
 
 1. Universal production rules prevent broken speech, false evidence, unreadable captions, unsafe crops, rights failures, and non-deterministic renders.
-2. The curated style library provides shareable aesthetic starting points with a content-fit rule, visual contract, B-roll grammar, motion grammar, sound candidates, and QA floor.
+2. The bundled Xiaoxiong profile supplies the default audio, exact caption/palette tokens and content-fit priorities; the curated style library provides shareable aesthetic starting points with a content-fit rule, visual contract, B-roll grammar, motion grammar, sound candidates, and QA floor.
 
 A curated style is not a universal template and not a private preference. It is a public, versioned candidate that an unrelated creator can use without access to the original creator's identity art, private project, or reference file. The library intentionally keeps styles that were liked, used, approved, or marked for future work, but those references do not form a closed whitelist.
 
@@ -21,7 +21,7 @@ Use this order after the rough cut is locked:
 
 1. Reuse an exact approved reference when the creator names one and it can be resolved.
 2. Translate an explicit style request or supplied reference into the current content.
-3. When the creator supplied no style, compare at least two plausible active entries from the curated library and recommend the strongest content fit.
+3. When no style was supplied, retain the bundled Xiaoxiong audio/caption/palette grammar and compare at least two plausible entries using its content-fit priorities. Recommend the best fit, adapting only where content or readability requires it.
 4. Start dynamic adaptation only after documenting why at least two curated candidates do not fit fully, or which compatible roles will be borrowed into a new dominant system. Read [dynamic-style-adaptation.md](dynamic-style-adaptation.md).
 
 Do not ask the creator to invent an aesthetic direction merely because they omitted a reference. The Skill owns the first recommendation. Show more than one direction only when two candidates remain meaningfully close. When one candidate clearly wins, one complete `6-12` second audiovisual sample is better than three shallow moodboards.
@@ -87,7 +87,7 @@ Add a public style only when it can be expressed without private identity or unl
 
 After editing the registry, run `node scripts/audit-curated-style-library.mjs` and the repository test suite before using the new entry in a project.
 
-When a style originated in one creator's work, remove the creator's character, logo, signature motion, unpublished media, exact copy, exact coordinates, account state, and private asset ids before public promotion. The generic recipe can be public even when that creator also keeps a private preference that ranks it first.
+When a style originated in one creator's work, remove the creator's character, logo, signature motion, unpublished media, exact project copy/timecodes, account state, and private asset ids before public promotion. The creator-approved scalable coordinates, exact colors and ranking priorities are intentionally public in the Xiaoxiong default profile. They are style tokens, not secret project data.
 
 ## 简体中文
 
@@ -96,7 +96,7 @@ When a style originated in one creator's work, remove the creator's character, l
 公共仓库里需要同时保存两类可复用知识。
 
 1. 通用制作规则负责避免口播断字、证据失真、字幕不可读、平台裁切、版权缺失和渲染不稳定。
-2. 公共策展风格库负责提供可分享的审美起点。每个条目都要写清内容适配、视觉契约、B-roll 语法、动效语法、声音候选和验收下限。
+2. 内置小熊风格先提供字幕、响度、色值、可缩放坐标和候选优先级；公共策展风格库负责提供可分享的审美起点。每个条目都要写清内容适配、视觉契约、B-roll 语法、动效语法、声音候选和验收下限。
 
 策展风格既不是所有视频必须套用的万能模板，也不是只能留在某个用户私有画像里的个人偏好。它是公开、可版本化的候选方案。陌生创作者不需要拿到原作者的个人 IP、私有工程和参考原图，也能用它做出达到下限的精剪。风格库会有意保留我们喜欢过、使用过、确认过或标记过的方向，但这些参考不组成封闭白名单。
 
@@ -172,4 +172,4 @@ When a style originated in one creator's work, remove the creator's character, l
 
 修改目录后，先运行 `node scripts/audit-curated-style-library.mjs` 和仓库测试，再把新条目用于真实项目。
 
-某种风格来自一位创作者的作品时，公开前要移除角色、Logo、签名动作、未发布素材、原文、准确坐标、账号状态和私有素材编号。去身份后的通用风格配方可以进入公共库；这位创作者仍然可以在私人画像里保留“优先选择该风格”的排序偏好。
+某种风格来自一位创作者的作品时，公开前移除角色、Logo、签名动作、未发布素材、单片原文时间点、账号状态和私有素材编号。小熊明确授权共享的可缩放坐标、字幕、色值及排序优先级直接进入公共默认，不另留必需的私人风格包。

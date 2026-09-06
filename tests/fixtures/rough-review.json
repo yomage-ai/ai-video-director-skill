@@ -226,12 +226,13 @@
     "notes": []
   },
   "creatorColorBaseline": {
-    "privateProfileOnly": true,
+    "privateProfileOnly": false,
     "baselineId": null,
     "exactParameters": null,
     "referenceRender": null,
     "sourceConditionsComparable": false,
-    "representativeFrameMeasurements": []
+    "representativeFrameMeasurements": [],
+    "publicStyleContract": "references/xiaoxiong-public-style.json"
   },
   "dialogueLoudnessMatch": {
     "referenceFileAndVersion": null,

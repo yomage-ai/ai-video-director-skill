@@ -39,7 +39,7 @@ Promotion rules:
 Keep these layers separate in code, storage, and review:
 
 1. **General mechanism:** frame mapping, state transitions, layout math, semantic anchors, overflow behavior, and generic QA. It must render with neutral defaults and without private dependencies.
-2. **Private adapter:** creator-owned art, logos, poses, action sequences, voice-linked signatures, private reference locks, and creator-identifying style tokens. Store these in the private profile or approved private asset system, never in the generic Skill repository. Public non-identifying style recipes stay in the curated style library and depend only on documented `G`/`T` contracts.
+2. **Private adapter:** creator-owned art, logos, poses, action sequences, voice-linked signatures, private reference locks, and creator-identifying style tokens. Store identity material in the selected identity Skill or approved private asset system, never in the public editing Skill. The explicitly shared Xiaoxiong colors, subtitle geometry and aesthetic priorities are public style tokens, not private identity assets. Public non-identifying style recipes stay in the curated style library and depend only on documented `G`/`T` contracts.
 3. **Project instance data:** viewer-facing copy, claims, chapter boundaries, cue frames, media IDs, crops, route points, target-player geometry, and approval records. Keep this in the video project.
 
 Dependency direction is one way:

@@ -1,0 +1,741 @@
+{
+  "schemaVersion": 1,
+  "profileId": "xiaoxiong-public-style-v1",
+  "version": 1,
+  "updatedAt": "2026-09-06",
+  "scope": "bundled-public-default",
+  "authorization": "creator-explicitly-authorized-public-sharing-of-approved-editing-style-2026-09-06",
+  "preferences": {
+    "talkingHead": {
+      "audioLoudness": {
+        "version": 1,
+        "measurementSource": "actual-rendered-timeline-after-cuts-denoise-fades-and-gain",
+        "metrics": [
+          "integrated-lufs",
+          "true-peak-dbtp",
+          "loudness-range-lu"
+        ],
+        "target": {
+          "integratedLufsPreferred": -16.5,
+          "integratedLufsAcceptable": {
+            "minimum": -17,
+            "maximum": -15.5
+          },
+          "truePeakMaximumDbtp": -1,
+          "preferredTruePeakHeadroomDbtp": -1.3,
+          "loudnessRangeTypicalLu": {
+            "minimum": 1.5,
+            "maximum": 3.5
+          }
+        },
+        "gainScope": {
+          "continuousSameSession": "uniform-source-track-or-all-derived-aroll-clips",
+          "perCutIndependentNormalization": false,
+          "perSectionAutomationOnlyForDocumentedSourceLevelChange": true
+        },
+        "acceptedReferences": [
+          {
+            "integratedLufs": -16.03,
+            "truePeakDbtp": -1.48,
+            "loudnessRangeLu": 2.5,
+            "role": "primary-clean-format-matched-reference"
+          }
+        ],
+        "rejectedOutliers": [
+          {
+            "integratedLufs": -8.22,
+            "truePeakDbtp": 0.51,
+            "reason": "over-hot-and-true-peak-above-zero"
+          },
+          {
+            "integratedLufs": -8.21,
+            "truePeakDbtp": 0.6,
+            "reason": "over-hot-and-true-peak-above-zero"
+          }
+        ],
+        "verification": [
+          "full-timeline-render-before",
+          "uniform-gain-application",
+          "full-timeline-render-after",
+          "integrated-lufs",
+          "true-peak-dbtp",
+          "loudness-range-lu",
+          "early-middle-late-audible-review"
+        ],
+        "voiceTreatment": {
+          "default": "preserve-the-recorded-speakers-natural-timbre",
+          "cleanup": "remove-distracting-noise-and-mouth-artifacts-without-metallic-overprocessing",
+          "voiceCloneDefault": false,
+          "pitchShiftDefault": false
+        }
+      },
+      "captionLayout": {
+        "profileId": "xiaoxiong-talking-head-captions-v1",
+        "version": 1,
+        "lockedVisualTreatment": false,
+        "referenceCanvas": {
+          "width": 2160,
+          "height": 3840
+        },
+        "geometry": {
+          "left": 120,
+          "top": 2748,
+          "width": 1920,
+          "height": 500,
+          "scaleProportionallyForOtherCanvases": true,
+          "topNormalized": 0.715625
+        },
+        "visualTreatment": "style-matched-portable-caption-token-set",
+        "platformSafety": "keep-below-primary-content-and-clear-of-description-area",
+        "verification": [
+          "native-size",
+          "phone-size",
+          "tablet-size",
+          "longest-two-line-card",
+          "platform-description-clearance"
+        ],
+        "defaultPreset": "bold-evidence-editorial-v1",
+        "font": {
+          "family": "Noto Sans SC",
+          "file": "NotoSansSC-VF.ttf",
+          "weights": [
+            100,
+            900
+          ],
+          "assetManifest": "assets/style/font-source.json",
+          "agentSetup": "scripts/prepare-style-assets.mjs"
+        },
+        "presets": {
+          "bold-evidence-editorial-v1": {
+            "referenceCanvas": {
+              "width": 1080,
+              "height": 1920
+            },
+            "geometry": {
+              "left": 76,
+              "top": 1432,
+              "width": 888,
+              "height": 178
+            },
+            "fontSize": 50,
+            "fontWeight": 820,
+            "lineHeight": 1.18,
+            "color": "#fff9e8",
+            "outline": {
+              "width": 5,
+              "color": "#151515"
+            },
+            "background": "transparent",
+            "keywordColor": "#f9d84a",
+            "keywordWeight": 900,
+            "preferredMaximumLines": 1,
+            "fallbackMaximumLines": 2
+          },
+          "warm-notebook-journey-v1": {
+            "referenceCanvas": {
+              "width": 1080,
+              "height": 1920
+            },
+            "geometry": {
+              "left": 60,
+              "top": 1374,
+              "width": 960,
+              "height": 250
+            },
+            "fontSize": 47,
+            "fontWeight": 690,
+            "lineHeight": 1.32,
+            "color": "#fffdf7",
+            "background": "rgba(29,34,31,0.72)",
+            "padding": [
+              18,
+              28,
+              22
+            ],
+            "borderRadius": 8,
+            "preferredMaximumLines": 1,
+            "fallbackMaximumLines": 2
+          }
+        }
+      },
+      "productionBaseline": {
+        "profileId": "xiaoxiong-talking-head-production-baseline-v1",
+        "version": 2,
+        "joinAcceptancePriority": [
+          "intended-word-intelligibility",
+          "natural-pause-and-mouth-noise-cleanup",
+          "picture-continuity"
+        ],
+        "repeatedBoundaryWord": {
+          "transcriptStrikeDoesNotProveAcousticOccurrenceRemoved": true,
+          "inspectOutgoingHandleBeforeExtendingIncoming": true,
+          "retainExactlyOneAudibleOccurrence": true,
+          "decodedSourceTimingAndWaveformRequired": true,
+          "renderedTargetWindowAsrAndListeningRequired": true
+        },
+        "pause": {
+          "universalDuration": false,
+          "removeSwallowLipSmackAndExcessiveDeadAirAtChangedJoin": true,
+          "compactJoinCandidateSeconds": [
+            0.2,
+            0.4
+          ],
+          "candidateOnly": true
+        },
+        "playbackSpeed": {
+          "selectByContentAndActualPerformance": true,
+          "defaultStartingRate": 1,
+          "denseExplainerCandidateRange": [
+            1.02,
+            1.06
+          ],
+          "compareEarlyMiddleLate": true,
+          "target": "perceptually-consistent-unless-intentional-content-led-variation",
+          "avoidUnmotivatedMidProgramSlowdown": true,
+          "stablePitchPreservingContiguousRanges": true,
+          "perSentenceSpeedChasing": false,
+          "postRetimeRevalidation": {
+            "required": true,
+            "layers": [
+              "joins-and-breaths",
+              "timeline-duration-and-boundaries",
+              "captions",
+              "b-roll",
+              "presenter-or-cutout",
+              "sound-effects",
+              "background-music-and-ducking",
+              "layout-and-motion",
+              "chapter-progress",
+              "transitions",
+              "outro"
+            ],
+            "normalSpeedAudiovisualReviewRequired": true
+          }
+        },
+        "color": {
+          "baselineId": "xiaoxiong-natural-bright-v1",
+          "sourceConditionScope": "comparable-camera-lighting-exposure-white-balance-and-input-render-state",
+          "filterOrder": [
+            "curves",
+            "colorbalance",
+            "eq"
+          ],
+          "provenance": "exact-creator-approved-curve-balance-saturation-chain",
+          "approximateOrRoundedSubstitutionForbidden": true,
+          "representativeDecodedYuvMaxAverageDelta": 0.15,
+          "differentConditionsRequireRevalidation": true,
+          "filterStages": [
+            "curves=all=0/0 0.25/0.275 0.5/0.535 0.75/0.77 1/1",
+            "colorbalance=rs=-0.025:bs=0.035:pl=1",
+            "eq=saturation=0.96"
+          ],
+          "ffmpegVideoFilter": "curves=all=0/0 0.25/0.275 0.5/0.535 0.75/0.77 1/1,colorbalance=rs=-0.025:bs=0.035:pl=1,eq=saturation=0.96",
+          "execution": "apply-once-to-a-reviewed-source-quality-derivative-before-canonical-EDL-render; preserve-source-lineage-and-do-not-reapply",
+          "inputColorPolicy": "SDR-with-verified-color-metadata; HDR-requires-explicit-color-managed-conversion-first"
+        },
+        "dialogueLoudness": {
+          "referenceId": "xiaoxiong-dialogue-loudness-v1",
+          "targetIntegratedLufs": -16.5,
+          "referenceLoudnessRangeLu": 2.1,
+          "referenceTruePeakDbtp": -1.3,
+          "primaryMatchMetric": "integrated-lufs",
+          "truePeakIsHeadroomConstraint": true,
+          "uiSliderOrPeakOnlyMatch": false
+        }
+      },
+      "seriesStyle": {
+        "profileId": "xiaoxiong-talking-head-series-style-v1",
+        "version": 1,
+        "captionBehavior": {
+          "wholeSemanticCards": true,
+          "wordByWordOrKaraoke": false,
+          "maximumLines": 2,
+          "inheritApprovedLaneBeforeMoving": true,
+          "manuscriptIsPunctuationSource": true,
+          "preserveInternalPunctuation": true,
+          "omitDetachablePageFinalCommaPeriodSemicolonColonEnumerationComma": true,
+          "preservePageFinalQuestionExclamationAndPairedClosers": true
+        },
+        "evidenceAndBroll": {
+          "sentenceLockedReveal": true,
+          "evidenceNotDecoration": true,
+          "noAllAtOnceInformationDump": true,
+          "continuousCoverageNoBlankOrArollFlash": true,
+          "exactUiStateAndSemanticRoi": true,
+          "isolatedDemoData": true,
+          "hideUnrelatedCommercialAdminAccountAndIdentityModulesBeforeCapture": true,
+          "contentDrivenFormatSelection": true,
+          "inspectUsableSuppliedRecordingFirst": true,
+          "compareRepresentativeStillCandidates": true,
+          "recordingPreferredWhenTemporalActionMateriallyImprovesProofOrOperationalFeel": true,
+          "recordingMandatory": false,
+          "stillMandatory": false,
+          "selectedFormatRequiresReason": true
+        },
+        "roleAndMotion": {
+          "pathAnimationMustShowRealAdvanceCollisionBacktrackRerouteAndDecision": true
+        },
+        "layout": {
+          "captionLaneIsExclusiveEvidenceFreeZone": true,
+          "jointCollisionMatrixRequired": true,
+          "pipGeometryChosenPerCardOrCoverageRun": true,
+          "pipStableWithinRun": true,
+          "platformControlsIncludedInReview": true
+        },
+        "audioAndPacing": {
+          "speechIntelligibilityFirst": true,
+          "pauseDurationIsFunctionalNotUniform": true,
+          "removeSwallowLipSmackMouthResetAndDeadAirAtChangedJoin": true,
+          "playbackSpeedContentDriven": true,
+          "bgmAndSfxRequireReasonedAudit": true,
+          "denseExplainerCanRemainVoiceOnly": true
+        },
+        "approvalMemory": {
+          "storeApprovedComponentMethodRejectedAlternativesAndFailureCause": true,
+          "approvedVersionIsDuplicatedBeforeRevision": true,
+          "changeAllowlistAndInvariantDiffRequired": true,
+          "sharedStyleIdentityAndProjectInstancesRemainSeparate": true
+        },
+        "deliverables": {
+          "classifyReviewProxyPlatformReleaseAndSourceQualityMaster": true,
+          "platformCompatibilityDoesNotProveSourceQuality": true,
+          "neverUpscaleReviewProxyAndCallItMaster": true,
+          "neverDuplicateFramesOnlyToClaimHigherFps": true
+        },
+        "visualTimingAndMicroCues": {
+          "wordLevelPermissionWindows": true,
+          "noEarlyFactNumberStateOrLayoutReveal": true,
+          "ordinaryLayoutRequiresSpokenModeName": false,
+          "semanticStateMustMatchCurrentSpokenClaim": true,
+          "explicitModeIntroductionComparisonOrTeachingSwitchesOnNamedPhrase": true,
+          "sameVoiceComparisonDefault": "omit-when-it-sounds-like-glitch-or-repeat",
+          "silentAuthoredProcessIllustrationAllowed": true,
+          "microCues": {
+            "nice": "single-token-locked-pop-with-optional-low-rights-cleared-sfx",
+            "commentCta": "single-token-locked-wiggle-or-tap",
+            "looping": false,
+            "dialogueDominant": true
+          }
+        }
+      },
+      "visualSafetyAndPalette": {
+        "version": 1,
+        "informationCards": {
+          "rejectBackgroundFamilies": [
+            "dark-forest-green",
+            "ink-green"
+          ],
+          "preferredDefault": "neutral-graphite",
+          "contentDrivenAlternativesAllowed": true,
+          "scope": "card-surfaces-not-all-green-accents"
+        },
+        "portraitSemanticProgress": {
+          "referenceCanvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "stylePresets": {
+            "warm-notebook-journey-v1": {
+              "railY": 112
+            },
+            "bold-evidence-editorial-v1": {
+              "topBandHeightPx": 96,
+              "persistentSemanticX": [
+                140,
+                940
+              ],
+              "railAtBandBottom": true
+            }
+          },
+          "geometryScope": "scalable-style-starting-tokens-not-a-universal-platform-safe-area",
+          "mustRemainVisible": [
+            "progress-rail",
+            "neutral-marker",
+            "chapter-labels"
+          ],
+          "reflowOnMove": [
+            "headings",
+            "evidence-cards",
+            "picture-in-picture",
+            "presenter-cutouts"
+          ],
+          "collisionRecheckRequired": true,
+          "selectionRule": "Use the content-matched public preset; verify actual target UI. Reopen an approved project layout only for a user request, target change, or observed safety/readability failure."
+        }
+      },
+      "coverageBoundary": {
+        "profileId": "xiaoxiong-coverage-boundary-v1",
+        "version": 1,
+        "sourceCutLayoutSameProgramFrame": true,
+        "minimumIntentionalARollResetSeconds": 2,
+        "continuousBrollForbidsAOnlyBridge": true,
+        "stablePresenterAcrossContinuousRun": true,
+        "hiddenEntryPreroll": true,
+        "tokenSynchronizedDemoException": {
+          "allowed": true,
+          "exactFirstAndLastTokenRequired": true
+        },
+        "structuralTrimRebaseLayers": [
+          "captions",
+          "broll",
+          "presenter",
+          "progress",
+          "sfx",
+          "outro"
+        ],
+        "boundaryFrameReview": [
+          "two-before",
+          "one-before",
+          "on",
+          "one-after",
+          "two-after"
+        ]
+      },
+      "evidenceEditorialStyle": {
+        "profileId": "xiaoxiong-evidence-editorial-v1",
+        "version": 2,
+        "contentDirection": {
+          "principle": "content-first-not-house-template",
+          "rhythm": "alternate-live-aroll-real-screen-evidence-and-designed-explanation-by-semantic-job",
+          "revealTiming": "sentence-and-token-locked-no-early-spoilers"
+        },
+        "palette": {
+          "approvedReferencePalette": {
+            "editorialFrame": "saturated-yellow",
+            "neutralBase": "black-white-and-neutral-surface",
+            "presenterOutline": "cobalt-blue",
+            "errorAccent": "restrained-coral"
+          },
+          "reuseMode": "starting-candidate-not-mandatory",
+          "contentDrivenAdaptation": true,
+          "selectionFactors": [
+            "hair-or-headwear",
+            "clothing",
+            "skin-edge-separation",
+            "all-underlying-backgrounds",
+            "evidence-and-content-palette",
+            "approved-brand-or-creator-tendency",
+            "platform-ui",
+            "phone-scale-contrast"
+          ],
+          "exactProjectPaletteMustBeReapprovedWhenSourceOrContentChanges": false,
+          "sourceOrContentChangeRequiresContrastAndSkinCheck": true
+        },
+        "presenterCutout": {
+          "frequentUseWhenItSupportsExplanation": true,
+          "normalPlacementZones": [
+            "lower-left",
+            "lower-right"
+          ],
+          "rejectedAnchors": [
+            "material-aligned",
+            "evidence-container-aligned"
+          ],
+          "oldRejectedAnchorMustNotBeRetained": true,
+          "sideSelection": "content-occupancy-gaze-gesture-caption-platform-ui-and-phone-legibility",
+          "placementStillFollowsEvidenceOccupancy": true,
+          "stableWithinCoverageRun": true,
+          "framing": "large-head-neck-and-shoulders",
+          "outline": {
+            "recommendedStartingState": "on",
+            "recommendedStateIsNotMandatory": true,
+            "offRequiresReason": true,
+            "derivedFromSameAlpha": true,
+            "colorAndWidthAreContentDriven": true,
+            "approvedV3Cobalt": "reference-candidate-not-fixed-default"
+          },
+          "shoulderEdge": "soft-fade-without-rectangular-source-edge"
+        },
+        "captions": {
+          "portraitPreferredMaximumLines": 1,
+          "semanticConsecutiveCardsBeforeWrapping": true,
+          "surface": "transparent",
+          "text": "white-with-dark-outline",
+          "keywordAccent": "selective-yellow"
+        },
+        "audio": {
+          "backgroundMusic": "light-technology-bed-with-dialogue-carve-and-dynamic-ducking",
+          "soundEffects": "sparse-semantic-cues-for-interface-actions-numbers-reveals-and-punchlines",
+          "speechRemainsDominant": true
+        },
+        "excludedFromApproval": [
+          "persistent-synchronized-top-bottom-duplicate-screen-layout",
+          "material-aligned-presenter-cutout-anchor",
+          "evidence-container-aligned-presenter-cutout-anchor"
+        ],
+        "platformFrame": {
+          "profileId": "xiaoxiong-douyin-top-only-editorial-frame-v1",
+          "version": 1,
+          "scope": "Douyin 9:16 proof-led knowledge talking-heads using the evidence-driven editorial style",
+          "defaultTreatment": {
+            "persistentAccent": "full-width-top-band-only",
+            "sideRails": false,
+            "bottomRail": false,
+            "programBelowBand": "full-width-crop-tolerant-media",
+            "semanticCopy": "move-into-target-player-safe-inset",
+            "captionTreatment": "inherit-transparent-white-outline-with-inline-yellow-emphasis"
+          },
+          "exactGeometryPolicy": {
+            "projectCoordinatesAreReferenceOnly": true,
+            "universalPixelHardcode": false,
+            "deriveFromApprovedReferenceThenValidateTargetSurface": true
+          },
+          "routineIteration": {
+            "reopenLayoutDiscussion": false
+          },
+          "reopenOnlyWhen": [
+            "creator-explicitly-requests-redesign",
+            "target-platform-or-aspect-ratio-changes",
+            "real-target-surface-crops-required-semantics",
+            "verified-platform-player-behavior-changes",
+            "new-layout-crosses-approved-safe-region"
+          ],
+          "referenceCanvas": {
+            "width": 1080,
+            "height": 1920
+          },
+          "referenceTokens": {
+            "topBandHeightPx": 96,
+            "persistentSemanticX": [
+              140,
+              940
+            ],
+            "railHeightPx": 8
+          },
+          "validation": "approved-design-contract; final-target-surface-check-required-for-current-video"
+        }
+      },
+      "screenRecordingLayout": {
+        "primaryEvidenceV1": {
+          "profileId": "xiaoxiong-primary-evidence-screen-v1",
+          "version": 1,
+          "default": "single-primary-evidence-plane",
+          "sequence": {
+            "establishContext": "brief-overview",
+            "followSpeechTarget": "semantic-scale-pan-or-clean-reframe",
+            "persistentSynchronizedDuplicates": false
+          },
+          "temporaryDetailInset": {
+            "allowedWhen": "critical-micro-evidence-remains-unreadable",
+            "typicalDurationSeconds": [
+              1,
+              2.5
+            ]
+          },
+          "trueSplitScreen": {
+            "allowedWhen": "two-states-must-be-compared-simultaneously"
+          },
+          "presenter": {
+            "normalPlacementZones": [
+              "lower-left",
+              "lower-right"
+            ],
+            "rejectedAnchors": [
+              "material-aligned",
+              "evidence-container-aligned"
+            ],
+            "sideSelection": "active-evidence-occupancy-gaze-gesture-caption-platform-ui-and-phone-legibility",
+            "evidenceReadabilityWinsOnCollision": true,
+            "stableWithinCoverageRun": true
+          },
+          "motion": {
+            "restrained": true,
+            "semanticBoundaryDriven": true,
+            "continuousSourceOperationPreserved": true
+          }
+        }
+      },
+      "editorialJudgment": {
+        "profileId": "xiaoxiong-editorial-judgment-v1",
+        "version": 1,
+        "expressiveMoments": {
+          "contentDriven": true,
+          "automaticLaughFreeze": false,
+          "automaticFreezeOrRemoval": false,
+          "selectionCriteria": [
+            "meaning",
+            "performance-quality",
+            "emotional-or-comic-timing",
+            "whole-program-pace",
+            "visual-continuity"
+          ],
+          "candidateTreatments": [
+            "preserve-natural-motion",
+            "shorten",
+            "cut-away",
+            "hold",
+            "motivated-freeze",
+            "other-reasoned-treatment"
+          ],
+          "normalSpeedAudiovisualReviewRequired": true
+        },
+        "paceConsistency": {
+          "compareEarlyMiddleLate": true,
+          "target": "perceptually-consistent-unless-content-justifies-variation",
+          "avoidUnmotivatedSlowdown": true,
+          "anchor": "clear-energetic-natural-delivery-fit-to-platform-and-content",
+          "intentionalVariationAllowedWithReason": true
+        },
+        "postRetimeRevalidation": {
+          "requiredWhenRetimeApplied": true,
+          "layers": [
+            "joins-and-breaths",
+            "timeline-duration-and-boundaries",
+            "captions",
+            "b-roll",
+            "presenter-or-cutout",
+            "sound-effects",
+            "background-music-and-ducking",
+            "layout-and-motion",
+            "chapter-progress",
+            "transitions",
+            "outro"
+          ],
+          "normalSpeedAudiovisualReviewRequired": true
+        },
+        "screenEvidence": {
+          "contentDriven": true,
+          "inspectUsableSuppliedRecordingFirst": true,
+          "compareRepresentativeStills": true,
+          "recordingLean": "prefer-when-temporal-action-adds-operational-feel-without-reducing-clarity",
+          "recordingMandatory": false,
+          "stillMandatory": false,
+          "selectedFormatRequiresReason": true
+        }
+      },
+      "chapterProgress": {
+        "contentDriven": true,
+        "enabledWhen": "real-navigation-or-established-series-identity",
+        "omitWhen": "decorative-only-or-attention-cost-exceeds-value",
+        "visualAdapter": {
+          "id": "xiaoxiong-notebook-progress-v2",
+          "warmWhitePaper": true,
+          "forestGreenRail": true,
+          "yellowCrayonActiveChapter": true,
+          "durationProportionalChapters": true,
+          "platformSafeInsetLocked": false
+        },
+        "markerSelection": {
+          "primaryBasis": [
+            "content-meaning",
+            "creator-fit",
+            "attention-budget"
+          ],
+          "candidates": {
+            "ai-programming-productivity-knowledge-work": "notebook-nib-first",
+            "direct-software-interaction": "restrained-hand-drawn-pointer-candidate",
+            "lifestyle-diary-emotion-gentle-growth-celebration": "botanical-or-neutral-marker; identity-action-only-through-an-explicitly-selected-identity-skill"
+          },
+          "automaticPersonalIp": false,
+          "newAssetRequiresStillAndMotionPreview": true
+        },
+        "notebookNib": {
+          "tipEqualsFillEndpoint": true,
+          "anchorErrorMaximumCompositionPx": 1,
+          "continuousFloatingPointTravel": true,
+          "chapterBoundaryPositionReset": false,
+          "microMotion": "separate-deterministic-seek-safe-low-amplitude-clock",
+          "rotation": false,
+          "asset": "assets/style/notebook-nib.svg",
+          "referenceCanvas": {
+            "width": 64,
+            "height": 64
+          },
+          "contactPoint": {
+            "x": 8,
+            "y": 56
+          }
+        }
+      },
+      "handdrawnKnowledgeMapStyle": {
+        "publicStyleId": "handdrawn-knowledge-map-v1",
+        "publicLibraryId": "ai-video-director-curated-talking-head-styles",
+        "rankingBias": {
+          "preferWhenContentFitPasses": true,
+          "automaticCandidatePriority": true,
+          "currentProjectExplicitDirectionWins": true,
+          "contentEvidenceRightsAndReadabilityWinOverPreference": true
+        },
+        "classification": "bundled-creator-style-priority"
+      },
+      "styleSelection": {
+        "default": "xiaoxiong-curated-content-driven",
+        "explicitCurrentDirectionWins": true,
+        "candidatesByContent": {
+          "proof-screen-demo-diagnosis-numerical-result": [
+            "bold-evidence-editorial-v1",
+            "handdrawn-knowledge-map-v1"
+          ],
+          "abstract-process-system-relationships": [
+            "handdrawn-knowledge-map-v1",
+            "color-block-explainer-v1"
+          ],
+          "journey-experiment-lessons-chapters": [
+            "warm-notebook-journey-v1",
+            "handdrawn-knowledge-map-v1"
+          ]
+        },
+        "noPrivateProfileOrReferenceRequired": true,
+        "adaptation": "keep-Xiaoxiong-caption-audio-and-palette-grammar; choose-evidence-and-layout-by-content; user-request-or-real-readability-conflict-may-override"
+      },
+      "paletteTokens": {
+        "bold-evidence-editorial-v1": {
+          "yellow": "#f9d84a",
+          "cobalt": "#2f7ce0",
+          "ink": "#151515",
+          "white": "#fff9e8",
+          "coral": "#ff6257",
+          "green": "#23866a",
+          "paper": "#f5f1e5"
+        },
+        "warm-notebook-journey-v1": {
+          "paper": "#f7f4ea",
+          "paperCool": "#f2f6f6",
+          "ink": "#202721",
+          "forest": "#236349",
+          "forestSoft": "#dce9df",
+          "yellow": "#f3c94f",
+          "coral": "#d46659",
+          "graphite": "#35373b",
+          "white": "#fffdf7"
+        },
+        "scope": "palette-and-scalable-type-layout-tokens-are-public-style-defaults; choose-colors-for-contrast-and-current-evidence"
+      }
+    },
+    "captions": {
+      "pagination": {
+        "profileId": "comma-and-sentence-short-card-v1",
+        "forceBreakAfter": [
+          "，",
+          "。",
+          "；",
+          "：",
+          "！",
+          "？",
+          ",",
+          ".",
+          ";",
+          ":",
+          "!",
+          "?"
+        ],
+        "enumerationComma": "short-list-only",
+        "fixedWidthCodePointSplit": false,
+        "protectedTermsAtomic": true,
+        "leadingDetachedPunctuation": "forbidden",
+        "maxLines": 2,
+        "maxUnits": 18,
+        "preferredMaxLines": 1
+      }
+    }
+  },
+  "optionalIdentitySkill": "xiaoxiong-ip",
+  "referencePolicy": "All runtime values and public visual examples are bundled; original private footage, screenshots and conversation history are provenance only and are not runtime dependencies.",
+  "referenceAssets": [
+    "assets/style/reference-board.html",
+    "assets/style/xiaoxiong-style.css",
+    "assets/style/notebook-nib.svg",
+    "assets/style/font-source.json"
+  ],
+  "validation": "approved-source-style-parameters; engineering-and-portability-verification; independent-real-project-trial-remains-required"
+}

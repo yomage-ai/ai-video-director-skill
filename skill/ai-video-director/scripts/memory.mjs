@@ -5,6 +5,7 @@ import {appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync} from
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {publicStyle, identityAdapter, mergePreferences} from './lib/style-profile.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../../..');
@@ -114,6 +115,9 @@ function setDotted(target, dottedKey, value) {
     throw new Error('--key must be a dot-separated preference key.');
   }
   const parts = dottedKey.split('.');
+  if (parts.some(part => ['__proto__', 'constructor', 'prototype'].includes(part))) {
+    throw new Error('Unsafe preference key');
+  }
   let cursor = target;
   for (const part of parts.slice(0, -1)) {
     if (!cursor[part] || typeof cursor[part] !== 'object' || Array.isArray(cursor[part])) {
@@ -168,21 +172,23 @@ function promote(args) {
 
 function show(args) {
   const paths = pathsFor(args);
-  if (!existsSync(paths.profile)) {
-    console.log(JSON.stringify({dataDir:paths.root,status:'not-initialized',preferences:{}}));
-    return;
-  }
-  const profile = readProfile(paths);
-  const events = existsSync(paths.feedback) ? readEvents(paths) : [];
+  const defaults = publicStyle();
+  const hasLocalProfile = !args['defaults-only'] && existsSync(paths.profile);
+  const profile = hasLocalProfile ? readProfile(paths) : {profileId:null,version:null,preferences:{},promotionHistory:[]};
+  const events = hasLocalProfile && existsSync(paths.feedback) ? readEvents(paths) : [];
   if (args.history) {
     console.log(JSON.stringify({dataDir:paths.root,profile,feedbackEvents:events},null,2));
     return;
   }
+  const identity = args['identity-skill'] ? identityAdapter(path.resolve(args['identity-skill'])) : null;
+  let effective = mergePreferences(defaults.preferences, profile.preferences || {});
+  if (identity) effective = mergePreferences(effective, identity.preferences);
+  const valueAt = (obj,key) => key.split('.').reduce((v,k)=>v?.[k],obj);
   const stage = args.stage || 'intake';
   const selectors = {
-    intake: /(?:content|intake|source|workflow|platformFrame|handdrawnKnowledgeMapStyle)/i,
-    rough: /(?:rough|dialogue|pace|pause|color|loudness|takeSelection|playback)/i,
-    fine: /(?:caption|style|visual|presenter|cutout|outline|progress|outro|broll|screenRecording|evidence)/i,
+    intake: /(?:content|intake|source|workflow|platformFrame|styleSelection|handdrawnKnowledgeMapStyle)/i,
+    rough: /(?:rough|dialogue|pace|pause|color|loudness|takeSelection|playback|productionBaseline)/i,
+    fine: /(?:caption|style|palette|visual|presenter|cutout|outline|progress|outro|broll|screenRecording|evidence|audioLoudness)/i,
     release: /(?:render|production|delivery|platform|loudness)/i,
     all: /./,
   };
@@ -193,16 +199,20 @@ function show(args) {
       if (args.style && /style/i.test(key) && typeof value === 'object'
         && !JSON.stringify(value).includes(args.style)) return;
       setDotted(preferences,key,structuredClone(value));
-      const history = [...profile.promotionHistory].reverse().find(e=>key===e.key || key.startsWith(e.key+'.') || e.key.startsWith(key+'.'));
-      provenance.push({key,source:'current-private-profile',profileVersion:profile.version,
-        feedbackId:history?.sourceFeedbackId || null,approvedAt:history?.approvedAt || null});
+      provenance.push({key,source:'bundled-public-style',profileId:defaults.profileId,version:defaults.version});
+      if (valueAt(profile.preferences,key) !== undefined) {
+        const history = [...(profile.promotionHistory || [])].reverse().find(e=>key===e.key || key.startsWith(e.key+'.') || e.key.startsWith(key+'.'));
+        provenance.push({key,source:'current-local-override',profileVersion:profile.version,
+          feedbackId:history?.sourceFeedbackId || null,approvedAt:history?.approvedAt || null});
+      }
+      if (identity && valueAt(identity.preferences,key) !== undefined) provenance.push({key,source:'selected-identity-skill',skillId:identity.skillId,version:identity.version});
       return;
     }
     if (value && typeof value === 'object' && !Array.isArray(value)) {
       for (const [k,v] of Object.entries(value)) visit(v,key?key+'.'+k:k);
     }
   }
-  for (const [key,value] of Object.entries(profile.preferences || {})) visit(value,key);
+  for (const [key,value] of Object.entries(effective)) visit(value,key);
   const overridden = [];
   if (args.overrides) {
     const overrides = JSON.parse(readFileSync(path.resolve(args.overrides),'utf8'));
@@ -219,6 +229,8 @@ function show(args) {
   const pending = events.filter(e=>e.type==='feedback-recorded' && !promoted.has(e.id) && !superseded.has(e.id)
     && (!args.project || e.projectId===args.project || e.scope==='base-candidate'));
   console.log(JSON.stringify({dataDir:paths.root,profileId:profile.profileId,profileVersion:profile.version,
+    publicStyle:{profileId:defaults.profileId,version:defaults.version},localProfileRequired:false,
+    identity:identity ? {skillId:identity.skillId,version:identity.version,assets:identity.assets} : null,
     stage,preferences,provenance,overridden,
     pendingCandidates:args['include-candidates'] ? pending.slice(-12).map(e=>({id:e.id,projectId:e.projectId,category:e.category,feedback:e.feedback,scope:e.scope,automaticallyApplied:false})) : [],
     pendingCandidateCount:pending.length,historyIncluded:false},null,2));
@@ -227,7 +239,7 @@ function show(args) {
 function usage() {
   console.log(`Usage:
   node scripts/memory.mjs init [--data-dir <private-directory>]
-  node scripts/memory.mjs show [--stage intake|rough|fine|release|all] [--key <prefix>] [--style <id>] [--project <id>] [--include-candidates] [--overrides <project-overrides.json>] [--history] [--data-dir <private-directory>]
+  node scripts/memory.mjs show [--stage intake|rough|fine|release|all] [--defaults-only] [--identity-skill <skill-directory>] [--key <prefix>] [--style <id>] [--project <id>] [--include-candidates] [--overrides <project-overrides.json>] [--history] [--data-dir <private-directory>]
   node scripts/memory.mjs record --project <id> --category <name> --feedback <text> [--scope project-only|base-candidate]
   node scripts/memory.mjs promote --id <feedback-id> --key <dotted-key> --value-json <json> --reason <text> --confirm-user-approved`);
 }

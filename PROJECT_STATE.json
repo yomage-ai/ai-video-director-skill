@@ -4,9 +4,9 @@
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "public",
   "license": "Apache-2.0",
-  "status": "v0.2.0-rc.1-engineering-validated-real-project-trial-pending",
+  "status": "v0.2.0-rc.2-bundled-xiaoxiong-style-real-project-trial-pending",
   "validatedAt": "2026-09-06",
-  "release": "0.2.0-rc.1",
+  "release": "0.2.0-rc.2",
   "candidateRelease": "0.2.0",
   "skill": {
     "id": "ai-video-director",
@@ -44,7 +44,7 @@
     "noUserStylePolicy": "compare-at-least-two-active-public-styles-and-recommend-the-strongest-content-fit",
     "referenceRole": "liked-used-approved-and-marked-styles-are-public-reference-material-not-a-closed-asset-whitelist",
     "noCompleteMatchPolicy": "define-one-dominant-audiovisual-system-and-a-beat-level-plan-for-evidence-generated-or-code-authored-assets-typography-icons-footage-music-and-sfx",
-    "privacyBoundary": "no-personal-ip-private-reference-project-copy-exact-coordinate-or-source-asset-in-public-style-entry",
+    "privacyBoundary": "no-identity-media-private-reference-project-copy-or-unlicensed-assets; approved-scalable-style-tokens-are-public",
     "validationStatus": "engineering-validated-next-real-project-motion-and-attention-cost-trial-pending"
   },
   "roughCutPolicy": {
@@ -472,7 +472,7 @@
         "highlights"
       ],
       "comparison": "representative-decoded-frames-through-one-color-managed-path",
-      "approvedCreatorBaseline": "exact-private-profile-parameters-with-reference-render-and-source-condition-scope",
+      "approvedCreatorBaseline": "exact-bundled-public-style-parameters-with-source-condition-scope",
       "reuseCondition": "comparable-camera-lighting-exposure-and-white-balance",
       "differentSourceCondition": "starting-candidate-only-revalidate-skin-whites-and-highlights"
     },
@@ -493,7 +493,7 @@
         "continuousSameSessionGainScope": "uniform-source-track-or-all-derived-aroll-clips",
         "perCutIndependentNormalization": "forbidden-by-default",
         "verification": "full-timeline-reexport-and-remeasurement",
-        "creatorSpecificTargets": "private-profile-only",
+        "creatorSpecificTargets": "bundled-public-style-or-explicit-local-override",
         "primaryMatchMetric": "integrated-lufs",
         "supportingConstraints": "loudness-range-and-true-peak",
         "uiSliderOrPeakOnlyMatch": "invalid",
@@ -635,7 +635,7 @@
         "changeAllowlistRequired": true,
         "invariantListRequired": true,
         "postEditDiff": "timeline-structure-items-ranges-asset-references-captions-audio-and-unaffected-pixels",
-        "promotionLayers": "repository-default-private-creator-profile-project-only"
+        "promotionLayers": "public-production-rule-shared-creator-style-identity-skill-local-override-project-only"
       },
       "signatureOutro": {
         "recurringSignoff": "named-reusable-component",
@@ -836,7 +836,7 @@
     "progress-label-layer-separation-from-captions",
     "platform-validated-progress-label-baseline-with-cross-background-and-device-proof",
     "chapter-label-director-plan-approval-before-style-lock",
-    "private-profile-progress-token-or-identity-marker-overrides-only",
+    "public-style-tokens-or-identity-skill-marker-overrides",
     "content-driven-progress-selection-and-semantic-marker-anchor",
     "approved-version-duplication-change-allowlist-and-post-edit-diff",
     "owned-identity-signature-outro-with-preview-before-reuse",
@@ -1002,5 +1002,13 @@
       "independent-next-real-project-quality",
       "full-length-host-resource-curve"
     ]
+  },
+  "publicCreatorStyle": {
+    "profile": "skill/ai-video-director/references/xiaoxiong-public-style.json",
+    "publicationMap": "skill/ai-video-director/references/style-publication-map.json",
+    "defaultOnFreshInstall": true,
+    "privateStylePackageRequired": false,
+    "optionalIdentitySkill": "xiaoxiong-ip",
+    "authorization": "explicit-owner-public-style-consolidation-and-GitHub-sync-2026-09-06"
   }
 }

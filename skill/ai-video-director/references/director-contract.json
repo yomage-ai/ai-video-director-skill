@@ -170,10 +170,11 @@
       ]
     },
     "creatorColorBaseline": {
-      "privateProfileOnly": true,
-      "baselineId": null,
+      "privateProfileOnly": false,
+      "baselineId": "xiaoxiong-natural-bright-v1",
       "exactParameterReuseRequiresComparableSourceConditions": true,
-      "differentConditionsRequireRevalidation": true
+      "differentConditionsRequireRevalidation": true,
+      "publicStyleContract": "references/xiaoxiong-public-style.json"
     }
   },
   "bRollContinuity": {
@@ -568,7 +569,7 @@
         "true-peak-dbtp",
         "loudness-range-lu"
       ],
-      "referencePolicy": "prefer-recent-clean-format-matched-private-profile-references",
+      "referencePolicy": "use-bundled-Xiaoxiong-target-unless-current-project-or-approved-user-reference-overrides",
       "clippedOutliersDefineTarget": false,
       "fallbackStartingBandLufs": {
         "minimum": -18,
@@ -581,7 +582,7 @@
       "integratedLufsIsPrimaryMatchMetric": true,
       "uiSliderOrPeakOnlyMatchIsValid": false,
       "referenceFileAndVersionRequired": true,
-      "creatorSpecificTargetStorage": "private-profile-only"
+      "creatorSpecificTargetStorage": "bundled-public-style-or-explicit-local-override"
     },
     "captions": {
       "requestedScale": 1,

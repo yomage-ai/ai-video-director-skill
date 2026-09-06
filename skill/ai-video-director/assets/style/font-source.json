@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "family": "Noto Sans SC",
+  "license": "OFL-1.1",
+  "licenseFile": "OFL-NotoSansSC.txt",
+  "source": "https://github.com/notofonts/noto-cjk/tree/165c01b46ea533872e002e0785ff17e44f6d97d8/Sans/Variable/TTF/Subset",
+  "url": "https://raw.githubusercontent.com/notofonts/noto-cjk/165c01b46ea533872e002e0785ff17e44f6d97d8/Sans/Variable/TTF/Subset/NotoSansSC-VF.ttf",
+  "filename": "NotoSansSC-VF.ttf",
+  "sha256": "d68bafcb48a2707749396aa12bbbd833cb70401f3a9a689fd2902c7e0d295964",
+  "licenseSha256": "babcfe66c8a098b2fa279bc724a3a342f8124f77ce18941fbcc1bbb39823cded",
+  "installation": "agent-downloads-and-verifies-into-project-assets; no-system-font-installation-required",
+  "failurePolicy": "report-missing-font-or-checksum-failure; never-silently-substitute-and-call-it-exact",
+  "licenseTextNormalization": "trailing-whitespace-only; license wording unchanged"
+}

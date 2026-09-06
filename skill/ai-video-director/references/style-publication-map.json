@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "sourceProfileVersion": 37,
+  "approvedAt": "2026-09-06",
+  "items": [
+    {
+      "sourceKey": "talkingHead.chapterProgress",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.signatureOutro",
+      "destination": "xiaoxiong-ip",
+      "disposition": "Identity art, signoff and exact expression/motion adapter."
+    },
+    {
+      "sourceKey": "talkingHead.audioLoudness",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.captionLayout",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.productionBaseline",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.seriesStyle",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.visualSafetyAndPalette",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.coverageBoundary",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.evidenceEditorialStyle",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.screenRecordingLayout",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.editorialJudgment",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "talkingHead.renderOperations",
+      "destination": "host-only",
+      "disposition": "Hardware preset; new machines probe their own capacity. Reusable operations already live in release-render-operations.md."
+    },
+    {
+      "sourceKey": "talkingHead.handdrawnKnowledgeMapStyle",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    },
+    {
+      "sourceKey": "production.uiEvidenceAndSignatureOutro",
+      "destination": "split",
+      "disposition": "UI evidence invariants stay in the public production standard; signature treatment moves to xiaoxiong-ip."
+    },
+    {
+      "sourceKey": "captions.pagination",
+      "destination": "bundled-public-default",
+      "disposition": "Reusable style/mechanism retained; raw project IDs, private reference media and single-video timing are provenance only."
+    }
+  ],
+  "reusableSourceKeyCount": 15,
+  "rawReferencePathsRequiredAtRuntime": 0
+}

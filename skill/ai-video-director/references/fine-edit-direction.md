@@ -21,7 +21,7 @@ Read [curated-style-library.md](curated-style-library.md) and its JSON registry 
 3. When neither exists, compare at least two plausible active curated styles and recommend the strongest fit. Do not ask the creator to invent a style merely because the request omitted one.
 4. Use `dynamic-adaptation` only after recording why at least two curated candidates fail as complete solutions, or which compatible roles will be borrowed into a new dominant system. `content-derived` remains a legacy alias for older project records.
 
-The selected public style supplies a palette role system, type hierarchy, icon family, B-roll grammar, motion character, sound candidates, and quality floor. It does not lock sample copy, exact coordinates, presenter placement, or a private creator asset. Adapt those values to the current transcript, evidence, aspect ratio, caption lane, and platform controls, then prove the result in the audiovisual sample.
+The selected public style supplies a palette role system, type hierarchy, icon family, B-roll grammar, motion character, sound candidates, and quality floor. The bundled Xiaoxiong profile also provides exact scalable subtitle and layout tokens. It does not lock sample copy, unscaled one-project geometry, presenter placement regardless of evidence, or a private creator asset. Adapt those values to the current transcript, evidence, aspect ratio, caption lane, and platform controls, then prove the result in the audiovisual sample.
 
 Record the library version, considered style ids, selected id, selection reason, and adaptation summary in `fine-edit-direction.json`. When two candidates remain materially close, show distinct directions. When one clearly wins, show one complete recommended sample instead of three shallow variants.
 
@@ -81,7 +81,7 @@ A style sample should normally last about `6-12 seconds`, long enough to judge o
 3. 两者都没有时，至少比较两个合理的公共策展风格，由 Agent 推荐适配最好的一项。不能因为用户没写参考，就让用户自己发明风格。
 4. 只有写清至少两个公共候选为什么不能作为完整方案，或者哪些角色会被借入新的主系统后，才能使用 `dynamic-adaptation`。`content-derived` 只作为旧项目记录的兼容别名。
 
-公共风格提供配色角色、字号层级、图标家族、B-roll 语法、动效性格、声音候选和验收下限。它不锁定示例文案、准确坐标、人物位置和私人创作者资产。具体数值要根据本片口播、证据、画幅、字幕区和平台控件重新调整，再通过视听样片证明效果。
+公共风格提供配色角色、字号层级、图标家族、B-roll 语法、动效性格、声音候选和验收下限。小熊风格的准确色值、字幕和可缩放版式参数已经内置；它不锁定示例文案、忽略内容占位的人物位置或私人创作者资产。具体数值要根据本片口播、证据、画幅、字幕区和平台控件重新调整，再通过视听样片证明效果。
 
 在 `fine-edit-direction.json` 中记录风格库版本、比较过的风格编号、选中的编号、选择理由和本片改编摘要。两个候选确实接近时再展示不同方向；一个候选明显更好时，交付一个完整推荐样片，不要做三个浅层变体。
 

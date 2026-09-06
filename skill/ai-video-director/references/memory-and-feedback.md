@@ -1,108 +1,58 @@
-# Memory And Feedback
+# Defaults, Identity And Feedback / 默认风格、个人形象与反馈
 
-## Runtime And Knowledge Layers
+## Runtime Ownership / 运行时归属
 
-1. Repository defaults are universal production rules suitable for every user. They are versioned in Git and prevent correctness, evidence, rights, safety, and delivery failures.
-2. The public curated style library stores shareable aesthetic recipes with content-fit rules, B-roll grammar, motion, sound candidates, and a quality floor. These entries are public candidates, not universal mandates.
-3. The private base profile stores durable personal preferences, creator-specific ranking biases, identity treatments, and private references. It lives under `AI_VIDEO_DIRECTOR_DATA_DIR`, outside Git.
-4. Project overrides store choices, copy, timing, assets, and geometry for one video only. They live in that video's external project folder.
-5. An external personal knowledge base, when the user has one, stores provenance, status, conflicts, and practice history. It is not an automatic runtime default unless an approved public style, private-profile value, or explicit current decision points to it.
+1. **Public editing Skill:** production rules plus Xiaoxiong's explicitly shared editing style. `xiaoxiong-public-style.json` owns the approved loudness, natural-color chain, exact scalable subtitle tokens, palettes, screen/presenter defaults, music/effect tendencies and content-fit priorities. It loads on a fresh install without old local files. The curated library supplies compatible style recipes and dynamic adaptation routes.
+2. **Optional identity Skill:** `xiaoxiong-ip` owns Xiaoxiong character images, approved poses, wink/signoff treatment and the twirl sequence. It is selected only for that identity use. Another creator does not need it to use the public editing style.
+3. **Video project:** the current footage, transcript, timecodes, EDL, chosen music/assets, approvals, target-specific layout and QA. Continuing an existing video requires this project regardless of which computer is used.
+4. **Optional local data:** another user's overrides, feedback history, credentials stored by their tool, and host-specific operational state. `AI_VIDEO_DIRECTOR_DATA_DIR` is not a required private Xiaoxiong style package. New hardware is probed rather than copying another machine's performance preset.
+5. **External knowledge base:** provenance, decisions, status and practice history. It is not required for the bundled style to run and does not replace the source Skill, identity library or video project.
 
-This separation lets a user say, for example, “this video should feel quieter” without permanently changing every future video.
+公共 Skill 是小熊剪辑风格的沉淀，不只是一套中性的剪辑工具。已授权共享的字幕、音量、配色、自然提亮、画面取舍与风格优先级直接随仓库发布。个人形象和片尾动作归 `xiaoxiong-ip`。单条视频的素材与决定随工程保存；其他人的覆盖偏好、反馈历史和本机性能状态可留在本地，但换电脑复现小熊风格不依赖它们。
 
-Use this placement test:
+A scalable reference coordinate, exact color or loudness target can be an approved public style token. Do not automatically classify it as private merely because one creator selected it. Conversely, publicizing a style does not require copying original face/voice media, account screenshots, private chats or unlicensed assets. The shipped neutral examples and full numeric/behavioral contracts replace those runtime dependencies. See [xiaoxiong-public-style.md](xiaoxiong-public-style.md) and [style-publication-map.json](style-publication-map.json).
 
-| Question | Universal rule | Public curated style | Private profile | Project only | External knowledge base |
-|---|---|---|---|---|---|
-| Does it prevent a correctness, evidence, rights, safety, or delivery failure for every creator? | yes | no | no | concrete instance only | method history |
-| Is it a shareable visual/editing recipe that can be expressed without private identity or unlicensed source assets? | supporting mechanisms only | yes, with content-fit and avoid rules | optional creator ranking bias | current adaptation | provenance and validation history |
-| Does it encode a creator character, logo, face/voice asset, signature motion, private reference, rejected option, or recurring personal exception? | no | no | yes after explicit approval | yes before promotion | yes with sensitivity and lifecycle status |
-| Is it exact copy, timing, clip choice, asset id, coordinate, source range, or a one-video fix? | no | no | only when it truly becomes a durable private adapter | yes | task evidence, not a runtime default |
-| Did one feedback item reveal a method, a reusable public look, and a personal preference? | split out the invariant | create a versioned style recipe | create a separate linked preference only when useful | keep the concrete instance | link all records; do not merge their status |
+可缩放坐标、具体色号、响度目标可以公开成为风格默认；不能再因为它是个人审美就排除。公开的是完整可执行风格，原始人脸、声纹、账号画面、聊天和未获许可的参考图片仍不是公共附件。
 
-One feedback item may therefore live in more than one layer, but not as one mixed payload. Split it into linked records. Example: `choose still/recording/hybrid from content` is a universal rule; a shareable proof-led editorial treatment belongs in the curated style library; `this creator ranks that treatment first for technical explainers` belongs in the private profile; exact runs and timecodes stay project-only; the knowledge base records how the distinctions were learned and whether they passed later practice.
+## Effective Defaults / 有效默认值
 
-Universal rules must describe decision factors and exceptions. Curated public styles may be opinionated and concrete, but every entry needs content-fit signals, avoid conditions, adaptation boundaries, provenance, and a validation level. A successful treatment becomes a public style candidate only after private identity, project copy, exact coordinates, and unlicensed source assets are removed. It never becomes a mandatory format for every video.
+Precedence, from low to high:
 
-Private preferences may change candidate order or attach a creator-specific adapter, but they still cannot override intelligibility, evidence accuracy, rights, privacy, or an explicit current-project request. A creator may curate a public style and also keep a private preference that ranks it first; those are separate records.
+1. Bundled Xiaoxiong public style.
+2. Explicitly approved local user overrides, if present.
+3. Explicitly selected identity adapter, for identity fields only.
+4. Current-project overrides with `key`, `value`, `reason`, and `source`.
 
-The same applies to presenter design. For portrait `B-base-A-cutout`, the public repository recommends lower-left and lower-right as the first placement candidates and outline `on` as the starting state. For portrait short-form captions, it recommends one semantic line per card. These are overridable defaults, not universal locks: content conflicts or an exact approved reference may select another zone, turn the outline off, or use two caption lines when one line would create tiny type, over-fast cards, or harmful semantic fragmentation. A private profile may remove a creator's rejected anchor and store recurring side bias, outline strength, hair/clothing color facts, or caption exceptions. Exact side, color, width, coordinates, and creator-specific styling remain private or project decisions.
+Project approval and actual evidence/readability constraints always take precedence over an aesthetic default. No override authorizes impersonation, new voice cloning, paid generation or use of uncleared media. Pending feedback is not an effective default. Updating the public Skill must not silently overwrite another user's approved local choices.
 
-## Feedback Lifecycle
+优先顺序：内置风格 → 已确认的用户覆盖 → 已选择的身份适配 → 当前项目决定。用户当前要求与真实可读性优先，待试反馈不自动变成默认。发布公共风格也不能悄悄覆盖别人的已确认选择。
 
-1. Record the exact feedback, project, category, and scope.
-2. Apply it to the current video immediately when requested.
-3. Keep it project-only by default.
-4. Suggest promotion when the same preference repeats or the user explicitly says it should become the default.
-5. Promote only with explicit approval, including a reason and timestamp.
-6. Keep a reversible history. A later preference can supersede, not erase, earlier evidence.
+`memory.mjs show` reads the effective current-stage view without writing a profile. `--stage intake|rough|fine|release|all` and `--key` narrow it. `--defaults-only` ignores optional local data, useful for checking a new installation. `--identity-skill <resolved-directory>` loads the selected identity contract and verifies asset hashes; omitting it inserts no Xiaoxiong identity. `--history` is explicit archival inspection. Project overrides change only the returned view. Provenance reports the contributing public, local, identity and project layers.
 
-Never store raw media, full transcripts, face/voice files, credentials, or sensitive personal facts in the preference profile.
+默认只读有效配置，不为读默认风格创建私人画像；历史按需读取。身份适配不因“电脑上恰好装了”而自动加入别人的视频。
 
-## Public Style Curation Lifecycle
+## Feedback And Publication / 反馈与发布
 
-1. Capture the useful visual and editorial decisions from a reference or completed project.
-2. Separate the reusable style recipe from the creator's identity, private assets, project copy, timing, and coordinates.
-3. Record viewer jobs, strong fit signals, avoid conditions, palette roles, type hierarchy, icon grammar, B-roll forms, motion character, sound candidates, evidence boundaries, safe areas, and QA.
-4. Record provenance honestly. `method-only` means the source asset is not distributed or copied. A single still can approve a visual contract but cannot prove exact motion. A single project can prove that instance but not every content context.
-5. Add the genericized entry to `references/curated-style-library.json` and the human guide. Keep personal IP and private reference files outside Git.
-6. Compare at least two active entries when no user style was provided. Treat liked, used, approved, and marked entries as retrieval references, not a closed asset list. A new or hybrid dynamic direction is allowed when the existing candidates are assessed with rejection or borrowing reasons and the project records a coherent audiovisual system plus beat-level asset plan.
-7. Preserve versions. A later revision supersedes rather than silently rewriting an approved historical contract.
+1. Record the actual feedback and its project/source. Apply a requested correction to that video.
+2. Keep a one-video choice in its project. Suggest a reusable default only when the user requests it or repeated evidence justifies a proposal.
+3. When the owner explicitly approves a shared style/default, update the public profile and applicable guide/assets, validate fresh-install behavior and publish within existing authorization. No second private copy is required for the same default.
+4. Store an approved character/identity change in its identity Skill. A new image merely being liked is not a canonical identity update.
+5. Store an unshared user override locally only after its explicit approval; preserve reversible history. Do not copy history into the public Skill.
+6. Maintain `analysis/learning-scope-ledger.json`. Keep its established `changeType` and `promotionLayer` fields: use `public-curated-style-hardened` or `new-public-curated-style` with `public-curated-style-library` for the bundled creator-style contract; the implementation field points to `references/xiaoxiong-public-style.json`. General mechanisms, optional local preferences and project decisions retain their own classifications. A source submission does not prove a pending independent real-video trial passed.
 
-## Per-Project Learning Scope Ledger
+用户明确说“把这个风格放进公共 Skill”时，直接维护公共默认并在已授权范围内提交；不额外造一份同内容的私人风格包。其他用户自己的覆盖偏好仍可留本地。学习清单继续区分公共规则、公共风格、身份、私人覆盖与单片决定，不把一次参数复用说成所有场景都验证过。
 
-At delivery, create `analysis/learning-scope-ledger.json` from `assets/templates/learning-scope-ledger.template.json`. This ledger explains what changed instead of presenting every rule as newly invented in the current project.
-
-For each lesson, record two independent classifications:
-
-- `changeType`: `pre-existing-confirmed`, `pre-existing-hardened`, `public-curated-style-hardened`, `corrected-overgeneralization`, `new-general-rule`, `new-public-curated-style`, `new-private-preference`, or `project-only-decision`;
-- `promotionLayer`: `public-repository`, `public-curated-style-library`, `private-profile`, or `project-only`.
-
-Also record the previous contract, observed failure, generalized invariant, project-specific instance, implementation location, evidence, and privacy reason. A pre-existing rule that gained a template field, automated audit, clearer exception, or stronger QA is `pre-existing-hardened`, not “new.” A project-specific number or visual choice may reveal a general method without making that number or choice a repository default.
-
-When one feedback item is split across layers, use separate ledger entries and connect them with `linkedEntryIds`. `implementation.externalKnowledgeRecords` may name an external knowledge record when one exists, but it does not replace the actual public/private/project implementation field.
-
-### 简体中文
-
-公共 Skill 同时保存两种东西。第一种是陌生创作者都要遵守的通用判断、流程、模板和审计。第二种是可以公开分享的策展风格库，每个风格都有适用内容、禁用场景、视觉与剪辑语法和验收下限，但不强迫所有视频使用。私人画像保存用户明确批准的个人排序偏好、身份资产、私有参考和例外；单片工程保存文案、时间点、素材、坐标和本片修复；个人知识库保存来源、状态、冲突和实践历史，不自动等于运行时默认。
-
-同一条反馈可以同时产生通用规则、公共风格、私人偏好和单片记录，但必须拆开，不能混成一个包。例如“截图、录屏或混合形式按内容选择”属于通用规则；一套去除个人 IP 后仍可复用的高彩证据编辑方法进入公共风格库；“这位创作者做技术口播时优先选它”进入私人画像；具体四段录屏和时间点只留在本片；知识库记录这些区分怎样形成、是否经过后续真实剪辑验证。
-
-通用规则必须写决策因素和例外。公共风格可以有明确审美，但必须同时写清内容适配、避用条件、改编边界、来源关系与验证等级。一次成功处理可以沉淀成公共候选风格，不能因此升级为所有视频强制使用的万能模板。私人偏好可以改变候选顺序，但不能覆盖清晰度、证据准确性、版权、隐私和当前项目的明确要求。
-
-人物设计也按同样方式拆分：竖屏 `B-base-A-cutout` 的公共推荐起点是先比较左下和右下，描边先开；竖屏短视频字幕则先按“一张字幕卡一行完整语义”排版。它们都可以覆盖，不是不可变的统一模板：当内容占位或精确已确认参考冲突时可以换位置或关闭描边；单行会造成字号太小、切换过快或语义破碎时可以改为两行，但都要记录原因并做手机尺度复核。私人画像保存创作者明确否定的旧锚点、长期侧向偏好、描边强度、常见发色衣着和字幕例外；具体侧边、颜色、宽度与坐标仍属于私人或单片决定。
-
-交付时必须生成 `analysis/learning-scope-ledger.json`，逐条说明本片经验到底属于“原规则再次确认、原规则加固、公共策展风格加固、纠正过度泛化、新增通用规则、新增公共策展风格、新增私人偏好，还是仅本片决定”，并另行标明它进入通用公共仓库、公共策展风格库、私人画像还是单片工程。
-
-每条都要写清修改前的规则、这次暴露的问题、抽象后的通用不变量、本片的具体实例、真正落地的文件、验证证据和隐私边界。以前已经存在但这次增加模板字段、自动审计、例外条件或更严格 QA 的规则，要标成“加固”，不能说成这次才第一次拥有。
-
-### 公共风格沉淀流程
-
-1. 从参考图或已完成项目里提取真正有用的视觉与剪辑判断。
-2. 把可复用风格与创作者身份、私有素材、本片文案、时间和坐标拆开。
-3. 写清观众任务、适配信号、避用条件、配色角色、字号层级、图标、B-roll、动效、声音、证据边界、安全区和验收方法。
-4. 如实记录来源关系。`method-only` 表示只提炼方法，不分发或复制源素材。单张静帧可以支持视觉契约，不能证明准确动效；单个项目可以证明这一实例，不能证明所有题材。
-5. 去身份后的条目进入 `references/curated-style-library.json` 和对应说明；个人 IP 与私有参考文件继续留在 Git 之外。
-6. 用户没有给风格时，至少比较两个公共候选。喜欢过、使用过、确认过和标记过的条目负责提供检索参考，不能变成封闭素材列表。写清候选的拒绝或借用理由，并记录完整视听系统和逐节点素材计划后，可以重新设计动态方案或混合方案。
-7. 风格按版本演进。新版本替代旧版本时保留历史，不静默改写已经确认的契约。
-
-## Commands
+## Agent Commands
 
 ```bash
-node scripts/memory.mjs init
-node scripts/memory.mjs show
-node scripts/memory.mjs record --project my-video --category captions --feedback "字幕少用逐字跳动"
-node scripts/memory.mjs promote --id <feedback-id> --key captions.motion --value-json '"restrained"' --reason "用户明确要求设为默认" --confirm-user-approved
+node scripts/memory.mjs show --stage fine
+node scripts/memory.mjs show --defaults-only --stage all
+node scripts/memory.mjs show --stage fine --identity-skill <installed-xiaoxiong-ip-directory>
+node scripts/memory.mjs show --stage fine --overrides <project-overrides.json>
+node scripts/memory.mjs record --project my-video --category captions --feedback "Use quieter caption motion for this video"
+node scripts/memory.mjs promote --id <feedback-id> --key captions.motion --value-json '"restrained"' --reason "Explicitly approved local override" --confirm-user-approved
 ```
 
-Set a custom private location with:
+`init`, `record` and `promote` create local data only when needed. The current owner's former profile has been split by explicit approval: reusable style into this repository, identity treatment into `xiaoxiong-ip`, host settings retained locally, original history retained as provenance. Future installs need no migration of that old profile to obtain the style.
 
-```bash
-export AI_VIDEO_DIRECTOR_DATA_DIR="$HOME/Private/ai-video-director"
-```
-
-## Runtime Slices / 运行时切片
-
-`memory.mjs show` defaults to current intake preferences without history. Use `--stage rough|fine|release`, `--key <prefix>`, `--style <id>` and `--include-candidates` only as needed. `--history` is explicit archival inspection. Project override records contain `key`, `value`, `reason`, `source`; they overlay the current view without modifying the private profile. The output lists provenance and overwritten values. Candidate feedback is shown separately and is never applied automatically; explicit superseding feedback hides the superseded candidate.
-
-默认只读当前阶段有效偏好；历史需明确请求。项目覆盖写明键、值、理由、来源，只影响当前视图。输出保留出处与覆盖情况。待试反馈独立展示，不自动生效；新纠正替代的旧候选不再作为当前候选。
+One feedback item may expose a general mechanism, a shared style and a concrete project choice. Split it into linked records using `linkedEntryIds`; do not duplicate the full mixed payload. 例如“截图、录屏或混合形式按内容选择”是通用判断，小熊黄蓝色值是公共风格，具体哪段录屏用于哪句话仍是单片决定。个人知识库保存来源、状态、冲突和实践历史，不代替实际实现。
