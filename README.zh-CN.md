@@ -33,6 +33,8 @@ https://github.com/yomage-ai/ai-video-director-skill
 
 首次使用时，Agent 会检查并准备所需工具。遇到必须由你完成的登录、系统权限或付费确认时，Agent 会说明具体步骤；新安装的插件可能需要开启新任务后才能使用。
 
+大原片先在本地检查。上传卡住时，Agent 会保留已有剪辑并安排恢复；条件允许时使用 ChatCut Desktop 本地素材，原画质成片仍从原片制作。详见[大文件与上传恢复](skill/ai-video-director/references/chatcut-media-recovery.md)。
+
 ## 用户需要提供
 
 - 真人口播视频，也支持屏幕与摄像头已经录成一张画面的素材。文稿有帮助，但不能代替录制素材。

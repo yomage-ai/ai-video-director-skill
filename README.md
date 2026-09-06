@@ -33,6 +33,8 @@ The built-in Xiaoxiong style covers captions, dialogue loudness, natural-bright 
 
 On first use, the Agent checks and prepares the tools it needs. If a login, system permission, or payment requires your action, it explains the specific steps. Newly installed plugins may require a new task before they become available.
 
+Large recordings are checked locally first. If an upload stalls, the Agent preserves the existing edit and arranges recovery; where supported, it uses ChatCut Desktop local media. Source-quality output still comes from the original. See [large files and upload recovery](skill/ai-video-director/references/chatcut-media-recovery.md).
+
 ## What You Provide
 
 - Recorded talking-head footage, including a screen recording with a baked-in webcam. A manuscript helps but does not replace source footage.

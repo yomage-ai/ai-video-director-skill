@@ -4,9 +4,9 @@
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "public",
   "license": "Apache-2.0",
-  "status": "v0.2.0-rc.3-agent-owned-dependency-setup-real-project-trial-pending",
+  "status": "v0.2.0-rc.4-media-recovery-guidance-target-device-validation-pending",
   "validatedAt": "2026-09-06",
-  "release": "0.2.0-rc.3",
+  "release": "0.2.0-rc.4",
   "candidateRelease": "0.2.0",
   "skill": {
     "id": "ai-video-director",
@@ -1034,5 +1034,20 @@
     },
     "nextRealProject": "pending",
     "preserveExistingToolPath": true
+  },
+  "mediaRecovery": {
+    "documentedAt": "2026-09-06",
+    "reference": "skill/ai-video-director/references/chatcut-media-recovery.md",
+    "upstreamPlugin": "0.2.26",
+    "upstreamRevision": "a7b75b22e8d26a91ecaf02c67b9d20fd02006ab8",
+    "helperSha256": "345d3500569e9177a39b0f136d1d93a32917a8fc1903831fa78ec250bf20662e",
+    "requestAttemptTimeoutSeconds": 120,
+    "attemptsPerRequest": 5,
+    "maxParallelPartsPerFile": 32,
+    "upstreamUploaderPatched": false,
+    "scope": "bounded hosted recovery, existing-edit preservation, conditional Desktop local media, host-supported proxy/source conform and actual playback gates",
+    "evidence": "installed helper identical to checked official repository HEAD; official import/relink/Desktop documentation inspected; historical private project contains successful proxy/source-conform artifacts",
+    "targetDeviceValidation": "pending; no affected-device logs, live upload recovery or Desktop migration executed",
+    "newDependencyAdopted": false
   }
 }

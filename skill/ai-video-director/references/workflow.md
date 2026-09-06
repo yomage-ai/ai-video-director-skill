@@ -47,6 +47,8 @@ flowchart TD
 
 ## Stages And Artifacts
 
+Before stages 02–04 import or resume media, apply [chatcut-media-recovery.md](chatcut-media-recovery.md). A registered asset or populated timeline is not playable-media proof. Preserve existing edits across upload recovery; do not let repeated cloud retries block independent local analysis. / 进入转写和粗剪前核对素材是否真正可用；上传失败保留已有时间线并按恢复流程换策略，不无限重试。
+
 | Stage | Plain-language action | Main tools | Required output/gate |
 |---|---|---|---|
 | 00 | Lock only the inputs needed for the first decision: platform, aspect ratio, source identities, supplied-manuscript reliability, rights/privacy blockers, and local media facts. Do not upload large media, retry a cloud import, render style, or research publication details before the first approval unless one of those actions is genuinely needed to understand the content | local file inspection, `ffprobe`, supplied manuscript, selective source orientation | lightweight intake and first-approval work-budget decision |

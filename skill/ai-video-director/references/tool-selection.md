@@ -54,6 +54,8 @@ Governance record: [governance-hyperframes-background-removal.json](governance-h
 
 ## ChatCut And `video-use`
 
+For media import and stalled uploads, read [chatcut-media-recovery.md](chatcut-media-recovery.md). Keep the hosted plugin and Desktop local MCP distinct. Large recordings may use a supported local-media or reviewed proxy/conform route; do not claim either fixes the upstream uploader or is already validated on a new machine. / 导入与上传超时按恢复规范执行，网页版插件和 Desktop 本地连接分别核对；本地素材或代理回原片是有条件的路线，不冒充上传工具已修复。
+
 ChatCut remains active because it supplies what the local scripts do not: a visual timeline, multitrack context, realtime preview, transcript interaction, and direct human adjustment.
 
 `video-use` is not stacked as another director. Its tested contribution is now internal workflow logic: word-boundary handles, short fades, join checks, controlled EDL rules, and acceptance criteria. Its native Scribe path was not tested because the required ElevenLabs key was unavailable. Do not describe a compatible Whisper adapter as proof that native Scribe passed.

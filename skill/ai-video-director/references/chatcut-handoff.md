@@ -1,5 +1,7 @@
 # ChatCut To Canonical EDL
 
+If media is still uploading or was repaired/relinked, first follow [chatcut-media-recovery.md](chatcut-media-recovery.md). Preserve the existing timeline, verify source identity and actual playback, and carry any proxy-to-original time mapping into this handoff. / 上传未完成或重新关联过素材时，先核对原有时间线、素材身份和实际播放；代理回原片的时间映射必须随交接保留。
+
 ## Why Two Timelines Become One
 
 ChatCut's timeline is the comfortable place to see tracks, preview edits, drag cut points, and fix them by hand. A local timing map or EDL is the machine-readable list of exact source intervals that FFmpeg and visual tools can reproduce.
