@@ -23,7 +23,7 @@ export function activateRuntimePaths() {
     }
     if (process.env.ProgramFiles) extra.push(path.join(process.env.ProgramFiles,'Git','cmd'));
   }
-  process.env.PATH = [...new Set([...extra.filter(existsSync), ...(process.env.PATH || '').split(path.delimiter)])].join(path.delimiter);
+  process.env.PATH = [...new Set([path.dirname(process.execPath), ...(process.env.PATH || '').split(path.delimiter), ...extra.filter(existsSync)])].join(path.delimiter);
 }
 
 export function run(argv, {cwd, timeout = 120000, live = false} = {}) {

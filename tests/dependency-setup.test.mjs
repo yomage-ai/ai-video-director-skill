@@ -5,7 +5,7 @@ import {spawnSync} from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {classifyChatcut, nativeInstallPlan, npmCommand, xmlDependency} from '../skill/ai-video-director/scripts/lib/setup-runtime.mjs';
+import {activateRuntimePaths, classifyChatcut, nativeInstallPlan, npmCommand, xmlDependency} from '../skill/ai-video-director/scripts/lib/setup-runtime.mjs';
 
 const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const skill=path.join(repo,'skill','ai-video-director');
@@ -25,6 +25,18 @@ test('native installation is missing-only and preserves permission boundaries on
   assert.ok(windows.every(a=>a.includes('--disable-interactivity') && a.includes('--exact') && !a.includes('--force')));
   assert.deepEqual(nativeInstallPlan('linux',['ffmpeg'],p=>p==='apt-get',1000)[0],['sudo','-n','apt-get','update']);
   assert.deepEqual(nativeInstallPlan('linux',['git'],p=>p==='apt-get',0)[1],['apt-get','install','-y','git']);
+});
+
+test('fallback binary directories never take priority over the existing tool search path',()=>{
+  const before=process.env.PATH;
+  const existing=temporary();
+  try {
+    process.env.PATH=[existing,before].join(path.delimiter);
+    activateRuntimePaths();
+    const resolved=process.env.PATH.split(path.delimiter);
+    assert.equal(resolved[0],path.dirname(process.execPath));
+    assert.equal(resolved[1],existing);
+  } finally { process.env.PATH=before; }
 });
 
 test('ChatCut registration can never establish login, live tools or operational readiness',()=>{
