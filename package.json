@@ -1,6 +1,6 @@
 {
   "name": "ai-video-director-skill",
-  "version": "0.2.0-rc.4",
+  "version": "0.2.0-rc.5",
   "private": true,
   "license": "Apache-2.0",
   "description": "Bilingual Codex Skill for governed AI video generation and talking-head editing.",

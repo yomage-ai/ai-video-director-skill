@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "evaluatedAt": "2026-09-06",
+  "decisionStatus": "user-authorized-upload-repair-with-version-bound-local-adaptation",
+  "identity": {
+    "name": "AI Video Director ChatCut upload compatibility entry",
+    "kind": "local-adapter",
+    "version": "chatcut-upload-slow-link-v1",
+    "revision": "chatcut-upload-profile.json",
+    "officialSource": "https://github.com/ChatCut-Inc/agent-plugin/blob/a7b75b22e8d26a91ecaf02c67b9d20fd02006ab8/codex/skills/asset-import/scripts/upload-media.mjs"
+  },
+  "workflowRole": {
+    "stage": "authorized hosted media import and same-asset retry",
+    "function": "Verify the installed official helper SHA, prepare an isolated local copy with a fixed compatibility profile, and execute the preserved official import flow in the foreground",
+    "changes": [
+      "per-request limit 120 to 600 seconds",
+      "parallel parts and signing batch 32 to 2 per file",
+      "attempts per request 5 to 2",
+      "retain no-transcribe in same-asset retry arguments"
+    ],
+    "preserved": [
+      "official import session and authorization",
+      "metadata and media preparation",
+      "server-assigned part sizes and direct storage upload",
+      "asset identity and finalization",
+      "structured results and cancellation"
+    ],
+    "location": "local; authorized upload uses existing official endpoints"
+  },
+  "licensing": {
+    "software": "Original adapter code Apache-2.0; upstream plugin manifest declares GPL-3.0-only. Adapted upstream code stays on the user's device with origin/license/change metadata; it is not copied into this public repository or relicensed.",
+    "source": "https://github.com/ChatCut-Inc/agent-plugin/blob/a7b75b22e8d26a91ecaf02c67b9d20fd02006ab8/codex/.codex-plugin/plugin.json",
+    "modelWeights": "none",
+    "dependencies": "existing Node and governed FFmpeg/ffprobe; no added package or service"
+  },
+  "cost": {
+    "newPayment": false,
+    "network": "existing authorized media transfer; fewer parallel requests may trade maximum fast-link throughput for reliability",
+    "storage": "small local helper copy; normal official conversion temporary files",
+    "credits": "existing ASR choice preserved; upload repair does not authorize new paid actions"
+  },
+  "rightsAndPrivacy": {
+    "preparationUploadsMedia": false,
+    "executionUploadsMedia": "only the authorized original official import flow",
+    "credentialsInReceipt": false,
+    "originalPluginModified": false,
+    "unknownHelper": "stop before preparation or execution",
+    "policyDenial": "stop; never use compatibility adaptation to bypass denied access or transfer"
+  },
+  "stability": {
+    "knownLimits": [
+      "not an upstream release or guarantee for disconnected networks",
+      "600 seconds remains a finite request limit",
+      "the media probe and loudness limits are unchanged",
+      "cross-session part resume remains the upstream behavior",
+      "multiple files still share bandwidth; import a large failed file alone",
+      "new helper hashes require review before adaptation"
+    ],
+    "recheckTriggers": [
+      "upstream helper SHA or license changes",
+      "active host requires byte-identical helper execution",
+      "new HTTP or preparation failure",
+      "target OS changes"
+    ]
+  },
+  "evidence": {
+    "status": "passed-controlled-http-and-regression; real-cloud-and-target-device-unverified",
+    "scope": "fast regression and controlled local HTTP slow-transfer tests; real ChatCut account/backend and affected computer are separate checks",
+    "tests": [
+      "tests/chatcut-upload-compat.test.mjs",
+      "tests/chatcut-upload-smoke.mjs"
+    ],
+    "actualResults": {
+      "originalRequestTimeoutAtMs": 120241,
+      "adaptedCompletedAtMs": 125375,
+      "parallelParts": 2,
+      "videoByteHashMatched": true,
+      "sameAssetRetry": true,
+      "noTranscribePreserved": true,
+      "setupPreparedAutomatically": true
+    },
+    "notTested": [
+      "real ChatCut cloud account/storage service",
+      "affected computer",
+      "Windows/Linux target devices"
+    ],
+    "regressionTestsPassed": 63
+  },
+  "recommendation": {
+    "priority": "P1-conditional",
+    "allowedRole": "version-verified hosted helper compatibility within already-authorized video editing",
+    "blockedRole": "editing plugin cache in place, guessed/private APIs, reimporting completed assets, claiming all possible network failures fixed, or redistributing the adapted upstream helper as Apache-2.0"
+  }
+}

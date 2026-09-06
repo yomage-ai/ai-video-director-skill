@@ -4,6 +4,22 @@ Read before the first ChatCut media import, when resuming a pending asset, or af
 
 首次导入 ChatCut、续接未完成素材或上传卡住时读取。Agent 排查并执行支持的恢复操作；用户只处理 Agent 无法代办的登录、权限或实体操作。沿用内容批准，保留已有剪辑。
 
+## Automatic upload entry / Agent 自动执行入口
+
+For every authorized hosted import or same-asset retry with the governed Plugin 0.2.26 helper, **run this Skill's executable entry below**. Obtain the session and arguments from the official `import_media` / `asset-import` flow; resolve the original helper from that active Skill, not a workspace copy. The Agent supplies paths and session values; these are not user setup steps.
+
+```text
+node <director-skill>/scripts/chatcut-upload.mjs --helper <absolute-official-upload-media.mjs> -- <official-upload-arguments>
+```
+
+The entry automatically checks the full official helper hash, prepares/reuses an isolated local compatibility copy, and executes it in the foreground. Its fixed profile sets **two parallel parts per file, a 600-second request ceiling and two attempts**; retry arguments retain `--no-transcribe` when selected. The official session, media preparation, server-assigned part sizes, storage upload, asset IDs, finalization and result JSON remain in the upstream flow. The original plugin stays unchanged. A large failed recording runs alone; additional files would still share bandwidth.
+
+The rough-stage setup prepares this compatibility copy automatically from the installed plugin registry; the upload entry also prepares it on demand, so a copied Skill works without an earlier setup receipt. Preparation needs no upload, login, new npm package or user editing. Unknown upstream hashes or modified cached copies stop before execution and require Agent review. Do not silently run the old 120-second helper after this check fails. Use the existing supported recovery route if the active host explicitly disallows a compatibility copy.
+
+**正常上传和失败重试都由 Agent 调用上面的 Skill 入口，不能只读本文后仍直接运行旧脚本。** 入口自动校验官方版本，生成或复用本地适配副本：每个文件同时传 2 个分片、单次请求最多等 10 分钟、失败最多尝试 2 次。素材编号、转写选择和官方上传流程保留，原插件不动。大文件单独传。粗剪前的 setup 会自动准备；漏跑 setup 时上传入口也会自行准备。用户不用复制脚本、改参数或另外拿一份文档。未知插件版本由 Agent 检查，不擅自套补丁或退回旧入口死循环。
+
+This is a version-bound reliability fix, not unlimited waiting or a cure for offline/auth/permission/storage failures. The 600-second value is this helper's ceiling; lower transport/service limits can still fail earlier. See [compatibility governance](governance-chatcut-upload-compat.json) for the fixed scope and [profile](chatcut-upload-profile.json) for exact values. / 这次确实有可执行修复；断网、登录失效、权限或存储不足仍要按实际原因处理，其他网络层也可能先报错，不能承诺任意网络永远成功。
+
 ## Identify the actual failure / 先分清卡在哪里
 
 Record locally: active host surface and plugin/helper revision, source size/duration, prepared upload size when reported, asset state, failed operation, progress and exact error. Read available local files and logs before asking the user. Keep tokens, signed URLs, account/project IDs and private paths out of public reports and Git.
@@ -20,17 +36,17 @@ Agent 在单片工程记录实际宿主、插件/脚本版本、原片大小与�
 
 Checked 2026-09-06: official Agent Plugin `0.2.26`, revision `a7b75b22e8d26a91ecaf02c67b9d20fd02006ab8`, sets `UPLOAD_RETRY_ATTEMPT_TIMEOUT_MS = 120_000` and `UPLOAD_RETRY_MAX_ATTEMPTS = 5`. Its multipart loop signs batches of 32 and starts up to 32 part PUTs concurrently **per file**; up to four files can run together. The server supplies part sizes. These are implementation facts at this revision, not a claim that concurrency caused a particular user's failure. Check the actual target revision before applying them.
 
-该版有每次请求 120 秒、最多 5 次尝试、每个文件最多同时上传 32 个分片的实现；分片大小由服务返回，最多四个文件同时处理。慢上行、链路不稳定或并发争用都可能触发超时，具体原因仍要看目标机器日志。它没有公开的上传超时或分片并发参数。另一个同为 120 秒的响度分析计时器不是同一问题。单纯延长 Codex 工具等待、重装本 Skill 或安装相同插件版本，都不会改变内部计时器。
+上述是未适配官方版本的实现，不是本 Skill 入口采用的参数。慢上行、链路不稳定或并发争用可能触发旧超时，具体原因仍看目标机器日志。官方没有公开的上传超时或分片并发参数，因此本 Skill 使用经过完整哈希校验的固定适配；另一个同为 120 秒的响度分析计时器保持原样。总上传耗时超过 120 秒不一定失败，只要每次请求在限时内完成即可。只延长 Codex 工具等待不会改变内部计时器。
 
 ## Bounded hosted recovery / 网页插件的有限恢复
 
-1. Follow the active hosted plugin's `asset-import` and `known-errors` instructions. Query existing assets first. Keep one helper invocation active; read its actual foreground output through completion. A file with repeated stalls should run alone on the next supported attempt, avoiding competition from other files. This does **not** reduce that helper's internal part concurrency.
-2. Preserve the current timeline/version and source map before repair. After failure, query asset state again. Reuse completed assets. When the helper returns structured `retry`, obtain the requested fresh import session and run its returned arguments for the **same pending asset ID**. Check that the retry still respects the user's transcription choice: this revision's retry builder omits `--no-transcribe`, although the parser supports it. Carry forward that supported flag when explicitly selected; do not silently restart cloud ASR or change the approved provider. Never invent an asset ID, backend API or upload endpoint. This repairs the asset reference; do not promise resumable part/byte transfer across sessions without evidence.
-3. A fresh session can fix expired credentials; it does not remove the 120-second limit. Respect the helper's bounded internal retries. If the same timeout recurs after one justified recovery attempt with changed conditions, stop automatic helper relaunches and move to supported editor recovery. Do not repeatedly rebuild the project, reimport completed clips or stack background uploads.
+1. Follow the active hosted plugin's `asset-import` and `known-errors` flow, using the automatic compatibility entry above for execution. Query existing assets first. Keep one invocation active and read its foreground output through completion. Run a large failed file alone to avoid competing file uploads.
+2. Preserve the current timeline/version and source map before repair. After failure, query asset state again. Reuse completed assets. When structured `retry` is returned, obtain the requested fresh session and pass the retry arguments through **the same Skill upload entry**, preserving the pending asset ID and transcription choice. The compatibility copy fixes the upstream hint's missing `--no-transcribe`. Never invent an asset ID, backend API or upload endpoint. Same-asset recovery is not proof of resumable part/byte transfer across sessions.
+3. A fresh session can fix expired credentials; the compatibility profile addresses the old request timer/concurrency. Respect its two-attempt bound. If the same failure recurs after one justified recovery with changed conditions, stop automatic relaunches and use supported editor recovery. Do not rebuild the project, reimport completed clips or stack background uploads.
 4. On the existing asset card, use the supported **Retry Upload**, **Grant file access** or **Relink File** action matching its actual state. Relink selects the matching original and preserves the existing reference; it is not permission to substitute an arbitrary compressed file. Agent uses official tools/UI where available. If the host cannot perform a file picker or permission grant, give the user that one exact action and continue afterward. A UI retry is an alternative official path, not a guarantee of upload success.
 5. If the valid upload still fails, preserve a compact, redacted incident record and the edit. Prepare an official support report describing version, time, failed step and observed retries. Sending it externally requires the user's authorization. Do not claim a support report or an untested workaround fixed the affected computer.
 
-Agent 先查已有素材，等当前上传结束，只对失败素材按官方 `retry` 恢复；成功素材和现有时间线继续复用。该版重试提示会漏掉原来的 `--no-transcribe`，用户已经选择不做云端转写时，Agent 必须保留这个受支持的参数，不能偷偷重开转写。单独传一个文件能减少文件之间抢带宽，但不会改变脚本内部的 32 分片并发。换新会话不能解决固定超时；在改变条件后合理恢复一次仍同样失败，就停止自动重开。再按素材卡真实状态使用官方“重试上传／授予文件访问权限／重新关联”，选择原文件。需要用户点系统文件授权时只交代这一步。仍失败则保存进度与脱敏故障记录，不能一直显示“马上完成”。
+Agent 先查已有素材，等当前上传结束；失败后按官方 `retry` 给的新会话和原素材编号，再经本 Skill 入口恢复。成功素材和已有剪辑不重建，用户关闭的云端转写不重开。适配后仍反复失败则停止重开，按素材卡状态使用官方“重试上传／授予文件访问权限／重新关联”，选择原文件；仍失败再考虑下方本地媒体路线。只有真正无法代办的文件授权交给用户，不能一直显示“马上完成”。
 
 These alternatives address technical failures, not denied permission. If host policy denies transfer or another required action, stop that action and state the actual denial; do not use another upload path or local editing to bypass it. / 以上替代路线只处理技术故障；宿主拒绝传输或权限时，明确说明拒绝原因，不能换上传渠道或本地编辑来绕过。
 
@@ -46,11 +62,11 @@ For an existing edit, preserve a named version and export/read back the current 
 
 ## Review proxies and finish gates / 轻量审片与完成标准
 
-A small review proxy with source-quality conform is a previously used project workaround, not a repair to the upstream uploader. Use it only through a preparation/import route supported by the **active host**. The current hosted plugin requires its official helper for media preparation and upload: do not silently substitute handwritten FFmpeg/curl/presigned-upload commands, change plugin cache files or run a copied helper with larger timeouts. If the host has no supported proxy route, use official editor recovery or the conditional Desktop route above.
+A small review proxy with source-quality conform is a previously used project workaround. Use it only through a preparation/import route supported by the **active host**. The hosted path retains official helper preparation/upload through the governed compatibility entry. Do not replace it with handwritten FFmpeg/curl/presigned-upload commands, edit plugin cache files or improvise other helper patches. If the host has no supported proxy route, use official editor recovery or the conditional Desktop route above.
 
 When a supported proxy workflow is selected, retain the original, record both hashes and the timing mapping, and validate duration, start offset, rotation, cadence and audio sync at the beginning/middle/end and changed joins. A 30 fps proxy and 60 fps original may map by time; frame numbers cannot be copied between them. Preserve the exact source intervals through [chatcut-handoff.md](chatcut-handoff.md). Build final output from the original or a reviewed source-quality derivative, never by enlarging the proxy. Relinking a different file under the original identity without validating this mapping is unsafe.
 
-以前用过“小文件审剪点、原片出成片”，这只是项目绕行方案。当前宿主允许才执行；不能为压小文件擅自替换官方上传流程，不能直接改插件缓存或复制脚本改超时。支持代理时，由 Agent 保留原片与时间映射，检查首尾、中段和剪点的音画同步。不同帧率按时间换算，最终回原片出片，不能把低清文件放大冒充原画质。
+以前用过“小文件审剪点、原片出成片”，当前宿主支持才执行。不要为了压小文件替换官方上传流程、修改插件缓存或临时另造补丁；只使用上面固定、可校验的 Skill 适配。支持代理时，Agent 保留原片与时间映射，检查首尾、中段和剪点音画同步；不同帧率按时间换算，最终回原片出片，不放大低清文件冒充原画质。
 
 Continue independent local analysis and permitted timeline metadata edits while transfer is pending. Cloud export and remote frame inspection require confirmed upload readiness; Desktop local playback requires confirmed local access. Rough-cut approval still requires actual end-to-end watching/listening after the last edit. Record **installed**, **connected**, **registered**, **bytes ready**, **playable** and **reviewed** separately. Dependency installation tests, source inspection and documentation review do not establish a successful large-file upload on another computer.
 
@@ -62,6 +78,6 @@ Continue independent local analysis and permitted timeline metadata edits while 
 - [Official hosted import contract](https://github.com/ChatCut-Inc/agent-plugin/blob/a7b75b22e8d26a91ecaf02c67b9d20fd02006ab8/codex/skills/asset-import/SKILL.md).
 - [My Assets: retry and relink](https://chatcut.io/docs/my-assets), [Desktop: local media and local MCP](https://chatcut.io/docs/desktop-app), [workflow failures](https://chatcut.io/docs/workflow-failures).
 
-Scope: source-code inspection and official documentation checked on 2026-09-06; historical proxy/conform evidence exists in a private project. No fresh slow-network large upload, same-asset UI recovery or Desktop migration was executed for this update. Do not label these target-device checks as passed. A durable upstream improvement would expose bounded request/idle timeouts and upload concurrency plus verifiable resume behavior; changing only one timeout is not a complete reliability fix.
+Validation separates the executable compatibility tests from live cloud/device checks. The integration fixture runs the real original and adapted helpers with anonymous video, controlled loopback HTTP, full-byte/hash/finalization checks, same-asset recovery and preserved transcription choice. It can hold requests for 125 seconds to reproduce the old timer and verify the compatibility entry. This does not test a real ChatCut account/storage service or the affected computer. Exact run results belong in the governance evidence and project state; do not infer success merely because the test script exists.
 
-本次验证是源码与官方文档核对，旧项目留有代理回原片证据；没有在故障电脑实测大文件上传、UI 恢复或 Desktop 迁移。上游长期改进应覆盖可配置的请求/无进展超时、上传并发和可验证的断点恢复，不能把只延长一个数字称为彻底修复。
+验证脚本会实际运行原版和适配版助手，用匿名视频及本地 HTTP 测试上传、字节完整性、素材登记和原编号恢复；可让请求持续 125 秒，对照旧超时和新入口。真实 ChatCut 账号、云存储和故障电脑仍是另一项验证。结果看实际运行回执，不能把有测试脚本当作测试已经通过。

@@ -28,7 +28,9 @@ Digital-human/avatar production is paused. Never use SadTalker or the legacy `ai
 
 默认带入公开的小熊字幕、响度、配色和画面风格，新机不需要旧私人画像。小熊形象与片尾才加载 `xiaoxiong-ip`。首次核对真实安装、工程位置和当前偏好；续接时复用未变化的环境结果。私有素材不进入公共仓库。按阶段读取规范和有效偏好，历史与待试反馈不能自动覆盖当前决定。
 
-首次使用必须由 Agent 补齐依赖，不能只运行 Doctor 后把安装清单交给用户。入口会复用或下载校验 Node 22+，补齐脚本依赖和 FFmpeg；粗剪前执行 `setup.mjs --stage rough --apply --codex <当前桌面宿主内置CLI绝对路径>`，补齐官方 ChatCut 插件，再核对真实连接与转写。精剪前执行 `setup.mjs --stage fine --apply`，复用或安装固定版本 HyperFrames、配套创作 Skill 和渲染浏览器；抠像才加 `--renderer cutout`。Agent 必须继续处理回执中的 `agentActions`，完成实际小样验证；仅登录、宿主不允许自动重载工具、系统权限或新费用需要用户参与。不能把 `localReady` 当作能剪辑，也不能用缺少可选模型阻塞首份分析。
+首次使用必须由 Agent 补齐依赖，不能只运行 Doctor 后把安装清单交给用户。入口会复用或下载校验 Node 22+，补齐脚本依赖和 FFmpeg；粗剪前执行 `setup.mjs --stage rough --apply --codex <当前桌面宿主内置CLI绝对路径>`，补齐官方 ChatCut 插件及内置上传适配，再核对真实连接与转写。网页版插件的正常上传和重试，Agent 都必须调用 `chatcut-upload.mjs --helper <当前官方助手绝对路径> -- <官方上传参数>`；具体见 [上传恢复](references/chatcut-media-recovery.md)，不能仅阅读说明后仍调用旧的 120 秒入口，也不要求用户另传文档。精剪前执行 `setup.mjs --stage fine --apply`，复用或安装固定版本 HyperFrames、配套创作 Skill 和渲染浏览器；抠像才加 `--renderer cutout`。Agent 必须继续处理回执中的 `agentActions`，完成实际小样验证；仅登录、宿主不允许自动重载工具、系统权限或新费用需要用户参与。不能把 `localReady` 当作能剪辑，也不能用缺少可选模型阻塞首份分析。
+
+For hosted ChatCut imports and retries, Agent must execute `chatcut-upload.mjs --helper <active-official-helper> -- <official arguments>` from this Skill. Rough setup prepares the verified compatibility helper; the upload entry also prepares/reuses it on demand. Do not leave this as a document-only recommendation or ask the user to transport a separate guide. Follow [media recovery](references/chatcut-media-recovery.md).
 
 ## Stage Routing / 阶段路由
 

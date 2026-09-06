@@ -4,6 +4,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {activateRuntimePaths, classifyChatcut, findHyperframes, nativeInstallPlan, npmCommand, run, runtimeRoot, skillRoots, version, xmlDependency} from './lib/setup-runtime.mjs';
 import {artifact, decode, probe} from './lib/media-contract.mjs';
+import {prepareChatcutUpload} from './lib/chatcut-upload-compat.mjs';
 
 const skillDir=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const manifest=JSON.parse(readFileSync(path.join(skillDir,'references','dependencies.json'),'utf8'));
@@ -80,6 +81,14 @@ function chatcut() {
   if (status==='disabled') action('chatcut','Check why this plugin is disabled; preserve an explicit user-disable decision. Enable only within current authorization, using the host supported command.');
   else if (status==='missing' || status==='registration-required') action('chatcut','Resume the official plugin install/registration flow and verify its actual result.');
   else action('chatcut-session','Discover live ChatCut tools and make a read-only call. If auth is required, Agent runs the bundled CLI mcp login chatcut once and asks the user to complete browser sign-in. If this session cannot load newly installed tools, save the project handoff and request a new session. Installed does not mean logged in or callable.');
+  if (status==='installed-session-verification-required') {
+    const helper=plugin?.source?.path && path.join(plugin.source.path,'skills','asset-import','scripts','upload-media.mjs');
+    if (helper && existsSync(helper)) {
+      const prepared=prepareChatcutUpload(helper,{apply});
+      add('chatcut-upload-compat',prepared.ready?'pass':'preparation-required',{...prepared,scope:'helper verified/prepared locally; not an authenticated upload test'});
+    } else needs('chatcut-upload-compat','Resolve the official helper from the active asset-import Skill, then Agent runs chatcut-upload.mjs --helper <absolute-helper> --prepare-only. Do not ask the user to copy a helper or edit settings.');
+    action('chatcut-upload','For hosted imports and same-asset retry, run this Skill\'s chatcut-upload.mjs --helper <active-official-helper> -- <official arguments>. It automatically verifies and prepares the governed compatibility helper. A large file runs alone; retain no-transcribe and existing assets.');
+  }
   action('asr','Verify the chosen ChatCut host exposes real transcription and can access the authorized source; transcribe after content approval. A manuscript or plugin cache does not prove ASR readiness.');
 }
 

@@ -33,7 +33,7 @@ The built-in Xiaoxiong style covers captions, dialogue loudness, natural-bright 
 
 On first use, the Agent checks and prepares the tools it needs. If a login, system permission, or payment requires your action, it explains the specific steps. Newly installed plugins may require a new task before they become available.
 
-Large recordings are checked locally first. If an upload stalls, the Agent preserves the existing edit and arranges recovery; where supported, it uses ChatCut Desktop local media. Source-quality output still comes from the original. See [large files and upload recovery](skill/ai-video-director/references/chatcut-media-recovery.md).
+Large recordings are checked locally first. The Skill includes an upload compatibility script that the Agent prepares and runs automatically, preserving the existing edit during recovery. You do not need a separate troubleshooting document or manual parameter changes. Login or system authorization is requested only when needed. See [large files and upload recovery](skill/ai-video-director/references/chatcut-media-recovery.md).
 
 ## What You Provide
 

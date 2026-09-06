@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "chatcut-upload-slow-link-v1",
+  "upstreamVersion": "0.2.26",
+  "upstreamRevision": "a7b75b22e8d26a91ecaf02c67b9d20fd02006ab8",
+  "upstreamSha256": "345d3500569e9177a39b0f136d1d93a32917a8fc1903831fa78ec250bf20662e",
+  "requestTimeoutMs": 600000,
+  "attemptsPerRequest": 2,
+  "parallelPartsPerFile": 2,
+  "preserveNoTranscribeInRetry": true,
+  "governance": "governance-chatcut-upload-compat.json"
+}
