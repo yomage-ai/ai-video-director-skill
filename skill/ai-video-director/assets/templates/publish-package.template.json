@@ -57,6 +57,7 @@
     "platformDeclarationPlanned": false,
     "viewerFacingCopy": ""
   },
+  "claimEvidence": [],
   "variants": [
     {
       "id": "direct-result",
@@ -64,6 +65,7 @@
       "postCaption": "",
       "hashtags": [],
       "rationale": "",
+      "claimEvidenceIds": [],
       "claimsNeedingEvidenceOrNarrowing": []
     },
     {
@@ -72,6 +74,7 @@
       "postCaption": "",
       "hashtags": [],
       "rationale": "",
+      "claimEvidenceIds": [],
       "claimsNeedingEvidenceOrNarrowing": []
     },
     {
@@ -80,6 +83,7 @@
       "postCaption": "",
       "hashtags": [],
       "rationale": "",
+      "claimEvidenceIds": [],
       "claimsNeedingEvidenceOrNarrowing": []
     }
   ],
@@ -87,5 +91,19 @@
   "campaignEligibilityVerified": false,
   "rightsPrivacyAndSponsorshipNotes": [],
   "selectedVariantId": null,
-  "humanReviewRequired": true
+  "humanReviewRequired": true,
+  "postPublishVerification": {
+    "publicationInScope": false,
+    "publishTimestamp": null,
+    "selectedVisibility": null,
+    "itemOrShareUrlOrId": null,
+    "platformStatus": "not-published|processing|under-review|public|restricted|removed|unknown",
+    "platformNotice": null,
+    "directItemVisibilityChecked": false,
+    "secondaryAccountCheck": "not-run|visible|not-visible|not-applicable",
+    "titleSearchUsedAsSoleViolationEvidence": false,
+    "deleteOrRepostPerformed": false,
+    "reasonCapturedBeforeDeleteOrRepost": false,
+    "checkedAt": null
+  }
 }

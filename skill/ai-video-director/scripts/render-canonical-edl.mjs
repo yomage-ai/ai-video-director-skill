@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import {execFileSync} from 'node:child_process';
-import {existsSync, mkdirSync, readFileSync} from 'node:fs';
+import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
+import {artifact, decode, invariant, validateEdl, resolveArtifact, sha256} from './lib/media-contract.mjs';
 import path from 'node:path';
 
 function parseArgs(values) {
@@ -64,9 +65,15 @@ if (args.sourceMap) {
 const edlPath = path.resolve(edlArg);
 const outputPath = path.resolve(outputArg);
 const edl = JSON.parse(readFileSync(edlPath, 'utf8'));
-if (edl.schemaVersion !== 1 || !Array.isArray(edl.segments) || edl.segments.length === 0) {
+if (![1,2].includes(edl.schemaVersion) || !Array.isArray(edl.segments) || edl.segments.length === 0) {
   throw new Error('Unsupported or empty canonical EDL');
 }
+validateEdl(edl);
+invariant(!existsSync(outputPath), 'Output exists; choose a new version instead of overwriting');
+const edlBinding = artifact(edlPath);
+const extraBindings = ['timingSource','processingPlan'].filter(k=>edl[k])
+  .map(k=>artifact(resolveArtifact(edl[k],path.dirname(edlPath),k)));
+if (args.sourceMap) extraBindings.push(artifact(path.resolve(args.sourceMap)));
 const outputFps = finitePositive(edl.outputFps, 'outputFps');
 const durationFrames = finitePositive(edl.durationFrames, 'durationFrames');
 
@@ -78,20 +85,28 @@ if (args.sourceMap) {
     throw new Error('Source map must be an object from EDL sourceFile names to local media paths');
   }
 } else {
-  const names = [...new Set(edl.segments.map((segment) => segment.sourceFile))];
+  const names = [...new Set(edl.segments.map((segment) => segment.sourceId || segment.sourceFile))];
   if (names.length !== 1) {
     throw new Error('EDL contains multiple source names; use --source-map');
   }
   sourceMap = {[names[0]]: directSource};
 }
 
-const sourceNames = [...new Set(edl.segments.map((segment) => segment.sourceFile))];
+const sourceNames = [...new Set(edl.segments.map((segment) => segment.sourceId || segment.sourceFile))];
 const sources = sourceNames.map((name) => {
-  const configured = sourceMap[name];
+  const label = edl.segments.find(s => (s.sourceId || s.sourceFile) === name).sourceFile;
+  const sameNameIds = new Set(edl.segments.filter(s=>s.sourceFile===label).map(s=>s.sourceId || s.sourceFile));
+  const configured = sourceMap[name] ?? (sameNameIds.size === 1 ? sourceMap[label] : undefined);
   if (!configured) throw new Error(`No source path mapped for EDL sourceFile: ${name}`);
-  const resolved = path.resolve(configured);
+  const mapBase = args.sourceMap ? path.dirname(path.resolve(args.sourceMap)) : process.cwd();
+  const resolved = path.resolve(mapBase,typeof configured === 'string' ? configured : configured.path);
+  if (configured.sha256) resolveArtifact(configured,mapBase,`source ${name}`);
+  if (configured.lineage) {
+    resolveArtifact(configured.lineage.original,mapBase,'derived original');
+    resolveArtifact(configured.lineage.derivation,mapBase,'derivation record');
+  }
   if (!existsSync(resolved)) throw new Error(`Source media not found: ${resolved}`);
-  return {name, path: resolved, ...probe(resolved)};
+  return {name, path: resolved, binding: {...artifact(resolved), sourceId:name, ...(configured.lineage ? {lineage:{original:artifact(resolveArtifact(configured.lineage.original,mapBase)), derivation:artifact(resolveArtifact(configured.lineage.derivation,mapBase))}} : {})}, ...probe(resolved)};
 });
 for (const source of sources) {
   if (isHdr(source.video)) {
@@ -116,23 +131,41 @@ edl.segments.forEach((segment, index) => {
   if (!Number.isFinite(sourceStart) || sourceStart < 0 || !Number.isFinite(duration) || duration <= 0) {
     throw new Error(`Invalid timing in ${segment.id || `segment ${index + 1}`}`);
   }
-  const source = inputIndex.get(segment.sourceFile);
+  const source = inputIndex.get(segment.sourceId || segment.sourceFile);
   const start = sourceStart.toFixed(9);
-  const length = duration.toFixed(9);
-  const fadeDuration = Math.min(1 / outputFps, duration / 2);
-  const fadeOutStart = Math.max(0, duration - fadeDuration);
-  filters.push(
-    `[${source}:v]trim=start=${start}:duration=${length},setpts=PTS-STARTPTS,fps=${outputFps}[v${index}]`,
-    `[${source}:a]atrim=start=${start}:duration=${length},asetpts=PTS-STARTPTS,`
-      + `afade=t=in:st=0:d=${fadeDuration.toFixed(9)},`
-      + `afade=t=out:st=${fadeOutStart.toFixed(9)}:d=${fadeDuration.toFixed(9)}[a${index}]`,
-  );
+  const rate = segment.playbackRate ?? 1;
+  const length = (duration * rate).toFixed(9);
+  const selected = sources[source];
+  const sourceDuration = Number(selected.video.duration);
+  invariant(!Number.isFinite(sourceDuration) || sourceStart + duration * rate <= sourceDuration + 1 / outputFps,
+    `Source interval exceeds media: ${segment.id}`);
+  const audioDuration = Number(selected.audio.duration);
+  invariant(Number.isFinite(audioDuration) && sourceStart + duration * rate <= audioDuration + 0.05,
+    `Source audio interval exceeds media or has unknown duration: ${segment.id}`);
+  invariant(Math.abs(Number(selected.audio.start_time || 0)-Number(selected.video.start_time || 0)) <= 0.05,
+    'Source A/V start offsets need an explicitly aligned derivative');
+  const processing = segment.processing || {};
+  const vf = [`trim=start=${start}:duration=${length}`, `setpts=(PTS-STARTPTS)/${rate}`, `fps=${outputFps}`,
+    `trim=end_frame=${segment.outputEndFrameExclusive-segment.outputStartFrame}`];
+  if (Object.keys(processing.video || {}).length) vf.push('eq='+Object.entries(processing.video).map(([k,v])=>`${k}=${v}`).join(':'));
+  const af = [`atrim=start=${start}:duration=${length}`, 'asetpts=PTS-STARTPTS'];
+  let tempo = rate;
+  while (tempo > 2) { af.push('atempo=2'); tempo /= 2; }
+  while (tempo < 0.5) { af.push('atempo=0.5'); tempo /= 0.5; }
+  if (tempo !== 1) af.push(`atempo=${tempo}`);
+  const audio = processing.audio || {};
+  if (audio.gainDb) af.push(`volume=${audio.gainDb}dB`);
+  if (audio.fadeInSeconds) af.push(`afade=t=in:st=0:d=${audio.fadeInSeconds}`);
+  if (audio.fadeOutSeconds) af.push(`afade=t=out:st=${duration-audio.fadeOutSeconds}:d=${audio.fadeOutSeconds}`);
+  // No implicit fades: an approved processing contract owns every audio change.
+  af.push(`apad=whole_dur=${duration}`, `atrim=duration=${duration}`);
+  filters.push(`[${source}:v]${vf.join(',')}[v${index}]`, `[${source}:a]${af.join(',')}[a${index}]`);
 });
 const concatInputs = edl.segments.map((_, index) => `[v${index}][a${index}]`).join('');
 filters.push(`${concatInputs}concat=n=${edl.segments.length}:v=1:a=1[v][a]`);
 
 mkdirSync(path.dirname(outputPath), {recursive: true});
-const ffmpegArgs = ['-hide_banner', '-y', '-v', 'warning'];
+const ffmpegArgs = ['-hide_banner', '-n', '-v', 'warning'];
 for (const source of sources) ffmpegArgs.push('-i', source.path);
 ffmpegArgs.push(
   '-filter_complex', filters.join(';'),
@@ -161,9 +194,23 @@ for (const [flag, value] of metadataOptions) {
 ffmpegArgs.push(outputPath);
 execFileSync('ffmpeg', ffmpegArgs, {stdio: 'inherit'});
 
+decode(outputPath);
 const result = probe(outputPath);
+invariant(Number(result.video.nb_frames) === durationFrames, 'Rendered frame count mismatch');
+invariant(Math.abs(Number(result.video.duration)-edl.durationSeconds) < 2/outputFps, 'Rendered duration mismatch');
+invariant(sha256(edlPath) === edlBinding.sha256, 'EDL changed during rendering');
+for (const source of sources) invariant(sha256(source.path) === source.binding.sha256, 'Source changed during rendering');
+for (const ref of extraBindings) resolveArtifact(ref,path.dirname(edlPath),'render dependency');
+const receipt = {schemaVersion:1, outputClass:'review-proxy', generatedAt:new Date().toISOString(),
+  edl:edlBinding, sources:sources.map(s=>s.binding), output:artifact(outputPath),
+  durationFrames, outputFps, fullDecodePassed:true,
+  processing:edl.segments.map(s=>({id:s.id,playbackRate:s.playbackRate ?? 1,processing:s.processing || {}})),
+  renderer:artifact(new URL(import.meta.url)), command:['ffmpeg',...ffmpegArgs]};
+writeFileSync(`${outputPath}.render.json`,JSON.stringify(receipt,null,2)+'\n');
 console.log(JSON.stringify({
   status: 'rendered',
+  outputClass: 'review-proxy',
+  receipt: `${outputPath}.render.json`,
   output: outputPath,
   durationFrames: Math.round(durationFrames),
   outputFps,

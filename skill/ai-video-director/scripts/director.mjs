@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import {spawnSync} from 'node:child_process';
+import {resolveArtifact} from './lib/media-contract.mjs';
 import {
   cpSync,
   existsSync,
@@ -70,7 +71,7 @@ function skillInstallPath() {
   return path.join(codexHome, 'skills', 'ai-video-director');
 }
 
-function doctor() {
+function doctor(args = {}) {
   const required = [
     ['Git', 'git', ['--version']],
     ['Node.js', 'node', ['--version']],
@@ -162,7 +163,8 @@ function doctor() {
   checks.push({
     name: 'ChatCut Codex plugin',
     required: false,
-    status: existsSync(chatcutPluginRoot) ? 'pass' : 'not-found',
+    status: existsSync(chatcutPluginRoot) ? 'installed-unverified' : 'not-found',
+    note: 'Cache presence is not proof of connection, login or callable editing capability.',
     path: chatcutPluginRoot,
   });
   checks.push({
@@ -181,7 +183,23 @@ function doctor() {
   });
 
   const failed = checks.filter((check) => check.required && check.status !== 'pass');
-  console.log(JSON.stringify({ok: failed.length === 0, repoRoot, skillDir, checks}, null, 2));
+  if (args.stage) {
+    const requiredByStage = {rough:['ffmpeg','ffprobe','chatcut','asr','source-listen'],fine:['ffmpeg','ffprobe','fine-renderer'],release:['ffmpeg','ffprobe','fine-renderer']};
+    if (!requiredByStage[args.stage]) throw new Error('--stage must be rough, fine or release');
+    let capabilities = {checks:[]};
+    if (args.capabilities) capabilities=JSON.parse(readFileSync(path.resolve(args.capabilities),'utf8'));
+    for(const name of requiredByStage[args.stage]) {
+      const check=capabilities.checks?.find(c=>c.name===name);
+      let error;
+      try {
+        if (check?.status !== 'pass' || !check.version || !check.method || !Number.isFinite(Date.parse(check.checkedAt)) || Math.abs(Date.now()-Date.parse(check.checkedAt))>86400000) throw new Error('missing, stale or unverified capability');
+        resolveArtifact(check.evidence,path.dirname(path.resolve(args.capabilities)),name);
+      } catch(e) { error=e.message; }
+      const result={name:`operational ${name}`,required:true,status:error?'fail':'pass',note:error || check.method};
+      checks.push(result); if(error) failed.push(result);
+    }
+  }
+  console.log(JSON.stringify({ok: failed.length === 0, scope:args.stage || 'local-installation-only',repoRoot, skillDir, checks}, null, 2));
   if (failed.length > 0) {
     process.exitCode = 1;
   }
@@ -261,6 +279,10 @@ function initProject(args) {
     args.root || path.join(os.homedir(), 'Documents', 'ai-video-projects'),
   );
   const projectDir = path.join(projectsRoot, id);
+  const language = args.language || 'en';
+  if (!['zh-CN', 'en'].includes(language)) {
+    throw new Error('--language must be zh-CN or en.');
+  }
   if (isWithin(projectDir, repoRoot)) {
     throw new Error('Video projects must be created outside the Skill repository.');
   }
@@ -286,7 +308,10 @@ function initProject(args) {
     ['content-lock.template.json', 'analysis/content-lock.json'],
     ['director-plan.template.json', 'analysis/director-plan.json'],
     ['rough-cut-review.template.json', 'analysis/rough-cut-review.json'],
+    ['fine-edit-direction.template.json', 'analysis/fine-edit-direction.json'],
     ['project-state.template.json', 'project-state.json'],
+    ['pipeline.template.json', 'pipeline.json'],
+    ['trial-metrics.template.json', 'analysis/trial-metrics.json'],
     ['rights-manifest.template.json', 'analysis/rights-manifest.json'],
     ['publish-package.template.json', 'analysis/publish-package.json'],
     ['learning-scope-ledger.template.json', 'analysis/learning-scope-ledger.json'],
@@ -299,6 +324,7 @@ function initProject(args) {
     }
     const value = loadTemplate(templateName);
     value.projectId = id;
+    if (templateName === 'pipeline.template.json') value.language = language;
     if ('updatedAt' in value) {
       value.updatedAt = date;
     }
@@ -308,6 +334,11 @@ function initProject(args) {
   const qaDestination = path.join(projectDir, 'analysis', 'qa-report.md');
   if (!existsSync(qaDestination)) {
     cpSync(path.join(templatesDir, 'qa-report.template.md'), qaDestination);
+  }
+  const directorBriefDestination = path.join(projectDir, 'analysis', 'director-brief.md');
+  if (!existsSync(directorBriefDestination)) {
+    cpSync(path.join(templatesDir, `director-brief.${language}.template.md`),
+      directorBriefDestination);
   }
   const gitignoreDestination = path.join(projectDir, '.gitignore');
   if (!existsSync(gitignoreDestination)) {
@@ -322,18 +353,23 @@ function initProject(args) {
 
 function usage() {
   console.log(`Usage:
-  node scripts/director.mjs doctor
+  node scripts/director.mjs doctor [--stage rough|fine|release --capabilities <capabilities.json>]
+  node scripts/director.mjs contract --section <name>
   node scripts/director.mjs install-skill [--force]
   node scripts/director.mjs uninstall-skill
-  node scripts/director.mjs init-project --id <id> [--root <outside-repo-directory>] [--force]`);
+  node scripts/director.mjs init-project --id <id> [--root <outside-repo-directory>] [--language <zh-CN|en>] [--force]`);
 }
 
 const args = parseArgs(process.argv.slice(2));
 const command = args._[0];
 
 try {
-  if (command === 'doctor') {
-    doctor();
+  if (command === 'contract') {
+    const contract = JSON.parse(readFileSync(path.join(skillDir,'references/director-contract.json'),'utf8'));
+    if (!args.section || !(args.section in contract)) throw new Error('contract --section requires a named section such as roughCut, bRollContinuity or finishingPass');
+    console.log(JSON.stringify({section:args.section,value:contract[args.section]},null,2));
+  } else if (command === 'doctor') {
+    doctor(args);
   } else if (command === 'install-skill') {
     installSkill(args);
   } else if (command === 'uninstall-skill') {

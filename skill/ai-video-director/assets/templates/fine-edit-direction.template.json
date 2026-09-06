@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "status": "in-progress",
+  "basedOn": {
+    "roughCutApproved": false,
+    "canonicalEdlVersion": null,
+    "durationFrames": null,
+    "fps": null
+  },
+  "styleSource": {
+    "mode": "deferred|approved-reference|explicit-new-reference|curated-library|dynamic-adaptation|content-derived",
+    "referenceId": null,
+    "contractExtracted": false,
+    "unreferencedHouseTemplateLockedAtDirectorPlan": false,
+    "curatedLibrary": {
+      "reviewed": false,
+      "libraryVersion": 1,
+      "candidateStyleIds": [],
+      "selectedStyleId": null,
+      "selectionReason": "",
+      "adaptationSummary": "",
+      "rejectionReasons": []
+    },
+    "dynamicAdaptation": {
+      "triggerReason": "",
+      "fitGap": "",
+      "dominantSystem": "",
+      "borrowedReferenceRoles": [],
+      "notLimitedToLibrary": true,
+      "visualSystem": {
+        "palette": "",
+        "typography": "",
+        "composition": "",
+        "imageryAndIcons": "",
+        "motion": "",
+        "transitions": "",
+        "music": "",
+        "soundEffects": ""
+      }
+    }
+  },
+  "contentDirection": {
+    "primaryViewerJob": "",
+    "contentSpecificLayoutSelection": true,
+    "majorNarrativeBeatsAudited": false,
+    "beats": []
+  },
+  "visualAssetPlan": {
+    "contentFitPrimary": true,
+    "referenceLibraryIsNotWhitelist": true,
+    "coherencePlan": "",
+    "decisions": []
+  },
+  "screenEvidence": {
+    "used": null,
+    "formatSelectionIsContentDriven": true,
+    "automaticStillOrRecordingRule": false,
+    "onePrimaryEvidencePlaneDefault": true,
+    "persistentSynchronizedDuplicateDefault": false,
+    "wholeThenSemanticPushPanOrCut": true,
+    "splitScreenOnlyForGenuineSimultaneousComparison": true,
+    "sourceRangesAllocatedBeforeFullFineEdit": false,
+    "crossRunSourceReuseAudited": false,
+    "runs": []
+  },
+  "presenter": {
+    "used": null,
+    "cutoutUsed": null,
+    "roleDeclaredPerRun": true,
+    "placementFollowsEvidenceOccupancy": true,
+    "publicLowerCornerRecommendationAppliesOnlyToBBaseACutout": true,
+    "publicRecommendationIsOverridable": true,
+    "activeEvidenceMayBeCovered": false,
+    "previewIncludesPlannedTreatment": false,
+    "portraitCutoutPlacement": {
+      "selectionSource": "pending|public-recommendation|content-derived|approved-reference|private-profile|mixed",
+      "publicRecommendedStartingZones": [
+        "lower-left",
+        "lower-right"
+      ],
+      "publicRecommendationConsidered": false,
+      "candidateZonesCompared": [],
+      "universalCornerDefaultApplied": false,
+      "selectedZone": null,
+      "publicRecommendationOverrideReason": null,
+      "selectionReason": "",
+      "stableWithinCoverageRun": true
+    },
+    "cutoutOutline": {
+      "selectionSource": "pending|public-recommendation|content-derived|approved-reference|private-profile|mixed",
+      "publicRecommendedStartingState": "on",
+      "publicRecommendationConsidered": false,
+      "recommendationOverridable": true,
+      "candidateStatesCompared": [],
+      "universalOutlineDefaultApplied": false,
+      "decision": "pending|on|off",
+      "publicRecommendationOverrideReason": null,
+      "decisionReason": "",
+      "derivedFromSameAlpha": true,
+      "colorSelectionIsContentDriven": true,
+      "paletteAnalysis": {
+        "hairOrHeadwear": "",
+        "clothing": "",
+        "underlyingBackgroundFamilies": [],
+        "contentOrBrandPalette": [],
+        "contrastRisks": []
+      },
+      "selectedColor": null,
+      "selectedWidthToCanvasWidth": null,
+      "brightDarkBusyAndPhoneScaleReviewed": false
+    }
+  },
+  "captions": {
+    "delivery": "portrait-short-form",
+    "selectionSource": "pending|public-recommendation|content-and-phone-scale|approved-reference|private-profile|mixed",
+    "publicRecommendedMaximumLines": 1,
+    "publicRecommendationConsidered": false,
+    "recommendationOverridable": true,
+    "candidateMaximumLinesCompared": [],
+    "selectedMaximumLines": null,
+    "publicRecommendationOverrideReason": null,
+    "selectionReason": "",
+    "universalOneLineDefaultApplied": false,
+    "splitLongThoughtIntoConsecutiveSemanticCardsFirst": true,
+    "fixedWidthOrMidWordSplitAllowed": false,
+    "phoneScaleReviewed": false
+  },
+  "audio": {
+    "backgroundMusic": {
+      "decision": "pending|on|off",
+      "auditionedInStyleSample": false,
+      "dialogueOnlyComparisonAuditionedWhenNoStyleWasLocked": false,
+      "reason": "",
+      "rightsStatus": "pending|cleared|not-applicable",
+      "speechIntelligibilityReviewed": false,
+      "provenance": {
+        "originType": "pending|ai-generated|licensed-library|creator-provided|commissioned-original|other-cleared|not-applicable",
+        "providerOrLibrary": "",
+        "rightsManifestItemId": "",
+        "generationJobOrAssetId": null,
+        "exclusiveOriginalityVerified": false,
+        "creatorFacingSummary": ""
+      }
+    },
+    "soundEffects": {
+      "decision": "pending|on|off",
+      "auditionedInStyleSample": false,
+      "reason": "",
+      "cueList": [],
+      "rightsStatus": "pending|cleared|not-applicable",
+      "provenance": {
+        "originType": "pending|ai-generated|licensed-library|creator-provided|commissioned-original|other-cleared|not-applicable",
+        "providerOrLibrary": "",
+        "rightsManifestItemId": "",
+        "generationJobOrAssetId": null,
+        "exclusiveOriginalityVerified": false,
+        "creatorFacingSummary": ""
+      }
+    }
+  },
+  "audiovisualSample": {
+    "durationSeconds": null,
+    "containsActualOrTimingFaithfulDialogue": false,
+    "containsFinalLikeCaptions": false,
+    "containsPlannedEvidenceTreatment": false,
+    "containsPlannedPresenterTreatmentWhenUsed": false,
+    "containsProposedBgmAndSfxState": false,
+    "silent": true,
+    "dialogueOnlyIsIntentionalFinalRecommendation": false,
+    "creatorFacingReviewLanguage": null,
+    "reviewArtifact": null
+  },
+  "approval": {
+    "question": "",
+    "approvedAt": null
+  },
+  "evidenceBinding": {
+    "roughRenderReceipt": null,
+    "sample": null,
+    "dependencies": []
+  }
+}

@@ -10,8 +10,10 @@ Use this reference when a video will be published, when the user requests a spec
 4. Publish-copy variants
 5. AI disclosure
 6. Claim, CTA, and hashtag safety
-7. Required artifacts
-8. 简体中文
+7. Claim-evidence ledger
+8. Post-publish verification
+9. Required artifacts
+10. 简体中文
 
 ## Two-Phase Contract
 
@@ -90,6 +92,28 @@ When current law or platform policy requires a declaration, plan both the platfo
 - Use only tags that describe the actual topic, method, audience, or verified campaign. Do not add generic “trending” tags as camouflage.
 - Rights, privacy, advertisements, endorsements, and sponsored relationships require their own truthful disclosures.
 
+## Claim-Evidence Ledger
+
+Do not leave measurable claims as free-form notes. For every number, quantity, percentage, duration, file size, cost, performance result, or causal statement used in a cover or post caption, record:
+
+- the exact claim and final publication wording;
+- whether it is exact, rounded, bounded, personal experience, or only a question;
+- the subject, scope, time window, unit, and evidence source;
+- whether the claim was verified, narrowed, or removed;
+- every publication variant that uses it.
+
+Use precision words such as “about,” “nearly,” “more than,” “single day,” or “cumulative” when the evidence supports only that scope. A measured value below a round threshold may be described as “nearly” that threshold, but not as the exact threshold. A rounded quantity must preserve the truthful direction, unit, scope, and context. The size of an input archive is not automatically evidence that a system learned its contents. Questions may preserve uncertainty, but a question mark does not excuse a false premise.
+
+`claimsNeedingEvidenceOrNarrowing` may be used during drafting, but it must be empty before a variant passes the publication audit. Link every numeric or measured claim to a resolved `claimEvidence` item.
+
+## Post-Publish Verification
+
+When the Agent is responsible for publication follow-through, record the publish timestamp, selected visibility, item/share URL or id, current processing/review/public/restricted/removed state, direct-item visibility, a secondary-account check when appropriate, and any explicit platform notice.
+
+Zero views after a few minutes and failure to find a title in search are diagnostic signals, not proof of a violation. Search can be delayed, ranked, personalized, or omit content that is still processing or under review. Check the direct item and explicit account/platform status first. Do not delete and repost before preserving the observed state and any stated reason; premature reposting destroys evidence and can restart processing or review.
+
+Do not invent a fixed review SLA when the current official sources do not publish one for the relevant upload path. At a reasonable checkpoint, use the platform's live creator-support or appeal path and record the response. Treat a large-file processing delay as an inference unless the platform explicitly reports it.
+
 ## Required Artifacts
 
 Use `assets/templates/publish-package.template.json` and run `scripts/audit-publish-package.mjs` before delivery. Keep the following together:
@@ -100,6 +124,7 @@ Use `assets/templates/publish-package.template.json` and run `scripts/audit-publ
 - AI declaration decision;
 - rights/privacy/sponsorship notes;
 - unresolved risks and the final human selection.
+- claim-evidence records and, when publication follow-through is in scope, the post-publish status record.
 
 ## 简体中文
 
@@ -120,3 +145,17 @@ Use `assets/templates/publish-package.template.json` and run `scripts/audit-publ
 AI 声明要写清真人实拍与真人原声、AI 辅助转写/剪辑/字幕/布局、AI 生成图像/动画/声音/换脸分别是否存在。法规或平台要求声明时，同时规划平台原生声明开关和必要的观众可见说明，不得删除、遮挡或规避规定标识。
 
 避免夸大确定性、标题与内容不符、无关热点标签、谣言、冒充、泄露隐私、裸联系方式、诱导站外、奖品式评论诱导和重复营销。可以使用克制、真实的讨论型 CTA，但不能把互动写成虚假承诺或交换条件。
+
+### 数字和主张证据
+
+封面或发布文案里的每个数字、数量、比例、时长、文件大小、费用、效果和因果说法，都要进入 `claimEvidence`：记录原始主张、最终发布措辞、精确/约数/范围/个人经历/疑问句类型、主体、范围、时间窗口、单位、证据来源，以及它被核实、缩窄还是删除，并关联使用它的文案版本。
+
+证据只支持约数或有限范围时，必须使用“约、近、超过、单日、累计”等精度词。低于某个整数门槛的实测值，可以在证据允许时写成“接近”该门槛，不能直接写成精确等于；数量取整时也要保持方向、单位、范围和语境真实。输入资料的体量不能自动证明系统已经学会其中内容。疑问句可以保留不确定性，但问号不能替虚假前提免责。草稿阶段可以暂存“仍需证据或缩窄”的主张，发布审计通过前必须全部解决。
+
+### 发布后状态核验
+
+Agent 负责发布跟进时，要记录发布时间、可见范围、作品或分享链接/编号、处理/审核/公开/受限/移除状态、直接作品可见性、必要时的其他账号检查，以及平台明确通知。
+
+发布几分钟零播放、标题搜索不到，只能作为排查信号，不能单独证明违规。搜索可能有延迟、排序和个性化，仍在处理或审核的作品也可能不进入公开检索。先检查直接作品和账号内明确状态；删除重发前必须保存当前状态和平台原因，否则既丢失证据，也可能重新开始处理或审核。
+
+当前官方资料没有给出对应上传路径的固定审核时长时，不得编造 SLA。到合理检查点后，使用平台当时可用的创作者客服或申诉入口并记录回复。只有平台明确提示时，才能把“大文件处理较慢”写成事实；否则只能标为推断。

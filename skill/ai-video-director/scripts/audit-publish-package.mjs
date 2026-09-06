@@ -68,6 +68,26 @@ if (aiUsed && !nonEmpty(disclosure.viewerFacingCopy)) {
   warnings.push('AI use is declared but viewerFacingCopy is empty; verify whether current rules require visible copy.');
 }
 
+const claimEvidence = Array.isArray(data.claimEvidence) ? data.claimEvidence : [];
+const claimById = new Map();
+for (const [index, claim] of claimEvidence.entries()) {
+  const label = `claimEvidence[${index}]`;
+  if (!nonEmpty(claim.id)) errors.push(`${label}.id is required.`);
+  if (claimById.has(claim.id)) errors.push(`${label}.id must be unique.`);
+  if (nonEmpty(claim.id)) claimById.set(claim.id, claim);
+  if (!nonEmpty(claim.claimText)) errors.push(`${label}.claimText is required.`);
+  if (!nonEmpty(claim.publicationWording)) errors.push(`${label}.publicationWording is required.`);
+  if (!['exact', 'rounded', 'bounded', 'personal-experience', 'question-only']
+    .includes(claim.precision)) {
+    errors.push(`${label}.precision must be exact, rounded, bounded, personal-experience, or question-only.`);
+  }
+  if (!nonEmpty(claim.scope)) errors.push(`${label}.scope is required.`);
+  if (!nonEmpty(claim.sourceEvidence)) errors.push(`${label}.sourceEvidence is required.`);
+  if (!['verified', 'narrowed', 'removed'].includes(claim.status)) {
+    errors.push(`${label}.status must be verified, narrowed, or removed.`);
+  }
+}
+
 const variants = data.variants;
 if (!Array.isArray(variants) || variants.length < 3) {
   errors.push('Provide at least three publication variants.');
@@ -83,6 +103,26 @@ if (!Array.isArray(variants) || variants.length < 3) {
     if (!nonEmpty(variant.postCaption)) errors.push(`${label}.postCaption is required.`);
     const combined = `${variant.coverTitle || ''}\n${variant.postCaption || ''}`;
     if (risky.test(combined)) errors.push(`${label} contains a prohibited guarantee, diversion cue, or raw URL.`);
+    const numericOrMeasuredClaim = /\d[\d,.]*(?:\s*(?:%|GB|TB|MB|G|亿|万|千|小时|分钟|天|次|份|个|Token))?/i;
+    if (!Array.isArray(variant.claimEvidenceIds)) {
+      errors.push(`${label}.claimEvidenceIds must be an array.`);
+    } else {
+      for (const claimId of variant.claimEvidenceIds) {
+        if (!claimById.has(claimId)) {
+          errors.push(`${label}.claimEvidenceIds references unknown claim ${claimId}.`);
+        } else if (claimById.get(claimId)?.status === 'removed') {
+          errors.push(`${label}.claimEvidenceIds references removed claim ${claimId}.`);
+        }
+      }
+      if (numericOrMeasuredClaim.test(combined) && variant.claimEvidenceIds.length === 0) {
+        errors.push(`${label} contains a numeric or measured claim but has no claimEvidenceIds.`);
+      }
+    }
+    if (!Array.isArray(variant.claimsNeedingEvidenceOrNarrowing)) {
+      errors.push(`${label}.claimsNeedingEvidenceOrNarrowing must be an array.`);
+    } else if (variant.claimsNeedingEvidenceOrNarrowing.length > 0) {
+      errors.push(`${label} still contains unresolved claims needing evidence or narrowing.`);
+    }
     if (!Array.isArray(variant.hashtags) || variant.hashtags.length < 2 || variant.hashtags.length > 8) {
       errors.push(`${label}.hashtags must contain 2-8 directly relevant tags.`);
     } else {
@@ -98,6 +138,40 @@ if (Array.isArray(data.campaignTags) && data.campaignTags.length > 0
   errors.push('Campaign tags require verified eligibility.');
 }
 if (data.humanReviewRequired !== true) errors.push('humanReviewRequired must remain true.');
+
+const postPublish = data.postPublishVerification || {};
+if (postPublish.titleSearchUsedAsSoleViolationEvidence !== false) {
+  errors.push('Title search may not be used as the sole evidence of a violation.');
+}
+if (postPublish.deleteOrRepostPerformed === true
+  && postPublish.reasonCapturedBeforeDeleteOrRepost !== true) {
+  errors.push('Capture the platform status or stated reason before deleting or reposting.');
+}
+if (postPublish.publicationInScope === true) {
+  if (!/^\d{4}-\d{2}-\d{2}/.test(postPublish.publishTimestamp || '')) {
+    errors.push('postPublishVerification.publishTimestamp is required when publication is in scope.');
+  }
+  if (!nonEmpty(postPublish.selectedVisibility)) {
+    errors.push('postPublishVerification.selectedVisibility is required when publication is in scope.');
+  }
+  if (!nonEmpty(postPublish.itemOrShareUrlOrId)) {
+    errors.push('postPublishVerification.itemOrShareUrlOrId is required when publication is in scope.');
+  }
+  if (!['processing', 'under-review', 'public', 'restricted', 'removed', 'unknown']
+    .includes(postPublish.platformStatus)) {
+    errors.push('postPublishVerification.platformStatus must record the observed platform state.');
+  }
+  if (!/^\d{4}-\d{2}-\d{2}/.test(postPublish.checkedAt || '')) {
+    errors.push('postPublishVerification.checkedAt is required when publication is in scope.');
+  }
+  if (postPublish.directItemVisibilityChecked !== true) {
+    errors.push('postPublishVerification.directItemVisibilityChecked must be true when publication is in scope.');
+  }
+  if (['restricted', 'removed'].includes(postPublish.platformStatus)
+    && !nonEmpty(postPublish.platformNotice)) {
+    errors.push('postPublishVerification.platformNotice is required for restricted or removed content.');
+  }
+}
 
 const report = {ok: errors.length === 0, file, errors, warnings};
 console.log(JSON.stringify(report, null, 2));

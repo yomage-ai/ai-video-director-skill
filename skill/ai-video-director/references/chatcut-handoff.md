@@ -38,16 +38,32 @@ node scripts/render-canonical-edl.mjs canonical-edl.json source.mov a-roll-maste
 
 Use `--source-map` with the renderer when the EDL contains multiple source names.
 
-## Tested Boundary
+## Explicit Processing And Tested Boundary / 显式处理与能力边界
 
-The bridge is tested for straight cuts in a single primary video track. It reads clip output frames and source in/out frames, validates duration consistency, and preserves source file identity where the XML provides it.
+New conversion produces canonical EDL v2 with stable XML file IDs, integer output boundaries, explicit source intervals, constant playback rates and typed video/audio processing. Names are labels; two sources with the same basename must be mapped by `sourceId`. Conflicting audio timing/source identity and XML effects, transitions, nesting and disabled tracks are rejected rather than dropped.
 
-Do not claim the bridge currently preserves:
+For constant retiming, export neutral timing and use `--processing processing-plan.json`. Bind `inputXmlSha256`; key `segments` by XML clip ID. Each entry may contain `playbackRate` (0.25–4), `video` (`brightness`, `contrast`, `saturation`, `gamma`) and `audio` (`gainDb`, `fadeInSeconds`, `fadeOutSeconds`). The rate must match source/output duration. Unknown fields and unused segment IDs fail. No gain or fade is implicit; fade duration is in seconds, independent of video fps. Video EQ is an explicit FFmpeg operation, not a promise to reproduce arbitrary editor color controls.
 
-- ChatCut captions or motion graphics.
-- Speed ramps or retiming.
-- Nested sequences, compound clips, or multicam edits.
-- Transitions, transforms, filters, or audio automation.
-- Arbitrary multi-angle overlap.
+```json
+{
+  "schemaVersion": 1,
+  "inputXmlSha256": "<hash of the neutral timing XML>",
+  "segments": {
+    "clipitem-1": {
+      "playbackRate": 1.04,
+      "video": {"brightness": 0.02, "saturation": 1.03},
+      "audio": {"gainDb": -1.5}
+    }
+  }
+}
+```
 
-Those features require explicit schema and regression tests before adoption. Until then, use ChatCut for rough-cut decisions and rebuild fine-edit layers from the canonical EDL.
+These numbers illustrate the format, not preferred editorial settings. Never remove an effect from the approved timeline in place just to pass conversion. Duplicate the timing export; translate supported processing into the explicit plan and compare the resulting rendered color, loudness, pace and every changed boundary with the approved preview. Rate changes require source/output timing updates, not a second competing clock.
+
+For unsupported processing, render a reviewed source-quality derivative with effects baked in, then cut that derivative on a neutral timeline. A source-map entry may be `{ "path": "processed.mov", "sha256": "...", "lineage": { "original": {"path":"original.mov","sha256":"..."}, "derivation": {"path":"derivation.json","sha256":"..."} } }`. The derivation record preserves original/derivative intervals, exact processing command or editor project, cadence, color, audio and approval evidence. Never map a proxy or processed source into original offsets without this conform. The renderer binds these lineage files into its receipt; the Agent must still inspect source-quality and perceptual equivalence.
+
+The renderer supports source-aligned audio, constant pitch-preserving tempo, typed EQ/gain and explicit non-overlapping fades. Speed ramps, reverse motion, independent external audio, arbitrary filters, overlapping dialogue crossfades and HDR conversion remain explicit derivative routes. The raw renderer creates an unapproved review candidate plus a full-decode receipt; use the stage runner for production gates.
+
+新版 EDL v2 明确保存素材 ID、整数帧边界、源区间、恒定调速和视频/音频处理。同名文件按 ID 映射。不支持的 XML 效果、独立音轨剪辑和嵌套必须拒绝，不能悄悄丢弃。
+
+Agent 用绑定 XML 哈希的 processing plan 显式记录调速、基础色彩与音频参数；不暗加增益或淡化，淡化秒数不跟视频帧率变化。批准工程保留，新建中性时间导出，处理前后核对实际颜色、响度、语速和剪点。复杂效果走带原始区间、处理命令与批准依据的源质量衍生素材路线；HDR、变速曲线、反向、独立外录音轨和重叠交叉淡化不宣称已原生支持。

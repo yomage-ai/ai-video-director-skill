@@ -1,0 +1,930 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "contentLockVersion": 1,
+  "status": "awaiting-user",
+  "userFacingApproval": {
+    "language": null,
+    "format": "plain-language-markdown",
+    "machineJsonMayBeShownByDefault": false,
+    "sections": [
+      "content-lock",
+      "director-judgment",
+      "rough-cut-plan",
+      "evidence-plan",
+      "deferred-fine-edit-decisions",
+      "approval-question-and-next-step"
+    ],
+    "fineEditStyleStatus": "deferred-until-rough-cut-lock-unless-exact-reference-is-approved",
+    "firstApprovalWorkBudget": {
+      "targetMinutesWhenReliableManuscriptAndLocalMediaAreReadable": 15,
+      "silentHeavyWorkAfterTargetExceeded": false,
+      "allowed": [
+        "local-media-probe",
+        "supplied-manuscript-review",
+        "quick-source-orientation",
+        "content-and-rough-cut-risk-analysis"
+      ],
+      "deferred": [
+        "large-cloud-upload",
+        "rough-cut-render",
+        "background-removal",
+        "motion-graphics-generation",
+        "full-fine-edit-style-build",
+        "publication-package"
+      ]
+    }
+  },
+  "releaseAndPublicationPlan": {
+    "reference": "references/platform-release-and-publish-package.md",
+    "constraintsLockedAt": "intake-before-editing",
+    "targetPlatform": null,
+    "jurisdiction": null,
+    "releaseSpecification": {
+      "aspectRatio": null,
+      "width": null,
+      "height": null,
+      "fps": null,
+      "colorIntent": null,
+      "container": null,
+      "codec": null
+    },
+    "highestQualityApprovedSourceRequired": true,
+    "reviewProxyMayReceiveFinalPublicationApproval": false,
+    "exactReleaseCandidateQaAndApprovalRequired": true,
+    "coverCropAndPlatformUiConstraints": [],
+    "aiUseFacts": {
+      "realHumanRecording": null,
+      "realHumanVoice": null,
+      "aiAssistedEditing": null,
+      "aiGeneratedGraphicsOrAnimation": null,
+      "syntheticVoice": null,
+      "faceReplacement": null
+    },
+    "finalPublishPackageStage": "after-exact-release-candidate-qa",
+    "multipleCopyVariantsRequired": true,
+    "currentOfficialRulesMustBeRecheckedAtPublication": true
+  },
+  "roughCut": {
+    "retentionRules": [],
+    "removalRules": [],
+    "takeSelection": {
+      "principle": "quality-first",
+      "laterOccurrence": "tie-breaker-only",
+      "candidateAuditRequired": true,
+      "hybridSpliceRequiresFullSpeedReview": true
+    },
+    "pauseTreatment": {
+      "ordinaryBreaths": "preserve",
+      "excessiveDeadAir": "compress-contextually",
+      "falseStartGaps": "remove-with-failed-words",
+      "universalDurationMilliseconds": null
+    },
+    "playbackSpeed": {
+      "sourceRate": 1,
+      "candidateRates": [],
+      "selectedRate": null,
+      "contentAndPerformanceRationale": "",
+      "inheritRateFromAnotherVideo": false,
+      "compareEarlyMiddleLate": true,
+      "stablePitchPreservingContiguousRangesRequired": true,
+      "postRetimeRevalidationRequired": true,
+      "postRetimeLayers": [
+        "joins-and-breaths",
+        "timeline-duration-and-boundaries",
+        "captions",
+        "b-roll",
+        "presenter-or-cutout",
+        "sound-effects",
+        "background-music-and-ducking",
+        "layout-and-motion",
+        "chapter-progress",
+        "transitions",
+        "outro"
+      ],
+      "boundaryAuditAfterSelectionRequired": true
+    },
+    "paceConsistency": {
+      "compareEarlyMiddleAndLate": true,
+      "measurement": "active-speech-rate-plus-normal-speed-listening",
+      "reviewCandidateDeltaPercent": 12,
+      "contentDrivenIntentionalVariationAllowed": true,
+      "unexplainedPaceDriftAllowedAtApproval": false,
+      "retimeUsesStableContiguousRanges": true,
+      "reauditEveryPresentDownstreamLayerAfterRetime": true
+    },
+    "joinAcceptance": [
+      "meaning remains intact",
+      "speech sounds natural",
+      "visual continuity is acceptable",
+      "consonant and breath onsets are not clipped",
+      "the complete cut passes a start-to-finish review"
+    ],
+    "issueClassSweep": {
+      "requiredWhenFeedbackNamesRepeatableDefect": true,
+      "patchOnlyListedTimestamps": false,
+      "scope": "complete-relevant-timeline",
+      "examples": [
+        "clipped-word-onsets",
+        "overlong-joins",
+        "mouth-resets",
+        "pace-drift",
+        "premature-evidence",
+        "duplicated-source-ranges"
+      ]
+    },
+    "audibleDuplicateAudit": {
+      "scanAcrossSegmentAndClipBoundaries": true,
+      "captionDisplayOverrideCountsAsAudioRemoval": false,
+      "renderExactWindowAndCountOccurrences": true
+    },
+    "structuralEditReadback": {
+      "requiredAfterScriptEdit": true,
+      "checks": [
+        "clip count and duration",
+        "source offsets",
+        "intentional audio transitions",
+        "downstream B-roll alignment"
+      ]
+    },
+    "sourceColorNormalization": {
+      "workflowStage": "rough-cut-before-approval",
+      "correctionScope": "source-track-or-global-first",
+      "neutralizeCastBeforeCreativeLook": true,
+      "creativeLookDefault": false,
+      "preserveSkinTextureAndHighlights": true,
+      "perClipCorrectionDefault": false,
+      "sameParametersProvePerceptualConsistency": false,
+      "representativeFrameAudit": [
+        "early",
+        "middle",
+        "late",
+        "cut-boundaries"
+      ],
+      "rollbackIfInconsistent": "remove-correction-and-keep-last-stable-source",
+      "stageUpdateRequiredAfterRollback": true,
+      "fineEditReprocessingDefault": false,
+      "fineEditExceptions": [
+        "new-explicit-user-request",
+        "documented-source-condition-change"
+      ]
+    },
+    "creatorColorBaseline": {
+      "privateProfileOnly": true,
+      "baselineId": null,
+      "exactParameterReuseRequiresComparableSourceConditions": true,
+      "differentConditionsRequireRevalidation": true
+    }
+  },
+  "bRollContinuity": {
+    "evidenceComposition": {
+      "onePrimaryEvidencePlaneDefault": true,
+      "wholeThenSemanticPushPanOrCut": true,
+      "persistentSynchronizedDuplicateDefault": false,
+      "temporaryDetailCropMaximumSeconds": 2.5,
+      "splitScreenOnlyForGenuineSimultaneousComparison": true,
+      "sourceRangeAllocation": {
+        "requiredBeforeFullFineEdit": true,
+        "narrativeRoles": [
+          "cold-open",
+          "overview",
+          "detail",
+          "diagnosis",
+          "resolution",
+          "other"
+        ],
+        "eachRunRecordsSourceRangeId": true,
+        "eachRunDeclaresNewInformation": true,
+        "laterDetailNormallyUsesDifferentOrMoreCompleteRange": true,
+        "exactRangeReuseRequiresRecallComparisonOrOrientationReason": true
+      }
+    },
+    "coverageRunClassification": {
+      "mergeAdjacentOrNearAdjacentBeats": true,
+      "durationBasis": "aggregate-viewer-visible-run",
+      "modeAxis": "visible-source-presence",
+      "modes": [
+        "A-only",
+        "B-only",
+        "AB-live"
+      ],
+      "abLiveLayouts": [
+        "B-base-A-PiP",
+        "A-base-B-overlay",
+        "B-base-A-cutout",
+        "AB-split"
+      ],
+      "layoutAxis": "ab-live-composition",
+      "presenterPriorityAxis": "semantic-visual-layer-independent-of-layout",
+      "presenterPriorities": [
+        "foreground",
+        "supporting",
+        "background"
+      ],
+      "presenterAnchorAxis": "placement-independent-of-priority",
+      "presenterAnchors": [
+        "container-bottom",
+        "canvas-bottom",
+        "bounded-pip-region",
+        "other-declared-anchor"
+      ],
+      "coverageRunRecordRequires": [
+        "mode",
+        "layout-when-ab-live",
+        "presenter-priority-when-visible",
+        "presenter-anchor-when-composed",
+        "collision-policy"
+      ],
+      "legacyModeAliases": {
+        "AB-live-PiP": {
+          "mode": "AB-live",
+          "layout": "B-base-A-PiP"
+        }
+      },
+      "longRunDefault": "AB-live-only-when-presenter-continuity-helps-then-select-layout-by-content-occupancy-style-and-matte-quality",
+      "intentionalARollResetRequiresReadableHold": true,
+      "minimumIntentionalARollResetSeconds": 2,
+      "sourceCutLayoutSnap": "same-program-frame-when-the-layout-enters-or-exits-on-the-new-take",
+      "shortLayoutException": "declared-token-synchronized-demo-with-exact-first-and-last-token-window",
+      "ordinaryLayoutRequiresSpokenModeName": false,
+      "ordinaryLayoutSelectionBasis": [
+        "content-and-claim",
+        "evidence-density",
+        "presenter-value",
+        "negative-space-and-collisions",
+        "target-device",
+        "approved-direction"
+      ],
+      "semanticStateSynchronizationRequired": true,
+      "exactNamedPhraseSwitchRequiredOnlyWhenLayoutIsEvidence": true
+    },
+    "coverageRuns": [],
+    "continuousRunInteriorAlphaCoverage": "required",
+    "pairedInteriorFadesMayRevealARoll": false,
+    "shortGapsMustBeIntentional": true,
+    "sourceCutAndLayoutBoundaryAudit": {
+      "manifestTemplate": "assets/templates/coverage-boundary-audit.template.json",
+      "script": "scripts/audit-coverage-boundaries.mjs",
+      "exactFrameSnapWhenSameSemanticBoundary": true,
+      "canonicalBoundaryUnit": "integer-frame-index",
+      "secondsDerivation": "frame-divided-by-fps-without-independent-decimal-rounding",
+      "requiredFrameFields": [
+        "startFrame",
+        "endFrame"
+      ],
+      "forbidShortAOnlyBridgeInsideContinuousBrollRun": true,
+      "minimumReadableAOnlyResetSeconds": 2,
+      "renderedBoundarySamples": [
+        "two-before",
+        "one-before",
+        "on-boundary",
+        "one-after",
+        "two-after"
+      ]
+    },
+    "transitionGrammar": {
+      "continuousExplanationInterior": "direct-cuts-by-default",
+      "presentationModeChanges": "short-restrained-dissolve-when-motivated",
+      "synchronizeBrollAndPresenterLayer": true,
+      "blanketPresetAcrossAllBoundaries": false
+    },
+    "seamFrames": [
+      "before",
+      "on-boundary",
+      "after"
+    ]
+  },
+  "informationCoverage": [],
+  "claimFraming": {
+    "generalRules": [],
+    "personalOrInstitutionSpecificResults": [],
+    "timeOrLocationSensitiveDetails": []
+  },
+  "visualBeats": [],
+  "narrativeEmphasisAudit": {
+    "requiredBeforeFullFineEdit": true,
+    "roles": [
+      "hook",
+      "proof-reveal",
+      "number",
+      "turn",
+      "punchline",
+      "conclusion"
+    ],
+    "decisions": [
+      "none",
+      "visual",
+      "audio",
+      "both"
+    ],
+    "noneIsAllowedWithReason": true,
+    "majorBeatWithoutDecisionBlocksReview": true
+  },
+  "spokenCueSynchronization": {
+    "wordLevelPermissionWindowsRequired": true,
+    "visualMayEnterBeforeFirstPermittingToken": false,
+    "visualMustRemainThroughFinalRequiredToken": true,
+    "ordinaryVisualLayoutMayBeDirectorSelectedWithoutBeingNamed": true,
+    "visibleSemanticStateMustMatchCurrentSpokenClaim": true,
+    "exactNamedModePhraseAppliesOnlyToExplicitModeIntroductionComparisonOrTeaching": true,
+    "appliesTo": [
+      "facts-and-numbers",
+      "interface-states",
+      "evidence",
+      "layout-mode-demonstrations"
+    ],
+    "sameVoiceBeforeAfterAudition": {
+      "default": "omit-when-it-would-sound-like-a-glitch-or-accidental-repeat",
+      "silentAuthoredIllustrationAllowed": true,
+      "illustrationMayBeRepresentedAsOriginalEvidence": false
+    },
+    "declaredNonMisleadingPreviewAllowed": true,
+    "previewRequiresSeparateNarrativeRole": true
+  },
+  "privacyPlan": {
+    "localDerivativeOnly": true,
+    "cropBeforeRedaction": true,
+    "criticalIdentifiersUseOpaqueMasks": true,
+    "focusCueWhenEvidenceIsNotObvious": "required",
+    "cloudUploadOnlyAfterRedaction": true,
+    "uiEvidenceCapture": {
+      "exactStatePathRequired": true,
+      "stateSelectors": [
+        "route-or-document",
+        "primary-tab",
+        "subtab",
+        "view-or-report-type",
+        "date-range-or-filter",
+        "expanded-modules",
+        "scroll-position",
+        "demo-data-and-privacy-state"
+      ],
+      "rejectedAdjacentStatesRequiredWhenAmbiguous": true,
+      "semanticRoiSourceOrder": [
+        "dom-accessibility-text-and-control-bounds",
+        "design-layer-geometry",
+        "user-confirmed-reference-pixels",
+        "manual-pixels-after-semantic-identification"
+      ],
+      "thumbnailGuessingAllowed": false,
+      "roiManifestRequired": true,
+      "preserveSourceAspectRatio": true,
+      "formatSelectionIsContentDriven": true,
+      "suppliedRecordingReviewedFirst": true,
+      "representativeStillComparedWhenRecordingSupplied": true,
+      "recordingAutomaticallyRequired": false,
+      "stillAutomaticallyRequired": false,
+      "sentenceLockedReveal": true,
+      "captionLaneAndPlatformCollisionBlocksExport": true
+    }
+  },
+  "presentationSafety": {
+    "presenterInsertEntryFrame": "normal-expression-eyes-open",
+    "shortProofCutaway": "presenter-optional",
+    "longFullScreenExplanation": "use-ab-live-only-when-presenter-continuity-benefits-and-select-layout-separately",
+    "recommendedDefaultsPolicy": {
+      "recommendAStartingTreatment": true,
+      "startingTreatmentIsNotAStyleLock": true,
+      "contentAndApprovedReferenceMayOverride": true,
+      "overrideReasonRequired": true,
+      "portraitCaptionRecommendedMaximumLines": 1,
+      "portraitCutoutRecommendedStartingZones": [
+        "lower-left",
+        "lower-right"
+      ],
+      "portraitCutoutRecommendedOutlineState": "on",
+      "portraitCutoutRecommendationAppliesOnlyToBBaseACutout": true,
+      "exactPlacementOutlineColorAndWidthLockAtAudiovisualSample": true
+    },
+    "pictureInPictureDesign": {
+      "defaultVisualPriority": "foreground-or-supporting",
+      "boundedWindowMayBeTreatedAsDisposableBackground": false,
+      "scaledUncroppedSourceDefault": false,
+      "cropIntent": "head-neck-and-upper-shoulders-when-appropriate",
+      "shapeAndRadiusMustBeDeclared": true,
+      "contentOccupancyMapRequired": true,
+      "preferredCornerIsOnlyADefault": true,
+      "fixedGlobalSizeDefault": false,
+      "sizeSelectionBasis": [
+        "card-content-occupancy",
+        "available-negative-space",
+        "presenter-role",
+        "coverage-run-duration",
+        "caption-and-platform-safe-areas",
+        "phone-scale-legibility"
+      ],
+      "geometryStableWithinCoverageRun": true,
+      "sizeMayChangeAtSemanticOrLayoutBoundaries": true,
+      "visibleCropBoxVerificationRequired": true,
+      "positionMayChangeAtSemanticBoundaries": true,
+      "sourceCropAndComposedFrameReviewRequired": true
+    },
+    "presenterCutoutDesign": {
+      "layoutId": "B-base-A-cutout",
+      "defaultEngine": "hyperframes-remove-background",
+      "testedVersion": "0.7.109",
+      "model": "u2net_human_seg",
+      "workflowStage": "after-rough-cut-and-canonical-timing-lock",
+      "cleanLockedARollWithoutBakedCaptionsOrOverlaysRequired": true,
+      "cutoutLayerMustBeMuted": true,
+      "device": "auto",
+      "draftQuality": "balanced",
+      "finalQuality": "best",
+      "transparentOutputs": [
+        "vp9-alpha-webm-for-hyperframes",
+        "prores-4444-mov-for-editor-round-trip"
+      ],
+      "matteQualityGate": {
+        "requiredBeforeSelection": true,
+        "inspect": [
+          "hair-and-glasses",
+          "hands-and-fingers",
+          "motion-blur",
+          "background-leakage",
+          "temporal-edge-flicker",
+          "alpha-timing-and-color-halo"
+        ],
+        "backgroundProof": [
+          "bright",
+          "dark",
+          "busy"
+        ],
+        "frameProof": [
+          "early",
+          "middle",
+          "late",
+          "every-cut-boundary"
+        ],
+        "failClosed": true,
+        "status": "not-applicable|pending|pass|fail"
+      },
+      "outline": {
+        "formula": "dilate-alpha-minus-source-alpha",
+        "implementation": "single-hyperframes-video-with-svg-feMorphology-and-feComposite",
+        "universalStartingState": null,
+        "publicRecommendedStartingState": "on",
+        "recommendationAppliesTo": "portrait-B-base-A-cutout",
+        "recommendationOverridable": true,
+        "overrideReasonRequiredWhenOff": true,
+        "candidateStates": [
+          "on",
+          "off"
+        ],
+        "candidateComparisonRequiredUnlessExactApprovedTreatmentExists": true,
+        "selectionSource": "content-approved-reference-private-profile-or-mixed",
+        "colorSelection": "content-driven-after-subject-and-background-palette-analysis",
+        "colorSelectionFactors": [
+          "hair-or-headwear",
+          "clothing",
+          "skin-edge-separation",
+          "underlying-backgrounds-across-the-run",
+          "evidence-and-content-palette",
+          "approved-brand-or-creator-tendency",
+          "phone-scale-contrast"
+        ],
+        "fixedHouseColor": false,
+        "referenceWidthToCanvasWidth": "0.007-0.009-starting-candidate-not-universal",
+        "mustTrackTheSameAlpha": true,
+        "mayHideSmallEdgeNoiseButMayNotRepairBrokenMattes": true,
+        "selectedState": null,
+        "selectedColor": null,
+        "selectedWidthToCanvasWidth": null,
+        "decisionReason": null
+      },
+      "placement": {
+        "visualPriorityRequired": true,
+        "visualPriorityValues": [
+          "foreground",
+          "supporting",
+          "background"
+        ],
+        "anchorRequired": true,
+        "anchorValues": [
+          "container-bottom",
+          "canvas-bottom",
+          "other-declared-anchor"
+        ],
+        "contentOccupancyMapRequired": true,
+        "portraitUniversalStartingZones": null,
+        "portraitRecommendedStartingZones": [
+          "lower-left",
+          "lower-right"
+        ],
+        "recommendationAppliesTo": "portrait-B-base-A-cutout",
+        "recommendationOverridable": true,
+        "nonLowerCornerOverrideReasonRequired": true,
+        "candidateZonesDerivedFrom": [
+          "public-lower-corner-recommendation",
+          "content-occupancy",
+          "gaze-and-gesture",
+          "captions-and-platform-controls",
+          "exact-approved-reference",
+          "approved-private-preference"
+        ],
+        "candidateComparisonRequired": true,
+        "selectedStartingZone": null,
+        "intentionalBottomBleedAllowed": true,
+        "foregroundAndSupportingCollisionPolicy": "reserve-face-required-gesture-silhouette-and-readable-container",
+        "backgroundCollisionPolicy": "captions-and-platform-copy-may-overlay-nonessential-body-area-while-face-required-gesture-critical-evidence-and-identity-marks-stay-readable",
+        "geometryStableWithinCoverageRun": true,
+        "changeOnlyAtSemanticOrLayoutBoundary": true
+      },
+      "fallback": "use-B-base-A-PiP-A-base-B-overlay-or-B-only-according-to-presenter-value-and-evidence-density"
+    },
+    "portraitDeliveryLayout": {
+      "presetId": "layout.portrait-talking-head.safe-v1",
+      "parameterTemplate": "assets/templates/portrait-talking-head-safe-layout.template.json",
+      "status": "approved-reference-baseline-not-universal-hardcode",
+      "referenceCanvas": "2160x3840",
+      "deliveryAspectRatio": "9:16",
+      "sameAspectResolutionChangeSolvesPlayerCrop": false,
+      "fullBleedVisualLayer": "crop-tolerant-backgrounds-and-contrast-surfaces",
+      "semanticForeground": "inside-visible-source-and-band-specific-platform-ui-free-intersection",
+      "declaredBrollCriticalRoiRequired": true,
+      "actualRenderedBoundsVerificationRequired": true,
+      "targetDeviceMatrix": [
+        "narrow-tall-phone",
+        "reference-9-by-16-viewport",
+        "wide-tablet"
+      ],
+      "publishedTargetDeviceScreenshotsOverrideAssumptions": true,
+      "projectSpecificExceptions": []
+    },
+    "platformUiExclusionZonesRequired": true,
+    "captionInformationCollisionCheckRequired": true
+  },
+  "finishingPass": {
+    "voiceIsolation": {
+      "speechOnly": true,
+      "strength": null,
+      "processEachSourceRangeSeparately": true,
+      "reuseDerivedAudioAcrossDifferentSourceRanges": false,
+      "earlyAndLateAudibleSampleRequired": true
+    },
+    "dialogueLoudness": {
+      "measurementSource": "actual-rendered-timeline-after-cuts-denoise-fades-and-gain",
+      "metrics": [
+        "integrated-lufs",
+        "true-peak-dbtp",
+        "loudness-range-lu"
+      ],
+      "referencePolicy": "prefer-recent-clean-format-matched-private-profile-references",
+      "clippedOutliersDefineTarget": false,
+      "fallbackStartingBandLufs": {
+        "minimum": -18,
+        "maximum": -15
+      },
+      "fallbackTruePeakMaximumDbtp": -1,
+      "continuousSameSessionGainScope": "uniform-source-track-or-all-derived-aroll-clips",
+      "perCutIndependentNormalizationDefault": false,
+      "postAdjustmentFullRenderRemeasureRequired": true,
+      "integratedLufsIsPrimaryMatchMetric": true,
+      "uiSliderOrPeakOnlyMatchIsValid": false,
+      "referenceFileAndVersionRequired": true,
+      "creatorSpecificTargetStorage": "private-profile-only"
+    },
+    "captions": {
+      "requestedScale": 1,
+      "reflowAfterScaling": true,
+      "longestTwoLineAndSafeAreaRecheckRequired": true,
+      "separateCompletedThoughtFromNextThought": true,
+      "portraitShortFormUniversalMaximumLines": null,
+      "portraitRecommendedMaximumLines": 1,
+      "recommendationOverridable": true,
+      "twoLineOverrideReasons": [
+        "tiny-type",
+        "over-fast-card-changes",
+        "semantic-fragmentation",
+        "exact-approved-reference"
+      ],
+      "portraitMaximumLinesSelection": "public-recommendation-approved-reference-private-profile-or-content-and-phone-scale",
+      "portraitCandidateMaximumLines": [
+        1,
+        2
+      ],
+      "portraitSelectedMaximumLines": null,
+      "portraitSelectionReasonRequired": true,
+      "splitIntoConsecutiveSemanticCardsBeforeWrapping": true,
+      "forceBreakOnlyAfterPaginationReadback": true,
+      "preserveApprovedVisualStyleUnlessExplicitChange": true,
+      "progressLayerRequestsDoNotRestyleCaptions": true,
+      "portraitReferenceLayout": "layout.portrait-talking-head.safe-v1",
+      "actualRenderedGlyphBoundsInsideEffectiveSafeRegion": true,
+      "decorativeOutroUnderline": "below-rendered-caption-ink-move-or-shorten-before-moving-approved-captions",
+      "semanticPunctuation": {
+        "sourceOfTruth": "supplied-manuscript",
+        "pageAwareDisplay": true,
+        "internalPunctuation": "preserve",
+        "pageFinalDetachableSeparators": "omit-by-style",
+        "pageFinalQuestionAndExclamation": "always-preserve",
+        "pairedStructuralMarks": "always-preserve",
+        "punctuationEmbeddedInTermsNumbersAndUnits": "preserve",
+        "rerunAfterPaginationChange": true,
+        "globalHidePunctuationWhenExceptionsExist": false,
+        "preserveEnumerationQuotesTitlesUnitsAndSymbols": true,
+        "semanticAndStructuralPunctuationMustMatchManuscript": true,
+        "inventOrSubstituteSymbols": false,
+        "globalPunctuationRemovalWithoutExceptionAudit": false,
+        "renderedPixelVerificationRequired": true,
+        "fallbackWhenRendererStrips": "preserve-exact-glyph-via-renderer-style-or-authored-caption-otherwise-separate-pages-without-inventing-symbols"
+      }
+    },
+    "fontGovernance": {
+      "rendererCatalogLookupRequired": true,
+      "canonicalFamilyNameRequired": true,
+      "systemFontStacksAllowedInProductionMotionGraphics": false,
+      "rightsBasisRequired": "verified-open-license-or-documented-user-commercial-license",
+      "freeDownloadIsLicenseProof": false,
+      "neutralSimplifiedChineseDefaultWhenSuitable": "Noto Sans SC",
+      "unsupportedFontWarningPolicy": "block-replace-and-reopen-export-preflight",
+      "postReplacementProof": [
+        "warning-absent",
+        "early-frame",
+        "middle-frame",
+        "late-frame",
+        "longest-label",
+        "densest-layout"
+      ]
+    },
+    "chapterProgress": {
+      "defaultEnabled": null,
+      "selectionMode": "content-driven",
+      "enableWhen": "defensible-sections-or-approved-recurring-series-format",
+      "omitWhen": "decorative-only-or-attention-cost-exceeds-navigation-value",
+      "chapterSource": "approved-semantic-structure-after-timing-lock",
+      "meaningfulSegmentCount": {
+        "minimum": 2,
+        "maximum": 7
+      },
+      "segmentWidth": "duration-proportional",
+      "labels": "short-and-phone-readable",
+      "defaultVisualGrammar": "shared-two-lane-clean-track-with-label-boundary-dividers-only",
+      "component": {
+        "id": "rmcu.semantic-progress.v1",
+        "scope": "repository-generic-non-personal",
+        "variant": null,
+        "landscape": "compact-full-width-top-rail",
+        "portrait": "platform-safe-two-lane-top-band",
+        "inactiveOverflow": "single-line-ellipsis",
+        "activeOverflow": "loop-marquee-only-when-overflowing",
+        "sameVisualGrammarAcrossOrientations": true,
+        "upperProgressTrack": "continuous-without-chapter-ticks",
+        "lowerLabelRow": "dividers-only-between-adjacent-chapters",
+        "outerSurfaceHorizontalInset": "zero-full-bleed-allowed",
+        "semanticHorizontalInset": "platform-player-validated-cover-aware",
+        "semanticRailsShareInset": true,
+        "leadingLabelMarks": false,
+        "chapterNumbers": false,
+        "activeSegmentPanel": false,
+        "defaultMarker": "neutral-playhead",
+        "personalIdentityAssetRequired": false,
+        "markerSelection": {
+          "basis": "content-meaning-creator-fit-and-attention-budget",
+          "newAssetRequiresStillAndMotionPreview": true,
+          "semanticContactPointAnchorRequired": true,
+          "markerOnlyChangePreservesAllOtherApprovedLayers": true
+        },
+        "portraitDeliveryLayoutPreset": "layout.portrait-talking-head.safe-v1",
+        "parameterTemplate": "assets/templates/semantic-progress-rmcu.template.json"
+      },
+      "verticalPlacement": "platform-validated-edge-band-bottom-first",
+      "labelApproval": {
+        "proposalStage": "director-plan-before-style-preview",
+        "proposalIncludes": [
+          "label",
+          "order",
+          "one-sentence-scope",
+          "narrative-anchor"
+        ],
+        "approvalGate": "director-plan-approval",
+        "separateBlockingQuestionDefault": false,
+        "separateQuestionExceptions": [
+          "ambiguous",
+          "high-stakes",
+          "meaning-changing"
+        ],
+        "exactBoundaryStage": "after-rough-cut-timing-lock",
+        "motionPreviewRequired": true,
+        "wordingOnlyChangeRequiresRecut": false,
+        "structuralTimingChangeRequiresBoundaryRecompute": true
+      },
+      "labelVisualBaseline": {
+        "semanticLayer": "chapter-progress-not-caption-track",
+        "mode": "fixed-neutral-across-backgrounds",
+        "contrastSurface": "narrow-full-width-translucent-neutral-strip",
+        "text": "light-with-restrained-dark-shadow-or-stroke",
+        "perChapterBoxesDefault": false,
+        "positionDefault": "bottom-first-after-platform-exclusion-validation",
+        "topPlacementDefault": "conditional-when-bottom-is-occluded-or-collides",
+        "activeState": "weight-opacity-and-progress-indicator",
+        "sceneBySceneColorInversion": false,
+        "verificationFrames": [
+          "a-roll",
+          "bright-b-roll",
+          "dark-b-roll",
+          "chapter-boundaries"
+        ],
+        "nativeAndPhoneScaleVerification": true,
+        "publishedTargetDeviceScreenshotVerification": true,
+        "topBandReflowRequired": true
+      },
+      "platformUiOcclusionPolicy": "semantic-label-occlusion-forbidden-relocate-strip-and-reflow-nearby-content",
+      "playhead": "actual-timeline-frame-over-final-duration",
+      "fallbackWithoutMeaningfulChapters": "single-unsegmented-progress-bar",
+      "renderedOverlayIsInteractive": false,
+      "actualSeeking": "platform-native-scrubber-or-separate-chapter-metadata",
+      "recomputeAfterStructuralTimingChange": true,
+      "primaryContentCollisionReview": [
+        "captions",
+        "picture-in-picture",
+        "information-cards",
+        "platform-ui-exclusion-zones"
+      ],
+      "renderedFrameVerification": [
+        "early",
+        "middle",
+        "late",
+        "chapter-boundaries",
+        "published-target-device-screenshots"
+      ]
+    },
+    "signatureOutro": {
+      "recurringSpokenSignoff": null,
+      "candidateDetectedDuringContentLock": false,
+      "namedReusableComponent": true,
+      "ownedIdentityAssetPreferred": true,
+      "genericThirdPartyStickerDefault": false,
+      "preserveLiveFaceVoiceAndDelivery": true,
+      "firstReusableLockRequiresStillAndMotionPreview": true,
+      "identityPhraseCue": null,
+      "encouragementPhraseCue": null,
+      "identityAssetVariant": null,
+      "contextualAccessories": [],
+      "microExpression": null,
+      "microExpressionCue": null,
+      "microExpressionRule": "optional-single-motivated-beat-not-entrance",
+      "microExpressionProof": [
+        "open-before",
+        "closed-peak",
+        "open-after",
+        "phone-size"
+      ],
+      "approvedMotionContract": {
+        "reuseExactApprovedComponent": true,
+        "includes": [
+          "tilt",
+          "blink-or-wink",
+          "timing",
+          "scale-envelope",
+          "placement",
+          "collision-behavior"
+        ],
+        "simplifiedRebuildMayDropMotionBeats": false,
+        "redesignRequiresExplicitApproval": true
+      },
+      "motionEnvelope": {
+        "include": [
+          "scale",
+          "translation",
+          "rotation",
+          "transform-origin",
+          "internal-accents",
+          "overshoot"
+        ],
+        "topTrackPreventsSelfClipping": false,
+        "hiddenOverflowDefault": false,
+        "visibleOverflowAloneIsSufficient": false,
+        "staticOuterNaturalBoxPreferred": true,
+        "paddedInnerAnimatedStageContainsEveryVisibleExtreme": true,
+        "verificationFrames": [
+          "first-visible",
+          "entrance-extreme",
+          "overshoot",
+          "settled",
+          "encouragement-peak",
+          "micro-expression-peak",
+          "reopen",
+          "final-visible"
+        ],
+        "verificationScales": [
+          "native",
+          "phone"
+        ]
+      },
+      "captionRelativePlacement": {
+        "anchor": "active-caption-card-top",
+        "referenceCanvasGapPx": [
+          16,
+          48
+        ],
+        "recalculateAfterCaptionPaginationOrGeometryChange": true,
+        "wholeCharacterBaseRemainsOpaqueDuringExpressionSwap": true,
+        "unrelatedFixedScreenYDefault": false
+      },
+      "collisionReview": [
+        "face",
+        "final-caption",
+        "chapter-progress",
+        "platform-ui"
+      ],
+      "soundDecision": null,
+      "privateProfilePromotionRequiresExplicitApproval": true,
+      "postApprovalAdaptations": [
+        "speech-sync",
+        "aspect-ratio-safe-placement",
+        "documented-collision-handling"
+      ]
+    },
+    "designAudit": {
+      "requiredBeforeFinalRender": true,
+      "unreviewedIsNotOff": true,
+      "decisionBasis": [
+        "content",
+        "tone",
+        "rhythm",
+        "speech-intelligibility",
+        "attention-cost",
+        "platform-context",
+        "rights"
+      ],
+      "categories": {
+        "backgroundMusic": {
+          "decision": null,
+          "reason": null,
+          "auditionInAudiovisualStyleSample": true,
+          "dialogueOnlyComparisonWhenNoAudioStyleIsLocked": true,
+          "offIsAResultNotAnIntakeDefault": true,
+          "speechIntelligibilityWins": true,
+          "rightsRequiredWhenEnabled": true,
+          "provenanceDisclosureWhenEnabled": {
+            "originTypeRequired": true,
+            "providerOrLibraryRequired": true,
+            "rightsManifestItemRequired": true,
+            "generationJobOrAssetIdRequiredForAiGenerated": true,
+            "exclusiveOriginalityClaimRequiresVerification": true,
+            "creatorFacingSummaryRequired": true
+          }
+        },
+        "soundEffects": {
+          "decision": null,
+          "reason": null,
+          "cueList": [],
+          "microCueContract": {
+            "exactSpokenTokenRequired": true,
+            "singleBriefAnimationCycle": true,
+            "continuousLoopDefault": false,
+            "dialogueRemainsDominant": true,
+            "rightsRecordRequiredWhenAudioEnabled": true,
+            "provenanceDisclosureRequiredWhenEnabled": true,
+            "licensedLibraryAudioMayBeCalledOriginal": false
+          }
+        },
+        "entryExitAnimation": {
+          "decision": null,
+          "reason": null
+        },
+        "transitions": {
+          "decision": null,
+          "reason": null
+        },
+        "decorativeEffects": {
+          "decision": null,
+          "reason": null
+        }
+      }
+    }
+  },
+  "timebaseIntegrity": {
+    "sourceFps": null,
+    "targetFps": null,
+    "boundaryConversion": "targetFrame = round(sourceFrame * targetFps / sourceFps)",
+    "deriveDurationsFromAdjacentConvertedEndpoints": true,
+    "copyRawFrameNumbersAcrossDifferentFps": false,
+    "postConformChecks": [
+      "expected duration in seconds",
+      "first and last boundary",
+      "item count and order",
+      "pairwise contiguity",
+      "opening middle and ending composed frames"
+    ]
+  },
+  "evidenceNeeded": [],
+  "stylePreview": {
+    "keyframes": 3,
+    "motionSampleSecondsRange": [
+      6,
+      12
+    ],
+    "actualOrTimingFaithfulDialogueRequired": true,
+    "finalLikeCaptionsRequired": true,
+    "plannedEvidenceTreatmentRequired": true,
+    "plannedPresenterTreatmentRequiredWhenUsed": true,
+    "proposedBgmAndSfxStateRequired": true,
+    "silentPreviewMayApproveAudiovisualStyle": false,
+    "fineEditDirectionTemplate": "assets/templates/fine-edit-direction.template.json",
+    "auditScript": "scripts/audit-fine-edit-direction.mjs",
+    "options": []
+  },
+  "risks": [],
+  "approvedAt": null
+}

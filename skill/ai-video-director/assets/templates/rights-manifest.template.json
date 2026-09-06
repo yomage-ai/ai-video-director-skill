@@ -6,14 +6,24 @@
     {
       "id": "asset-001",
       "file": "",
-      "kind": "video|image|audio|font|code|model-output",
+      "kind": "video|image|audio|font|code|model-output|model-output-audio",
+      "originType": "creator-provided|ai-generated|licensed-library|commissioned-original|other-cleared",
       "sourceUrl": "",
       "authorOrOwner": "",
+      "providerOrLibrary": "",
       "licenseOrTerms": "",
       "termsUrl": "",
       "retrievedAt": "",
+      "generation": {
+        "jobId": null,
+        "assetId": null,
+        "model": null,
+        "promptOrBrief": null
+      },
       "commercialUse": "unknown",
       "attribution": "",
+      "exclusiveOriginalityVerified": false,
+      "creatorFacingProvenanceSummary": "",
       "identityOrPropertyConsent": "not-applicable|recorded|missing",
       "restrictions": [],
       "decision": "pending"

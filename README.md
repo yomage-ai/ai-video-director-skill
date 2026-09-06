@@ -2,49 +2,50 @@
 
 **[简体中文快速开始](README.zh-CN.md)** | English
 
-AI Video Director Skill for editing talking-head videos from footage, scripts, and reference material.
-
-## Use It Directly
-
-Attach the video, script, and reference files to a Codex or other coding-agent task, then paste:
+Copy this request to Codex or another coding agent. Attach your recording or provide its local path; a manuscript and style reference are optional:
 
 ```text
-Read and use the AI Video Director Skill from this repository:
+Use my installed local $ai-video-director Skill first. If it is not installed, read and use it from:
 https://github.com/yomage-ai/ai-video-director-skill
 
-My material: the video, script, and reference files attached to this task.
+My material: [attached recording or local path; manuscript and references if available]
 Target platform and aspect ratio: [for example: Douyin, 9:16]
 Main point of the video: [one sentence, or help me refine it]
 Style request or reference: [optional]
 
-Inspect the material first and show me the content-lock card and director plan.
+Inspect the material locally first and show me a plain-language content-lock card and rough-cut plan in my language. Do not show internal JSON.
 Wait for my approval before continuing production.
+After the rough cut is locked, show me a 6-12 second audiovisual fine-edit sample before producing the full fine edit.
 Then deliver the final video, editable project, and verification records.
 When publishing is requested, also prepare several cover-title, caption, hashtag, and AI-disclosure options.
-Ask separately before any payment, account login, system permission, identity or voice cloning, or rights-sensitive media use.
+Reuse approvals already given for this task. Ask only when a new payment, login, system permission, identity/voice use, or media-rights authorization is actually needed.
 ```
 
-If the Skill already appears in Codex:
+For a rough cut only:
 
 ```text
-Use $ai-video-director to process the attached talking-head video. Show me the content-lock card and director plan first, then wait for my approval.
+Use $ai-video-director on this recording. Make a rough cut only: remove mistakes, retakes and unnecessary waits while keeping complete words and natural pacing. Show me the content and rough-cut plan first. After I approve the rough cut, deliver it with the editable timing project and captions, then stop.
 ```
 
 ## What You Provide
 
-- Recorded talking-head footage or a script.
+- Recorded talking-head footage, including a screen recording with a baked-in webcam. A manuscript helps but does not replace source footage.
 - Target platform, aspect ratio, and intended use.
 - Required points, sections, source material, or references.
-- Any style preference or visual reference.
+- Any style preference or visual reference you already have. This is optional at the first gate.
 
 ## What You Receive
 
-- A content-lock card and director plan before production.
-- A finished video and an editable project when the selected tools support it.
+- A plain-language content-lock card and rough-cut plan before production, without internal JSON.
+- A short audiovisual style sample after rough-cut approval, before the full fine edit.
+- A content-matched direction from the built-in curated fine-edit style library when you do not provide a visual reference. The library preserves liked and proven references but is not a closed asset list; when no entry fits, the Agent designs a new coherent asset, motion, music, and sound direction from the content. You can still approve or adjust it before full production.
+- A finished video and its editable project; a rough-only request ends with the approved rough cut, editable timing and captions.
 - Verification records and clear delivery paths.
 - Publication copy options when publishing is part of the request.
 
-The Agent handles the remaining preparation and execution after the required approvals.
+The Agent handles installation, dependency checks, local media inspection, transcription, timing audits, style recommendation, asset planning, rendering, and verification. A style reference is optional: when none is supplied, the Agent compares the public curated styles against the video's content and evidence needs instead of asking you to invent a direction. If the library has no strong match, it plans and produces suitable evidence, generated or code-authored graphics, typography, motion, BGM, and SFX under the normal approval and rights gates. Before the first approval it avoids unnecessary large uploads, cloud retries, full renders, and premature style production.
+
+This version checks actual media, processing settings, approvals and versions. Unsupported editor effects stop the handoff until the Agent arranges a supported explicit conversion or a reviewed high-quality derivative. It never treats filled checkboxes or a successful render as proof of listening quality. Version `0.2.0-rc.1` has passed engineering regression checks and is shared as a release candidate. The next independent real-video trial still needs to validate listening quality, revision effort and full-length resource use. See [the recorded validation state](PROJECT_STATE.json).
 
 ## License
 

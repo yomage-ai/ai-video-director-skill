@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "language": "en",
+  "publicationInScope": false,
+  "artifacts": {
+    "contentBrief": "analysis/director-brief.md",
+    "roughReview": "analysis/rough-cut-review.json",
+    "fineDirection": "analysis/fine-edit-direction.json",
+    "deliveryManifest": "delivery/delivery-manifest.json",
+    "capabilities": "analysis/capabilities.json",
+    "fineRenderReceipt": null
+  },
+  "approvals": {
+    "content": {
+      "approvedBy": null,
+      "approvedAt": null,
+      "artifact": null,
+      "evidence": null
+    },
+    "rough": {
+      "approvedBy": null,
+      "approvedAt": null,
+      "artifact": null,
+      "evidence": null
+    },
+    "style": {
+      "approvedBy": null,
+      "approvedAt": null,
+      "artifact": null,
+      "evidence": null
+    },
+    "release": {
+      "approvedBy": null,
+      "approvedAt": null,
+      "artifact": null,
+      "evidence": null
+    }
+  },
+  "jobs": {
+    "rough-render": {
+      "argv": [],
+      "inputs": [],
+      "requiresCapabilities": [
+        "ffmpeg",
+        "ffprobe",
+        "chatcut",
+        "asr",
+        "source-listen"
+      ],
+      "outputPath": null,
+      "outputSpec": {"width": null, "height": null, "fps": null, "durationFrames": null}
+    },
+    "fine-render": {
+      "argv": [],
+      "inputs": [],
+      "requiresCapabilities": [
+        "ffmpeg",
+        "ffprobe",
+        "fine-renderer"
+      ],
+      "outputPath": null,
+      "outputSpec": {"width": null, "height": null, "fps": null, "durationFrames": null}
+    }
+  },
+  "outputScope": "full-edit",
+  "roughDelivery": {
+    "editableProject": null,
+    "captions": null
+  }
+}

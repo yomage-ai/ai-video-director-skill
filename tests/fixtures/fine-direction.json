@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "status": "ready-for-user-review",
+  "basedOn": {
+    "roughCutApproved": true,
+    "canonicalEdlVersion": "9d55e7377062c61aefa756936f0e4e7321228d6288528f682bdae56bd89478e4",
+    "durationFrames": 900,
+    "fps": 30
+  },
+  "styleSource": {
+    "mode": "curated-library",
+    "referenceId": "bold-evidence-editorial-v1",
+    "contractExtracted": true,
+    "unreferencedHouseTemplateLockedAtDirectorPlan": false,
+    "curatedLibrary": {
+      "reviewed": true,
+      "libraryVersion": 1,
+      "candidateStyleIds": [
+        "bold-evidence-editorial-v1",
+        "color-block-explainer-v1"
+      ],
+      "selectedStyleId": "bold-evidence-editorial-v1",
+      "selectionReason": "The viewer must inspect source-backed screens and one verified numeric result.",
+      "adaptationSummary": "Use the evidence-first grid with the fixture screens, caption lane, and presenter occupancy rather than copying sample geometry.",
+      "rejectionReasons": [
+        {
+          "styleId": "color-block-explainer-v1",
+          "reason": "Peer-category cards would weaken the exact proof state in this fixture."
+        }
+      ]
+    },
+    "dynamicAdaptation": {
+      "triggerReason": "",
+      "fitGap": "",
+      "dominantSystem": "",
+      "borrowedReferenceRoles": [],
+      "notLimitedToLibrary": true,
+      "visualSystem": {
+        "palette": "",
+        "typography": "",
+        "composition": "",
+        "imageryAndIcons": "",
+        "motion": "",
+        "transitions": "",
+        "music": "",
+        "soundEffects": ""
+      }
+    }
+  },
+  "contentDirection": {
+    "primaryViewerJob": "Understand where the learning effort actually went.",
+    "contentSpecificLayoutSelection": true,
+    "majorNarrativeBeatsAudited": true,
+    "beats": [
+      {
+        "id": "reveal",
+        "viewerJob": "Understand the scale and feel the contradiction.",
+        "narrativeRole": "proof-reveal",
+        "emphasisDecision": "both",
+        "emphasisReason": "One restrained number animation and cue make the verified reveal legible."
+      }
+    ]
+  },
+  "visualAssetPlan": {
+    "contentFitPrimary": true,
+    "referenceLibraryIsNotWhitelist": true,
+    "coherencePlan": "Use one evidence-first editorial system across the proof run while adapting every asset to the current screen state and caption lane.",
+    "decisions": [
+      {
+        "beatId": "reveal",
+        "viewerJob": "Inspect the verified result and understand why it matters.",
+        "semanticRole": "proof",
+        "assetForm": "hybrid",
+        "referenceStyleIds": [
+          "bold-evidence-editorial-v1"
+        ],
+        "selectionReason": "The real screen proves the state while one code-authored number cue explains its scale.",
+        "sourceOrGenerationPlan": "Use the cleared fixture recording and author a local deterministic number treatment.",
+        "rendererOrTool": "HyperFrames plus source screen recording",
+        "plannedVisibleResult": "Full evidence plane followed by one exact ROI and one large verified number.",
+        "styleAdaptation": "Inherit editorial contrast and timing, but derive geometry from the fixture evidence and caption safe area.",
+        "rightsEvidencePrivacyBoundary": "Use fabricated fixture data, retain exact evidence state, and introduce no third-party visual asset."
+      }
+    ]
+  },
+  "screenEvidence": {
+    "used": true,
+    "formatSelectionIsContentDriven": true,
+    "automaticStillOrRecordingRule": false,
+    "onePrimaryEvidencePlaneDefault": true,
+    "persistentSynchronizedDuplicateDefault": false,
+    "wholeThenSemanticPushPanOrCut": true,
+    "splitScreenOnlyForGenuineSimultaneousComparison": true,
+    "sourceRangesAllocatedBeforeFullFineEdit": true,
+    "crossRunSourceReuseAudited": true,
+    "runs": [
+      {
+        "id": "screen-1",
+        "viewerJob": "Read the result and then inspect the relevant control.",
+        "layoutReason": "A full view establishes context before one semantic push-in.",
+        "narrativeRole": "detail",
+        "sourceRangeId": "token-dashboard-detail-01",
+        "newInformationComparedWithEarlierRuns": "Shows the task rows and model columns not used in the cold open.",
+        "reusesEarlierSourceRange": false,
+        "reuseJustification": null,
+        "recordingProvided": true,
+        "candidateFormatsConsidered": [
+          "recording",
+          "still"
+        ],
+        "recordingReviewedFirst": true,
+        "representativeStillCompared": true,
+        "selectedFormat": "recording",
+        "formatReason": "The cursor path materially improves understanding in this beat.",
+        "automaticFormatRuleApplied": false,
+        "primaryEvidencePlaneDeclared": true,
+        "persistentSynchronizedDuplicate": false,
+        "simultaneousSourceCopies": 1
+      }
+    ]
+  },
+  "presenter": {
+    "used": true,
+    "cutoutUsed": true,
+    "roleDeclaredPerRun": true,
+    "placementFollowsEvidenceOccupancy": true,
+    "publicLowerCornerRecommendationAppliesOnlyToBBaseACutout": true,
+    "publicRecommendationIsOverridable": true,
+    "activeEvidenceMayBeCovered": false,
+    "previewIncludesPlannedTreatment": true,
+    "portraitCutoutPlacement": {
+      "selectionSource": "content-derived",
+      "publicRecommendedStartingZones": [
+        "lower-left",
+        "lower-right"
+      ],
+      "publicRecommendationConsidered": true,
+      "candidateZonesCompared": [
+        "lower-right",
+        "upper-left",
+        "bounded-center"
+      ],
+      "universalCornerDefaultApplied": false,
+      "selectedZone": "lower-right",
+      "publicRecommendationOverrideReason": null,
+      "selectionReason": "The lower-right keeps the presenter natural and leaves the active proof clear.",
+      "stableWithinCoverageRun": true
+    },
+    "cutoutOutline": {
+      "selectionSource": "content-derived",
+      "publicRecommendedStartingState": "on",
+      "publicRecommendationConsidered": true,
+      "recommendationOverridable": true,
+      "candidateStatesCompared": [
+        "on",
+        "off"
+      ],
+      "universalOutlineDefaultApplied": false,
+      "decision": "on",
+      "publicRecommendationOverrideReason": null,
+      "decisionReason": "A restrained outline separates dark hair and a white shirt across mixed screens.",
+      "derivedFromSameAlpha": true,
+      "colorSelectionIsContentDriven": true,
+      "paletteAnalysis": {
+        "hairOrHeadwear": "near-black hair",
+        "clothing": "white shirt",
+        "underlyingBackgroundFamilies": [
+          "warm-white-ui",
+          "dark-graphite-chart"
+        ],
+        "contentOrBrandPalette": [
+          "editorial-yellow",
+          "cobalt-accent"
+        ],
+        "contrastRisks": [
+          "dark hair over graphite",
+          "white shirt over warm white"
+        ]
+      },
+      "selectedColor": "#2F80ED",
+      "selectedWidthToCanvasWidth": 0.008,
+      "brightDarkBusyAndPhoneScaleReviewed": true
+    }
+  },
+  "captions": {
+    "delivery": "portrait-short-form",
+    "selectionSource": "content-and-phone-scale",
+    "publicRecommendedMaximumLines": 1,
+    "publicRecommendationConsidered": true,
+    "recommendationOverridable": true,
+    "candidateMaximumLinesCompared": [
+      1,
+      2
+    ],
+    "selectedMaximumLines": 1,
+    "publicRecommendationOverrideReason": null,
+    "selectionReason": "One line matches the approved pacing in this fixture without over-fragmenting the speech.",
+    "universalOneLineDefaultApplied": false,
+    "splitLongThoughtIntoConsecutiveSemanticCardsFirst": true,
+    "fixedWidthOrMidWordSplitAllowed": false,
+    "phoneScaleReviewed": true
+  },
+  "audio": {
+    "backgroundMusic": {
+      "decision": "on",
+      "auditionedInStyleSample": true,
+      "dialogueOnlyComparisonAuditionedWhenNoStyleWasLocked": true,
+      "reason": "A restrained bed supports pace without masking speech.",
+      "rightsStatus": "cleared",
+      "speechIntelligibilityReviewed": true,
+      "provenance": {
+        "originType": "ai-generated",
+        "providerOrLibrary": "fixture-music-model",
+        "rightsManifestItemId": "generated-bgm-fixture",
+        "generationJobOrAssetId": "job-fixture-1",
+        "exclusiveOriginalityVerified": false,
+        "creatorFacingSummary": "Generated for this project; exclusivity is not claimed."
+      }
+    },
+    "soundEffects": {
+      "decision": "on",
+      "auditionedInStyleSample": true,
+      "reason": "One short cue lands the numeric reveal.",
+      "cueList": [
+        {
+          "token": "twenty-billion",
+          "role": "reveal"
+        }
+      ],
+      "rightsStatus": "cleared",
+      "provenance": {
+        "originType": "licensed-library",
+        "providerOrLibrary": "fixture-sfx-library",
+        "rightsManifestItemId": "licensed-sfx-fixture",
+        "generationJobOrAssetId": null,
+        "exclusiveOriginalityVerified": false,
+        "creatorFacingSummary": "Licensed library sounds with project-specific timing and mixing."
+      }
+    }
+  },
+  "audiovisualSample": {
+    "durationSeconds": 8,
+    "containsActualOrTimingFaithfulDialogue": true,
+    "containsFinalLikeCaptions": true,
+    "containsPlannedEvidenceTreatment": true,
+    "containsPlannedPresenterTreatmentWhenUsed": true,
+    "containsProposedBgmAndSfxState": true,
+    "silent": false,
+    "dialogueOnlyIsIntentionalFinalRecommendation": false,
+    "creatorFacingReviewLanguage": "zh-CN",
+    "reviewArtifact": "fixture-sample.mp4"
+  },
+  "approval": {
+    "question": "这套视听风格是否可以进入完整精剪？",
+    "approvedAt": null
+  }
+}

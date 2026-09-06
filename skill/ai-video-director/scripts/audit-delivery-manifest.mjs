@@ -2,6 +2,7 @@
 
 import {existsSync, readFileSync, statSync} from 'node:fs';
 import path from 'node:path';
+import {sha256} from './lib/media-contract.mjs';
 
 function fail(message) {
   throw new Error(message);
@@ -49,6 +50,7 @@ const master = data.releaseMaster || {};
 checkAbsolutePath(master.absolutePath, 'releaseMaster.absolutePath', 'file', errors);
 checkAbsolutePath(master.qaReportAbsolutePath, 'releaseMaster.qaReportAbsolutePath', 'file', errors);
 if (!nonEmpty(master.sha256)) errors.push('releaseMaster.sha256 is required.');
+else if (existsSync(master.absolutePath) && sha256(master.absolutePath) !== master.sha256) errors.push('releaseMaster.sha256 differs from the actual file.');
 if (master.exactCandidateApprovedByUser !== true) {
   warnings.push('The exact release candidate has not yet been approved by the user.');
 }
@@ -82,6 +84,7 @@ for (const field of [
   'publicationPackageAbsolutePath',
   'learningScopeLedgerAbsolutePath',
 ]) {
+  if (field === 'publicationPackageAbsolutePath' && data.publicationInScope === false) continue;
   checkAbsolutePath(supporting[field], `supportingArtifacts.${field}`, 'file', errors);
 }
 

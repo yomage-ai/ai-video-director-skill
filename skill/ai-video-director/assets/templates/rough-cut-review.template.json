@@ -1,8 +1,15 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "projectId": "replace-with-project-id",
   "canonicalEdlVersion": null,
-  "status": "in-progress",
+  "status": "in-progress|ready-for-user-review|approved",
+  "timelineInventory": {
+    "durationSeconds": null,
+    "placedMediaItems": null,
+    "expectedJoinCount": null,
+    "actualJoinCount": null,
+    "allRealJoinsRepresented": false
+  },
   "takeSelectionPolicy": {
     "principle": "quality-first",
     "laterOccurrence": "tie-breaker-only",
@@ -11,18 +18,112 @@
   "takeDecisions": [],
   "hybridSplices": [],
   "pauseEdits": [],
+  "issueClassSweep": {
+    "userFeedbackNamedRepeatableDefect": null,
+    "patchOnlyListedTimestamps": false,
+    "fullRelevantTimelineSwept": false,
+    "classes": []
+  },
   "playbackSpeedReview": {
     "sourceRate": 1,
     "testedRates": [],
     "selectedRate": null,
+    "retimeApplied": null,
     "contentAndPerformanceRationale": "",
     "representativeRenderedPassageReviewed": false,
-    "boundaryAuditRerunAfterRateSelection": false
+    "boundaryAuditRerunAfterRateSelection": false,
+    "abruptRateChangeAtNonSemanticBoundary": false,
+    "pitchPreserved": false,
+    "stableRateRanges": []
+  },
+  "paceConsistencyReview": {
+    "method": "representative-window-effective-speech-rate-plus-normal-speed-listening",
+    "reviewCandidateDeltaPercent": 12,
+    "comparisonWindows": [
+      {
+        "id": "early",
+        "role": "early",
+        "startSeconds": null,
+        "endSeconds": null,
+        "activeSpeechUnitsPerSecond": null,
+        "selectedPlaybackRate": null,
+        "normalSpeedAuditioned": false,
+        "status": "pending|pass|repaired|intentional-variation",
+        "rationale": ""
+      },
+      {
+        "id": "middle",
+        "role": "middle",
+        "startSeconds": null,
+        "endSeconds": null,
+        "activeSpeechUnitsPerSecond": null,
+        "selectedPlaybackRate": null,
+        "normalSpeedAuditioned": false,
+        "status": "pending|pass|repaired|intentional-variation",
+        "rationale": ""
+      },
+      {
+        "id": "late",
+        "role": "late",
+        "startSeconds": null,
+        "endSeconds": null,
+        "activeSpeechUnitsPerSecond": null,
+        "selectedPlaybackRate": null,
+        "normalSpeedAuditioned": false,
+        "status": "pending|pass|repaired|intentional-variation",
+        "rationale": ""
+      }
+    ],
+    "wholeProgramFeelsConsistent": false,
+    "intentionalVariations": [],
+    "unresolvedSections": [],
+    "postRetimeRevalidation": {
+      "status": "not-applicable|pending|pass",
+      "joinsAndBreaths": "not-applicable|pending|pass",
+      "timelineDurationAndBoundaries": "not-applicable|pending|pass",
+      "captions": "not-applicable|pending|pass|not-present",
+      "bRoll": "not-applicable|pending|pass|not-present",
+      "presenterOrCutout": "not-applicable|pending|pass|not-present",
+      "soundEffects": "not-applicable|pending|pass|not-present",
+      "backgroundMusicAndDucking": "not-applicable|pending|pass|not-present",
+      "layoutAndMotion": "not-applicable|pending|pass|not-present",
+      "chapterProgress": "not-applicable|pending|pass|not-present",
+      "transitions": "not-applicable|pending|pass|not-present",
+      "outro": "not-applicable|pending|pass|not-present",
+      "normalSpeedAudiovisualReviewCompleted": false,
+      "evidence": []
+    }
+  },
+  "pauseScan": {
+    "candidateThresholdSeconds": 0.6,
+    "scannedRenderedProgram": false,
+    "candidateCount": 0,
+    "resolvedCount": 0,
+    "unresolvedCount": 0,
+    "longestUnexplainedSeconds": null,
+    "candidates": []
+  },
+  "expressiveMomentReview": {
+    "contentDriven": true,
+    "automaticFreezeOrRemoval": false,
+    "allowedTreatments": [
+      "preserve-natural-motion",
+      "shorten",
+      "cut-away",
+      "hold",
+      "motivated-freeze",
+      "other"
+    ],
+    "decisions": [],
+    "unresolved": []
   },
   "coverageAudit": [],
   "joinReview": {
     "allPlacedItemBoundariesEnumerated": false,
+    "everyRealJoinReviewedAtNormalSpeed": false,
     "everyChangedBoundaryReviewedAtFullSpeed": false,
+    "auditoryReviewCompletedByAgent": false,
+    "automationUsedAsSoleProof": false,
     "normalSpeedRenderedWindows": [],
     "clippedOnsets": [],
     "clippedOrSwallowedTails": [],
@@ -42,6 +143,7 @@
     "everyChangedBoundaryHasExpectedTokens": false,
     "verifiedBoundaries": [
       {
+        "boundaryId": "",
         "timelineTimeSeconds": null,
         "expectedLastToken": "",
         "expectedFirstToken": "",
@@ -49,6 +151,7 @@
         "audibleFirstToken": "",
         "retainedOccurrenceHasCompleteOnset": false,
         "pauseSeconds": null,
+        "renderedWindow": "",
         "mouthNoise": "none",
         "visualState": "unreviewed",
         "normalSpeedAuditioned": false,
@@ -109,8 +212,14 @@
   "fullCutReview": {
     "watchedFromStartToFinish": false,
     "listenedFromStartToFinish": false,
+    "normalSpeedAuditoryReview": false,
+    "automationUsedAsSoleProof": false,
     "reviewer": "",
-    "unresolvedIssues": []
+    "unresolvedIssues": [],
+    "method": ""
   },
-  "approvedAt": null
+  "approvedAt": null,
+  "evidenceBinding": {
+    "renderReceipt": null
+  }
 }

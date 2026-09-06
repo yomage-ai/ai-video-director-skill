@@ -1,19 +1,75 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-18",
+  "updatedAt": "2026-09-06",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "public",
   "license": "Apache-2.0",
-  "status": "public-v0.1.0-validated",
-  "validatedAt": "2026-08-07",
-  "release": "0.1.0",
+  "status": "v0.2.0-rc.1-engineering-validated-real-project-trial-pending",
+  "validatedAt": "2026-09-06",
+  "release": "0.2.0-rc.1",
+  "candidateRelease": "0.2.0",
   "skill": {
     "id": "ai-video-director",
     "path": "skill/ai-video-director",
     "legacySkill": "ai-auto-editing-director-disabled"
   },
   "activeWorkflow": "governed-talking-head-video-v1",
+  "candidateWorkflow": "evidence-bound-talking-head-video-v2",
+  "candidatePromotionGate": {
+    "remoteSubmissionAllowedNow": true,
+    "requiredEvidence": "engineering-regression-skill-validation-privacy-review-and-nonconflicting-remote-state",
+    "afterTrial": "record-real-project-quality-resource-and-revision-outcomes-without-retroactively-equating-source-submission-with-trial-success",
+    "trialMetricsTemplate": "skill/ai-video-director/assets/templates/trial-metrics.template.json",
+    "authorizedAt": "2026-09-06",
+    "authorization": "user-explicitly-requested-recheck-and-direct-remote-submission",
+    "previousTrialBeforeSubmissionHold": "superseded-by-explicit-current-authorization"
+  },
+  "curatedStyleLibrary": {
+    "schemaVersion": 1,
+    "libraryVersion": 1,
+    "registry": "skill/ai-video-director/references/curated-style-library.json",
+    "guide": "skill/ai-video-director/references/curated-style-library.md",
+    "activeStyleIds": [
+      "handdrawn-knowledge-map-v1",
+      "warm-notebook-journey-v1",
+      "bold-evidence-editorial-v1",
+      "color-block-explainer-v1"
+    ],
+    "precedence": [
+      "exact-approved-reference",
+      "explicit-user-style-or-reference",
+      "public-curated-style-library",
+      "dynamic-adaptation-after-library-assessment"
+    ],
+    "noUserStylePolicy": "compare-at-least-two-active-public-styles-and-recommend-the-strongest-content-fit",
+    "referenceRole": "liked-used-approved-and-marked-styles-are-public-reference-material-not-a-closed-asset-whitelist",
+    "noCompleteMatchPolicy": "define-one-dominant-audiovisual-system-and-a-beat-level-plan-for-evidence-generated-or-code-authored-assets-typography-icons-footage-music-and-sfx",
+    "privacyBoundary": "no-personal-ip-private-reference-project-copy-exact-coordinate-or-source-asset-in-public-style-entry",
+    "validationStatus": "engineering-validated-next-real-project-motion-and-attention-cost-trial-pending"
+  },
   "roughCutPolicy": {
+    "firstApprovalFastPath": {
+      "userFacingFormat": "plain-language-markdown-in-the-users-language",
+      "internalMachineJsonVisibleByDefault": false,
+      "markdownTemplates": {
+        "zh-CN": "assets/templates/director-brief.zh-CN.template.md",
+        "en": "assets/templates/director-brief.en.template.md"
+      },
+      "auditScript": "scripts/audit-director-brief.mjs",
+      "firstGateScope": "content-lock-and-rough-cut-plan-only",
+      "targetMinutesWhenReliableManuscriptAndLocalMediaAreReadable": 15,
+      "silentHeavyWorkAfterTargetExceeded": false,
+      "visualStyleApprovalDeferredUntil": "rough-cut-lock-unless-an-exact-approved-reference-or-private-profile-exists",
+      "reliableSuppliedManuscriptMayOrientContentBeforeFullAsr": true,
+      "fullAsrTimingAndSourceListenRequiredBeforeCutExecution": true,
+      "avoidBeforeFirstApprovalUnlessRequired": [
+        "large-media-upload",
+        "cloud-import-retry",
+        "full-render",
+        "style-production",
+        "publication-research"
+      ]
+    },
     "repeatedTakeSelection": {
       "default": "quality-first",
       "laterOccurrence": "tie-breaker-only",
@@ -39,6 +95,9 @@
       "swallowLipSmackAndMouthResetAtChangedJoin": "remove",
       "expectedBoundaryTokensRecorded": true,
       "renderedNormalSpeedWindowRequired": true,
+      "everyRealPlacedItemJoinMustBeAudited": true,
+      "selectiveImportantJoinListIsSufficient": false,
+      "auditScript": "scripts/audit-rough-cut-review.mjs",
       "unexplainedLongPauseScanSeconds": "0.60-review-candidate-not-auto-cut",
       "crossfadeRole": "click-protection-after-correct-boundary-not-boundary-repair",
       "acceptancePriority": [
@@ -48,13 +107,51 @@
       ],
       "repeatedBoundaryWordPolicy": "preserve-complete-retained-occurrence-from-source-timing-and-verify-rendered-word-window"
     },
+    "issueClassSweep": {
+      "trigger": "creator-feedback-identifies-repeatable-defect-class",
+      "patchOnlyListedTimestamps": "forbidden",
+      "scope": "complete-relevant-timeline",
+      "recordEveryHitAndDisposition": true,
+      "nextReviewBlockedUntilSweepComplete": true
+    },
+    "expressiveMoments": {
+      "examples": [
+        "laughter",
+        "smile",
+        "reaction-hold",
+        "expressive-silence",
+        "freeze-frame"
+      ],
+      "selectionBasis": "meaning-performance-emotional-or-comic-timing-pace-and-visual-continuity",
+      "automaticFreezeOrRemoval": "forbidden",
+      "allowedTreatments": "preserve-natural-motion-shorten-cut-away-hold-motivated-freeze-or-other-reasoned-option",
+      "normalSpeedAudiovisualReviewRequired": true
+    },
     "playbackSpeed": {
       "defaultStartingPoint": "1.00x",
       "fixedHouseRate": "forbidden",
       "denseExplainerCandidateRange": "1.02x-1.06x-review-only",
       "selectionBasis": "content-and-actual-performance",
       "continuousSameSessionRate": "stable-unless-documented-semantic-or-performance-change",
-      "verification": "representative-render-then-rerun-manuscript-boundary-audit"
+      "earlyMiddleLateComparisonRequired": true,
+      "largeDifferenceReviewTrigger": "about-12-percent-or-clear-audible-drift-review-trigger-not-an-automatic-defect-threshold",
+      "retimeMethod": "stable-pitch-preserving-contiguous-range-not-per-sentence-speed-chasing",
+      "retimeRequiresCompleteDownstreamRevalidation": true,
+      "postRetimeLayers": [
+        "joins-and-breaths",
+        "timeline-duration-and-boundaries",
+        "captions",
+        "b-roll",
+        "presenter-or-cutout",
+        "sound-effects",
+        "background-music-and-ducking",
+        "layout-and-motion",
+        "chapter-progress",
+        "transitions",
+        "outro"
+      ],
+      "absentLayerStatus": "not-present",
+      "verification": "representative-render-then-rerun-all-present-downstream-layer-audits-at-normal-speed"
     },
     "audibleDuplicateAudit": {
       "scope": "cross-segment-and-cross-clip-boundaries",
@@ -172,10 +269,22 @@
       "semanticRoiSourceOrder": "dom-accessibility-bounds-then-design-geometry-then-user-confirmed-pixels",
       "thumbnailOrVisualGuessing": "forbidden",
       "roiManifest": "claim-state-path-viewport-requested-bounds-actual-output-proof-labels-privacy-and-pixel-review",
-      "stableStateCapture": "still-preferred",
-      "interactionCapture": "recording-only-when-interaction-or-change-is-the-evidence",
+      "captureFormatSelection": "content-driven-still-recording-or-hybrid",
+      "suppliedRecordingReview": "inspect-first-then-compare-representative-stills",
+      "recordingPreference": "prefer-only-when-temporal-action-materially-improves-understanding-credibility-or-rhythm",
+      "automaticStillOrRecordingRule": "forbidden",
       "aspectRatio": "preserve-source-and-recompose-for-phone-readability",
       "sentenceLockedReveal": true,
+      "primaryEvidencePlaneDefault": "one-primary-evidence-view-with-semantic-push-pan-or-cut",
+      "persistentSynchronizedDuplicateScreen": "forbidden",
+      "temporaryDetailInsetMaximumSeconds": 2.5,
+      "splitScreenAllowedOnlyFor": "genuine-simultaneous-comparison-or-causal-relationship",
+      "crossStorySourceRangeAllocation": {
+        "requiredBeforeFullFineEdit": true,
+        "eachRunRecordsNarrativeRoleSourceRangeAndNewInformation": true,
+        "laterDetailNormallyUsesDifferentOrMoreCompleteRange": true,
+        "exactRangeReuseRequiresRecallComparisonOrOrientationReason": true
+      },
       "avoid": [
         "unmarked-small-proof",
         "decorating-every-field",
@@ -187,6 +296,19 @@
       "presenterInsertEntryFrame": "normal-expression-eyes-open",
       "shortProofCutaway": "presenter-optional",
       "longFullScreenExplanation": "use-ab-live-only-when-presenter-continuity-benefits-and-select-layout-separately",
+      "recommendedDefaultsPolicy": {
+        "recommendAStartingTreatment": true,
+        "startingTreatmentIsNotAStyleLock": true,
+        "contentAndApprovedReferenceMayOverride": true,
+        "overrideReasonRequired": true,
+        "portraitCaptionRecommendedMaximumLines": 1,
+        "portraitCutoutRecommendedStartingZones": [
+          "lower-left",
+          "lower-right"
+        ],
+        "portraitCutoutRecommendedOutlineState": "on",
+        "portraitCutoutRecommendationAppliesOnlyToBBaseACutout": true
+      },
       "pictureInPictureDesign": {
         "defaultVisualPriority": "foreground-or-supporting",
         "boundedWindowMayBeTreatedAsDisposableBackground": false,
@@ -242,7 +364,28 @@
         "outline": {
           "formula": "dilate-alpha-minus-source-alpha",
           "implementation": "single-hyperframes-video-with-svg-feMorphology-and-feComposite",
-          "defaultColor": "white-only-when-the-approved-style-supports-it",
+          "universalStartingState": null,
+          "publicRecommendedStartingState": "on",
+          "recommendationAppliesTo": "portrait-B-base-A-cutout",
+          "recommendationOverridable": true,
+          "overrideReasonRequiredWhenOff": true,
+          "candidateStates": [
+            "on",
+            "off"
+          ],
+          "candidateComparisonRequiredUnlessExactApprovedTreatmentExists": true,
+          "selectionSource": "content-approved-reference-private-profile-or-mixed",
+          "colorSelection": "content-driven-after-subject-and-background-palette-analysis",
+          "colorSelectionFactors": [
+            "hair-or-headwear",
+            "clothing",
+            "skin-edge-separation",
+            "underlying-backgrounds-across-the-run",
+            "evidence-and-content-palette",
+            "approved-brand-or-creator-tendency",
+            "phone-scale-contrast"
+          ],
+          "fixedHouseColor": false,
           "referenceWidthToCanvasWidth": "0.007-0.009-starting-candidate-not-universal",
           "mustTrackTheSameAlpha": true,
           "mayHideSmallEdgeNoiseButMayNotRepairBrokenMattes": true
@@ -261,7 +404,24 @@
             "other-declared-anchor"
           ],
           "positionSelection": "per-coverage-run-content-occupancy-map",
-          "preferredBottomCorner": "default-only-not-a-rule",
+          "portraitUniversalStartingZones": null,
+          "portraitRecommendedStartingZones": [
+            "lower-left",
+            "lower-right"
+          ],
+          "recommendationAppliesTo": "portrait-B-base-A-cutout",
+          "recommendationOverridable": true,
+          "nonLowerCornerOverrideReasonRequired": true,
+          "candidateZonesDerivedFrom": [
+            "public-lower-corner-recommendation",
+            "content-occupancy",
+            "gaze-and-gesture",
+            "captions-and-platform-controls",
+            "exact-approved-reference",
+            "approved-private-preference"
+          ],
+          "candidateComparisonRequired": true,
+          "privateProfileMayRemoveExplicitlyRejectedOldAnchors": true,
           "intentionalBottomBleedAllowed": true,
           "foregroundAndSupportingCollisionPolicy": "reserve-face-required-gesture-silhouette-and-readable-container",
           "backgroundCollisionPolicy": "captions-and-platform-copy-may-overlay-nonessential-body-area-while-face-required-gesture-critical-evidence-and-identity-marks-stay-readable",
@@ -341,7 +501,22 @@
       },
       "captions": {
         "scaleChange": "requires-reflow-and-box-resize",
-        "verification": "longest-two-line-page-with-pip-cards-and-platform-safe-areas",
+        "portraitShortFormUniversalMaximumLines": null,
+        "portraitRecommendedMaximumLines": 1,
+        "recommendationOverridable": true,
+        "twoLineOverrideReasons": [
+          "tiny-type",
+          "over-fast-card-changes",
+          "semantic-fragmentation",
+          "exact-approved-reference"
+        ],
+        "portraitMaximumLinesSelection": "public-recommendation-approved-reference-private-profile-or-content-and-phone-scale",
+        "portraitCandidateMaximumLines": [
+          1,
+          2
+        ],
+        "portraitOverflowResolutionOrder": "semantic-split-then-compare-one-or-two-line-treatment-at-phone-scale",
+        "verification": "longest-approved-page-with-pip-cards-and-platform-safe-areas",
         "semanticPagination": "completed-thought-and-next-thought-use-separate-cards",
         "forcedBreakPolicy": "re-read-after-structural-edit-then-force-only-if-still-needed",
         "fixedWidthCodePointSplit": "forbidden",
@@ -484,6 +659,18 @@
       "designAudit": {
         "requiredBeforeFinalRender": true,
         "unreviewedCountsAsOff": false,
+        "backgroundMusicOffIsAReasonedResultNotDefault": true,
+        "styleApprovalStage": "after-rough-cut-lock-unless-exact-approved-reference-exists",
+        "audiovisualSampleSeconds": "6-12",
+        "audiovisualSampleMustInclude": [
+          "real-dialogue",
+          "real-caption-style",
+          "content-specific-evidence-treatment-selected-from-still-recording-or-hybrid",
+          "presenter-treatment-when-relevant",
+          "proposed-bgm-state",
+          "semantic-sound-cue-when-relevant"
+        ],
+        "auditScript": "scripts/audit-fine-edit-direction.mjs",
         "categories": [
           "background-music",
           "sound-effects",
@@ -500,7 +687,28 @@
           "attention-cost",
           "platform-context",
           "rights"
-        ]
+        ],
+        "recommendedDefaultsPolicy": {
+          "recommendAStartingTreatment": true,
+          "startingTreatmentIsNotAStyleLock": true,
+          "contentAndApprovedReferenceMayOverride": true,
+          "overrideReasonRequired": true,
+          "exactDetailsLockAtAudiovisualSample": true
+        },
+        "audioProvenanceDisclosure": {
+          "enabledLayerRequiresOriginType": true,
+          "originTypes": [
+            "ai-generated",
+            "licensed-library",
+            "creator-provided",
+            "commissioned-original",
+            "other-cleared"
+          ],
+          "providerOrLibraryRightsItemAndApplicableJobIdRequired": true,
+          "aiGeneratedDoesNotImplyVerifiedExclusiveOriginality": true,
+          "licensedLibraryAudioMayBeCalledOriginal": false,
+          "creatorFacingSummaryRequired": true
+        }
       }
     },
     "timebaseIntegrity": {
@@ -535,6 +743,26 @@
       "exactRequestedResolutionCandidateApprovalRequired": true,
       "lowerResolutionProxyMayApproveDifferentFinalRender": false
     },
+    "renderOperations": {
+      "reference": "references/release-render-operations.md",
+      "exactResolutionSampleBeforeMemoryIntensiveFullRun": true,
+      "oneObservableHeavyRenderAtATime": true,
+      "approvedMatchingPrivateHostProfileOverridesGenericWorkerStart": true,
+      "approvedHostProfileMustApplyAsCompleteBundle": [
+        "worker-count",
+        "intermediate-frame-mode",
+        "temporary-background-work-pause-and-resume",
+        "memory-circuit-breaker"
+      ],
+      "genericMultiMinute4kFallback": "streaming-or-low-memory-auto-intermediate-one-worker-until-headroom-is-measured",
+      "memoryGuardScript": "scripts/run-memory-guarded.mjs",
+      "memoryGuardStopsWholeRenderProcessTree": true,
+      "memoryGuardPreservesReleaseQualitySettings": true,
+      "raiseJavascriptHeapOnlyAsSystemMemoryFix": "forbidden",
+      "backgroundOrParallelRetryAfterResourceFailure": "forbidden",
+      "retryRequiresMaterialResourceStrategyChange": true,
+      "audioOnlyChangePrefersApprovedVideoStreamCopyWhenCompatible": true
+    },
     "currentRuleVerification": {
       "publicationDateOfficialSourcesRequired": true,
       "platformAgreementCommunityRulesCreatorGuidanceAndLiveUi": true,
@@ -554,8 +782,12 @@
       "hashtagRange": "2-8-directly-relevant",
       "campaignTagRequiresEligibilityProof": true,
       "openSourceClaimRequiresLivePublicRepositoryAndLicense": true,
+      "numericAndMeasuredClaimsRequireResolvedEvidenceIds": true,
+      "claimPrecisionRecordsExactRoundedBoundedExperienceOrQuestion": true,
       "aiDisclosureSeparatesReal-recording-ai-edit-generated-media-synthetic-voice-and-face-replacement": true,
-      "humanReviewRequired": true
+      "humanReviewRequired": true,
+      "postPublishVerification": "record-direct-item-visibility-platform-state-and-notice-before-diagnosing-or-reposting",
+      "zeroViewsOrTitleSearchAloneProvesViolation": false
     }
   },
   "approvedCapabilities": [
@@ -633,6 +865,27 @@
     "absolute-path-openable-editable-project-delivery-manifest",
     "public-repository-current-tree-history-metadata-and-media-audit"
   ],
+  "candidateCapabilities": [
+    "plain-language-same-language-first-approval-without-machine-json",
+    "first-approval-fast-path-before-heavy-media-work",
+    "fail-closed-every-real-join-normal-speed-audit",
+    "early-middle-late-speaking-pace-consistency-audit",
+    "retime-triggered-pause-caption-and-visual-revalidation",
+    "content-driven-expressive-moment-treatment-without-automatic-laughter-freeze",
+    "post-rough-cut-audiovisual-style-approval-sample",
+    "public-one-semantic-line-portrait-caption-recommendation-with-documented-two-line-overrides",
+    "content-driven-still-recording-or-hybrid-evidence-format-selection",
+    "single-primary-evidence-plane-without-persistent-synchronized-duplication",
+    "cross-story-screen-source-allocation-with-new-information-and-reuse-justification",
+    "per-major-beat-none-visual-audio-or-both-emphasis-decision",
+    "explicit-bgm-and-sfx-audition-with-reasoned-off-state",
+    "public-lower-left-or-lower-right-portrait-cutout-recommendation-with-content-safe-overrides",
+    "public-outline-on-portrait-cutout-recommendation-with-content-driven-color-width-and-off-overrides",
+    "audio-origin-rights-and-originality-disclosure-without-mislabeling-library-sfx",
+    "feedback-class-complete-timeline-sweep-before-next-review",
+    "memory-safe-single-heavy-release-render-with-evidence-based-retry-stop-condition",
+    "numeric-publication-claim-evidence-and-post-publish-visibility-diagnosis"
+  ],
   "pausedCapabilities": [
     "digital-human-and-avatar-generation",
     "musetalk"
@@ -661,6 +914,7 @@
     "readmeAudience": "end-user-only",
     "readmePrimaryContent": [
       "copy-paste-natural-language-invocation",
+      "plain-language-same-language-first-approval",
       "required-user-inputs",
       "unavoidable-user-approvals",
       "essential-rights-and-privacy-disclosures"
@@ -671,7 +925,10 @@
       "environment-checks",
       "dependency-preparation",
       "project-initialization",
-      "tool-routing"
+      "tool-routing",
+      "local-media-inspection",
+      "transcription-and-timing-audits",
+      "rendering-and-verification"
     ],
     "userInterventionOnlyFor": [
       "content-and-style-decisions",
@@ -683,15 +940,67 @@
   },
   "validation": {
     "skillCreator": "pass",
-    "coreTests": "28/28 pass",
-    "testedMediaPath": "synthetic source -> ChatCut XML fixture -> canonical EDL -> FFmpeg precise render",
+    "candidateValidatedAt": "2026-09-06",
+    "coreTests": "46/46 pass; no skips on the current macOS host",
+    "testedMediaPath": "synthetic tone and anonymous local system speech -> EDL v2 -> explicit processing -> full decode -> real evidence audits; synthetic approvals test the stage lifecycle",
     "mermaidDiagrams": "3/3 render",
     "privacyScan": "pass",
     "publicRepositoryAudit": "pass-after-history-email-rewrite",
-    "publishPackageAudit": "pass-with-positive-and-negative-fixtures",
+    "publishPackageAudit": "pass-with-claim-evidence-and-post-publish-positive-and-negative-fixtures",
+    "directorBriefAudit": "pass-with-same-language-positive-and-json-leak-negative-fixtures",
+    "roughCutReviewAudit": "pass-with-real-media-bindings-rate-context-and-stale-missing-out-of-bounds-duplicate-negative-cases",
+    "fineEditDirectionAudit": "pass-with-real-audiovisual-sample-and-rough-version-bindings-plus-reference-override-cases",
+    "releaseRenderOperations": "pass-with-bilingual-low-memory-single-heavy-job-retry-stop-and-stream-copy-contract",
     "deliveryManifestAudit": "pass-with-openable-project-and-absolute-path-fixture",
-    "learningScopeLedgerAudit": "pass-with-change-type-and-promotion-layer-fixture",
+    "learningScopeLedgerAudit": "pass-with-linked-public-private-project-and-external-knowledge-placement-fixture",
     "installedSkill": "~/.codex/skills/ai-video-director symlink",
-    "privateMemory": "initialized outside Git"
+    "privateMemory": "initialized outside Git",
+    "stageExecution": "pass-for-stale-approval-and-input-blocking-rough-only-delivery-wrong-output-spec-and-fine-render-through-final-delivery",
+    "independentForwardTest": "pass-for-Chinese-first-card-and-synthetic-90s-source-to-50s-retimed-aroll; two-discovered-routing-window-issues-fixed-and-regressed",
+    "anonymousSpeech": "pass-for-duration-gain-and-decode; not-a-naturalness-or-creator-acceptance-test",
+    "operationalCapabilityBoundary": "local-installation-doctor-pass; editor-asr-listening-and-fine-renderer-need-current-stage-evidence",
+    "nextRealProject": "pending-independent-production; source-submission-authorized-separately"
+  },
+  "policySnapshotStatus": {
+    "role": "compatibility-summary-only",
+    "authoritativeWorkflow": "skill/ai-video-director/SKILL.md",
+    "detailLookup": "scripts/director.mjs contract --section <key>",
+    "note": "Read the current stage reference for operational decisions; do not load all policy snapshots into each project."
+  },
+  "reliabilityImplementation": {
+    "implementedAt": "2026-09-05",
+    "edlSchema": 2,
+    "roughReviewSchema": 4,
+    "stageEntry": "scripts/stage.mjs",
+    "executionReference": "references/execution-and-evidence.md",
+    "normalStages": [
+      "rough-render",
+      "fine-render",
+      "deliver"
+    ],
+    "outputScopes": [
+      "rough-cut",
+      "full-edit"
+    ],
+    "supportedProcessing": [
+      "constant-pitch-preserving-retime",
+      "explicit-video-eq",
+      "explicit-audio-gain-and-fades"
+    ],
+    "unsupportedXmlProcessing": "reject-and-route-to-reviewed-high-quality-derivative",
+    "actualEvidence": [
+      "source-and-processing-hashes",
+      "exact-edl-boundaries-and-rates",
+      "render-and-window-hashes",
+      "style-sample-and-dependencies",
+      "artifact-bound-approval",
+      "exact-output-spec-and-full-decode"
+    ],
+    "notProven": [
+      "human-listening-quality",
+      "user-identity-or-os-level-unbypassability",
+      "independent-next-real-project-quality",
+      "full-length-host-resource-curve"
+    ]
   }
 }

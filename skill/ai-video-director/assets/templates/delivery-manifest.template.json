@@ -3,6 +3,7 @@
   "projectId": "replace-with-project-id",
   "updatedAt": null,
   "status": "draft",
+  "publicationInScope": false,
   "releaseMaster": {
     "classification": "platform-release",
     "absolutePath": null,

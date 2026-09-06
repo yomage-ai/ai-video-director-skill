@@ -1,0 +1,419 @@
+{
+  "schemaVersion": 1,
+  "libraryId": "ai-video-director-curated-talking-head-styles",
+  "libraryVersion": 1,
+  "purpose": {
+    "en": "A public, shareable fine-edit style floor for talking-head videos when the creator has not supplied a preferred style.",
+    "zh-CN": "当创作者没有提供偏好风格时，为口播视频提供可公开复用的精剪风格下限。"
+  },
+  "selectionPolicy": {
+    "precedence": [
+      "exact-approved-reference",
+      "explicit-user-style-or-reference",
+      "public-curated-style-library",
+      "dynamic-adaptation-after-library-assessment"
+    ],
+    "whenNoUserStyle": "Review the active curated styles, compare at least two plausible candidates, select the strongest content fit, and adapt it to the current transcript instead of asking the creator to invent a visual direction.",
+    "candidateComparisonMinimum": 2,
+    "showMultipleDirectionsWhen": "Two or more candidates remain materially close after content, evidence, platform, presenter, and attention-cost analysis.",
+    "singleRecommendationAllowedWhen": "One candidate is clearly stronger and its 6-12 second audiovisual sample demonstrates the complete proposed treatment.",
+    "dynamicAdaptationAllowedWhen": "No active style is a strong enough fit, or the content needs a new or hybrid visual system. At least two plausible active candidates are still recorded as references and rejected or selectively borrowed with concrete reasons.",
+    "universalTemplateLock": false
+  },
+  "referencePolicy": {
+    "role": "Open-ended reference and preference library, not a closed asset whitelist.",
+    "keepMarkedStyles": true,
+    "markedStyleMeaning": "A style may be retained because it was liked, used, approved, or deliberately curated. That signal affects retrieval and confidence but never overrides content fit.",
+    "reuseBoundary": "Reuse the generic design grammar and documented public preview assets. Do not copy private or uncleared source media, exact diagrams, text, identity art, or project geometry.",
+    "outsideLibraryAllowed": true,
+    "outsideLibraryRule": "When the library has no strong fit, design a new coherent audiovisual system and author, generate, capture, or source the required assets under the normal rights, cost, evidence, privacy, and approval gates.",
+    "hybridAllowed": true,
+    "hybridRule": "Borrow only compatible roles from existing entries and state what remains new. Do not combine styles merely to display variety."
+  },
+  "sharedQualityFloor": {
+    "contentFitBeforeStyle": true,
+    "realEvidenceMayNotBeReplacedByIllustration": true,
+    "transcriptSpecificCopyRequired": true,
+    "literalReferenceCopyForbidden": true,
+    "rightsClearedFontsIconsAudioAndMediaRequired": true,
+    "mobileRule": "Reveal dense information sequentially; never shrink a poster-sized composition into one unreadable phone frame.",
+    "captionAndPlatformSafeRegionsRemainReserved": true,
+    "motionRule": "Every entrance, hold, state change, and exit is driven by the canonical timeline and a spoken or semantic cue.",
+    "audioRule": "BGM and SFX are auditioned as part of the style sample; dialogue remains dominant and off is a reasoned option.",
+    "verification": [
+      "representative-still-at-native-size",
+      "representative-still-at-phone-size",
+      "normal-speed-motion-sample",
+      "caption-and-platform-collision-check",
+      "bright-dark-and-busy-background-check",
+      "evidence-legibility-check",
+      "rights-and-provenance-check"
+    ]
+  },
+  "styles": [
+    {
+      "id": "handdrawn-knowledge-map-v1",
+      "status": "active",
+      "validationLevel": "static-reference-contract-approved; exact motion remains project-sample-gated",
+      "curationSignals": [
+        "explicitly-liked-reference",
+        "marked-for-future-use",
+        "genericized-public-method"
+      ],
+      "label": {
+        "en": "Hand-drawn Knowledge Map",
+        "zh-CN": "暖纸手绘知识地图"
+      },
+      "summary": {
+        "en": "Warm paper, hand-drawn connectors, compact semantic icons, and sequentially assembled process or relationship maps.",
+        "zh-CN": "用暖白纸张、手绘连接线、语义小图标和逐步搭建的流程或关系地图解释抽象知识。"
+      },
+      "contentFit": {
+        "viewerJobs": [
+          "understand-a-process",
+          "follow-stage-gates",
+          "map-system-or-module-relationships",
+          "group-concepts",
+          "compare-categories",
+          "summarize-a-knowledge-system"
+        ],
+        "strongSignals": [
+          "The narration contains a main path plus supporting modules.",
+          "Several abstract ideas become clearer when spatially grouped.",
+          "The audience needs orientation more than photographic inspection."
+        ],
+        "avoidWhen": [
+          "The viewer must inspect an exact product state or source document.",
+          "The beat is primarily emotional, cinematic, or photorealistic.",
+          "The claim is a single low-density punchline.",
+          "Precise legal, financial, medical, or safety evidence must remain verbatim."
+        ]
+      },
+      "visualContract": {
+        "surface": "warm-off-white-paper-with-subtle-grain",
+        "palette": {
+          "paper": "#FCFBF6",
+          "ink": "#171A16",
+          "green": ["#2F8F46", "#DDEFD4"],
+          "yellow": ["#F2BE2E", "#F8DE7E"],
+          "coral": ["#F58E91", "#FFD2CE"],
+          "blue": ["#4C9FE3", "#D8EBF8"],
+          "orange": "#F2A221"
+        },
+        "colorBalance": "Warm white dominates; green carries the main path; yellow, coral, blue, and orange mark distinct semantic roles rather than decorating every object.",
+        "typography": "Readable hand-lettered display plus compact handwritten or rounded body text; short phrases only inside video cards.",
+        "composition": [
+          "one-primary-flow-spine",
+          "asymmetric-supporting-modules",
+          "thin-hand-drawn-frames",
+          "dashed-groups",
+          "arrows-and-connectors",
+          "highlighter-label-bands",
+          "sparse-washi-tape-corners"
+        ],
+        "iconography": "Simple near-black outline icons with one or two flat fills; icons must name a semantic role such as document, checklist, terminal, shield, folder, person, robot, monitor, or arrow.",
+        "microDecoration": "Sparse stars, hearts, sparks, curved arrows, dots, and wavy underlines."
+      },
+      "brollGrammar": {
+        "primaryForms": [
+          "B-only-full-frame-designed-explainer",
+          "B-base-A-PiP-with-large-information-field",
+          "AB-split-when-presenter-continuity-is-essential",
+          "short-map-transition-between-A-roll-and-real-evidence"
+        ],
+        "buildRule": "Show one module or relationship per spoken beat. The map may accumulate only after each element is earned by the narration.",
+        "evidenceBoundary": "Use real screenshots, recordings, documents, or source quotes for proof. The hand-drawn layer explains and orients; it never impersonates evidence."
+      },
+      "motionGrammar": {
+        "entrances": [
+          "marker-stroke-draw",
+          "highlighter-wipe",
+          "arrow-grow",
+          "icon-pop-with-small-settle",
+          "paper-card-slide-or-fade",
+          "tape-settle"
+        ],
+        "character": "Light, tactile, friendly, and restrained; no continuous wobble or exaggerated elastic motion.",
+        "timing": "Sentence- and token-locked sequential reveals."
+      },
+      "soundGrammar": {
+        "candidates": ["paper", "pen", "check", "soft-interface-tick"],
+        "rule": "Use only when the sound clarifies a semantic action; do not sonify every icon."
+      },
+      "provenance": {
+        "relationship": "method-only",
+        "sourceAssetDistributed": false,
+        "note": "The public recipe is a new renderer-neutral contract distilled from a supplied style reference. No source image, text, diagram, icon set, or third-party font is included."
+      }
+    },
+    {
+      "id": "warm-notebook-journey-v1",
+      "status": "active",
+      "validationLevel": "derived-from-approved-workflow-patterns; exact project treatment remains sample-gated",
+      "curationSignals": [
+        "previously-used-method",
+        "approved-workflow-pattern",
+        "genericized-public-method"
+      ],
+      "label": {
+        "en": "Warm Notebook Journey",
+        "zh-CN": "暖色手账旅程"
+      },
+      "summary": {
+        "en": "A warm notebook system for chapters, experiments, lessons, progress, and creator-led journeys.",
+        "zh-CN": "用手账纸张、路径、标签和便签呈现章节、实验、复盘、成长与创作者旅程。"
+      },
+      "contentFit": {
+        "viewerJobs": [
+          "follow-a-personal-or-project-journey",
+          "understand-lessons-over-time",
+          "see-chapter-progress",
+          "track-experiments-and-results",
+          "turn-a-how-to-into-a-guided-path"
+        ],
+        "strongSignals": [
+          "The narration has a real beginning, middle, and changed ending.",
+          "Progress, attempts, or lessons matter more than a static taxonomy.",
+          "The speaker's continuity adds trust or warmth."
+        ],
+        "avoidWhen": [
+          "The video is a hard investigative proof piece.",
+          "The viewer must compare several dense live interfaces at once.",
+          "The topic requires a clinical or deliberately cold tone."
+        ]
+      },
+      "visualContract": {
+        "surface": "warm-paper-with-light-grid-rule-or-torn-note-layers",
+        "palette": {
+          "paper": "#FFF9E8",
+          "ink": "#243026",
+          "forest": "#2D6A4F",
+          "yellow": "#F3C74F",
+          "sky": "#7CB7E8",
+          "coral": "#EE8A83",
+          "softGreen": "#CFE6C9"
+        },
+        "typography": "Friendly handwritten headings paired with a highly readable body face.",
+        "composition": [
+          "chapter-path-or-duration-proportional-rail-when-navigation-is-real",
+          "page-tabs",
+          "sticky-notes",
+          "checkmarks-and-stamps",
+          "torn-paper-or-taped-photo-frames",
+          "one-clear-reading-order"
+        ],
+        "identityBoundary": "Use neutral pens, tabs, stamps, and paper shapes. Creator characters, logos, signature art, and private markers are optional private adapters and are not part of this public style."
+      },
+      "brollGrammar": {
+        "primaryForms": [
+          "A-only-with-restrained-notebook-annotations",
+          "B-base-A-PiP-for-longer-explanation-runs",
+          "B-only-chapter-card-or-path-map",
+          "real-photo-or-screen-evidence-inside-a-paper-frame"
+        ],
+        "buildRule": "Use chapters only when they navigate real content. A path, tab, or stamp appears when the story reaches that stage, not as a permanent decorative overlay.",
+        "evidenceBoundary": "Evidence remains readable and uncropped inside the paper treatment; texture may frame it but may not lower credibility or hide source state."
+      },
+      "motionGrammar": {
+        "entrances": [
+          "page-or-note-slide",
+          "pen-line-progress",
+          "tab-reveal",
+          "stamp-or-check-settle",
+          "photo-frame-place",
+          "restrained-page-turn-between-major-chapters"
+        ],
+        "character": "Warm and deliberate, with longer holds than the hand-drawn knowledge map.",
+        "timing": "Chapter changes follow semantic boundaries; small notes follow sentence cues."
+      },
+      "soundGrammar": {
+        "candidates": ["paper-slide", "soft-pencil", "stamp", "subtle-page-turn"],
+        "rule": "Prefer one recognizable material cue per meaningful change, not a constant scrapbook sound bed."
+      },
+      "provenance": {
+        "relationship": "genericized-approved-method",
+        "sourceAssetDistributed": false,
+        "note": "Private character art, signature markers, project copy, and exact historical geometry are excluded."
+      }
+    },
+    {
+      "id": "bold-evidence-editorial-v1",
+      "status": "active",
+      "validationLevel": "genericized-from-approved-proof-led-editorial-work; exact project geometry remains sample-gated",
+      "curationSignals": [
+        "previously-used-style",
+        "approved-overall-direction",
+        "genericized-public-method"
+      ],
+      "label": {
+        "en": "Bold Evidence Editorial",
+        "zh-CN": "高彩证据编辑"
+      },
+      "summary": {
+        "en": "A high-contrast editorial system that makes real screenshots, recordings, claims, and numerical proof the visual center.",
+        "zh-CN": "以高对比编辑设计承托真实截图、录屏、观点和数字证据，让证据成为画面中心。"
+      },
+      "contentFit": {
+        "viewerJobs": [
+          "inspect-real-proof",
+          "understand-a-product-or-workflow-case-study",
+          "follow-a-diagnosis-and-resolution",
+          "read-a-key-number-or-result",
+          "compare-before-and-after-states"
+        ],
+        "strongSignals": [
+          "The video contains source-backed screens or documents.",
+          "The central promise depends on credibility and exact state.",
+          "The story benefits from decisive contrast and a modern technical tone."
+        ],
+        "avoidWhen": [
+          "The story is intimate, reflective, or intentionally soft.",
+          "There is no credible evidence asset and illustration would overstate certainty.",
+          "The platform crop cannot preserve the required proof region."
+        ]
+      },
+      "visualContract": {
+        "surface": "black-white-and-neutral-evidence-surfaces-with-one-persistent-accent-family",
+        "palette": {
+          "black": "#111111",
+          "white": "#FFFFFF",
+          "warmNeutral": "#F4F1E9",
+          "yellow": "#F5C400",
+          "cobalt": "#2367D1",
+          "coral": "#E7685D",
+          "resolvedGreen": "#3D8B5A"
+        },
+        "colorBalance": "Neutral evidence dominates. Yellow or another chosen accent organizes the frame; cobalt, coral, and green appear only for declared semantic roles.",
+        "typography": "Large editorial headlines, compact labels, and one dominant number or phrase per beat.",
+        "composition": [
+          "full-width-accent-band-or-equivalent-safe-anchor",
+          "full-bleed-primary-evidence-plane",
+          "one-semantic-ROI-callout-at-a-time",
+          "large-number-or-claim-card",
+          "hard-aligned-grid",
+          "controlled-presenter-PiP-or-cutout-when-it-adds-continuity"
+        ]
+      },
+      "brollGrammar": {
+        "primaryForms": [
+          "B-only-full-frame-proof",
+          "B-base-A-PiP",
+          "B-base-A-cutout-after-matte-and-collision-QA",
+          "A-base-B-overlay-for-compact-proof",
+          "AB-split-only-for-genuine-simultaneous-comparison"
+        ],
+        "buildRule": "Establish the complete evidence state, then push, pan, or cut to one exact semantic ROI. Use large copy only after the source has earned the claim.",
+        "evidenceBoundary": "Never redraw an exact UI value as decoration, guess a crop, or cover a relevant adjacent state."
+      },
+      "motionGrammar": {
+        "entrances": [
+          "hard-cut",
+          "short-editorial-wipe",
+          "semantic-push-in",
+          "number-lock",
+          "callout-draw",
+          "restrained-presenter-pop"
+        ],
+        "character": "Direct, controlled, and high-contrast; avoid playful bounce on serious proof.",
+        "timing": "Claim, proof, and callout remain token-accurate with no early state reveal."
+      },
+      "soundGrammar": {
+        "candidates": ["restrained-impact", "interface-confirm", "short-error-cue", "single-number-hit"],
+        "rule": "Use sparse semantic cues; dense explainers may remain voice-only."
+      },
+      "provenance": {
+        "relationship": "genericized-approved-method",
+        "sourceAssetDistributed": false,
+        "note": "No creator footage, private palette lock, interface capture, or approved project geometry is included."
+      }
+    },
+    {
+      "id": "color-block-explainer-v1",
+      "status": "active",
+      "validationLevel": "public-curated-composition-contract; exact project treatment remains sample-gated",
+      "curationSignals": [
+        "curated-style-extension",
+        "public-original-contract"
+      ],
+      "label": {
+        "en": "Color-block Explainer",
+        "zh-CN": "彩色模块解释器"
+      },
+      "summary": {
+        "en": "Bold flat color blocks, geometric icons, and modular cards for comparisons, lists, tool families, and fast conceptual sorting.",
+        "zh-CN": "用鲜明平涂色块、几何图标和模块卡片呈现对比、清单、工具分类与快速概念整理。"
+      },
+      "contentFit": {
+        "viewerJobs": [
+          "compare-options",
+          "sort-a-list-into-groups",
+          "understand-pros-cons-or-tradeoffs",
+          "scan-a-tool-or-feature-roundup",
+          "follow-a-myth-fact-or-problem-solution-structure"
+        ],
+        "strongSignals": [
+          "The narration contains peer items with clear category roles.",
+          "Fast recognition matters more than a continuous spatial map.",
+          "A bright, energetic tone fits the subject and presenter."
+        ],
+        "avoidWhen": [
+          "The content has one continuous journey rather than peer modules.",
+          "The evidence itself is visually dense and already colorful.",
+          "The tone requires restraint, grief, seriousness, or photographic realism."
+        ]
+      },
+      "visualContract": {
+        "surface": "clean-warm-white-or-neutral-base-with-flat-color-modules",
+        "palette": {
+          "base": "#F8F7F2",
+          "ink": "#171717",
+          "yellow": "#F4C542",
+          "blue": "#4E8DE6",
+          "coral": "#EE7B73",
+          "green": "#69A96B",
+          "violet": "#8B72D6"
+        },
+        "colorBalance": "Assign one stable color to one semantic family. Do not recolor the same category between cards.",
+        "typography": "Bold compact headings, short labels, and restrained body copy with high contrast.",
+        "composition": [
+          "modular-grid-or-stacked-cards",
+          "clear-category-labels",
+          "large-simple-geometric-icons",
+          "one-dominant-comparison-axis",
+          "consistent-gutters-and-card-bounds"
+        ],
+        "iconography": "Geometric and symbolic rather than illustrative; all icons share stroke, corner, and fill logic."
+      },
+      "brollGrammar": {
+        "primaryForms": [
+          "B-only-modular-comparison",
+          "A-base-B-overlay-for-one-or-two-cards",
+          "B-base-A-PiP-for-longer-list-runs",
+          "AB-split-only-when-two-sides-must-remain-visible"
+        ],
+        "buildRule": "Introduce one category, item, or comparison axis at a time; keep stable card geometry while content changes.",
+        "evidenceBoundary": "When a card refers to a real product or result, insert the real cleared asset or label the card as explanation rather than proof."
+      },
+      "motionGrammar": {
+        "entrances": [
+          "card-snap-or-short-slide",
+          "color-block-wipe",
+          "icon-scale-settle",
+          "comparison-divider-draw",
+          "selected-card-emphasis"
+        ],
+        "character": "Energetic but organized; no simultaneous entrance of every card.",
+        "timing": "Each module enters on its spoken label and holds long enough for phone-scale reading."
+      },
+      "soundGrammar": {
+        "candidates": ["soft-pop", "short-swipe", "selection-tick", "single-comparison-hit"],
+        "rule": "Keep a small repeated cue vocabulary and reserve stronger hits for the selected or winning item."
+      },
+      "provenance": {
+        "relationship": "public-curated-original-contract",
+        "sourceAssetDistributed": false,
+        "note": "The recipe defines reusable design decisions and contains no third-party visual asset."
+      }
+    }
+  ]
+}

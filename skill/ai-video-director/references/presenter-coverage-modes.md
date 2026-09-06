@@ -109,9 +109,10 @@ npx --yes hyperframes@0.7.109 remove-background locked-a-roll.mp4 \
 <video src="presenter-cutout.webm" muted playsinline style="filter:url(#presenter-outline)"></video>
 ```
 
-- White is the default only when the approved style supports it. A reference-derived width of about `0.007-0.009` of canvas width is a starting candidate, not a universal constant.
+- For portrait `B-base-A-cutout`, use outline `on` as the public recommended starting state. An exact approved reference or a documented content reason may turn it off; record that override and verify the chosen state on this shot.
+- Select the outline color only after analyzing hair or headwear, clothing, skin-edge separation, all recurring underlying background families, the evidence/content palette, any approved creator or brand tendency, and phone-scale contrast. Do not reuse white, yellow, blue, or another house color merely because it worked before. A reference-derived width of about `0.007-0.009` of canvas width is a starting candidate, not a universal constant.
 - An outline may soften small edge noise but may not be used to disguise missing fingers, clipped hair, a leaking background, or unstable matte timing.
-- Build a content-occupancy map for the B-roll. Bottom-left or bottom-right is a starting candidate, not a rule. Apply the declared presenter-priority rule: foreground and bounded PiP reserve their readable region; a background cutout may sit behind captions or platform copy, but never hide critical proof or sacrifice the face or required gesture.
+- Build a content-occupancy map for the B-roll. For portrait `B-base-A-cutout`, begin with lower-left and lower-right as the public recommended zones, then choose the clearer side from evidence occupancy, gaze, gesture, captions, and platform controls. Another edge or center-weighted placement is allowed when both lower corners conflict with evidence/UI or an exact approved reference requires it; record the override. A private creator profile may remove a previously rejected anchor instead of carrying that old option into every new director plan. Foreground and bounded PiP still reserve their readable region; a background cutout may sit behind nonessential copy but never hide critical proof or sacrifice the face or required gesture.
 - Intentional bottom bleed is allowed when the body crop reads naturally. Keep the visible silhouette and its full motion envelope inside the effective semantic safe region everywhere else.
 - Keep scale, anchor, side, and outline stable inside one coverage run. Do not make the presenter jump from corner to corner as B-roll cards change.
 
@@ -217,9 +218,10 @@ npx --yes hyperframes@0.7.109 remove-background locked-a-roll.mp4 \
 
 - 描边必须从同一份人物 Alpha 生成：`outlineAlpha = dilate(alpha, radius) - alpha`，并放在人物层后方。
 - 在 HyperFrames 中，优先让同一个透明 `<video>` 使用基于 Alpha 的 SVG 滤镜，不要用两个可能产生时序差异的视频层。根据画布宽度算出 `outlinePx`，使用英文部分给出的 `feMorphology + feComposite` 结构，并以真实渲染结果验收。
-- 只有已确认风格适合时才默认白色。参考画面可从画布宽度的 `0.007-0.009` 作为描边宽度起点，但不能当成通用常量。
+- 竖屏使用 `B-base-A-cutout` 人物抠像时，公共推荐默认开启描边。精确已确认参考或有记录的内容理由可以关闭描边，但必须记录覆盖原因，并在本片背景上复核。
+- 描边颜色必须先综合分析头发或头饰、衣服、肤色边缘、这一覆盖段会出现的全部背景素材、内容或品牌配色、创作者已确认倾向，以及手机尺度对比度。不能因为白色、黄色或蓝色以前成功过就机械复用。参考画面可从画布宽度的 `0.007-0.009` 作为描边宽度起点，但不能当成通用常量。
 - 描边可以柔化轻微边缘噪点，不能用来掩盖手指缺失、头发被切、背景泄漏或蒙版时序抖动。
-- 先做 B-roll 内容占用图。左下或右下只是候选位置，不是固定规则。再按已声明的人物层级处理遮挡：前景人物和有边界小窗要预留完整可读区；背景抠像可以位于字幕或平台文案之后，但不能遮住关键证据，也不能牺牲脸或必要手势。
+- 先做 B-roll 内容占用图。竖屏使用 `B-base-A-cutout` 时，公共推荐先从左下和右下选择，再根据证据占位、视线、手势、字幕和平台控件决定更清楚的一侧。只有两个下角都与证据或平台 UI 冲突，或者精确已确认参考明确要求时，才改用其他边缘或偏中心位置并记录原因。私人创作者画像已经否定的旧锚点应直接移除，不能每次导演方案又把它当候选带回来。前景人物和有边界小窗仍要预留完整可读区；背景抠像可以位于非关键信息之后，但不能遮住关键证据，也不能牺牲脸或必要手势。
 - 身体底部有意出血可以保留，但其他可见轮廓及完整动作范围仍须位于有效语义安全区。
 - 同一覆盖区间内保持缩放、锚点、左右位置和描边稳定，不能随着 B-roll 卡片切换让人物来回跳角。
 

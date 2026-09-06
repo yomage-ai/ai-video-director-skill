@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 4,
+  "projectId": "replace-with-project-id",
+  "canonicalEdlVersion": "9d55e7377062c61aefa756936f0e4e7321228d6288528f682bdae56bd89478e4",
+  "status": "ready-for-user-review",
+  "timelineInventory": {
+    "durationSeconds": 30,
+    "placedMediaItems": 2,
+    "expectedJoinCount": 1,
+    "actualJoinCount": 1,
+    "allRealJoinsRepresented": true
+  },
+  "takeSelectionPolicy": {
+    "principle": "quality-first",
+    "laterOccurrence": "tie-breaker-only",
+    "asrRole": "candidate-detection-only"
+  },
+  "takeDecisions": [],
+  "hybridSplices": [],
+  "pauseEdits": [],
+  "issueClassSweep": {
+    "userFeedbackNamedRepeatableDefect": true,
+    "patchOnlyListedTimestamps": false,
+    "fullRelevantTimelineSwept": true,
+    "classes": [
+      {
+        "id": "overlong-joins",
+        "detectionMethod": "Scan every rendered join and every 0.6s+ pause candidate at normal speed.",
+        "hitCount": 3,
+        "resolvedCount": 3,
+        "evidence": "renders/audit/all-overlong-join-candidates.json"
+      }
+    ]
+  },
+  "playbackSpeedReview": {
+    "sourceRate": 1,
+    "testedRates": [
+      1,
+      1.04
+    ],
+    "selectedRate": 1.04,
+    "retimeApplied": true,
+    "contentAndPerformanceRationale": "A stable middle-range adjustment matches the already natural opening and ending pace.",
+    "representativeRenderedPassageReviewed": true,
+    "boundaryAuditRerunAfterRateSelection": true,
+    "abruptRateChangeAtNonSemanticBoundary": false,
+    "pitchPreserved": true,
+    "stableRateRanges": [
+      {
+        "startSeconds": 0,
+        "endSeconds": 30,
+        "rate": 1.04
+      }
+    ]
+  },
+  "paceConsistencyReview": {
+    "method": "representative-window-effective-speech-rate-plus-normal-speed-listening",
+    "reviewCandidateDeltaPercent": 12,
+    "comparisonWindows": [
+      {
+        "id": "early",
+        "role": "early",
+        "startSeconds": 0,
+        "endSeconds": 6,
+        "activeSpeechUnitsPerSecond": 4.2,
+        "selectedPlaybackRate": 1.04,
+        "normalSpeedAuditioned": true,
+        "status": "pass",
+        "rationale": ""
+      },
+      {
+        "id": "middle",
+        "role": "middle",
+        "startSeconds": 10,
+        "endSeconds": 16,
+        "activeSpeechUnitsPerSecond": 4.25,
+        "selectedPlaybackRate": 1.04,
+        "normalSpeedAuditioned": true,
+        "status": "repaired",
+        "rationale": ""
+      },
+      {
+        "id": "late",
+        "role": "late",
+        "startSeconds": 20,
+        "endSeconds": 26,
+        "activeSpeechUnitsPerSecond": 4.3,
+        "selectedPlaybackRate": 1.04,
+        "normalSpeedAuditioned": true,
+        "status": "pass",
+        "rationale": ""
+      }
+    ],
+    "wholeProgramFeelsConsistent": true,
+    "intentionalVariations": [],
+    "unresolvedSections": [],
+    "postRetimeRevalidation": {
+      "status": "pass",
+      "joinsAndBreaths": "pass",
+      "timelineDurationAndBoundaries": "pass",
+      "captions": "pass",
+      "bRoll": "pass",
+      "presenterOrCutout": "pass",
+      "soundEffects": "pass",
+      "backgroundMusicAndDucking": "pass",
+      "layoutAndMotion": "pass",
+      "chapterProgress": "not-present",
+      "transitions": "pass",
+      "outro": "pass",
+      "normalSpeedAudiovisualReviewCompleted": true,
+      "evidence": [
+        "renders/audit/post-retime-full-program.mp4"
+      ]
+    }
+  },
+  "pauseScan": {
+    "candidateThresholdSeconds": 0.6,
+    "scannedRenderedProgram": true,
+    "candidateCount": 1,
+    "resolvedCount": 1,
+    "unresolvedCount": 0,
+    "longestUnexplainedSeconds": null,
+    "candidates": [
+      {
+        "startSeconds": 14.8,
+        "endSeconds": 15.1,
+        "decision": "keep",
+        "reason": "Synthetic audit fixture; not an actual editorial approval."
+      }
+    ]
+  },
+  "expressiveMomentReview": {
+    "contentDriven": true,
+    "automaticFreezeOrRemoval": false,
+    "allowedTreatments": [
+      "preserve-natural-motion",
+      "shorten",
+      "cut-away",
+      "hold",
+      "motivated-freeze",
+      "other"
+    ],
+    "decisions": [
+      {
+        "id": "laugh-1",
+        "type": "laughter",
+        "treatment": "shorten",
+        "reason": "Keep the genuine reaction while preserving the surrounding pace.",
+        "normalSpeedAudiovisualReviewed": true
+      }
+    ],
+    "unresolved": []
+  },
+  "coverageAudit": [],
+  "joinReview": {
+    "allPlacedItemBoundariesEnumerated": true,
+    "everyRealJoinReviewedAtNormalSpeed": true,
+    "everyChangedBoundaryReviewedAtFullSpeed": true,
+    "auditoryReviewCompletedByAgent": true,
+    "automationUsedAsSoleProof": false,
+    "normalSpeedRenderedWindows": [],
+    "clippedOnsets": [],
+    "clippedOrSwallowedTails": [],
+    "repeatedSyllablesOrRestarts": [],
+    "retainedSwallowsLipSmacksOrMouthResets": [],
+    "unexplainedLongPauseCandidates": [],
+    "unnaturalVisualResets": []
+  },
+  "manuscriptAudibilityAudit": {
+    "acceptancePriority": [
+      "intended-word-intelligibility",
+      "natural-pause-and-mouth-noise-cleanup",
+      "picture-continuity"
+    ],
+    "openingWordsAudible": true,
+    "closingWordsAudible": true,
+    "everyChangedBoundaryHasExpectedTokens": true,
+    "verifiedBoundaries": [
+      {
+        "boundaryId": "segment-001--segment-002",
+        "timelineTimeSeconds": 15,
+        "expectedLastToken": "它",
+        "expectedFirstToken": "会停",
+        "audibleLastToken": "它",
+        "audibleFirstToken": "会停",
+        "retainedOccurrenceHasCompleteOnset": true,
+        "pauseSeconds": 0.28,
+        "renderedWindow": "fixture-window.wav",
+        "mouthNoise": "none",
+        "visualState": "pass",
+        "normalSpeedAuditioned": true,
+        "status": "repaired",
+        "notes": [
+          "Restored the incoming onset."
+        ],
+        "timelineFrame": 450
+      }
+    ]
+  },
+  "audibleDuplicateAudit": {
+    "crossSegmentAndClipBoundariesScanned": false,
+    "displayOnlyCaptionFixesUsedAsAudioEdits": false,
+    "verifiedWindows": []
+  },
+  "structuralEditReadback": {
+    "clipCountAndDurationChecked": false,
+    "sourceOffsetsChecked": false,
+    "intentionalTransitionsChecked": false,
+    "downstreamBRollAlignmentChecked": false
+  },
+  "sourceColorNormalization": {
+    "workflowStage": "rough-cut-before-approval",
+    "scope": null,
+    "creativeLookApplied": false,
+    "naturalSkinAndExposurePass": true,
+    "representativeFramesChecked": {
+      "early": true,
+      "middle": true,
+      "late": true,
+      "cutBoundaries": true
+    },
+    "perClipCorrectionJustified": false,
+    "rollbackOccurred": false,
+    "stageUpdateSentAfterRollback": false,
+    "fineEditReprocessingRequired": false,
+    "notes": []
+  },
+  "creatorColorBaseline": {
+    "privateProfileOnly": true,
+    "baselineId": null,
+    "exactParameters": null,
+    "referenceRender": null,
+    "sourceConditionsComparable": false,
+    "representativeFrameMeasurements": []
+  },
+  "dialogueLoudnessMatch": {
+    "referenceFileAndVersion": null,
+    "referenceIntegratedLufs": null,
+    "referenceLoudnessRangeLu": null,
+    "referenceTruePeakDbtp": null,
+    "currentBeforeIntegratedLufs": null,
+    "appliedUniformGainDb": null,
+    "currentAfterIntegratedLufs": -21,
+    "currentAfterLoudnessRangeLu": null,
+    "currentAfterTruePeakDbtp": -17,
+    "integratedLufsMatchedFirst": false,
+    "peakOnlyMatchUsed": false
+  },
+  "fullCutReview": {
+    "watchedFromStartToFinish": true,
+    "listenedFromStartToFinish": true,
+    "normalSpeedAuditoryReview": true,
+    "automationUsedAsSoleProof": false,
+    "reviewer": "fixture-human-audition",
+    "unresolvedIssues": [],
+    "method": "Synthetic test fixture for validation logic only"
+  },
+  "approvedAt": null
+}

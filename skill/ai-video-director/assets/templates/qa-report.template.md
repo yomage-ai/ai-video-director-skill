@@ -18,6 +18,8 @@
 - Speech isolation strength, per-source-range routing, and early/late audible samples:
 - Blank/frozen/corrupt frame checks:
 - Exact requested-resolution release candidate, not only a lower-resolution review proxy, was the file probed, fully reviewed, and approved for publication:
+- Memory-intensive release preflight records renderer/version, exact-resolution sample, matching approved host-profile id or generic fallback, worker count, intermediate frame mode, streaming/low-memory mode, available memory/disk, and concurrent heavy tasks. The complete host-profile bundle was applied, including background-task pause/resume and the memory-guard command, thresholds, samples, trip status, and log path. Only one observable heavy render ran at a time; any resource failure preserved logs and caused a material strategy change rather than a heap-only or background retry:
+- Final reproducible render command and full-decode evidence:
 
 ## Approved-Version Change Isolation
 
@@ -29,12 +31,16 @@
 
 ## Dialogue And Captions
 
+- `scripts/audit-rough-cut-review.mjs` passed; placed-item count, real-join count, and verified-boundary count agree:
 - Full dialogue listened:
 - Every join reviewed:
+- Early, middle, and late active-speech pace compared at normal speed; unexplained drift resolved and intentional variations justified:
+- Every retimed range preserves pitch and stable semantic boundaries; pauses, captions, B-roll, music, and motion were rebased and re-audited afterward:
 - Repeated tokens scanned across transcript/clip boundaries and exact audible windows verified:
 - Structural Script edits rechecked for clip/source timing, intentional transitions, and downstream B-roll alignment:
 - Quality-first retake decisions and any hybrid splices audited:
 - Ordinary breaths preserved and excessive dead air handled contextually:
+- When feedback named a repeatable defect class, the complete relevant timeline was swept and every hit resolved; the next version did not patch only the user-listed timestamps:
 - Transcript/caption correctness:
 - Caption break profile and audit report; raw fixed-width code-point splitting is absent:
 - Raw pages reconstruct the manuscript, protected terms remain atomic, and no card starts with detached punctuation or an orphaned function particle:
@@ -57,13 +63,16 @@
 - Exact evidence state path (page, tab, subtab, view, filter/date, expansion, scroll) is recorded; plausible but wrong adjacent states are named and absent:
 - Every critical ROI was derived from DOM/accessibility text bounds, design geometry, or user-confirmed pixels rather than guessed from a thumbnail:
 - ROI manifest records claim, source state, viewport, requested bounds, actual output dimensions, proof labels, module allowlist, forbidden-string scan, and pixel review:
-- Stable-state evidence uses a still; screen recording is used only when interaction or change over time is part of the proof:
+- Every evidence run records why a still, recording, or hybrid best serves the content; supplied recordings were inspected first and compared with representative stills or extracted frames, with no format selected mechanically:
+- Every screen-evidence run records its narrative role, source-range id, and new information. Later detailed explanation does not accidentally repeat the cold-open range; any exact range reuse has a recall, comparison, or orientation reason:
 - Evidence keeps source aspect ratio, remains readable at phone scale, and appears on the matching spoken phrase instead of as an all-at-once information dump:
 - Every authored fact, number, interface state, mode label, and example enters no earlier than its first permitting spoken token and remains through its final required token:
 - Any same-voice before/after audition was either indispensably evidentiary and clearly signposted, or replaced by a silent authored illustration that is not represented as original proof:
 
 ## Visuals
 
+- `scripts/audit-fine-edit-direction.mjs` passed after rough-cut lock; the audiovisual sample includes actual dialogue, final-like captions, the selected evidence treatment, presenter treatment when used, and the proposed BGM/SFX state:
+- Each screen-evidence run declares one primary evidence plane; any temporary detail crop exits within its stated window, and split screen is reserved for a genuine simultaneous comparison:
 - Opening and real evidence:
 - Color-cast correction compared on representative frames; skin texture and highlights preserved:
 - Presenter insert starts on a normal open-eye frame and remains time-aligned:
@@ -73,9 +82,11 @@
 - For every `B-base-A-cutout` run, the derivative came from clean locked A-roll without baked captions, cards, logos, or overlays; canonical dialogue remained on its separate approved track and the cutout layer was muted:
 - HyperFrames version, model SHA-256, device/provider, quality, output format, source/output duration, frame rate, frame count, first/last frame, and cut-boundary alignment:
 - Moving matte proof over bright, dark, and busy backgrounds covered early/middle/late and every cut boundary; hair, glasses, hands/fingers, motion blur, foreground props, leakage, holes, halos, and temporal edge flicker passed:
-- Any presenter outline was derived from the same alpha, held stable with the cutout, and used for styling rather than to conceal a broken matte:
+- Cutout outline decision and reason; public recommendation `on` was applied, or `off` has a documented content/reference override after candidate review:
+- Any enabled presenter outline was derived from the same alpha, held stable with the cutout, and used for styling rather than to conceal a broken matte. Its color and width were selected after recording hair/headwear, clothing, skin-edge, recurring background, content/brand palette, creator-tendency, and phone-scale contrast analysis:
 - Every presenter run records `foreground`, `supporting`, or `background` priority independently from its layout and anchor; bounded PiP was not treated as disposable background:
-- Cutout silhouette, complete motion envelope, intentional bottom bleed, scale, anchor, side, and declared priority passed native, phone, evidence, progress, and platform-UI collision checks. Any intentional caption/platform-copy overlap on a background cutout affects only nonessential body area and preserves face, required gesture, critical evidence, and identity marks:
+- For portrait `B-base-A-cutout`, lower-left and lower-right were considered as the public starting zones; the selected zone and any non-lower-corner override reason are recorded. Outline `on` was used as the public starting state, or `off` has a documented content/reference override. Cutout silhouette, complete motion envelope, intentional bottom bleed, scale, anchor, placement, outline state, and declared priority passed native, phone, evidence, progress, and platform-UI collision checks. Any intentional caption/platform-copy overlap on a background cutout affects only nonessential body area and preserves face, required gesture, critical evidence, and identity marks:
+- Portrait caption pagination started from one semantic line per card. Any two-line treatment records why one line would create tiny type, over-fast cards, harmful semantic fragmentation, or conflict with an exact approved reference, and passes phone-scale review:
 - Per-card content-occupancy map and chosen negative-space position; no primary evidence is covered:
 - Platform UI exclusion zones and caption/information-card collision:
 - Keyframes and animation seek stability:
@@ -148,8 +159,12 @@
 
 Record a decision and reason for every category. `Off`/`none` is valid; `unreviewed` is not.
 
+- Every major hook, proof reveal, number, turn, punchline, and conclusion has a recorded `none`, visual, audio, or both emphasis decision and reason:
 - Background music decision/reason, speech-intelligibility impact, track/rights/mix when enabled:
+- Background music provenance: origin type, provider/model/library, rights-manifest item, generation job or asset id when applicable, creator-facing description, and whether exclusive originality was actually verified:
+- Background music and dialogue-only states were auditioned in the audiovisual style sample when no audio style was already locked; `off` was not inherited unreviewed from intake:
 - Sound effects decision/reason and exact motivated cue list when enabled:
+- Sound-effect provenance: licensed library, AI generation, creator-provided, commissioned original, or other cleared source; licensed library sounds were not called original merely because cue timing and mixing were custom:
 - Token-locked micro-cues such as a success badge or comment invitation appear only on the matching word, animate once, remain brief, use rights-cleared low-level audio when enabled, and never compete with dialogue:
 - Entry/exit animation decision/reason and treated boundaries:
 - Transition decision/reason and relationship conveyed at each treated boundary:
@@ -168,6 +183,8 @@ Record a decision and reason for every category. `Off`/`none` is valid; `unrevie
 - Canonical EDL and captions included:
 - Deliverable classification (`review-proxy|platform-release|source-quality-master`), source lineage, resolution, frame cadence, codec, and limitations:
 - Platform compatibility was verified separately from source-quality mastery using current authoritative requirements:
+- Every numeric or measurable cover/post claim links to a resolved claim-evidence record with exact/rounded/bounded scope, time window, unit, source, and final publication wording:
+- When publication follow-through is in scope, the publish timestamp, selected visibility, direct item/share id, processing/review/public state, other-account check, and platform notice are recorded. Zero views or title search absence was not used alone to claim a violation, and no delete/repost occurred before preserving the observed reason:
 - A lower-resolution review proxy was not upscaled or renamed as the master; any higher-quality original was conformed through the approved timing:
 - Frame cadence is intentional and verified; no duplicated-frame `30 fps` to `60 fps` relabeling:
 - The actual delivered file was probed for dimensions, duration, frame count, codecs, color, audio, loudness, true peak, sync, blank/frozen frames, and lineage:

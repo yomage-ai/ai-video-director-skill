@@ -18,12 +18,14 @@ Classify every component before reuse. Classification describes its safe reuse s
 | Grade | Meaning | Selection rule |
 | --- | --- | --- |
 | `G` | General mechanism | Repository-generic behavior with no creator identity, private media, project copy, or project timing. It may be a shared default only after cross-context proof. |
-| `P` | Private adapter | Creator-owned identity art, logo, motion sequence, style tokens, or other private treatment. Keep it outside the generic repository and require the applicable approval and rights record. |
+| `P` | Private adapter | Creator-owned identity art, logo, signature motion, private reference lock, or creator-identifying style tokens. Keep it outside the generic repository and require the applicable approval and rights record. Shareable non-identifying style recipes may instead live in the public curated style library. |
 | `T` | Topic template | Reusable structure for a defined content family, such as a process, comparison, evidence tour, or convergence diagram. Copy, media, cues, and claims remain instance data. |
 | `A` | Archive | Superseded but historically valid. Preserve for comparison or migration, exclude from automatic selection, and point to its replacement. |
 | `X` | Error sample | Known-bad behavior retained only as a minimal regression fixture. It must never be placed in a deliverable or offered as a reusable option. |
 
 A component may combine layers, such as a `G` progress mechanism with a `P` marker. Record both parts separately instead of promoting the composite to `G`. One approved episode proves only one instance; it does not prove generality.
+
+A public curated style recipe is a selection layer built from `G` mechanisms and, when useful, `T` structures. It does not need to be aesthetically neutral. It may define palette roles, type hierarchy, icon grammar, B-roll forms, motion character, and sound candidates as long as it contains no private identity or unlicensed source asset and declares content-fit and avoid rules. Do not misclassify every opinionated visual choice as `P`.
 
 Promotion rules:
 
@@ -37,7 +39,7 @@ Promotion rules:
 Keep these layers separate in code, storage, and review:
 
 1. **General mechanism:** frame mapping, state transitions, layout math, semantic anchors, overflow behavior, and generic QA. It must render with neutral defaults and without private dependencies.
-2. **Private adapter:** creator-owned art, logos, poses, action sequences, voice-linked signatures, and private style tokens. Store these in the private profile or approved private asset system, never in the generic Skill repository.
+2. **Private adapter:** creator-owned art, logos, poses, action sequences, voice-linked signatures, private reference locks, and creator-identifying style tokens. Store these in the private profile or approved private asset system, never in the generic Skill repository. Public non-identifying style recipes stay in the curated style library and depend only on documented `G`/`T` contracts.
 3. **Project instance data:** viewer-facing copy, claims, chapter boundaries, cue frames, media IDs, crops, route points, target-player geometry, and approval records. Keep this in the video project.
 
 Dependency direction is one way:
@@ -214,12 +216,14 @@ Useful regression categories include wall-clock animation, unbounded marker foot
 | 等级 | 含义 | 选择规则 |
 | --- | --- | --- |
 | `G` | 通用机制 | 仓库级通用行为，不含创作者身份、私人素材、单片文案或单片时间。只有通过跨场景验证后，才能成为共享默认。 |
-| `P` | 私人适配 | 创作者自有形象、Logo、动作序列、风格 token 或其他私人表达。保存在通用仓库之外，并满足对应授权与权利记录。 |
+| `P` | 私人适配 | 创作者自有形象、Logo、签名动作、私有参考锁或能够识别具体创作者的风格 token。保存在通用仓库之外，并满足对应授权与权利记录。去身份后可分享的风格配方可以进入公共策展风格库。 |
 | `T` | 题材模板 | 面向明确内容类型的可复用结构，例如流程、对照、证据巡游或汇合图。文案、素材、口播节点和观点仍属于实例数据。 |
 | `A` | 历史归档 | 已被替代但历史上有效。只用于比较或迁移，不能被自动选择，并且必须指向替代版本。 |
 | `X` | 错误样本 | 已知错误，只保留匿名最小回归样本。禁止进入成片，也不能作为可复用选项提供。 |
 
 一个画面可以同时包含多个层级，例如 `G` 级进度机制加 `P` 级人物播放头。必须分别记录两个部分，不能把整个组合直接提升为 `G`。一条已通过视频只能证明一个实例，不能证明通用性。
+
+公共策展风格是建立在 `G` 通用机制和必要的 `T` 题材结构之上的选择层。它不需要审美中性，可以明确配色角色、字号层级、图标语法、B-roll 形式、动效性格和声音候选。前提是不包含私人身份和未授权源素材，并且写清内容适配与避用条件。不能把所有有审美判断的视觉选择都误判成 `P`。
 
 升级与降级规则：
 
@@ -233,7 +237,7 @@ Useful regression categories include wall-clock animation, unbounded marker foot
 代码、存储和验收都要分开以下三层：
 
 1. **通用机制层：** 帧映射、状态切换、布局计算、语义锚点、溢出行为和通用 QA。必须能在没有私人依赖时用中性默认值渲染。
-2. **私人适配层：** 创作者自有形象、Logo、姿势、动作序列、口头签名和私人风格 token。保存在私人画像或已批准的私人素材系统中，禁止写入通用 Skill 仓库。
+2. **私人适配层：** 创作者自有形象、Logo、姿势、动作序列、口头签名、私有参考锁和能识别具体创作者的风格 token。保存在私人画像或已批准的私人素材系统中，禁止写入通用 Skill 仓库。去身份后可公开分享的风格配方留在策展风格库，只依赖已经记录的 `G`/`T` 契约。
 3. **单片实例层：** 给观众看的文案、观点、章节边界、口播 cueFrame、素材 ID、裁切、路线节点、目标播放器几何和审批记录。保存在视频项目中。
 
 依赖只能单向流动：

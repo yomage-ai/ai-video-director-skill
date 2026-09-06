@@ -6,13 +6,14 @@ Use this audit whenever an app, dashboard, document, or product UI is evidence i
 
 ## 1. Lock The Evidence Claim / 锁定证据命题
 
-Write one sentence for what the viewer must learn from the shot. Map it to the spoken beat and mark the evidence as `state`, `interaction`, or `change-over-time`.
+Write one sentence for what the viewer must learn from the shot. Map it to the spoken beat and mark the evidence as `state`, `interaction`, or `change-over-time`. This classification describes the content, not an automatic media-format rule.
 
-- Use a still for a stable state, feature, value, layout, or result.
-- Use a screen recording only when navigation, input, animation, or before/after change is part of the proof.
+- Consider `still`, `recording`, and `hybrid` as candidates. Choose from phone-scale legibility, temporal value, credibility, rhythm, and attention cost.
+- When the user supplies a usable recording, inspect it first and compare it with representative stills or extracted frames. Prefer the recording only when its temporal action materially improves the beat.
+- A stable state may still benefit from a short recording for presence or context, while a process may be clearer as selected stills. Record the chosen format and reason; never infer it mechanically from the evidence class.
 - Do not substitute a semantically related screen. An adjacent tab can be visually plausible and still be false evidence.
 
-先写一句“观众必须从这个镜头看懂什么”，并标记为静态状态、交互过程或随时间变化。稳定功能和结果优先截图；只有操作过程本身需要被证明时才录屏。不得用语义相近的相邻页面替代准确页面。
+先写一句“观众必须从这个镜头看懂什么”，并标记为静态状态、交互过程或随时间变化。这个分类只描述内容，不直接决定必须用截图还是录屏。截图、录屏和混合形式都应进入候选，根据手机可读性、时间变化的价值、可信度、节奏和注意力成本选择。用户提供了可用录屏时先检查录屏，再与代表性静帧或截图比较；录屏的时间变化确实让这一段更好时才优先采用。稳定状态也可能因短录屏更自然，操作过程也可能因精选静帧更清楚，因此必须记录最终形式和理由，不能机械写死。不得用语义相近的相邻页面替代准确页面。
 
 ## 2. Lock The Exact State Path / 锁定准确页面路径
 

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "projectId": "replace-with-project-id",
+  "candidateVersion": "0.2.0",
+  "status": "pending-independent-project",
+  "firstCardMinutes": null,
+  "totalActiveMinutes": null,
+  "userRevisionRounds": null,
+  "fullVisualRenderCount": null,
+  "repeatedDefects": [],
+  "peakRenderTreeRssMiB": null,
+  "swapGrowthMiB": null,
+  "hostPreset": null,
+  "baselineProject": null,
+  "measuredEvidence": [],
+  "creatorAccepted": false,
+  "comparisonConclusion": null
+}

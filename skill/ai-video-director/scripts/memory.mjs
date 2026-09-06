@@ -103,6 +103,7 @@ function record(args) {
     feedback: args.feedback,
     scope,
     promotionStatus: 'not-promoted',
+    ...(args.supersedes ? {supersedes:args.supersedes} : {}),
   };
   appendFileSync(paths.feedback, `${JSON.stringify(event)}\n`, 'utf8');
   console.log(JSON.stringify({dataDir: paths.root, event}, null, 2));
@@ -166,18 +167,67 @@ function promote(args) {
 }
 
 function show(args) {
-  const paths = initialize(args);
-  console.log(JSON.stringify({
-    dataDir: paths.root,
-    profile: readProfile(paths),
-    feedbackEvents: readEvents(paths),
-  }, null, 2));
+  const paths = pathsFor(args);
+  if (!existsSync(paths.profile)) {
+    console.log(JSON.stringify({dataDir:paths.root,status:'not-initialized',preferences:{}}));
+    return;
+  }
+  const profile = readProfile(paths);
+  const events = existsSync(paths.feedback) ? readEvents(paths) : [];
+  if (args.history) {
+    console.log(JSON.stringify({dataDir:paths.root,profile,feedbackEvents:events},null,2));
+    return;
+  }
+  const stage = args.stage || 'intake';
+  const selectors = {
+    intake: /(?:content|intake|source|workflow|platformFrame|handdrawnKnowledgeMapStyle)/i,
+    rough: /(?:rough|dialogue|pace|pause|color|loudness|takeSelection|playback)/i,
+    fine: /(?:caption|style|visual|presenter|cutout|outline|progress|outro|broll|screenRecording|evidence)/i,
+    release: /(?:render|production|delivery|platform|loudness)/i,
+    all: /./,
+  };
+  if (!selectors[stage]) throw new Error('--stage must be intake, rough, fine, release, or all');
+  const preferences = {}, provenance = [];
+  function visit(value,key) {
+    if (args.key ? (key === args.key || key.startsWith(args.key+'.')) : selectors[stage].test(key)) {
+      if (args.style && /style/i.test(key) && typeof value === 'object'
+        && !JSON.stringify(value).includes(args.style)) return;
+      setDotted(preferences,key,structuredClone(value));
+      const history = [...profile.promotionHistory].reverse().find(e=>key===e.key || key.startsWith(e.key+'.') || e.key.startsWith(key+'.'));
+      provenance.push({key,source:'current-private-profile',profileVersion:profile.version,
+        feedbackId:history?.sourceFeedbackId || null,approvedAt:history?.approvedAt || null});
+      return;
+    }
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      for (const [k,v] of Object.entries(value)) visit(v,key?key+'.'+k:k);
+    }
+  }
+  for (const [key,value] of Object.entries(profile.preferences || {})) visit(value,key);
+  const overridden = [];
+  if (args.overrides) {
+    const overrides = JSON.parse(readFileSync(path.resolve(args.overrides),'utf8'));
+    for (const item of overrides) {
+      if (!item.key || !item.reason || !item.source) throw new Error('Each project override needs key, value, reason and source');
+      overridden.push({key:item.key,previous:item.key.split('.').reduce((v,k)=>v?.[k],preferences),reason:item.reason});
+      setDotted(preferences,item.key,item.value);
+      provenance.push({key:item.key,source:'current-project-override',evidence:item.source,reason:item.reason});
+    }
+  }
+  const promoted = new Set(events.filter(e=>e.type==='feedback-promoted').map(e=>e.sourceFeedbackId));
+  const superseded = new Set(events.flatMap(e=>[e.supersedes,
+    ...(e.feedback?.match(/supersedes feedback ([a-f0-9-]{36})/i)?.slice(1) || [])]).filter(Boolean));
+  const pending = events.filter(e=>e.type==='feedback-recorded' && !promoted.has(e.id) && !superseded.has(e.id)
+    && (!args.project || e.projectId===args.project || e.scope==='base-candidate'));
+  console.log(JSON.stringify({dataDir:paths.root,profileId:profile.profileId,profileVersion:profile.version,
+    stage,preferences,provenance,overridden,
+    pendingCandidates:args['include-candidates'] ? pending.slice(-12).map(e=>({id:e.id,projectId:e.projectId,category:e.category,feedback:e.feedback,scope:e.scope,automaticallyApplied:false})) : [],
+    pendingCandidateCount:pending.length,historyIncluded:false},null,2));
 }
 
 function usage() {
   console.log(`Usage:
   node scripts/memory.mjs init [--data-dir <private-directory>]
-  node scripts/memory.mjs show [--data-dir <private-directory>]
+  node scripts/memory.mjs show [--stage intake|rough|fine|release|all] [--key <prefix>] [--style <id>] [--project <id>] [--include-candidates] [--overrides <project-overrides.json>] [--history] [--data-dir <private-directory>]
   node scripts/memory.mjs record --project <id> --category <name> --feedback <text> [--scope project-only|base-candidate]
   node scripts/memory.mjs promote --id <feedback-id> --key <dotted-key> --value-json <json> --reason <text> --confirm-user-approved`);
 }

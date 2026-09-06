@@ -39,7 +39,7 @@
   },
   "defaults": {
     "realEvidenceFirst": true,
-    "backgroundMusic": "off",
+    "backgroundMusic": "decide-in-audiovisual-style-preview",
     "transitions": "restrained",
     "externalPaidGeneration": "requires-explicit-approval"
   },

@@ -53,16 +53,22 @@ Scan the render for unexplained silent regions longer than about `0.60 s`, but t
 
 可扫描成片中约 `0.60 秒`以上的异常静段，但扫描结果只是复核清单，不能自动剪掉。底噪可能让检测漏掉停顿，而有表达作用的停顿也可能完全合理。
 
+## Expressive Moments / 表演性时刻
+
+Laughter, smiles, reaction holds, expressive silence, and freeze frames have no universal treatment. Review the complete audiovisual beat and choose the treatment that best serves meaning and pacing: preserve natural motion, shorten, cut away, hold, use a motivated freeze, or another deliberate option. Never freeze automatically because laughter exists, and never remove a long hold automatically when its emotional or comic function works. Record the chosen treatment and reason for every material moment; an intentional freeze or conspicuous hold must pass normal-speed audiovisual review.
+
+笑声、微笑、反应停留、表达性留白和定格都没有统一处理。必须听看完整段落，再根据含义、表演质量、情绪或笑点节奏、全片速度和画面连续性，在保留自然运动、缩短、切走、停留、有动机的定格或其他方案中选择最合适的一种。不能因为出现笑声就自动定格，也不能因为停留较长就自动删除。重要时刻要记录最终处理和理由；有意定格或明显停留必须通过正常速度视听检查。
+
 ## Crossfade Rules / 交叉淡化规则
 
 - Fix the boundary first. A crossfade cannot repair a cut inside a word or conceal a swallow.
-- Use a short one- or two-frame dialogue crossfade only after the cut is structurally correct and source handles are available.
+- Only after the boundary is structurally correct and source handles are available, choose a short dialogue crossfade from the actual waveform and listening evidence. Record its duration in seconds or audio samples; video frame rate must not select it automatically. The precise EDL renderer supports explicit fades, not overlapping crossfades; a true overlap requires a reviewed audio derivative and its source mapping.
 - Reject a crossfade that doubles a syllable, blurs an onset, changes stress, or makes the join sound phasey.
 - If the intended opening word already begins in the outgoing handle, do not also start the incoming clip before that same word; choose one acoustic occurrence before adding any crossfade.
 - Transcript-linked rebuilds may remove transitions. Re-read the rebuilt timeline, restore only intentional transitions, and audition again.
 
 - 先把剪点放对；交叉淡化不能修复词中剪切，也不能掩盖吞咽。
-- 结构正确且素材预留足够后，才使用一至两帧的短对白交叉淡化。
+- 结构正确且素材预留足够后，才按实际波形与听感选择短对白交叉淡化，以秒数或音频采样数记录，不由视频帧率自动决定。EDL 渲染器支持显式淡入淡出，不自动实现两段重叠交叉淡化；需要真正重叠时，先生成并审听音频衍生源，保留源映射。
 - 出现叠字、起音模糊、重音改变或相位感时，必须撤回或调整。
 - 如果目标句首字已经落在前一段的尾部预留里，后一段就不能再从同一个字之前起切；先确定唯一保留的声学发音，再考虑交叉淡化。
 - 文本联动重建可能清掉转场；重读时间线，只恢复原本有意设计的转场，再次试听。
@@ -91,14 +97,32 @@ After the last change, verify the manuscript opening and closing, review every c
 
 最后一次改动后，还要复核全文开头、结尾、所有改动过的衔接点，并从头到尾完整播放。无法正常速度听审时，粗剪必须标记为“未验证”，不能宣布锁定。
 
+Every real join between placed media items must have one boundary record. A short list of "important joins" is not a complete audit. Before presenting the rough cut, run `node scripts/audit-rough-cut-review.mjs <rough-cut-review.json> [report.json]`. The audit must fail when the item count, join count, and verified-boundary count disagree, when any word or mouth-noise review is pending, or when automated ASR/silence detection is the only proof.
+
+每个真实素材拼接点都必须有一条边界记录。只列几处“重点听审”不能代替全量检查。提交粗剪前运行 `node scripts/audit-rough-cut-review.mjs <rough-cut-review.json> [report.json]`。素材数、衔接数和已验证边界数不一致，任何字头字尾或口腔杂音仍待处理，或者只用 ASR、静音扫描等自动结果代替听审时，都必须阻断交付。
+
+## Feedback-Class Sweep / 同类问题全片扫描
+
+When the creator reports several instances of the same defect, treat the feedback as a defect class rather than a timestamp list. Name the class, define the detection method, sweep the complete relevant timeline, record every hit and disposition, then render the next review version. Examples include clipped word onsets, long joins, mouth resets, pace drift, premature evidence, and duplicated screen ranges. A version that fixes only the listed examples while leaving the same class elsewhere is not ready for review.
+
+当创作者连续指出同一种问题时，要把反馈理解成“缺陷类型”，不能只理解成几个时间点。先给问题命名、写明检查方法，再扫描完整相关时间线，记录每个命中点及处理结果，最后才渲染下一版。常见类型包括字头被切、衔接拖长、口腔复位、语速漂移、素材抢跑和录屏源区间重复。只修用户举例、同类问题仍散落在其他位置的版本，不能再次送审。
+
 ## Playback Speed / 语速
 
 - Do not inherit a fixed speed-up from another video. Start at `1.00x`, then compare the uncut performance and one or two conservative candidates only when the delivery drags.
 - A modest candidate such as `1.02x-1.06x` may suit a dense explanatory social video, but it is not a default. Keep `1.00x` or slower when emotion, demonstration, quotation, technical precision, or deliberate emphasis needs space.
 - Speed changes affect consonant clarity, breath length, cut timing, captions, music, and motion sync. Apply one stable rate across a continuous same-session passage unless a documented semantic or source-performance change justifies a new rate.
 - Approve speed from a representative rendered passage and then re-run the manuscript-boundary audit. Record the selected rate and reason.
+- Compare at least one representative early, middle, and late passage. Measure active speech rate separately from pauses, then listen at normal playback. A difference of roughly `12%` is a useful review trigger, not an automatic defect threshold.
+- Choose the anchor pace from the platform, content density, intelligibility, and the speaker's best natural delivery. For a dense short-form explainer, a clearly articulated energetic passage is usually a better anchor than a visibly hesitant slow passage; emotion, quotation, demonstration, and deliberate emphasis may justify intentional variation.
+- Correct a drifting passage with one stable pitch-preserving rate over a contiguous semantic range. Do not chase every sentence with a different speed or change rate at a non-semantic boundary.
+- Retiming speech does not necessarily retime an authored gap, still hold, transition, or independently placed clip. After every rate change, rebuild or rebase the affected timeline, remeasure pauses, and explicitly recheck every present downstream layer: joins and breaths, timeline boundaries, captions, B-roll, presenter or cutout, SFX, music and ducking, layout and motion, progress, transitions, and outro. Mark absent layers as `not-present`; do not silently skip them.
 
 - 不得沿用上一条视频的固定提速。先从 `1.00x` 开始，只有原始表达明显拖沓时，才比较一到两个克制候选。
 - `1.02x-1.06x` 这类轻提速可能适合信息密集的解释型短视频，但不是默认值。情绪表达、操作演示、引用、技术精度或刻意强调需要空间时，应保留 `1.00x`，必要时更慢。
 - 变速会同时影响辅音清晰度、气口、剪点、字幕、音乐和动画同步。同一次连续录制默认使用一个稳定速率，只有明确的语义或表演变化才分段调整。
 - 先用代表性渲染片段确认语速，再重新执行文案边界检查，并记录最终倍率和原因。
+- 至少比较开头、中段和后段各一个代表片段。有效说话速度与停顿密度要分开测量，再以正常速度连续听审。约 `12%` 的差异可以作为复核触发点，不能机械当成自动缺陷线。
+- 基准语速由平台、信息密度、清晰度和说话者最自然的一段共同决定。信息密集的短视频解释通常应以清楚、有精神、不过赶的自然表达为锚点，不能为了统一而向明显拖沓的一段看齐；情绪、引用、演示和刻意强调可以保留有理由的变化。
+- 需要修复时，在连续语义区间内使用一个稳定、保留音高的倍率。禁止逐句追速度，也不能在没有语义边界的位置突然变速。
+- 口播变速不一定会自动缩短独立气口、定格、转场或另放的片段。每次变速后必须重建或重算受影响时间线，重新测量气口，并逐项复核所有实际存在的下游层：剪点与气口、总时长和边界、字幕、B-roll、人物小窗或抠像、音效、背景音乐与 ducking、版式与动画、章节进度、转场和片尾。不存在的层要明确标记为 `not-present`，不能静默跳过。
