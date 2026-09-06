@@ -4,9 +4,9 @@
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "public",
   "license": "Apache-2.0",
-  "status": "v0.2.0-rc.2-bundled-xiaoxiong-style-real-project-trial-pending",
+  "status": "v0.2.0-rc.3-agent-owned-dependency-setup-real-project-trial-pending",
   "validatedAt": "2026-09-06",
-  "release": "0.2.0-rc.2",
+  "release": "0.2.0-rc.3",
   "candidateRelease": "0.2.0",
   "skill": {
     "id": "ai-video-director",
@@ -941,7 +941,7 @@
   "validation": {
     "skillCreator": "pass",
     "candidateValidatedAt": "2026-09-06",
-    "coreTests": "46/46 pass; no skips on the current macOS host",
+    "coreTests": "57/57 pass; no skips on the current macOS host",
     "testedMediaPath": "synthetic tone and anonymous local system speech -> EDL v2 -> explicit processing -> full decode -> real evidence audits; synthetic approvals test the stage lifecycle",
     "mermaidDiagrams": "3/3 render",
     "privacyScan": "pass",
@@ -958,7 +958,7 @@
     "stageExecution": "pass-for-stale-approval-and-input-blocking-rough-only-delivery-wrong-output-spec-and-fine-render-through-final-delivery",
     "independentForwardTest": "pass-for-Chinese-first-card-and-synthetic-90s-source-to-50s-retimed-aroll; two-discovered-routing-window-issues-fixed-and-regressed",
     "anonymousSpeech": "pass-for-duration-gain-and-decode; not-a-naturalness-or-creator-acceptance-test",
-    "operationalCapabilityBoundary": "local-installation-doctor-pass; editor-asr-listening-and-fine-renderer-need-current-stage-evidence",
+    "operationalCapabilityBoundary": "first-use bootstrap and selected-stage setup verified; install receipts never prove account login, live tools, ASR or listening; selected HyperFrames smoke rendered and fully decoded",
     "nextRealProject": "pending-independent-production; source-submission-authorized-separately"
   },
   "policySnapshotStatus": {
@@ -1010,5 +1010,28 @@
     "privateStylePackageRequired": false,
     "optionalIdentitySkill": "xiaoxiong-ip",
     "authorization": "explicit-owner-public-style-consolidation-and-GitHub-sync-2026-09-06"
+  },
+  "dependencySetup": {
+    "implementedAt": "2026-09-06",
+    "entry": "skill/ai-video-director/scripts/bootstrap.sh or bootstrap.ps1",
+    "stageSetup": "skill/ai-video-director/scripts/setup.mjs",
+    "nodeMinimum": 22,
+    "freshNodePin": "22.23.2",
+    "standaloneSkillLockfile": true,
+    "missingOnly": true,
+    "stageAware": true,
+    "noAutomaticUpgrade": true,
+    "installationIsNotOperationalReadiness": true,
+    "userActions": "actual login, host-required new session, system permission or new payment only",
+    "validation": {
+      "regressionTests": "57/57 pass",
+      "standaloneSkill": "copied Skill without repository dependencies; pinned Node 22.23.2 archive downloaded and SHA-256 checked; XML module installed from bundled lock; repeated run reused dependencies",
+      "hyperframesFresh": "0.7.90 installed into isolated data directory; 9 missing authoring Skills fetched at governed revision; render browser downloaded; lint 0 errors/0 warnings; anonymous 320x180 0.3s output rendered and fully decoded; first frame visually inspected and first/last decoded frames differed",
+      "chatcutFresh": "official plugin 0.2.26 installed and MCP registered in isolated CODEX_HOME; repeat reused installation; no account OAuth or live editor/ASR claimed",
+      "nativeTools": "existing macOS FFmpeg/ffprobe/Git reused and tiny local audio/video encode/probe passed; Homebrew/WinGet/apt missing-package plans tested, not fresh OS installation",
+      "crossPlatform": "macOS arm64 execution; Windows PowerShell and Linux acquisition routes not target-device tested",
+      "privacy": "current tree and history checked before source submission; private install/render receipts and binaries remain outside Git"
+    },
+    "nextRealProject": "pending"
   }
 }

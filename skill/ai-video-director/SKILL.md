@@ -21,12 +21,14 @@ Digital-human/avatar production is paused. Never use SadTalker or the legacy `ai
 
 ## Start Or Resume / 开始或续接
 
-1. Resolve the real Skill directory. Run `node scripts/director.mjs doctor` once per unchanged environment. Its default result checks local installation, not editor connectivity. Run stage-specific checks only before that stage; see [execution-and-evidence.md](references/execution-and-evidence.md).
+1. Resolve the real Skill directory and read [dependency-setup.md](references/dependency-setup.md). Agent runs `sh scripts/bootstrap.sh --stage intake --apply` on macOS/Linux or `scripts/bootstrap.ps1 --stage intake --apply` in PowerShell on Windows. Reuse healthy dependencies; install missing ones. A Skill folder install has no universal dependency hook: do this on first use even if the folder already exists. Run `doctor` after repairs, using the resolved Node. Setup receipts are local installation evidence, not editor connectivity. Keep the first content card fast; prepare rough tools before rough execution and the selected renderer before fine work.
 2. Keep projects and private media outside this repository. Create a project with `director.mjs init-project` or load its existing state. Never overwrite approved media, timelines or components; create a new version and retain the old one until the replacement passes.
 3. Load the bundled Xiaoxiong style described in [xiaoxiong-public-style.md](references/xiaoxiong-public-style.md). Its audio, caption, color, palette, layout and content-fit defaults work without a private profile. Read the effective defaults and optional overrides with `memory.mjs show --stage intake --include-candidates`. Use `--stage rough|fine|release`, `--key`, `--style` and project overrides as needed. When Xiaoxiong identity use is selected, load `$xiaoxiong-ip` and pass its resolved directory with `--identity-skill`; otherwise no Xiaoxiong character or signoff is inserted. Prepare the exact font and neutral reference assets with `prepare-style-assets.mjs --out <external-project>/assets/xiaoxiong-style`. History is opt-in. Pending feedback is a proposal, not an effective default. Follow [memory-and-feedback.md](references/memory-and-feedback.md).
 4. For a fresh project read [workflow.md](references/workflow.md). Read only the current stage's references below; query machine contract sections with `director.mjs contract --section roughCut` (or `bRollContinuity`, `finishingPass`) when needed. Do not load the entire contract or all references by default.
 
 默认带入公开的小熊字幕、响度、配色和画面风格，新机不需要旧私人画像。小熊形象与片尾才加载 `xiaoxiong-ip`。首次核对真实安装、工程位置和当前偏好；续接时复用未变化的环境结果。私有素材不进入公共仓库。按阶段读取规范和有效偏好，历史与待试反馈不能自动覆盖当前决定。
+
+首次使用必须由 Agent 补齐依赖，不能只运行 Doctor 后把安装清单交给用户。入口会复用或下载校验 Node 22+，补齐脚本依赖和 FFmpeg；粗剪前执行 `setup.mjs --stage rough --apply --codex <当前桌面宿主内置CLI绝对路径>`，补齐官方 ChatCut 插件，再核对真实连接与转写。精剪前执行 `setup.mjs --stage fine --apply`，复用或安装固定版本 HyperFrames、配套创作 Skill 和渲染浏览器；抠像才加 `--renderer cutout`。Agent 必须继续处理回执中的 `agentActions`，完成实际小样验证；仅登录、宿主不允许自动重载工具、系统权限或新费用需要用户参与。不能把 `localReady` 当作能剪辑，也不能用缺少可选模型阻塞首份分析。
 
 ## Stage Routing / 阶段路由
 

@@ -1,0 +1,13 @@
+{
+  "name": "ai-video-director-runtime",
+  "version": "0.2.0-rc.3",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "fast-xml-parser": "5.10.1"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-06",
+  "nodeMinimum": 22,
+  "xmlVersion": "5.10.1",
+  "chatcut": {
+    "version": "0.2.26",
+    "revision": "a7b75b22e8d26a91ecaf02c67b9d20fd02006ab8",
+    "source": "https://github.com/ChatCut-Inc/agent-plugin.git",
+    "installGuide": "https://chatcut.io/chatgpt"
+  },
+  "hyperframes": {
+    "composition": "0.7.90",
+    "cutout": "0.7.109",
+    "skillsRevision": "1e51eaec2cb6c058fbb5349c8c3dae9770d7f30c",
+    "source": "https://github.com/heygen-com/hyperframes.git",
+    "skills": ["hyperframes", "general-video", "hyperframes-core", "hyperframes-cli", "hyperframes-animation", "hyperframes-keyframes", "hyperframes-creative", "hyperframes-registry", "media-use"]
+  },
+  "remotion": "4.0.504",
+  "policy": "Reuse matching healthy installations. Install missing dependencies for the selected stage; do not upgrade a working renderer or install every optional model. Installation, login, live tool discovery and actual media execution are distinct checks."
+}

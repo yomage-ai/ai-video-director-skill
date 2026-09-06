@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "decisionStatus": "approved-installation-scope-platform-validation-bounded",
+  "evaluatedAt": "2026-09-06",
+  "identity": {
+    "name": "AI Video Director dependency acquisition",
+    "kind": "runtime",
+    "version": "0.2.0-rc.3; Node >=22 / fresh pin 22.23.2; XML 5.10.1; HyperFrames 0.7.90 and 0.7.109; ChatCut 0.2.26",
+    "revision": "references/dependencies.json and node-downloads.txt",
+    "officialSource": "https://nodejs.org/dist/v22.23.2/SHASUMS256.txt"
+  },
+  "workflowRole": {
+    "stage": "intake / rough / selected fine renderer",
+    "function": "Agent reuses installed dependencies and acquires missing governed tools; verifies installation separately from authentication and production capability",
+    "output": "local runtime, missing authoring Skill files, local receipt and explicit remaining Agent actions",
+    "execution": "deterministic",
+    "location": "local"
+  },
+  "licensing": {
+    "software": {
+      "license": "Node MIT with bundled notices; fast-xml-parser MIT; HyperFrames Apache-2.0; Git GPL-2.0; FFmpeg depends on build; ChatCut service/plugin terms separate",
+      "source": "https://nodejs.org/en/download; https://ffmpeg.org/legal.html; https://github.com/heygen-com/hyperframes; https://chatcut.io/docs/agent-plugin",
+      "openSource": "per-component",
+      "commercialUse": "per-component; ordinary dependency setup does not grant media rights",
+      "conditions": [
+        "Download from official distributions or governed package managers. Preserve package notices. Do not redistribute tool binaries in this repository.",
+        "FFmpeg Homebrew/WinGet/apt builds can include GPL codecs; record the installed version/configuration in the project capability evidence.",
+        "ChatCut account, upload and credit authorizations remain separate."
+      ]
+    },
+    "modelWeights": {
+      "license": "not-applicable",
+      "source": "governance-hyperframes-background-removal.json for selected cutout",
+      "commercialUse": "not-applicable",
+      "conditions": [
+        "No model acquisition merely to inspect a manuscript. Selected cutout follows its existing pinned-weight governance."
+      ]
+    },
+    "transitiveDependencies": {
+      "auditStatus": "existing XML lock pinned; HyperFrames npm transitive graph captured in local lockfile, not a full transitive legal audit",
+      "knownRestrictions": [
+        "Native packages and browser retain their own notices; top-level version does not prove identical transitive resolution across first-time installs."
+      ],
+      "distributionAction": "Acquire on target device; do not commit binaries, models, caches or private receipts."
+    }
+  },
+  "cost": {
+    "licenseFee": "per existing tool governance; no new paid service introduced",
+    "apiFee": "none for local setup",
+    "credits": "none for setup; ChatCut editing/ASR governed separately",
+    "localCompute": "download, extraction, npm/native installation and subsequent local smoke checks",
+    "storage": "Node/runtime/browser can require hundreds of MB; models only when selected",
+    "maintenance": "recheck changed versions and package-manager builds",
+    "freeConclusion": "No automatic paid purchase or API call; local downloads and compute are not costless resources."
+  },
+  "access": {
+    "account": "ChatCut requires owner login; Node/FFmpeg/HyperFrames local downloads do not",
+    "apiKey": "no new key requested by setup",
+    "network": "official Node, npm registry, GitHub, browser distributor, OS package repositories",
+    "hardware": "matching OS/architecture; Node >=22; practical media-render resources checked per host",
+    "region": "actual network availability required",
+    "organizationLimits": "existing selected-tool governance applies"
+  },
+  "rightsAndPrivacy": {
+    "uploadsUserMedia": false,
+    "biometricData": "none in setup smoke fixtures",
+    "consentRequired": false,
+    "retention": "tool caches and local receipts under local data directory; project artifacts stay outside Git",
+    "outputRightsBoundary": "Setup does not authorize portrait/voice use, media upload, new spending or publication.",
+    "aiLabeling": "not-applicable to tool installation"
+  },
+  "stability": {
+    "maturity": "new Agent setup integration around existing governed tools",
+    "reproducibility": "Node archives SHA-256 pinned; Skill XML lock pinned; renderer version and authoring commit pinned; runtime transitive packages locked per host",
+    "knownFailureModes": [
+      "Skill copy alone has no universal install hook",
+      "npx availability and plugin cache do not establish readiness",
+      "Node 20 fails selected HyperFrames engine requirement",
+      "Host tool list may require a new session after install/login",
+      "Package manager, OS permission, network, PATH and disk can block acquisition",
+      "PowerShell/Linux routes need native target-device validation"
+    ],
+    "vendorLockIn": "ChatCut host authorization and session lifecycle; explicit local media handoff remains"
+  },
+  "evidence": {
+    "testStatus": "passed-with-stated-platform-and-auth-boundaries",
+    "scope": "isolated Skill-only Node/XML acquisition; fresh HyperFrames/authoring/browser installation and actual 0.3s render/full decode; isolated ChatCut official plugin install/MCP registration and repeat reuse; 57 regression tests. Native fresh OS package managers, account OAuth, actual ASR/listening and full-video production not claimed.",
+    "hardware": "macOS arm64; Windows/Linux command planning only",
+    "versions": {
+      "nodeDownload": "22.23.2",
+      "xml": "5.10.1",
+      "hyperframes": "0.7.90; cutout pin 0.7.109 preserved",
+      "chatcutRegistry": "0.2.26"
+    },
+    "metrics": {
+      "regressionTestsPassed": 57,
+      "renderSeconds": 0.3,
+      "renderWidth": 320,
+      "renderHeight": 180,
+      "authoringSkillsInstalled": 9
+    },
+    "artifacts": [
+      "tests/dependency-setup.test.mjs",
+      "PROJECT_STATE.json dependencySetup validation; private execution receipts outside Git"
+    ]
+  },
+  "recommendation": {
+    "priority": "P1-conditional",
+    "allowedRole": "Agent-owned first-use setup and stage-specific dependency repair within user-authorized editing workflow",
+    "blockedRole": "Claiming all machines or authenticated fresh accounts were tested; silently enabling a deliberately disabled plugin; optional model/paid service adoption; replacing existing working tool or Skill directories",
+    "reason": "User explicitly requires missing dependencies to be installed by Agent, existing ones reused, and only unavoidable actions delegated to user.",
+    "recheckTriggers": [
+      "target OS or CPU changes",
+      "new upstream version/revision/license/installer command",
+      "host plugin lifecycle change",
+      "real rendering/ASR failure"
+    ]
+  }
+}

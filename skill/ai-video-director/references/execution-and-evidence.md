@@ -14,7 +14,7 @@ The rough auditor also compares decoded PCM against the actual program interval.
 
 ### Capability checks happen when needed
 
-- Default `director.mjs doctor` checks installation only. A cached plugin is `installed-unverified`; npx availability is not renderer readiness.
+- First use runs the Agent-owned [dependency setup](dependency-setup.md), repairing missing tools before their stage. Default `director.mjs doctor` remains read-only and checks installation only. A cached plugin is `installed-unverified`; npx availability is not renderer readiness.
 - `capability-probe.mjs <new-capabilities.json>` performs a tiny local encode/probe and saves real FFmpeg/ffprobe evidence. It does not download tools or contact an editor.
 - Before rough execution, the Agent adds current checks for `chatcut`, `asr`, and `source-listen` from actual host/tool results. Before fine/release execution, add `fine-renderer` from the exact selected version and a successful small render.
 - Each check has `name`, `status: "pass"`, `version`, `method`, `checkedAt`, and a hash-bound `evidence` file. Evidence expires after 24 hours and on a relevant environment change. For listening, name the actual playback/analysis modality and permitted reviewer; ASR text alone cannot demonstrate auditory capability. The data format is an attestation with traceable evidence, not a proof that software heard speech.
@@ -54,7 +54,7 @@ Agent 用 `evidence.mjs bind` 为文件生成绝对路径和 SHA-256。相对路
 
 ### 能力与阶段
 
-轻量 Doctor 只代表安装检查。`capability-probe.mjs` 真正做一次很小的本地编码和探测；剪辑器、ASR、听审能力和精剪渲染器必须由 Agent 在使用前留下实际工具响应或小样证据，每项记录版本、方法、时间与证据。24 小时过期或环境变化后重新核对。插件缓存和转写文本不能分别冒充连接与听审能力。
+首次使用先按 [依赖准备](dependency-setup.md) 自动补齐所需工具；轻量 Doctor 保持只读，只代表安装检查。`capability-probe.mjs` 真正做一次很小的本地编码和探测；剪辑器、ASR、听审能力和精剪渲染器必须由 Agent 在使用前留下实际工具响应或小样证据，每项记录版本、方法、时间与证据。24 小时过期或环境变化后重新核对。插件缓存和转写文本不能分别冒充连接与听审能力。
 
 正确顺序：内容批准 → 粗剪候选 → 从真实时间线生成全量听审窗口 → Agent 实际听看与审计 → 用户批准粗剪 → 整体样片与审计 → 用户批准风格 → 完整精剪 → 用户批准精确成片 → 交付检查。不能要求尚未生成的粗剪先通过自己的听审，也不能用旧版审片批准新版文件。
 

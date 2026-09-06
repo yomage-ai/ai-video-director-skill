@@ -3,6 +3,7 @@
 import {spawnSync} from 'node:child_process';
 import {resolveArtifact} from './lib/media-contract.mjs';
 import {publicStyle} from './lib/style-profile.mjs';
+import {activateRuntimePaths, findHyperframes, npmCommand, skillRoots, xmlDependency} from './lib/setup-runtime.mjs';
 import {
   cpSync,
   existsSync,
@@ -22,7 +23,8 @@ import {fileURLToPath} from 'node:url';
 const scriptPath = fileURLToPath(import.meta.url);
 const scriptDir = path.dirname(scriptPath);
 const skillDir = path.resolve(scriptDir, '..');
-const repoRoot = path.resolve(skillDir, '../..');
+const enclosingRepo = path.resolve(skillDir, '../..');
+const repoRoot = existsSync(path.join(enclosingRepo,'AGENTS.md')) && existsSync(path.join(enclosingRepo,'PROJECT_STATE.json')) ? enclosingRepo : skillDir;
 const templatesDir = path.join(skillDir, 'assets', 'templates');
 
 function parseArgs(values) {
@@ -73,10 +75,10 @@ function skillInstallPath() {
 }
 
 function doctor(args = {}) {
+  activateRuntimePaths();
   const required = [
     ['Git', 'git', ['--version']],
-    ['Node.js', 'node', ['--version']],
-    ['npm', 'npm', ['--version']],
+    ['Node.js', process.execPath, ['--version']],
     ['FFmpeg', 'ffmpeg', ['-version']],
     ['ffprobe', 'ffprobe', ['-version']],
   ];
@@ -87,19 +89,15 @@ function doctor(args = {}) {
 
   const nodeMajor = Number(process.versions.node.split('.')[0]);
   checks.push({
-    name: 'Node.js >= 20',
+    name: 'Node.js >= 22',
     required: true,
-    status: nodeMajor >= 20 ? 'pass' : 'fail',
+    status: nodeMajor >= 22 ? 'pass' : 'fail',
     version: process.versions.node,
   });
 
-  let xmlStatus = 'fail';
-  try {
-    const resolved = import.meta.resolve('fast-xml-parser');
-    xmlStatus = resolved ? 'pass' : 'fail';
-  } catch {
-    xmlStatus = 'fail';
-  }
+  const npm=npmCommand();
+  checks.push({name:'npm',required:true,status:npm && commandVersion(npm[0],[...npm.slice(1),'--version'])?'pass':'fail'});
+  const xmlStatus = xmlDependency(skillDir) ? 'pass' : 'fail';
   checks.push({name: 'fast-xml-parser', required: true, status: xmlStatus});
 
   const dataDir = privateDataDir();
@@ -140,24 +138,17 @@ function doctor(args = {}) {
     checks.push({name, required: false, status: version ? 'pass' : 'not-found', version});
   }
 
-  const hyperframesVersion = commandVersion('hyperframes', ['--version']);
-  const npxVersion = commandVersion('npx', ['--version']);
+  const hyperframesRuntime = nodeMajor>=22 ? findHyperframes('0.7.90') : null;
   checks.push({
     name: 'HyperFrames CLI',
     required: false,
-    status: hyperframesVersion ? 'pass' : npxVersion ? 'agent-managed-npx-ready' : 'not-found',
-    version: hyperframesVersion ?? (npxVersion ? `npx ${npxVersion}` : null),
-    note: hyperframesVersion
-      ? 'Installed command is available.'
-      : npxVersion
-        ? 'The Agent can run the governed pinned HyperFrames version with npx; first use may download the package and model.'
-        : 'Install or otherwise provide an approved HyperFrames runtime before a presenter-cutout shot.',
+    status: hyperframesRuntime ? 'installed-unverified' : 'not-found',
+    version: hyperframesRuntime?.version ?? null,
+    argv: hyperframesRuntime?.argv,
+    note: 'CLI availability is not renderer readiness. Agent runs setup --stage fine --apply, ensures a browser and verifies an actual tiny render. Cutout uses the separate governed version.',
   });
 
-  const possibleSkillRoots = [
-    path.join(os.homedir(), '.agents', 'skills'),
-    path.join(os.homedir(), '.codex', 'skills'),
-  ];
+  const possibleSkillRoots = skillRoots();
   checks.push({
     name: 'HyperFrames authoring Skill',
     required: false,
@@ -166,7 +157,7 @@ function doctor(args = {}) {
       : 'not-found',
   });
 
-  const chatcutPluginRoot = path.join(os.homedir(), '.codex', 'plugins', 'cache', 'chatcut-inc', 'chatcut');
+  const chatcutPluginRoot = path.join(process.env.CODEX_HOME || path.join(os.homedir(), '.codex'), 'plugins', 'cache', 'chatcut-inc', 'chatcut');
   checks.push({
     name: 'ChatCut Codex plugin',
     required: false,
@@ -221,6 +212,13 @@ function lstatSafe(target) {
 }
 
 function installSkill(args) {
+  function finish(status,destination) {
+    const child=spawnSync(process.execPath,[path.join(scriptDir,'setup.mjs'),'--stage','intake','--apply'],{encoding:'utf8',maxBuffer:8*1024*1024});
+    if (child.stderr) process.stderr.write(child.stderr);
+    let setup; try { setup=JSON.parse(child.stdout); } catch { setup={error:child.error?.message || 'Setup did not return a valid result'}; }
+    console.log(JSON.stringify({status,destination,source:skillDir,setup},null,2));
+    if (child.status!==0 || child.error) process.exitCode=1;
+  }
   const destination = skillInstallPath();
   mkdirSync(path.dirname(destination), {recursive: true});
   const stat = lstatSafe(destination);
@@ -228,7 +226,7 @@ function installSkill(args) {
     if (stat.isSymbolicLink()) {
       try {
         if (realpathSync(destination) === realpathSync(skillDir)) {
-          console.log(JSON.stringify({status: 'already-installed', destination, source: skillDir}, null, 2));
+          finish('already-installed',destination);
           return;
         }
       } catch {
@@ -243,7 +241,7 @@ function installSkill(args) {
     }
   }
   symlinkSync(skillDir, destination, 'dir');
-  console.log(JSON.stringify({status: 'installed', destination, source: skillDir}, null, 2));
+  finish('installed',destination);
 }
 
 function uninstallSkill() {

@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Local renderer check</title>
+<style>
+body { margin:0; font-family:Arial,sans-serif; color:#fff; }
+#root { position:relative; width:320px; height:180px; overflow:hidden; }
+.clip { position:absolute; inset:0; background:#16352d; display:grid; place-items:center; }
+.dot { position:absolute; top:120px; left:115px; width:18px; height:18px; border-radius:50%; background:#ffd96a; animation:move .3s linear 1 both; }
+@keyframes move { from { transform:translateX(0); } to { transform:translateX(72px); } }
+</style></head><body>
+<div id="root" data-composition-id="dependency-smoke" data-no-timeline data-start="0" data-width="320" data-height="180" data-duration="0.3" data-fps="10">
+  <section id="check-card" class="clip" data-start="0" data-duration="0.3" data-track-index="1"><p>Local renderer check</p><div id="check-dot" class="dot"></div></section>
+</div></body></html>

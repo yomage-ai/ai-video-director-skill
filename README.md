@@ -31,6 +31,8 @@ The Skill includes Xiaoxiong's approved subtitle look, dialogue loudness, natura
 
 For Xiaoxiong character art, signature outro or the approved twirl, also install the owner-authorized `xiaoxiong-ip` Skill. Other creators can use this editing style without that identity Skill. Continuing an existing video still requires its source media and editable project.
 
+On a new computer, the Agent reuses installed tools and prepares missing Node/npm, FFmpeg/ffprobe and script dependencies. Before rough editing it installs the official ChatCut plugin if missing and verifies sign-in and real tool access. Before fine editing it prepares the selected renderer, authoring Skills and browser. A copied Skill folder alone does not run an installer: first use performs this setup. You only complete unavoidable login or system permission steps; newly installed plugin tools may require a new session. Large optional models download only when selected. See [Agent-managed setup](skill/ai-video-director/references/dependency-setup.md).
+
 ## What You Provide
 
 - Recorded talking-head footage, including a screen recording with a baked-in webcam. A manuscript helps but does not replace source footage.
@@ -49,7 +51,7 @@ For Xiaoxiong character art, signature outro or the approved twirl, also install
 
 The Agent handles installation, dependency checks, local media inspection, transcription, timing audits, style recommendation, asset planning, rendering, and verification. A style reference is optional: when none is supplied, the Agent compares the public curated styles against the video's content and evidence needs instead of asking you to invent a direction. If the library has no strong match, it plans and produces suitable evidence, generated or code-authored graphics, typography, motion, BGM, and SFX under the normal approval and rights gates. Before the first approval it avoids unnecessary large uploads, cloud retries, full renders, and premature style production.
 
-This version checks actual media, processing settings, approvals and versions. Unsupported editor effects stop the handoff until the Agent arranges a supported explicit conversion or a reviewed high-quality derivative. It never treats filled checkboxes or a successful render as proof of listening quality. Version `0.2.0-rc.2` has passed engineering regression checks and is shared as a release candidate. The next independent real-video trial still needs to validate listening quality, revision effort and full-length resource use. See [the recorded validation state](PROJECT_STATE.json).
+This version checks actual media, processing settings, approvals and versions. Unsupported editor effects stop the handoff until the Agent arranges a supported explicit conversion or a reviewed high-quality derivative. It never treats filled checkboxes or a successful render as proof of listening quality. Version `0.2.0-rc.3` has passed engineering regression checks and is shared as a release candidate. The next independent real-video trial still needs to validate listening quality, revision effort and full-length resource use. See [the recorded validation state](PROJECT_STATE.json).
 
 ## License
 

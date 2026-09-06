@@ -1,12 +1,12 @@
 {
   "name": "ai-video-director-skill",
-  "version": "0.2.0-rc.2",
+  "version": "0.2.0-rc.3",
   "private": true,
   "license": "Apache-2.0",
   "description": "Bilingual Codex Skill for governed AI video generation and talking-head editing.",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "doctor": "node skill/ai-video-director/scripts/director.mjs doctor",
@@ -26,7 +26,8 @@
     "audit-learning-scope": "node skill/ai-video-director/scripts/audit-learning-scope-ledger.mjs",
     "audit-public-repository": "node skill/ai-video-director/scripts/audit-public-repository.mjs",
     "privacy-scan": "node skill/ai-video-director/scripts/privacy-scan.mjs",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "setup": "node skill/ai-video-director/scripts/setup.mjs"
   },
   "dependencies": {
     "fast-xml-parser": "5.10.1"
