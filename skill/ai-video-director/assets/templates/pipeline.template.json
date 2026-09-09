@@ -3,6 +3,7 @@
   "projectId": "replace-with-project-id",
   "language": "en",
   "publicationInScope": false,
+  "recovery": {"schemaVersion": 1, "blockers": []},
   "artifacts": {
     "contentBrief": "analysis/director-brief.md",
     "roughReview": "analysis/rough-cut-review.json",

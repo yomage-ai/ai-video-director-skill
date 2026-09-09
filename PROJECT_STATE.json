@@ -4,9 +4,9 @@
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "public",
   "license": "Apache-2.0",
-  "status": "v0.2.0-rc.6-installed-cli-gate-and-auth-diagnosis",
+  "status": "v0.2.0-rc.7-explicit-recovery-and-route-consent",
   "validatedAt": "2026-09-06",
-  "release": "0.2.0-rc.6",
+  "release": "0.2.0-rc.7",
   "candidateRelease": "0.2.0",
   "skill": {
     "id": "ai-video-director",
@@ -1084,5 +1084,18 @@
     "actualAuditoryProductionValidation": "not-completed",
     "regressionValidation": "64 tests: 63 passed; existing historical commit-email audit failed. Targeted stage/setup suite 12 passed; current-tree privacy scan and Skill validation passed. Historical commits were not rewritten.",
     "scope": "Software/readiness repair; does not certify perceptual editing quality or a new listening provider."
+  },
+  "recoveryConsentRepair": {
+    "date": "2026-09-09",
+    "changes": [
+      "real-auth-failures-produce-user-actions",
+      "unresolved-recovery-blocks-all-production-stages",
+      "resolved-route-changes-bind-user-consent-and-verification",
+      "current-model-modality-first-no-silent-auditory-model-install"
+    ],
+    "defaultAuditoryProvider": null,
+    "newProviderProductionTest": "not-run-pending-user-route-authorization",
+    "validation": "17 targeted checks passed; full suite 69 tests, 68 passed and the pre-existing historical commit-email audit failed. Current-tree privacy scan, doctor and Skill validation are checked separately. No history rewrite.",
+    "doesNotCertify": "Perceptual quality or completed real-video recut."
   }
 }

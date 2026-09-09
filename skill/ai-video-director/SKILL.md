@@ -67,9 +67,9 @@ For a rough-cut-only request, set `outputScope: "rough-cut"`, bind `roughDeliver
 
 Never mark a file reviewed from a successful tool call, an ASR transcript, a checked boolean or one attractive still. Missing auditory or visual capability must remain an explicit unverified item. The Agent records actual listening and rendered evidence; user approval is preserved with its source, timestamp and artifact hash.
 
-Establish the actual sound-input route before rough execution; this package does not bundle an auditory reviewer. A request to “rough-cut first” does not authorize bypassing failed checks or delivering an unreviewed experiment as completed cleanup. Audit retained clip interiors as well as joins: ASR can hide repeated speech, and adjacent stills can miss blinking and expression resets. See the dependency and dialogue-join references above.
+Establish the actual sound-input route before rough execution; this package does not bundle an auditory reviewer. Preserve the chosen host/model/provider. When login, consent, permissions or billing block that route, surface the exact user action and wait; do not silently install a substitute model or switch to local/alternate editing. A proposed replacement needs user agreement and a real sample test. Record blockers in `pipeline.recovery` using [execution-and-evidence.md](references/execution-and-evidence.md). A request to “rough-cut first” does not waive checks. Audit retained clip interiors as well as joins: ASR can hide repetitions and adjacent stills can miss motion.
 
-粗剪执行前先实测声音输入路线；本包没有内置听感审查模型。“先粗剪”不授权跳过失败检查或把未审实验作为清理结果交付。保留片段内部与片段衔接都要检查：转写可能漏掉重复，相邻静帧可能漏掉快眨眼和表情复位，具体按上面的依赖与衔接规范执行。
+粗剪前实测声音输入；本包没有内置听感模型。保留选定宿主、模型和服务；遇到登录、授权、权限或费用阻塞，说明用户具体要做什么并等待，不能默默安装替代模型或改走本地/其他路线。更换方案须先征得同意并通过小样，阻塞写入 `pipeline.recovery`。“先粗剪”不豁免检查。保留片段内部与衔接都要审：转写可能漏重复，相邻静帧可能漏快眨眼和表情复位。
 
 工具成功、转写存在、勾选字段或单张好看的图，都不能证明质量通过。Agent 必须留下实际检查方式与对应版本；缺少视听能力时如实标记未验证。
 

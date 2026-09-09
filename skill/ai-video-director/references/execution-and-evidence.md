@@ -8,6 +8,20 @@ A generic request to rough-cut or “try cutting it first” does not waive sour
 
 “先剪出来”“试着粗剪”不代表用户放弃听审和质量要求。Agent 不得自行创造 `trialOnly` 模式或另写渲染脚本，把失败的门禁变成可交付粗剪。用户明确要求的未审实验只能作为实验，不代表剪辑要求已完成。阶段命令必须返回非空结构化结果；仅退出码为零、没有结果不能算通过。入口支持目录符号链接安装。
 
+### Recovery and route changes / 阻塞恢复与路线变化
+
+On a real login, permission, billing, capability or quality obstruction, append a record to `pipeline.recovery.blockers` before further dependent execution. Preserve the original provider and concrete failure; `recoveryAction()` in `scripts/lib/recovery.mjs` separates user account/consent decisions from Agent technical repair. Tell the user what action, destination/data scope, and cost are involved. Wait on actual required input, while continuing independent authorized preparation. Do not bypass an authorization denial with another tool or provider, or silently reduce review quality.
+
+遇到真实登录、权限、费用、能力或质量阻塞，先在 `pipeline.recovery.blockers` 留下记录。说明原服务、实际失败、用户操作、涉及素材与费用；需要用户的输入就等待，同时继续独立且获授权的准备工作。不得换工具或服务绕过拒绝，不得偷偷降低质量要求。
+
+```json
+{"schemaVersion":1,"blockers":[{"id":"editor-login","kind":"authentication","provider":"selected-editor","detail":"Official tool returned not_logged_in","status":"blocked"}]}
+```
+
+`stage.mjs` rejects every unresolved blocker. A resolved record needs `qualityRequirementsPreserved:true` plus `resolution.verifiedAt` and hash-bound `resolution.evidence` from a real verification. Authentication, permission, billing and route-change records (or any `alternativeRoute`) additionally need `resolution.userAuthorization` with `approvedBy:"user"`, `approvedAt`, and bound message evidence. Existing consent is reusable; successful technical fallback is not consent. These receipts enforce the normal workflow, not an OS-wide or semantic guarantee.
+
+`stage.mjs` 在所有阶段阻断未解决记录。解决时保留质量标准，并绑定真实验证时间和文件；涉及用户身份、授权、费用或改换路线时，还需绑定用户决定。已获授权可复用，替代路线运行成功不能代替授权。回执不能证明感知质量，也不宣称操作系统级防绕过。
+
 ### Bind files and approvals
 
 `node scripts/evidence.mjs bind <file>...` computes absolute paths and streaming SHA-256 hashes. Use these records for sources, configuration, code, user-message excerpts, capability results and media. Relative paths in records resolve against the containing JSON file. Keep all private records outside this repository.

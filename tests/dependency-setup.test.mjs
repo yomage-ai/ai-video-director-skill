@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {cpSync, existsSync, mkdtempSync, readFileSync} from 'node:fs';
+import {cpSync, existsSync, mkdtempSync, readFileSync,writeFileSync,chmodSync} from 'node:fs';
 import {spawnSync} from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
@@ -71,6 +71,26 @@ test('setup check stays read-only and a missing host is not reported ready',()=>
   assert.equal(result.report.operationalReady,false);
   assert.equal(result.report.checks.find(c=>c.name==='chatcut').status,'missing');
   assert.equal(existsSync(data),false);
+});
+
+test('an installed but logged-out connector appears in userActions and never triggers an automatic login or substitute', {skip:process.platform==='win32'},()=>{
+  const dir=temporary(),cli=path.join(dir,'synthetic-codex');
+  const source=JSON.parse(readFileSync(path.join(skill,'references','dependencies.json'))).chatcut.source;
+  writeFileSync(cli,`#!${process.execPath}\nconst a=process.argv.slice(2);let r;
+if(a[0]==='plugin'&&a[1]==='marketplace'&&a[2]==='list')r={marketplaces:[{name:'synthetic',marketplaceSource:{source:${JSON.stringify(source)}}}]};
+else if(a[0]==='plugin'&&a[1]==='list')r={installed:[{name:'chatcut',installed:true,enabled:true}]};
+else if(a[0]==='mcp'&&a[1]==='get')r={enabled:true};
+else if(a[0]==='mcp'&&a[1]==='list')r=[{name:'chatcut',auth_status:'not_logged_in'}];
+else {process.stderr.write('Unexpected mutation');process.exit(9)}
+process.stdout.write(JSON.stringify(r));\n`);
+  chmodSync(cli,0o700);
+  const r=setup(['--stage','rough','--codex',cli],path.join(dir,'data'));
+  assert.equal(r.status,1);assert.equal(r.report.localReady,false);
+  assert.equal(r.report.userActions.length,1);
+  assert.equal(r.report.userActions[0].kind,'authentication');
+  assert.equal(r.report.userActions[0].actor,'user');
+  assert.equal(r.report.userActions[0].automaticFallbackAllowed,false);
+  assert.equal(existsSync(path.join(dir,'data')),false);
 });
 
 test('repeated intake apply reuses installed dependencies and saves distinct receipts',()=>{

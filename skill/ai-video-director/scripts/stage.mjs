@@ -5,6 +5,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {artifact,json,resolveArtifact,verifyRenderReceipt,decode,probe,invariant,sha256} from './lib/media-contract.mjs';
 import {sameFile,finite} from './lib/media-contract.mjs';
+import {verifyRecovery} from './lib/recovery.mjs';
 
 const scripts = path.dirname(fileURLToPath(import.meta.url));
 function audit(script,args) {
@@ -33,6 +34,7 @@ export function checkStage(manifestFile,stage) {
   invariant(['rough-render','fine-render','deliver'].includes(stage),'Unknown stage');
   const file=path.resolve(manifestFile),base=path.dirname(file),m=json(file);
   invariant(m.schemaVersion === 1 && typeof m.projectId === 'string' && m.projectId,'Invalid pipeline manifest');
+  const recoveryEvidence=verifyRecovery(m.recovery,base);
   invariant(['rough-cut','full-edit'].includes(m.outputScope),'outputScope must be rough-cut or full-edit');
   invariant(!(m.outputScope==='rough-cut' && stage==='fine-render'),'Fine render is outside the rough-cut-only scope');
   const locate = (key)=> {
@@ -42,7 +44,7 @@ export function checkStage(manifestFile,stage) {
   const brief=locate('contentBrief');
   audit('audit-director-brief.mjs',[brief,'--language',m.language]);
   approval(m.approvals?.content,brief,base,'content');
-  const inputs=[artifact(brief),artifact(resolveArtifact(m.approvals.content.evidence,base))];
+  const inputs=[...recoveryEvidence,artifact(brief),artifact(resolveArtifact(m.approvals.content.evidence,base))];
   let bound;
   if(stage !== 'rough-render') {
     const rough=locate('roughReview');

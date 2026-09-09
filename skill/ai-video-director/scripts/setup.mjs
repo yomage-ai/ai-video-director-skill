@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {activateRuntimePaths, classifyChatcut, findHyperframes, nativeInstallPlan, npmCommand, run, runtimeRoot, skillRoots, version, xmlDependency} from './lib/setup-runtime.mjs';
 import {artifact, decode, probe} from './lib/media-contract.mjs';
 import {prepareChatcutUpload} from './lib/chatcut-upload-compat.mjs';
+import {recoveryAction} from './lib/recovery.mjs';
 
 const skillDir=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const manifest=JSON.parse(readFileSync(path.join(skillDir,'references','dependencies.json'),'utf8'));
@@ -82,8 +83,11 @@ function chatcut() {
   add('chatcut',status,{version:plugin?.version || null,authStatus:authStatus || 'unknown'});
   if (status==='disabled') action('chatcut','Check why this plugin is disabled; preserve an explicit user-disable decision. Enable only within current authorization, using the host supported command.');
   else if (status==='missing' || status==='registration-required') action('chatcut','Resume the official plugin install/registration flow and verify its actual result.');
-  else if (status==='authentication-required') action('chatcut-login','Agent runs the bundled CLI mcp login chatcut once, then rechecks mcp list and discovers the live tools again. Ask the user only if browser sign-in actually needs their action. Do not reinstall or assume a new session is necessary.');
-  else action('chatcut-session','Discover live ChatCut tools and make a read-only call. If auth is required, Agent runs the bundled CLI mcp login chatcut once, rechecks auth and live tools, and asks the user only if browser sign-in actually needs their action. If this session cannot load newly installed tools after recovery, save the project handoff and request a new session. Installed does not mean logged in or callable.');
+  else if (status==='authentication-required') {
+    report.userActions.push({name:'chatcut-login',...recoveryAction('authentication','ChatCut','The installed connector reports not_logged_in; login/consent is required before source upload or editing.')});
+    action('chatcut-login','Tell the user that ChatCut needs login and open the official sign-in flow once. Let the user complete required login/consent. Recheck mcp list and make a live call before resuming. Record the blocker in pipeline.recovery. Do not switch to local editing or another model/provider to avoid this step.');
+  }
+  else action('chatcut-session','Discover live ChatCut tools and make a read-only call. If it requests authentication, explain the login to the user, open the official flow once and wait for any required user consent. Recheck auth and live tools before resuming; record the blocker rather than switching routes. Request a new session only when re-discovery fails after recovery. Installed does not mean logged in or callable.');
   action('source-listen','Before editing, test whether this exact host/model receives real audio for analysis. Name the working modality or reviewer and bind a real speech sample. A playable file, audio attachment returned to the user, ASR text, waveform, or ChatCut login is not a listening-capability pass. If unavailable, record the exact missing route and stop production handoff; do not turn a rough-cut request into permission for an unreviewed export.');
   if (status==='installed-session-verification-required') {
     const helper=plugin?.source?.path && path.join(plugin.source.path,'skills','asset-import','scripts','upload-media.mjs');
