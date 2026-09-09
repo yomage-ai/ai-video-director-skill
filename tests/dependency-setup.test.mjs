@@ -44,6 +44,9 @@ test('ChatCut registration can never establish login, live tools or operational 
   assert.equal(classifyChatcut({installed:true,enabled:false},{enabled:true}),'disabled');
   assert.equal(classifyChatcut({installed:true,enabled:true},null),'registration-required');
   assert.equal(classifyChatcut({installed:true,enabled:true},{enabled:true}),'installed-session-verification-required');
+  assert.equal(classifyChatcut({installed:true,enabled:true},{enabled:true},'not_logged_in'),'authentication-required');
+  assert.equal(classifyChatcut({installed:true,enabled:true},{enabled:true},'o_auth'),'installed-session-verification-required');
+  assert.equal(classifyChatcut({installed:true,enabled:false},{enabled:true},'not_logged_in'),'disabled');
 });
 
 test('Skill-only packaging carries a usable exact dependency lock and detects the absent XML module',()=>{

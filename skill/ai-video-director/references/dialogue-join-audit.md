@@ -21,6 +21,14 @@ The decision order is strict: `intended word intelligibility -> natural pause an
 
 ## Boundary Method / 边界方法
 
+Audit speech **inside every retained source interval**, not just the joins between placed items. ASR can collapse a restart into one clean sentence and assign the hidden repetition to an unusually long word. A clean transcript is not evidence that speech occurs only once. Overlapping short transcriptions and timing anomalies can locate candidates; compare against the source sound before deciding. Once repetition is reported, enumerate retained and removed occurrences across the whole source and verify the rendered occurrence count. Unresolved source/render transcription disagreements remain blocking issues, not notes handed to the creator as finished cleanup.
+
+检查对象包括**每个保留区间内部的发音**，不只有时间线片段之间的剪点。转写可能把重说合并成一句，再把重复时长塞进一个异常长的词；文稿干净不能证明只说了一次。短窗口重叠转写与时长异常只用于定位，取舍必须回到原声。收到重复反馈后，Agent 全片枚举保留和删除的发音次数，并核对成片；源转写与成片转写的分歧未解决时必须阻断，不能带着备注当作已清理完成。
+
+For blinking, eye/gaze resets and expression continuity, inspect the motion around the cut, including the outgoing tail and incoming lead-in; three adjacent stills alone miss events a few frames away. Move the cut only while preserving the entire word. Do not remove every natural blink, stretch a freeze, or cover a defect with B-roll before determining whether the original A-roll can be joined cleanly.
+
+快眨眼、眼神复位与表情衔接要看剪点前后的连续变化，包括出点尾部和入点预留，不能只看相邻三帧。调整剪点必须保住完整字词；不批量删除自然眨眼，不靠定格延长或先盖 B-roll 回避 A-roll 本身可修的衔接。
+
 1. Mark semantic boundaries first. Do not place a cut inside a word, consonant release, or meaningful emphasis merely because the transcript row ends there.
 2. Before editing, write the expected last and first tokens for the join. Include particles or short function words when the manuscript requires them.
 3. On the outgoing side, keep the full final word and its natural release, then stop before swallow, lip smack, mouth reset, or stale dead air.

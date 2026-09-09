@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-06",
+  "updatedAt": "2026-09-09",
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "public",
   "license": "Apache-2.0",
-  "status": "v0.2.0-rc.5-executable-chatcut-upload-compat-real-cloud-validation-bounded",
+  "status": "v0.2.0-rc.6-installed-cli-gate-and-auth-diagnosis",
   "validatedAt": "2026-09-06",
-  "release": "0.2.0-rc.5",
+  "release": "0.2.0-rc.6",
   "candidateRelease": "0.2.0",
   "skill": {
     "id": "ai-video-director",
@@ -1070,5 +1070,19 @@
       "noTranscribePreserved": true,
       "maxParallelPartsObserved": 2
     }
+  },
+  "roughReadinessRepair": {
+    "date": "2026-09-09",
+    "changes": [
+      "installed-directory-symlink-stage-cli-executes-checks",
+      "reported-mcp-authentication-state-and-login-recovery",
+      "actual-auditory-input-check-before-rough-execution",
+      "retained-clip-interior-repetition-and-motion-context-review",
+      "no-implied-unreviewed-trial-delivery"
+    ],
+    "auditoryBackendBundled": false,
+    "actualAuditoryProductionValidation": "not-completed",
+    "regressionValidation": "64 tests: 63 passed; existing historical commit-email audit failed. Targeted stage/setup suite 12 passed; current-tree privacy scan and Skill validation passed. Historical commits were not rewritten.",
+    "scope": "Software/readiness repair; does not certify perceptual editing quality or a new listening provider."
   }
 }

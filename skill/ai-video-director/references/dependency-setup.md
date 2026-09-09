@@ -30,6 +30,16 @@ HyperFrames 安装包只带部分入口 Skill，因此还要补齐匹配版本�
 
 ## ChatCut host and sign-in / 宿主和登录
 
+Read the `chatcut` row from the bundled CLI's `mcp list --json` as well as `mcp get`. `not_logged_in` is a concrete authentication result; an installed plugin cannot repair it. Agent runs one login flow, rechecks authentication, then searches the active tools again and performs a read-only call. Tools may become available after login in the same task: request a new task only after re-discovery actually fails. Do not infer a host-reload requirement from missing tools alone.
+
+同时读取宿主 CLI 的 `mcp list --json` 与 `mcp get`。`not_logged_in` 表示未登录，重装插件不能解决。Agent 发起一次登录、复查状态，再重新发现工具并真实只读调用；本任务内可能就能恢复，不能仅因最初没工具就让用户换任务。
+
+### Auditory capability / 听审能力
+
+This package installs editing dependencies; it does **not** bundle or provision an auditory-review model. The current ChatCut inspection contract returns timeline state, frames and transcripts, which do not establish that the calling model receives sound. Before rough execution, Agent must identify a supported real-audio input/reviewer, pass a short speech sample through that exact route, and record what was actually heard. Producing WAV files, showing a player, ASR or waveform analysis cannot fill this check. If no route works, identify that missing capability before rendering and keep production blocked. Do not silently upload private media to a new provider or start a paid service as a substitute. A configured and authorized alternative still needs its own sample test.
+
+本包会准备剪辑依赖，但**没有内置或安装负责听感判断的模型**。当前 ChatCut 检查接口提供时间线、静帧和转写，不能证明调用模型收到了声音。粗剪前 Agent 必须找出本宿主可用的真实音频输入或审听者，用短口播实测并记录实际听到的内容。生成 WAV、展示播放器、转写和波形分析都不能通过此检查。没有可用路线时，应在渲染前明确缺失能力并阻断生产交付；不能暗中新增上传渠道或付费服务。已配置且获授权的替代路线也需要小样验证。
+
 Before selecting the rough-edit host or starting any upload, read [chatcut-media-recovery.md](chatcut-media-recovery.md). Rough setup now automatically prepares the SHA-verified upload compatibility helper. The Agent uses `chatcut-upload.mjs` for actual hosted imports and retries; this entry also prepares it on demand. Reinstalling the original plugin alone does not remove its timeout, install Desktop or establish playback. / 粗剪准备会自动生成经完整校验的上传适配，上传和重试必须走内置 `chatcut-upload.mjs`；该入口也能即时自备，不靠用户另传文档或改参数。重装原插件本身不能代替这项修复，安装也不能冒充实际播放通过。
 
 For Codex desktop, first locate the **CLI bundled with the currently running desktop app**, verify it with `--version`, and pass its absolute path to setup. On macOS inspect the actual app bundle's `Contents/Resources/codex`; do not assume the app name or use a random standalone `codex` from PATH. On Windows locate the installed desktop app/runtime from the host environment and inspect its bundled CLI. The installer uses the official marketplace, reads its assigned name, installs only a missing plugin and then inspects the actual plugin registry and `mcp get chatcut`. It preserves an existing marketplace and never guesses success from its cache folder. Newly acquired plugin code is pinned in [dependencies.json](dependencies.json); a different offered version requires an upstream/governance check before installation.

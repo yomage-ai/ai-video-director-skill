@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtempSync,readFileSync,writeFileSync,existsSync} from 'node:fs';
+import {mkdtempSync,readFileSync,writeFileSync,existsSync,symlinkSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -12,6 +13,22 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 const templates=path.join(root,'skill/ai-video-director/assets/templates');
 const write=(file,data)=>writeFileSync(file,JSON.stringify(data,null,2));
 const approval=(file,evidence)=>({approvedBy:'user',approvedAt:new Date().toISOString(),artifact:artifact(file),evidence:artifact(evidence)});
+
+test('installed directory symlink executes stage CLI and fails closed like the real path',()=>{
+  const dir=mkdtempSync(path.join(os.tmpdir(),'director-installed-cli-'));
+  const installed=path.join(dir,'installed-skill');
+  symlinkSync(path.join(root,'skill','ai-video-director'),installed,process.platform==='win32'?'junction':'dir');
+  const file=path.join(dir,'unapproved.json');
+  const manifest=json(path.join(templates,'pipeline.template.json'));
+  write(file,manifest);
+  const invoke=script=>spawnSync(process.execPath,[script,'check',file,'rough-render'],{encoding:'utf8'});
+  const direct=invoke(path.join(root,'skill','ai-video-director','scripts','stage.mjs'));
+  const linked=invoke(path.join(installed,'scripts','stage.mjs'));
+  assert.equal(direct.status,1);
+  assert.equal(linked.status,1);
+  assert.equal(linked.stderr,direct.stderr);
+  assert.ok(linked.stderr.trim().length>0);
+});
 
 // Explicitly synthetic approvals and capability attestations test the gate logic only.
 // They are never installed as production approvals or claimed as a human listening test.

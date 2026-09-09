@@ -4,6 +4,10 @@
 
 The normal workflow uses `pipeline.json` and `stage.mjs`. These gates check actual files and the declared dependency graph; they do not prove human perception, user identity, or OS-level unbypassability. Never fabricate a listening record or user approval to satisfy a validator.
 
+A generic request to rough-cut or “try cutting it first” does not waive source listening or quality gates. Do not invent a `trialOnly` mode or use a custom renderer to turn a failed gate into a user-facing rough-cut delivery. An explicitly requested unreviewed experiment can remain an experiment, but does not fulfill reviewed editing. Require a nonempty structured stage result: exit code zero without a result is not a passed check. Directory-symlink installations are supported by the CLI entry point.
+
+“先剪出来”“试着粗剪”不代表用户放弃听审和质量要求。Agent 不得自行创造 `trialOnly` 模式或另写渲染脚本，把失败的门禁变成可交付粗剪。用户明确要求的未审实验只能作为实验，不代表剪辑要求已完成。阶段命令必须返回非空结构化结果；仅退出码为零、没有结果不能算通过。入口支持目录符号链接安装。
+
 ### Bind files and approvals
 
 `node scripts/evidence.mjs bind <file>...` computes absolute paths and streaming SHA-256 hashes. Use these records for sources, configuration, code, user-message excerpts, capability results and media. Relative paths in records resolve against the containing JSON file. Keep all private records outside this repository.

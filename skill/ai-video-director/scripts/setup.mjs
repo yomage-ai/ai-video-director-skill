@@ -76,11 +76,15 @@ function chatcut() {
     plugin=list()?.installed?.find(p=>p.name==='chatcut');
   }
   const server=readCommand([codex,'mcp','get','chatcut','--json']);
-  const status=classifyChatcut(plugin,server);
-  add('chatcut',status,{version:plugin?.version || null});
+  const servers=readCommand([codex,'mcp','list','--json']);
+  const authStatus=Array.isArray(servers) ? servers.find(s=>s.name==='chatcut')?.auth_status : undefined;
+  const status=classifyChatcut(plugin,server,authStatus);
+  add('chatcut',status,{version:plugin?.version || null,authStatus:authStatus || 'unknown'});
   if (status==='disabled') action('chatcut','Check why this plugin is disabled; preserve an explicit user-disable decision. Enable only within current authorization, using the host supported command.');
   else if (status==='missing' || status==='registration-required') action('chatcut','Resume the official plugin install/registration flow and verify its actual result.');
-  else action('chatcut-session','Discover live ChatCut tools and make a read-only call. If auth is required, Agent runs the bundled CLI mcp login chatcut once and asks the user to complete browser sign-in. If this session cannot load newly installed tools, save the project handoff and request a new session. Installed does not mean logged in or callable.');
+  else if (status==='authentication-required') action('chatcut-login','Agent runs the bundled CLI mcp login chatcut once, then rechecks mcp list and discovers the live tools again. Ask the user only if browser sign-in actually needs their action. Do not reinstall or assume a new session is necessary.');
+  else action('chatcut-session','Discover live ChatCut tools and make a read-only call. If auth is required, Agent runs the bundled CLI mcp login chatcut once, rechecks auth and live tools, and asks the user only if browser sign-in actually needs their action. If this session cannot load newly installed tools after recovery, save the project handoff and request a new session. Installed does not mean logged in or callable.');
+  action('source-listen','Before editing, test whether this exact host/model receives real audio for analysis. Name the working modality or reviewer and bind a real speech sample. A playable file, audio attachment returned to the user, ASR text, waveform, or ChatCut login is not a listening-capability pass. If unavailable, record the exact missing route and stop production handoff; do not turn a rough-cut request into permission for an unreviewed export.');
   if (status==='installed-session-verification-required') {
     const helper=plugin?.source?.path && path.join(plugin.source.path,'skills','asset-import','scripts','upload-media.mjs');
     if (helper && existsSync(helper)) {

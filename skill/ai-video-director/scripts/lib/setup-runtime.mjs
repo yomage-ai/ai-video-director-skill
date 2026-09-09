@@ -79,9 +79,10 @@ export function findHyperframes(wanted) {
   return null;
 }
 
-export function classifyChatcut(plugin, server) {
+export function classifyChatcut(plugin, server, authStatus) {
   if (!plugin?.installed) return 'missing';
   if (!plugin.enabled) return 'disabled';
   if (!server?.enabled) return 'registration-required';
+  if (authStatus === 'not_logged_in') return 'authentication-required';
   return 'installed-session-verification-required';
 }

@@ -137,7 +137,9 @@ export function runStage(file,stage) {
   writeFileSync(`${output}.stage.json`,JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});
   return {ok:true,stage,output,receipt:`${output}.stage.json`};
 }
-if (process.argv[1] && path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {
+// Installed Skills may be directory symlinks. Compare file identities so the
+// documented installed-path command cannot silently skip its CLI entry point.
+if (process.argv[1] && existsSync(process.argv[1]) && sameFile(process.argv[1],fileURLToPath(import.meta.url))) {
   try {
     const [command,file,stage]=process.argv.slice(2);
     invariant(['check','run'].includes(command) && file && stage,'Usage: stage.mjs <check|run> <pipeline.json> <rough-render|fine-render|deliver>');

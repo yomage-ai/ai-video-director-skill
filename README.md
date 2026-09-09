@@ -33,6 +33,8 @@ The built-in Xiaoxiong style covers captions, dialogue loudness, natural-bright 
 
 On first use, the Agent checks and prepares the tools it needs. If a login, system permission, or payment requires your action, it explains the specific steps. Newly installed plugins may require a new task before they become available.
 
+Complete rough-cut review also requires a host that can provide real auditory analysis; this Skill does not include a listening model. The Agent tests that capability first. If sound cannot reach a reviewer, it explains the limitation and does not present an unheard video as completed editing.
+
 Large recordings are checked locally first. The Skill includes an upload compatibility script that the Agent prepares and runs automatically, preserving the existing edit during recovery. You do not need a separate troubleshooting document or manual parameter changes. Login or system authorization is requested only when needed. See [large files and upload recovery](skill/ai-video-director/references/chatcut-media-recovery.md).
 
 ## What You Provide

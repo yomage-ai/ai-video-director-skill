@@ -67,6 +67,10 @@ For a rough-cut-only request, set `outputScope: "rough-cut"`, bind `roughDeliver
 
 Never mark a file reviewed from a successful tool call, an ASR transcript, a checked boolean or one attractive still. Missing auditory or visual capability must remain an explicit unverified item. The Agent records actual listening and rendered evidence; user approval is preserved with its source, timestamp and artifact hash.
 
+Establish the actual sound-input route before rough execution; this package does not bundle an auditory reviewer. A request to “rough-cut first” does not authorize bypassing failed checks or delivering an unreviewed experiment as completed cleanup. Audit retained clip interiors as well as joins: ASR can hide repeated speech, and adjacent stills can miss blinking and expression resets. See the dependency and dialogue-join references above.
+
+粗剪执行前先实测声音输入路线；本包没有内置听感审查模型。“先粗剪”不授权跳过失败检查或把未审实验作为清理结果交付。保留片段内部与片段衔接都要检查：转写可能漏掉重复，相邻静帧可能漏掉快眨眼和表情复位，具体按上面的依赖与衔接规范执行。
+
 工具成功、转写存在、勾选字段或单张好看的图，都不能证明质量通过。Agent 必须留下实际检查方式与对应版本；缺少视听能力时如实标记未验证。
 
 ## Feedback And Verification / 反馈与验证
