@@ -10,6 +10,10 @@ A generic request to rough-cut or “try cutting it first” does not waive sour
 
 ### Recovery and route changes / 阻塞恢复与路线变化
 
+Scope a blocker to the selected operation. `stage.mjs` controls gated renders and delivery, not every editor tool call. An unresolved auditory review can coexist with authorized ChatCut import, transcription and provisional editable timeline work. Keep the quality blocker until real review passes; do not mark it resolved merely to resume those independent operations. A proposed paid reviewer is optional until selected, and its credentials must not become a blanket prerequisite for the established editor route.
+
+阻塞对应所选操作。`stage.mjs` 管的是需要验收条件的渲染与交付，不是所有编辑器工具调用。听审未完成时，仍可做已授权的 ChatCut 导入、转写和候选可编辑时间线；质量阻塞保持未解决，不为继续这些独立操作而伪造通过。拟议付费审听模型尚未选定时，其凭据不能成为既有剪辑路线的统一前提。
+
 On a real login, permission, billing, capability or quality obstruction, append a record to `pipeline.recovery.blockers` before further dependent execution. Preserve the original provider and concrete failure; `recoveryAction()` in `scripts/lib/recovery.mjs` separates user account/consent decisions from Agent technical repair. Tell the user what action, destination/data scope, and cost are involved. Wait on actual required input, while continuing independent authorized preparation. Do not bypass an authorization denial with another tool or provider, or silently reduce review quality.
 
 遇到真实登录、权限、费用、能力或质量阻塞，先在 `pipeline.recovery.blockers` 留下记录。说明原服务、实际失败、用户操作、涉及素材与费用；需要用户的输入就等待，同时继续独立且获授权的准备工作。不得换工具或服务绕过拒绝，不得偷偷降低质量要求。

@@ -7,6 +7,12 @@
   "status": "v0.2.0-rc.7-explicit-recovery-and-route-consent",
   "validatedAt": "2026-09-06",
   "release": "0.2.0-rc.7",
+  "routeScopeClarification": {
+    "date": "2026-09-09",
+    "change": "Keep ChatCut import, transcription and provisional editable work separate from audited render/delivery. No paid auditory API is mandated.",
+    "preserved": "Actual auditory quality remains unverified until reviewed; existing render and delivery gates remain enforced.",
+    "scope": "Bilingual instruction clarification, not a new provider adoption or completed video repair."
+  },
   "candidateRelease": "0.2.0",
   "skill": {
     "id": "ai-video-director",
