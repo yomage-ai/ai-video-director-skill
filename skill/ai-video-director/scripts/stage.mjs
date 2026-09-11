@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {artifact,json,resolveArtifact,verifyRenderReceipt,decode,probe,invariant,sha256} from './lib/media-contract.mjs';
 import {sameFile,finite} from './lib/media-contract.mjs';
 import {verifyRecovery} from './lib/recovery.mjs';
+import {checkRevision,runRevision} from './lib/locked-master.mjs';
 
 const scripts = path.dirname(fileURLToPath(import.meta.url));
 function audit(script,args) {
@@ -31,10 +32,16 @@ function outputSpec(spec, media) {
   invariant(Math.abs(Number(media.format.duration)-spec.durationFrames/spec.fps)<Math.max(0.1,2/spec.fps),'Rendered duration differs from outputSpec');
 }
 export function checkStage(manifestFile,stage) {
-  invariant(['rough-render','fine-render','deliver'].includes(stage),'Unknown stage');
+  invariant(['rough-render','fine-render','revision-render','revision-review','deliver'].includes(stage),'Unknown stage');
   const file=path.resolve(manifestFile),base=path.dirname(file),m=json(file);
   invariant(m.schemaVersion === 1 && typeof m.projectId === 'string' && m.projectId,'Invalid pipeline manifest');
   const recoveryEvidence=verifyRecovery(m.recovery,base);
+  if(m.outputScope==='locked-master') {
+    const result=checkRevision(file,stage);result.inputs.push(...recoveryEvidence);
+    if(stage==='deliver') audit('audit-learning-scope-ledger.mjs',[resolveArtifact(m.supporting.learningLedger,base)]);
+    return result;
+  }
+  invariant(!stage.startsWith('revision-'),'Revision stages require locked-master scope');
   invariant(['rough-cut','full-edit'].includes(m.outputScope),'outputScope must be rough-cut or full-edit');
   invariant(!(m.outputScope==='rough-cut' && stage==='fine-render'),'Fine render is outside the rough-cut-only scope');
   const locate = (key)=> {
@@ -50,6 +57,7 @@ export function checkStage(manifestFile,stage) {
     const rough=locate('roughReview');
     audit('audit-rough-cut-review.mjs',[rough]);
     const review=json(rough);
+    if(m.reviewSchemas) invariant(m.reviewSchemas.rough===5&&review.schemaVersion===5,'New pipeline requires schema 5 retained-interior review');
     approval(m.approvals?.rough,rough,base,'rough');
     bound=verifyRenderReceipt(review.evidenceBinding.renderReceipt,path.dirname(rough));
     inputs.push(artifact(rough),artifact(bound.file),artifact(bound.edlPath),artifact(bound.program),artifact(resolveArtifact(m.approvals.rough.evidence,base)));
@@ -59,6 +67,7 @@ export function checkStage(manifestFile,stage) {
     approval(m.approvals?.style,direction,base,'style');
     inputs.push(artifact(direction),artifact(resolveArtifact(m.approvals.style.evidence,base)));
     const directionData=json(direction);
+    if(m.reviewSchemas) invariant(m.reviewSchemas.fine===2&&directionData.schemaVersion===2,'New pipeline requires schema 2 complete presentation review');
     invariant(directionData.evidenceBinding.roughRenderReceipt.sha256 === artifact(bound.file).sha256,'Style sample is based on another rough render');
     for(const ref of [directionData.evidenceBinding.sample,...directionData.evidenceBinding.dependencies]) {
       inputs.push(artifact(resolveArtifact(ref,path.dirname(direction),'style dependency')));
@@ -121,6 +130,7 @@ export function checkStage(manifestFile,stage) {
 }
 export function runStage(file,stage) {
   const checked=checkStage(file,stage);
+  if(checked.scope==='locked-master') return runRevision(checked);
   if(stage==='deliver') return {...checked,m:undefined,base:undefined};
   const {m,base,inputs}=checked,job=m.jobs[stage];
   const output=path.resolve(base,job.outputPath);
@@ -144,7 +154,7 @@ export function runStage(file,stage) {
 if (process.argv[1] && existsSync(process.argv[1]) && sameFile(process.argv[1],fileURLToPath(import.meta.url))) {
   try {
     const [command,file,stage]=process.argv.slice(2);
-    invariant(['check','run'].includes(command) && file && stage,'Usage: stage.mjs <check|run> <pipeline.json> <rough-render|fine-render|deliver>');
+    invariant(['check','run'].includes(command) && file && stage,'Usage: stage.mjs <check|run> <pipeline.json> <rough-render|fine-render|revision-render|revision-review|deliver>');
     const result=command==='run'?runStage(file,stage):checkStage(file,stage);
     console.log(JSON.stringify({...result,m:undefined,base:undefined},null,2));
   } catch(error) { console.error(error.message); process.exitCode=1; }

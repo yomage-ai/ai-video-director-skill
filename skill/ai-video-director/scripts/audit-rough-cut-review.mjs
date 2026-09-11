@@ -2,6 +2,7 @@
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import path from 'node:path';
+import {checkInteriorReview} from './lib/editorial-checks.mjs';
 import {verifyRenderReceipt,resolveArtifact,probe,joins,invariant,verifyAudioWindow} from './lib/media-contract.mjs';
 import {sameFile} from './lib/media-contract.mjs';
 
@@ -35,7 +36,7 @@ function requireNumber(value, field, minimum = 0) {
   if (!Number.isFinite(value) || value < minimum) errors.push(`${field} must be a number >= ${minimum}`);
 }
 
-if (data.schemaVersion !== 4) errors.push('schemaVersion must be 4; regenerate evidence from the current render receipt');
+if (![4,5].includes(data.schemaVersion)) errors.push('schemaVersion must be 4 or 5; regenerate evidence from the current render receipt');
 if (!['ready-for-user-review', 'approved'].includes(data.status)) {
   errors.push('status must be ready-for-user-review or approved');
 }
@@ -45,6 +46,11 @@ try {
   bound = verifyRenderReceipt(data.evidenceBinding?.renderReceipt,path.dirname(path.resolve(inputPath)));
   invariant(data.canonicalEdlVersion === bound.receipt.edl.sha256,'canonicalEdlVersion does not match bound EDL');
 } catch(error) { errors.push(`evidenceBinding: ${error.message}`); }
+if(bound && data.schemaVersion===5) {
+  try { checkInteriorReview(data.retainedInteriorReview,bound.edl,bound.receipt.output.sha256,path.dirname(path.resolve(inputPath))); }
+  catch(error) { errors.push(`retainedInteriorReview: ${error.message}`); }
+}
+if(data.schemaVersion===4) warnings.push('Legacy review: no machine-enumerated retained-interval audit. Generate schema 5 for new rough work.');
 
 const inventory = data.timelineInventory ?? {};
 requireNumber(inventory.placedMediaItems, 'timelineInventory.placedMediaItems', 1);

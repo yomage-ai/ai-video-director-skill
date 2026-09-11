@@ -58,7 +58,9 @@ When the user asks to stop after rough editing, set `outputScope: "rough-cut"` i
 
 ### Existing projects and regression
 
-Never backfill old records as if these checks happened historically. Regenerate schema-4 rough review from the current render receipt. Keep legacy projects and approved outputs intact. EDL v1 can be rendered for straight-cut compatibility, but new XML conversion produces v2. A current rough review always requires a fresh media receipt.
+Never backfill old records as if these checks happened historically. Regenerate schema-5 rough review from the current render receipt, including `retainedInteriorReview` for every kept interval. New fine directions use schema 2: `informationPlan` plus `presentation` from the complete dynamic sample. Old schema-4/1 documents remain readable with warnings; new work must not select old formats to skip checks. Keep legacy projects and approved outputs intact. EDL v1 can be rendered for straight-cut compatibility, but new XML conversion produces v2. A current rough review always requires a fresh media receipt.
+
+For an explicitly approved master with visual-only changes, use the separate [locked-master revision route](locked-master-revisions.md). It inherits only the exact approved audio and timing, compares all unchanged regions, and never represents inheritance as a fresh auditory review. / 已批准母版仅改画面时用独立修订路线，继承原音和时间并比较未改区域，不冒充重新听审。
 
 Use `trial-metrics.json` for the next independent production. Record actual first-card latency, active time, revision and rerender counts, repeated defects, host preset, RSS and swap evidence, and creator acceptance. Keep missing data null. Unit tests, a synthetic clip, retrospective replay and a new real production are different evidence classes.
 

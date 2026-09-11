@@ -10,32 +10,18 @@ https://github.com/yomage-ai/ai-video-director-skill
 
 My material: [attached recording or local path; manuscript and references if available]
 Target platform and aspect ratio: [for example: Douyin, 9:16]
-Main point of the video: [one sentence, or help me refine it]
 Style request or reference: [optional; use the built-in Xiaoxiong style by default]
-
-Inspect the material first. In my language, explain the main point, what to keep or remove, and the rough-cut plan.
-Wait for my approval before continuing production.
-After the rough cut is locked, show me a 6-12 second audiovisual fine-edit sample before producing the full fine edit.
-Then deliver the final video, editable project, and verification records.
-When publishing is requested, also prepare several cover-title, caption, hashtag, and AI-disclosure options.
-Reuse approvals already given for this task. Ask only when a new payment, login, system permission, identity/voice use, or media-rights authorization is actually needed.
-```
-
-For a rough cut only:
-
-```text
-Use $ai-video-director on this recording. Make a rough cut only: remove mistakes, retakes and unnecessary waits while keeping complete words and natural pacing. Show me the content and rough-cut plan first. After I approve the rough cut, deliver it with the editable timing project and captions, then stop.
 ```
 
 This Skill turns recorded talking-head footage into edited videos. It can remove mistakes and retakes, add captions, adjust sound and picture, and add suitable motion graphics, music, and sound effects. Request a rough cut only or continue to a full fine edit.
 
-The built-in Xiaoxiong style covers captions, dialogue loudness, natural-bright color treatment, palettes, and screen layout. You can provide your own reference or let the Agent recommend a direction based on the content. Xiaoxiong character art and signature outros require the separate `xiaoxiong-ip` Skill and permission to use that identity; editing your own videos does not require it.
+The Xiaoxiong style is built in. Provide your own reference or let the Agent recommend a direction based on the content.
 
 On first use, the Agent checks and prepares the tools it needs. If a login, system permission, or payment requires your action, it explains the specific steps. Newly installed plugins may require a new task before they become available.
 
 Complete rough-cut review also requires a host that can provide real auditory analysis; this Skill does not include a listening model. The Agent tests that capability first. If sound cannot reach a reviewer, it explains the limitation and does not present an unheard video as completed editing.
 
-Large recordings are checked locally first. The Skill includes an upload compatibility script that the Agent prepares and runs automatically, preserving the existing edit during recovery. You do not need a separate troubleshooting document or manual parameter changes. Login or system authorization is requested only when needed. See [large files and upload recovery](skill/ai-video-director/references/chatcut-media-recovery.md).
+Already edited a version yourself? Say: “Keep my chosen clips, order, speed and audio; only improve the named visual elements.” Agent preserves that master, adds missing visuals, captions and top progress, and checks the changed regions. Audio or structural edits use the normal review route. Existing valid approvals are reused.
 
 ## What You Provide
 
@@ -43,7 +29,7 @@ Large recordings are checked locally first. The Skill includes an upload compati
 - Target platform, aspect ratio, and intended use.
 - Required points, sections, source material, or references.
 - Any style preference or visual reference you already have (optional).
-- The source footage and editable project when continuing an existing video.
+- For an existing edit, provide that version; source footage and an editable project help when available. Agent first checks what the supplied flattened video can safely support.
 
 ## What You Receive
 

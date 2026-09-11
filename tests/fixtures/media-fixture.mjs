@@ -35,7 +35,11 @@ export function mediaFixture(rate=1) {
   return fixture;
 }
 export function bindRoughReview(review) {
+  review.schemaVersion=5;
   const fixture=mediaFixture(review.playbackSpeedReview.selectedRate);
+  if(review.schemaVersion===5) review.retainedInteriorReview={programSha256:sha256(fixture.output),intervals:fixture.edl.segments.map(s=>({segmentId:s.id,startFrame:s.outputStartFrame,endFrame:s.outputEndFrameExclusive,
+    normalSpeedAudio:true,normalSpeedMotion:true,method:'Synthetic gate fixture only',observation:'Not a real listening or motion review',evidence:fixture.receipt,
+    classes:Object.fromEntries(['restart','mouth-preparation','blink-reset','literal-repeat','semantic-repeat'].map(k=>[k,'clear']))}))};
   review.evidenceBinding={renderReceipt:fixture.receipt};
   review.canonicalEdlVersion=fixture.receipt && json(fixture.receipt.path).edl.sha256;
   const p=fixture.prepared.manuscriptAudibilityAudit.verifiedBoundaries[0];
@@ -50,11 +54,17 @@ export function bindRoughReview(review) {
   return fixture;
 }
 export function bindFineDirection(direction,rate=1) {
+  direction.schemaVersion=2;
   const fixture=mediaFixture(rate);
   direction.basedOn.canonicalEdlVersion=json(fixture.receipt.path).edl.sha256;
   direction.basedOn.durationFrames=fixture.edl.durationFrames;
   direction.basedOn.fps=fixture.edl.outputFps;
   direction.audiovisualSample.reviewArtifact=fixture.sample;
   direction.evidenceBinding={roughRenderReceipt:fixture.receipt,sample:artifact(fixture.sample),dependencies:[artifact(fixture.output),artifact(fixture.edlFile)]};
+  if(direction.schemaVersion===2) {
+    direction.informationPlan={schemaVersion:1,claims:[{id:'synthetic',viewerBenefit:'Gate regression only',occurrences:[{role:'primary',sourceId:'synthetic',locator:'frames 0–900',speaker:'presenter'}]}]};
+    direction.presentation={schemaVersion:1,preset:'synthetic',orientation:'landscape',portraitSafeCoordinatesApplied:false,screenRuns:[],cutoutUsed:false,
+      elements:Object.fromEntries(['captions','progress','presenter','screen','graphics','audio'].map(k=>[k,{state:['captions','presenter','audio'].includes(k)?'present':'absent',reason:'Synthetic gate fixture only',review:{normalSpeed:true,method:'Synthetic fixture',observation:'Not real perceptual evidence',sampleSha256:sha256(fixture.sample),evidence:fixture.receipt}}]))};
+  }
   return fixture;
 }

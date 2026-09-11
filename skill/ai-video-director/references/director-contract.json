@@ -688,7 +688,7 @@
         "portraitDeliveryLayoutPreset": "layout.portrait-talking-head.safe-v1",
         "parameterTemplate": "assets/templates/semantic-progress-rmcu.template.json"
       },
-      "verticalPlacement": "platform-validated-edge-band-bottom-first",
+      "verticalPlacement": "approved-edge-band-xiaoxiong-landscape-top",
       "labelApproval": {
         "proposalStage": "director-plan-before-style-preview",
         "proposalIncludes": [
@@ -715,8 +715,8 @@
         "contrastSurface": "narrow-full-width-translucent-neutral-strip",
         "text": "light-with-restrained-dark-shadow-or-stroke",
         "perChapterBoxesDefault": false,
-        "positionDefault": "bottom-first-after-platform-exclusion-validation",
-        "topPlacementDefault": "conditional-when-bottom-is-occluded-or-collides",
+        "positionDefault": "top-for-xiaoxiong-landscape-screen-preset-otherwise-approved-layout",
+        "topPlacementDefault": "preserve-approved-top-do-not-inherit-portrait-coordinates",
         "activeState": "weight-opacity-and-progress-indicator",
         "sceneBySceneColorInversion": false,
         "verificationFrames": [

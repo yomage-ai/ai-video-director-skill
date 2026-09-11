@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "reviewSchemas": {"rough": 5, "fine": 2},
   "projectId": "replace-with-project-id",
   "language": "en",
   "publicationInScope": false,

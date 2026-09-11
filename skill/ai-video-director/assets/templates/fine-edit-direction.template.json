@@ -1,5 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "informationPlan": {"schemaVersion": 1, "claims": []},
+  "presentation": null,
   "projectId": "replace-with-project-id",
   "status": "in-progress",
   "basedOn": {

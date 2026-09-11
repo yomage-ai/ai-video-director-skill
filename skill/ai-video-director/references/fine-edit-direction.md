@@ -4,6 +4,8 @@ Read this reference after rough-cut timing is locked and before building a full 
 
 粗剪时间线锁定后、制作完整精剪前读取本参考。
 
+New directions use schema 2 with `informationPlan` and `presentation`; Agent fills the latter from `presentation.template.json` and binds every present layer's actual dynamic sample observation. Read [locked-master-revisions.md](locked-master-revisions.md) for the shared data contract, screen narrative roles and frame mapping. A recording may provide the primary explanation; presenter footage only adds missing information. Supplied usable screen video is the preferred starting point for Xiaoxiong's landscape preset; stills require a specific clarity reason, not production convenience. Never loop clicks or replay the same explanation behind a second telling. / 新样片使用 schema 2，逐项绑定实际动态证据。录屏可承担主叙事，人物只补讲缺失内容；小熊横屏默认原视频正常流动，静态化需说明可读性理由，不因制作方便而截图。禁止用循环点击填时间，也不让口播和录屏重复讲一遍。
+
 ## English
 
 ### Design from the viewer's job

@@ -1,12 +1,23 @@
 {
   "schemaVersion": 1,
   "profileId": "xiaoxiong-public-style-v1",
-  "version": 1,
-  "updatedAt": "2026-09-06",
+  "version": 2,
+  "updatedAt": "2026-09-11",
   "scope": "bundled-public-default",
   "authorization": "creator-explicitly-authorized-public-sharing-of-approved-editing-style-2026-09-06",
   "preferences": {
     "talkingHead": {
+      "landscapeScreen": {
+        "preset": "xiaoxiong-landscape-screen-v1",
+        "canvas": "preserve-approved-native-aspect-resolution-and-cadence-not-forced-16:9",
+        "progressEdge": "top",
+        "captions": {"surface": "transparent", "align": "center", "layer": "topmost", "verticalPlacement": "approved-bottom-caption-lane"},
+        "portraitSafeCoordinatesApplied": false,
+        "screen": {"preferOriginalVideo": true, "supportMuted": true, "loopOperations": false, "zoom": "only-for-demonstrated-legibility-need"},
+        "presenter": {"role": "supplement-missing-information", "cutout": "optional-not-mandatory", "size": "reuse-approved-normalized-size-no-universal-half-scale", "chairIncluded": false},
+        "transitions": "preserve-approved-treatment-unless-current-request-changes-it",
+        "template": "assets/templates/presentation.template.json"
+      },
       "audioLoudness": {
         "version": 1,
         "measurementSource": "actual-rendered-timeline-after-cuts-denoise-fades-and-gain",

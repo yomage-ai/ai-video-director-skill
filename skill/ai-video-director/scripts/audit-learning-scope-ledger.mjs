@@ -40,6 +40,7 @@ try {
 
 const errors = [];
 const warnings = [];
+if (/replace-with|explain-why|<placeholder>/i.test(JSON.stringify(data))) errors.push('Unfinished learning scaffold: replace placeholder content or record an explicit no-new-learning review.');
 if (data.schemaVersion !== 1) errors.push('schemaVersion must be 1.');
 if (!nonEmpty(data.projectId)) errors.push('projectId is required.');
 if (Array.isArray(data.entries) && data.entries.length === 0 && data.reviewedNoNewLearning === true && nonEmpty(data.noNewLearningReason)) {

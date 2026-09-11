@@ -1,6 +1,23 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-09",
+  "updatedAt": "2026-09-11",
+  "localImprovement": {
+    "status": "user-approved-four-point-source-release",
+    "scope": ["locked-master-visual-revision", "retained-interior-review", "complete-dynamic-sample", "information-ownership", "integer-frame-rebase", "keyframe-tail-reuse", "iteration-events"],
+    "independentRealProjectValidation": "pending",
+    "remoteSubmissionAuthorized": true,
+    "releaseScope": "2026-09-11-user-approved-four-points-only-later-creator-feedback-and-host-update-changes-excluded",
+    "engineeringValidation": {
+      "checkedAt": "2026-09-11T04:18:29Z",
+      "tests": {"total": 78, "passed": 77, "failed": 1, "newRevisionTestsPassed": 9},
+      "remainingFailure": "pre-existing-public-repository-audit-of-historical-commit-email-metadata-no-history-rewrite-authorized",
+      "localDoctor": "pass-installation-only",
+      "currentFilePrivacyScan": "pass-137-files-no-findings",
+      "skillQuickValidate": "pass",
+      "diffWhitespace": "pass",
+      "perceptualQuality": "not-established-by-synthetic-tests"
+    }
+  },
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
   "visibility": "public",
   "license": "Apache-2.0",
@@ -22,12 +39,12 @@
   "activeWorkflow": "governed-talking-head-video-v1",
   "candidateWorkflow": "evidence-bound-talking-head-video-v2",
   "candidatePromotionGate": {
-    "remoteSubmissionAllowedNow": true,
+    "remoteSubmissionAllowedNow": false,
     "requiredEvidence": "engineering-regression-skill-validation-privacy-review-and-nonconflicting-remote-state",
     "afterTrial": "record-real-project-quality-resource-and-revision-outcomes-without-retroactively-equating-source-submission-with-trial-success",
     "trialMetricsTemplate": "skill/ai-video-director/assets/templates/trial-metrics.template.json",
     "authorizedAt": "2026-09-06",
-    "authorization": "user-explicitly-requested-recheck-and-direct-remote-submission",
+    "authorization": "historical-authorization-revoked-2026-09-10-current-result-review-required-before-commit-or-push",
     "previousTrialBeforeSubmissionHold": "superseded-by-explicit-current-authorization"
   },
   "curatedStyleLibrary": {
@@ -602,7 +619,7 @@
           "parameterTemplate": "assets/templates/semantic-progress-rmcu.template.json",
           "implementation": "inline-editor-motion-graphic-code-not-staged-in-repository"
         },
-        "verticalPlacement": "platform-validated-edge-band-bottom-first",
+        "verticalPlacement": "approved-edge-band-xiaoxiong-landscape-top",
         "labelApproval": {
           "proposalStage": "director-plan-before-style-preview",
           "proposalContent": "label-order-one-sentence-scope-and-narrative-anchor",
@@ -619,8 +636,8 @@
           "contrastSurface": "narrow-full-width-translucent-neutral-strip",
           "text": "light-with-restrained-dark-shadow-or-stroke",
           "perChapterBoxesDefault": "forbidden",
-          "positionDefault": "bottom-first-after-platform-exclusion-validation",
-          "topPlacementDefault": "conditional-after-platform-proof",
+          "positionDefault": "top-for-xiaoxiong-landscape-screen-preset-otherwise-approved-layout",
+          "topPlacementDefault": "preserve-approved-top-do-not-inherit-portrait-coordinates",
           "activeState": "weight-opacity-fill-and-playhead",
           "sceneBySceneColorInversion": "forbidden",
           "verification": "a-roll-bright-b-roll-dark-b-roll-chapter-boundaries-native-phone-and-published-target-device-scale",

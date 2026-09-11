@@ -88,7 +88,7 @@ test('project scaffold stays outside the repository and includes decision artifa
   assert.equal(intake.projectId, 'test-video');
   assert.equal(roughCutReview.projectId, 'test-video');
   assert.equal(roughCutReview.takeSelectionPolicy.principle, 'quality-first');
-  assert.equal(roughCutReview.schemaVersion, 4);
+  assert.equal(roughCutReview.schemaVersion, 5);
   assert.equal(roughCutReview.timelineInventory.allRealJoinsRepresented, false);
   assert.equal(roughCutReview.paceConsistencyReview.comparisonWindows.length, 3);
   assert.equal(roughCutReview.fullCutReview.listenedFromStartToFinish, false);
@@ -1125,14 +1125,14 @@ test('director plan schema carries reusable rough-cut and privacy guardrails', (
   assert.equal(plan.finishingPass.chapterProgress.component.activeSegmentPanel, false);
   assert.equal(plan.finishingPass.chapterProgress.component.personalIdentityAssetRequired, false);
   assert.equal(plan.finishingPass.chapterProgress.verticalPlacement,
-    'platform-validated-edge-band-bottom-first');
+    'approved-edge-band-xiaoxiong-landscape-top');
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.semanticLayer,
     'chapter-progress-not-caption-track');
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.contrastSurface,
     'narrow-full-width-translucent-neutral-strip');
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.perChapterBoxesDefault, false);
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.topPlacementDefault,
-    'conditional-when-bottom-is-occluded-or-collides');
+    'preserve-approved-top-do-not-inherit-portrait-coordinates');
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.sceneBySceneColorInversion, false);
   assert.equal(plan.finishingPass.chapterProgress.labelVisualBaseline.nativeAndPhoneScaleVerification,
     true);
@@ -1299,9 +1299,9 @@ test('rough cut owns natural color while finishing separates captions from progr
     'preserve-unless-explicit-caption-redesign');
   assert.equal(finishing.captions.progressLayerRequests, 'must-not-restyle-captions');
   assert.equal(finishing.chapterProgress.labelVisualBaseline.positionDefault,
-    'bottom-first-after-platform-exclusion-validation');
+    'top-for-xiaoxiong-landscape-screen-preset-otherwise-approved-layout');
   assert.equal(finishing.chapterProgress.labelVisualBaseline.topPlacementDefault,
-    'conditional-after-platform-proof');
+    'preserve-approved-top-do-not-inherit-portrait-coordinates');
   assert.equal(finishing.chapterProgress.labelVisualBaseline.perChapterBoxesDefault, 'forbidden');
 
   const standard = readFileSync(

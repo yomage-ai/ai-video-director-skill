@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "preset": "xiaoxiong-landscape-screen-v1",
+  "orientation": "landscape",
+  "portraitSafeCoordinatesApplied": false,
+  "captions": {"surface": "transparent", "align": "center", "layer": "topmost"},
+  "progress": {"edge": "top"},
+  "cutoutUsed": false,
+  "screenRuns": [],
+  "elements": {
+    "captions": {"state": "pending", "reason": ""},
+    "progress": {"state": "pending", "reason": ""},
+    "presenter": {"state": "pending", "reason": ""},
+    "screen": {"state": "pending", "reason": ""},
+    "graphics": {"state": "pending", "reason": ""},
+    "audio": {"state": "pending", "reason": ""}
+  }
+}

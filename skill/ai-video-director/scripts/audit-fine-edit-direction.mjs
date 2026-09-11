@@ -5,6 +5,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {resolveArtifact,verifyRenderReceipt,probe,invariant} from './lib/media-contract.mjs';
 import {sameFile} from './lib/media-contract.mjs';
+import {checkInformationPlan,checkPresentation} from './lib/editorial-checks.mjs';
 
 const [inputPath, reportPath] = process.argv.slice(2);
 if (!inputPath) {
@@ -44,7 +45,13 @@ const requireNumber = (value, field, minimum = 0) => {
 };
 const nonEmptyString = (value) => typeof value === 'string' && value.trim() !== '';
 
-if (data.schemaVersion !== 1) errors.push('schemaVersion must be 1');
+if (![1,2].includes(data.schemaVersion)) errors.push('schemaVersion must be 1 (legacy) or 2');
+if(data.schemaVersion===2) {
+  try {
+    checkInformationPlan(data.informationPlan);
+    checkPresentation(data.presentation,path.dirname(path.resolve(inputPath)),{sample:data.evidenceBinding?.sample});
+  } catch(error) { errors.push(error.message); }
+} else warnings.push('Legacy direction: regenerate schema 2 for new work to bind the complete dynamic presentation and information plan.');
 if (!['ready-for-user-review', 'approved'].includes(data.status)) {
   errors.push('status must be ready-for-user-review or approved');
 }

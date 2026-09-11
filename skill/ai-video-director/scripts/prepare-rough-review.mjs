@@ -13,12 +13,18 @@ const binding = artifact(path.resolve(receiptArg));
 const {edl,program,receipt} = verifyRenderReceipt(binding,process.cwd());
 const template = fileURLToPath(new URL('../assets/templates/rough-cut-review.template.json',import.meta.url));
 const review = json(template);
+review.schemaVersion=5;
 review.status = 'in-progress';
 review.evidenceBinding = {renderReceipt:binding};
 review.canonicalEdlVersion = receipt.edl.sha256;
 const boundaries = joins(edl);
 review.timelineInventory = {durationSeconds:edl.durationSeconds,placedMediaItems:edl.segments.length,
   expectedJoinCount:boundaries.length,actualJoinCount:boundaries.length,allRealJoinsRepresented:true};
+review.retainedInteriorReview={programSha256:receipt.output.sha256,intervals:edl.segments.map(s=>({
+  segmentId:s.id,startFrame:s.outputStartFrame,endFrame:s.outputEndFrameExclusive,
+  normalSpeedAudio:false,normalSpeedMotion:false,method:'',observation:'',evidence:null,
+  classes:{restart:'pending','mouth-preparation':'pending','blink-reset':'pending','literal-repeat':'pending','semantic-repeat':'pending'}
+}))};
 const directory = path.join(path.dirname(output),path.basename(output,'.json')+'-windows');
 mkdirSync(directory,{recursive:true});
 review.manuscriptAudibilityAudit.verifiedBoundaries = boundaries.map((boundary,index)=>{

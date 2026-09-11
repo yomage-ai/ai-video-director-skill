@@ -186,10 +186,10 @@ function show(args) {
   const valueAt = (obj,key) => key.split('.').reduce((v,k)=>v?.[k],obj);
   const stage = args.stage || 'intake';
   const selectors = {
-    intake: /(?:content|intake|source|workflow|platformFrame|styleSelection|handdrawnKnowledgeMapStyle)/i,
+    intake: /(?:content|intake|source|workflow|platformFrame|styleSelection|handdrawnKnowledgeMapStyle|landscapeScreen)/i,
     rough: /(?:rough|dialogue|pace|pause|color|loudness|takeSelection|playback|productionBaseline)/i,
-    fine: /(?:caption|style|palette|visual|presenter|cutout|outline|progress|outro|broll|screenRecording|evidence|audioLoudness)/i,
-    release: /(?:render|production|delivery|platform|loudness)/i,
+    fine: /(?:caption|style|palette|visual|presenter|cutout|outline|progress|outro|broll|screenRecording|evidence|audioLoudness|landscapeScreen)/i,
+    release: /(?:render|production|delivery|platform|loudness|landscapeScreen)/i,
     all: /./,
   };
   if (!selectors[stage]) throw new Error('--stage must be intake, rough, fine, release, or all');
