@@ -1,15 +1,27 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-11",
+  "updatedAt": "2026-09-15",
   "localImprovement": {
-    "status": "user-approved-four-point-source-release",
-    "scope": ["locked-master-visual-revision", "retained-interior-review", "complete-dynamic-sample", "information-ownership", "integer-frame-rebase", "keyframe-tail-reuse", "iteration-events"],
+    "status": "implemented-local-awaiting-result-review",
+    "scope": [
+      "locked-master-visual-revision",
+      "retained-interior-review",
+      "complete-dynamic-sample",
+      "information-ownership",
+      "integer-frame-rebase",
+      "keyframe-tail-reuse",
+      "iteration-events"
+    ],
     "independentRealProjectValidation": "pending",
-    "remoteSubmissionAuthorized": true,
-    "releaseScope": "2026-09-11-user-approved-four-points-only-later-creator-feedback-and-host-update-changes-excluded",
+    "remoteSubmissionAuthorized": false,
     "engineeringValidation": {
       "checkedAt": "2026-09-11T04:18:29Z",
-      "tests": {"total": 78, "passed": 77, "failed": 1, "newRevisionTestsPassed": 9},
+      "tests": {
+        "total": 78,
+        "passed": 77,
+        "failed": 1,
+        "newRevisionTestsPassed": 9
+      },
       "remainingFailure": "pre-existing-public-repository-audit-of-historical-commit-email-metadata-no-history-rewrite-authorized",
       "localDoctor": "pass-installation-only",
       "currentFilePrivacyScan": "pass-137-files-no-findings",
@@ -39,12 +51,12 @@
   "activeWorkflow": "governed-talking-head-video-v1",
   "candidateWorkflow": "evidence-bound-talking-head-video-v2",
   "candidatePromotionGate": {
-    "remoteSubmissionAllowedNow": false,
+    "remoteSubmissionAllowedNow": true,
     "requiredEvidence": "engineering-regression-skill-validation-privacy-review-and-nonconflicting-remote-state",
     "afterTrial": "record-real-project-quality-resource-and-revision-outcomes-without-retroactively-equating-source-submission-with-trial-success",
     "trialMetricsTemplate": "skill/ai-video-director/assets/templates/trial-metrics.template.json",
-    "authorizedAt": "2026-09-06",
-    "authorization": "historical-authorization-revoked-2026-09-10-current-result-review-required-before-commit-or-push",
+    "authorizedAt": "2026-09-15",
+    "authorization": "explicit-current-local-source-sync-2026-09-15; further functional changes still require their own result approval",
     "previousTrialBeforeSubmissionHold": "superseded-by-explicit-current-authorization"
   },
   "curatedStyleLibrary": {
@@ -1120,5 +1132,111 @@
     "newProviderProductionTest": "not-run-pending-user-route-authorization",
     "validation": "17 targeted checks passed; full suite 69 tests, 68 passed and the pre-existing historical commit-email audit failed. Current-tree privacy scan, doctor and Skill validation are checked separately. No history rewrite.",
     "doesNotCertify": "Perceptual quality or completed real-video recut."
+  },
+  "uploadHelperCompatibilityRepair": {
+    "date": "2026-09-11",
+    "status": "approved-for-current-source-synchronization",
+    "supportedHelperVersions": [
+      "0.2.26",
+      "1.10.12"
+    ],
+    "scope": "Reviewed helper hash registry with actual-version provenance, unchanged official plugin and transport transformation.",
+    "validation": {
+      "targetedTests": "6/6 pass",
+      "fullSuite": "78/79 pass; pre-existing historical commit-email audit",
+      "controlledUpload": "pass: actual installed original and adapted 1.10.12 helpers",
+      "doctor": "pass installation-only",
+      "realCloud": "two authorized videos prepared, uploaded and transcribed successfully; both visible in editor playback; no full audiovisual quality claim"
+    },
+    "remoteSubmissionAuthorized": true,
+    "currentAuthorizationDate": "2026-09-15"
+  },
+  "userReadyRecoveryUpdate": {
+    "date": "2026-09-11",
+    "status": "approved-for-current-source-synchronization",
+    "scope": [
+      "hosted-MCP-first-no-plugin-version-gate",
+      "automatic-isolated-reviewed-upload-helper-acquisition",
+      "bounded-recovery-and-offline-reuse",
+      "authorized-Skill-update-backup",
+      "explicit-creative-stage-and-action-ownership"
+    ],
+    "remoteSubmissionAuthorized": true,
+    "completeZeroSetupProductionClaim": false,
+    "remainingCapability": "Actual auditory-review route is host-dependent and not bundled. Installation and ASR cannot establish listening.",
+    "validation": {
+      "fullSuite": "Final full rerun after implementation: 88/89 pass; only pre-existing historical commit-email audit fails",
+      "doctor": "pass installation-only",
+      "skillQuickValidate": "pass using existing Python environment with PyYAML",
+      "currentFilePrivacy": "pass 140 files, no findings",
+      "realOfficialAcquisition": "cold fetch full SHA pass; unknown active helper unchanged; offline cache reuse pass",
+      "controlledUpload": "real isolated official/adapted helper: byte hash, two parallel parts, finalization, same-asset retry and no-transcribe pass",
+      "realExistingHost": "existing authenticated macOS MCP connection and upload helper setup pass, no host config change",
+      "notClaimed": [
+        "fresh-account OAuth on live service",
+        "Windows/Linux device onboarding",
+        "arbitrary future backend contract compatibility",
+        "actual auditory quality",
+        "finished fine edit"
+      ]
+    },
+    "remoteStateChecked": "Remote main matches local committed base; current uncommitted improvements are not released.",
+    "currentAuthorizationDate": "2026-09-15"
+  },
+  "creatorFeedbackWorkflow": {
+    "date": "2026-09-11",
+    "status": "approved-for-current-source-synchronization",
+    "default": "Agent prepares and checks rough cut; creator gives feedback and approval; continue fine edit",
+    "listeningModels": "not-proposed-installed-tested-or-called",
+    "appliesTo": "all-installations-and-resumed-projects",
+    "remoteSubmissionAuthorized": true,
+    "validation": {
+      "targetedTests": "18/18 pass",
+      "fullSuite": "92/93 pass; existing commit-email history audit fails",
+      "doctor": "pass",
+      "currentFilePrivacy": "144 files clean",
+      "skillStructure": "valid",
+      "remoteCommitPush": "not performed"
+    },
+    "currentAuthorizationDate": "2026-09-15"
+  },
+  "currentSourceSubmission": {
+    "date": "2026-09-15",
+    "status": "user-authorized-current-local-snapshot",
+    "authorization": "Creator explicitly requested checking and submitting the current local Skill to synchronize remote and local. Existing candidate source is in scope; new functional repairs, history rewriting and release artifacts are not added.",
+    "remoteSubmissionAuthorized": true,
+    "scope": [
+      "creator-feedback-review-schema-6",
+      "measured-all-join-and-retained-interval-pause-ledger",
+      "hosted-chatcut-readiness-and-reviewed-upload-helper",
+      "preserved-backup-for-authorized-skill-update",
+      "bilingual-workflow-documents-and-anonymous-regressions"
+    ],
+    "validation": {
+      "tests": {
+        "total": 97,
+        "passed": 96,
+        "failed": 1
+      },
+      "remainingFailure": "Pre-existing historical commit email metadata audit; current files clean, no history rewrite.",
+      "doctor": "pass-installation-only",
+      "currentFilePrivacyScan": "pass-147-files-no-findings",
+      "diffWhitespace": "pass"
+    },
+    "knownUnresolvedIssues": [
+      {
+        "file": "skill/ai-video-director/scripts/setup.mjs",
+        "issue": "Legacy source-listen action wording still conflicts with the creator-feedback instructions."
+      },
+      {
+        "file": "skill/ai-video-director/scripts/migrate-creator-review.mjs",
+        "issue": "Blocker retirement identifies legacy IDs/kinds without a dedicated prerequisite-only marker; manually distinguish actual quality defects before migration."
+      },
+      {
+        "file": "skill/ai-video-director/scripts/director.mjs",
+        "issue": "Authorized update preserves a backup but does not automatically restore the old installation after subsequent setup failure."
+      }
+    ],
+    "qualityBoundary": "One creator-approved full video does not establish universal editing quality, cross-platform onboarding, or all pending independent trial metrics."
   }
 }

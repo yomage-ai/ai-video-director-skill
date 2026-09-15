@@ -13,11 +13,20 @@ const binding = artifact(path.resolve(receiptArg));
 const {edl,program,receipt} = verifyRenderReceipt(binding,process.cwd());
 const template = fileURLToPath(new URL('../assets/templates/rough-cut-review.template.json',import.meta.url));
 const review = json(template);
-review.schemaVersion=5;
+review.schemaVersion=6;
+review.reviewMode='creator-feedback';
+review.pauseContractVersion=1;
 review.status = 'in-progress';
 review.evidenceBinding = {renderReceipt:binding};
 review.canonicalEdlVersion = receipt.edl.sha256;
 const boundaries = joins(edl);
+const pendingCheck=()=>({status:'pending',method:'',observation:'',evidence:null});
+review.agentPreparation={programSha256:receipt.output.sha256,listeningModelUsed:false,agentAuditoryReviewClaimed:false,
+  checks:Object.fromEntries(['content','picture','pauses','pace','audioLevels','decode'].map(k=>[k,pendingCheck()])),
+  intervals:edl.segments.map(s=>({segmentId:s.id,startFrame:s.outputStartFrame,endFrame:s.outputEndFrameExclusive,...pendingCheck()})),
+  boundaries:boundaries.map(b=>({...b,expectedLastToken:'',expectedFirstToken:'',...pendingCheck()})),unresolvedIssues:[]};
+review.creatorFeedback={approvedBy:null,approvedAt:null,programSha256:null,quote:'',evidence:null};
+review.agentPreparation.pauseLedger=null;
 review.timelineInventory = {durationSeconds:edl.durationSeconds,placedMediaItems:edl.segments.length,
   expectedJoinCount:boundaries.length,actualJoinCount:boundaries.length,allRealJoinsRepresented:true};
 review.retainedInteriorReview={programSha256:receipt.output.sha256,intervals:edl.segments.map(s=>({
@@ -39,4 +48,4 @@ review.manuscriptAudibilityAudit.verifiedBoundaries = boundaries.map((boundary,i
 });
 writeFileSync(output,JSON.stringify(review,null,2)+'\n');
 console.log(JSON.stringify({output,joins:boundaries.length,status:'in-progress',
-  next:'Agent must actually listen, inspect, measure and fill review decisions; generation does not approve quality.'}));
+  next:'Agent completes content, every interval/join, picture, pause, pace and audio-level checks, then delivers for creator feedback. Do not set listening claims or request an audio model.'}));

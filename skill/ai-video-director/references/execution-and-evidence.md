@@ -1,18 +1,20 @@
 # Execution And Evidence / 执行与证据
 
+Current review ownership: follow [creator-feedback-review.md](creator-feedback-review.md). Agent completes technical/content preparation; creator reviews the rough cut and gives feedback. Historical listening-specific fields do not require a listening model or block normal handoff. 当前审片职责以上述规则为准：Agent 检查并交付粗剪，创作者反馈后继续；不得把历史听审字段变成模型安装或暂停条件。
+
 ## English
 
 The normal workflow uses `pipeline.json` and `stage.mjs`. These gates check actual files and the declared dependency graph; they do not prove human perception, user identity, or OS-level unbypassability. Never fabricate a listening record or user approval to satisfy a validator.
 
-A generic request to rough-cut or “try cutting it first” does not waive source listening or quality gates. Do not invent a `trialOnly` mode or use a custom renderer to turn a failed gate into a user-facing rough-cut delivery. An explicitly requested unreviewed experiment can remain an experiment, but does not fulfill reviewed editing. Require a nonempty structured stage result: exit code zero without a result is not a passed check. Directory-symlink installations are supported by the CLI entry point.
+The default is schema 6 creator feedback. Agent preparation still requires actual technical/content evidence; it does not require an audio model. Deliver a reviewable rough cut, then preserve the creator's feedback and approval. Never fabricate listening or approval fields. Directory-symlink installations are supported.
 
-“先剪出来”“试着粗剪”不代表用户放弃听审和质量要求。Agent 不得自行创造 `trialOnly` 模式或另写渲染脚本，把失败的门禁变成可交付粗剪。用户明确要求的未审实验只能作为实验，不代表剪辑要求已完成。阶段命令必须返回非空结构化结果；仅退出码为零、没有结果不能算通过。入口支持目录符号链接安装。
+默认使用 schema 6 创作者反馈流程。Agent 完成实际技术与内容检查后交付可审粗剪，再绑定用户反馈和确认；无需音频模型，也不伪造听审或批准。
 
 ### Recovery and route changes / 阻塞恢复与路线变化
 
-Scope a blocker to the selected operation. `stage.mjs` controls gated renders and delivery, not every editor tool call. An unresolved auditory review can coexist with authorized ChatCut import, transcription and provisional editable timeline work. Keep the quality blocker until real review passes; do not mark it resolved merely to resume those independent operations. A proposed paid reviewer is optional until selected, and its credentials must not become a blanket prerequisite for the established editor route.
+Do not create blockers for a missing listening model or unused audio API. When resuming older records, retire only obsolete listening-model requirements with a policy-correction receipt; do not claim they passed. Real selected-editor authentication, permissions and technical failures remain scoped recovery work.
 
-阻塞对应所选操作。`stage.mjs` 管的是需要验收条件的渲染与交付，不是所有编辑器工具调用。听审未完成时，仍可做已授权的 ChatCut 导入、转写和候选可编辑时间线；质量阻塞保持未解决，不为继续这些独立操作而伪造通过。拟议付费审听模型尚未选定时，其凭据不能成为既有剪辑路线的统一前提。
+旧工程只撤销已取消听审模型造成的前置条件，保留更正依据，不写成测试通过。实际登录、权限和技术故障继续按范围恢复。
 
 On a real login, permission, billing, capability or quality obstruction, append a record to `pipeline.recovery.blockers` before further dependent execution. Preserve the original provider and concrete failure; `recoveryAction()` in `scripts/lib/recovery.mjs` separates user account/consent decisions from Agent technical repair. Tell the user what action, destination/data scope, and cost are involved. Wait on actual required input, while continuing independent authorized preparation. Do not bypass an authorization denial with another tool or provider, or silently reduce review quality.
 

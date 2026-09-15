@@ -44,7 +44,7 @@
     "executionUploadsMedia": "only the authorized original official import flow",
     "credentialsInReceipt": false,
     "originalPluginModified": false,
-    "unknownHelper": "stop before preparation or execution",
+    "unknownHelper": "Unknown active code is neither modified nor executed. Automatically acquire the independently reviewed official helper with full SHA verification outside the Skill; preserve modified caches for Agent inspection.",
     "policyDenial": "stop; never use compatibility adaptation to bypass denied access or transfer"
   },
   "stability": {
@@ -90,5 +90,38 @@
     "priority": "P1-conditional",
     "allowedRole": "version-verified hosted helper compatibility within already-authorized video editing",
     "blockedRole": "editing plugin cache in place, guessed/private APIs, reimporting completed assets, claiming all possible network failures fixed, or redistributing the adapted upstream helper as Apache-2.0"
+  },
+  "reviewedHelperUpdates": [
+    {
+      "evaluatedAt": "2026-09-11",
+      "version": "1.10.12",
+      "revision": "506b5b0d671ac84e51aa803433ed690a96748bac",
+      "sha256": "72fe5aa2c5cce067f8d926a7588e7101632693b7453b627b9bda1fbb0b6477a9",
+      "authorization": "User explicitly requested repairing automatic upload and uploading the already selected source files.",
+      "review": "Installed bytes match official revision; diff against 0.2.26 changes transcription language sample and waveform metadata. The transport and four adaptation anchors are unchanged.",
+      "validation": "Six targeted tests passed. Real installed original/adapted helpers passed generated-video loopback upload, six-part byte hash, two-part concurrency, same-asset retry, no-transcribe preservation and original-helper integrity.",
+      "realCloudValidation": "Passed on macOS with two authorized videos: official preparation, transcription and multipart byte finalization completed; both source images reachable in existing editor playback. Private evidence remains outside repository. Does not certify editing or auditory quality.",
+      "scope": "Additional exact reviewed hash; legacy hash retained; unknown helper hashes still fail before execution. No plugin cache edits or new service."
+    }
+  ],
+  "automaticRecovery": {
+    "evaluatedAt": "2026-09-11",
+    "authorization": "User explicitly requests that new, old and absent local installations recover internally; only unavoidable login, permissions and new fees go to the user.",
+    "mechanism": "Prefer reviewed active helper; otherwise bounded HTTPS acquisition from immutable official revision, full SHA verification, isolated original/adapted caches, offline reuse. No private media or credentials in acquisition.",
+    "newProvider": false,
+    "newPayment": false,
+    "sourceVersion": "1.10.12 at 506b5b0d671ac84e51aa803433ed690a96748bac",
+    "validation": {
+      "coldOfficialDownload": "passed; full SHA matches",
+      "unknownActiveHelper": "preserved and not executed; isolated fallback prepared",
+      "offlineCacheReuse": "passed with fetch disabled",
+      "controlledRealHelperUpload": "passed full byte hash, two concurrent parts, finalization and same-asset retry/no-transcribe"
+    },
+    "limits": [
+      "Does not promise arbitrary future service API compatibility",
+      "Network download is bounded to two 30-second attempts and 2 MiB",
+      "No live Windows/Linux or brand-new-account OAuth validation",
+      "Local code repair awaits user review before remote submission"
+    ]
   }
 }

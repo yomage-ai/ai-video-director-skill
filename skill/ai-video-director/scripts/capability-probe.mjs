@@ -23,6 +23,6 @@ try {
     writeFileSync(evidenceFile,JSON.stringify(evidence,null,2)+'\n',{flag:'wx'});
     checks.push({name,status:'pass',version:evidence.version,method:'local encode and stream probe',checkedAt:new Date().toISOString(),evidence:artifact(evidenceFile)});
   }
-  writeFileSync(output,JSON.stringify({schemaVersion:1,checks,unverified:['chatcut','asr','source-listen','fine-renderer']},null,2)+'\n',{flag:'wx'});
+  writeFileSync(output,JSON.stringify({schemaVersion:1,checks,unverified:['chatcut','asr','fine-renderer']},null,2)+'\n',{flag:'wx'});
   console.log(JSON.stringify({output,checks:checks.map(c=>c.name),note:'Editor, ASR, auditory review and selected fine renderer require real host/tool evidence; installation is not connectivity.'}));
 } finally { rmSync(directory,{recursive:true,force:true}); }

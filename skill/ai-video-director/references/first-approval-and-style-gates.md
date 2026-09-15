@@ -1,5 +1,7 @@
 # First Approval And Style Gates / 首次确认与样式确认
 
+Current review ownership: follow [creator-feedback-review.md](creator-feedback-review.md). Agent completes technical/content preparation; creator reviews the rough cut and gives feedback. Historical listening-specific fields do not require a listening model or block normal handoff. 当前审片职责以上述规则为准：Agent 检查并交付粗剪，创作者反馈后继续；不得把历史听审字段变成模型安装或暂停条件。
+
 Use this reference when a new video asks for a content lock, director plan, or style direction. It keeps the first decision fast and separates editorial intent from fine-edit styling.
 
 新视频需要内容锁定卡、导演方案或样式方向时读取本参考。目标是让第一次确认足够快，并把内容与粗剪决定和精剪样式决定分开。
@@ -22,7 +24,7 @@ The early director plan should still recommend useful starting treatments instea
 
 ### Fast path
 
-When a reliable user-supplied manuscript exists, use it for the first content gate together with local media metadata and a quick source-orientation check. Full word timing, every-take comparison, and complete normal-speed listening remain mandatory before rough-cut review, but they do not need to delay the first content decision.
+When a reliable user-supplied manuscript exists, use it for the first content gate together with local media metadata and a quick source-orientation check. Before rough delivery, the Agent completes word timing, quality-first retake comparison and technical/content checks. The creator reviews the delivered rough cut at normal speed; no listening model is required. These preparation details do not delay the first content decision.
 
 Before the first approval, do not:
 
@@ -78,7 +80,7 @@ Start from `assets/templates/director-brief.<language>.template.md` and run `nod
 
 ### 快速首轮
 
-用户已经提供可靠文稿时，第一次内容确认优先使用文稿、本地媒体参数和快速素材核对。逐词时间、全部重录比较和全片正常速度听审仍然是粗剪前的必做项，但不需要拖住第一次内容判断。
+用户已经提供可靠文稿时，第一次内容确认优先使用文稿、本地媒体参数和快速素材核对。粗剪交付前由 Agent 完成逐词时间、重录质量比较及技术/内容检查；创作者收到粗剪后正常审片反馈，不需要听审模型。这些准备工作不拖住第一次内容判断。
 
 第一次确认前禁止做这些工作：
 

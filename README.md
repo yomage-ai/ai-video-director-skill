@@ -17,9 +17,9 @@ This Skill turns recorded talking-head footage into edited videos. It can remove
 
 The Xiaoxiong style is built in. Provide your own reference or let the Agent recommend a direction based on the content.
 
-On first use, the Agent checks and prepares the tools it needs. If a login, system permission, or payment requires your action, it explains the specific steps. Newly installed plugins may require a new task before they become available.
+On first use, the Agent checks and prepares the tools it needs. When your action is needed, it opens the available sign-in or permission flow and explains the exact step; any new payment requires your confirmation. If the host requires a new task to load a connection, it preserves the project and tells you where work resumes.
 
-Complete rough-cut review also requires a host that can provide real auditory analysis; this Skill does not include a listening model. The Agent tests that capability first. If sound cannot reach a reviewer, it explains the limitation and does not present an unheard video as completed editing.
+Agent checks content, joins, picture and audio levels, then delivers the rough cut for your feedback. After approval, it continues to fine editing. No additional listening model or audio-review purchase is required.
 
 Already edited a version yourself? Say: “Keep my chosen clips, order, speed and audio; only improve the named visual elements.” Agent preserves that master, adds missing visuals, captions and top progress, and checks the changed regions. Audio or structural edits use the normal review route. Existing valid approvals are reused.
 

@@ -12,6 +12,7 @@ import {
   readFileSync,
   readlinkSync,
   realpathSync,
+  renameSync,
   symlinkSync,
   unlinkSync,
   writeFileSync,
@@ -182,7 +183,7 @@ function doctor(args = {}) {
 
   const failed = checks.filter((check) => check.required && check.status !== 'pass');
   if (args.stage) {
-    const requiredByStage = {rough:['ffmpeg','ffprobe','chatcut','asr','source-listen'],fine:['ffmpeg','ffprobe','fine-renderer'],release:['ffmpeg','ffprobe','fine-renderer']};
+    const requiredByStage = {rough:['ffmpeg','ffprobe','chatcut','asr'],fine:['ffmpeg','ffprobe','fine-renderer'],release:['ffmpeg','ffprobe','fine-renderer']};
     if (!requiredByStage[args.stage]) throw new Error('--stage must be rough, fine or release');
     let capabilities = {checks:[]};
     if (args.capabilities) capabilities=JSON.parse(readFileSync(path.resolve(args.capabilities),'utf8'));
@@ -212,17 +213,37 @@ function lstatSafe(target) {
 }
 
 function installSkill(args) {
-  function finish(status,destination) {
+  function finish(status,destination,backup) {
     const child=spawnSync(process.execPath,[path.join(scriptDir,'setup.mjs'),'--stage','intake','--apply'],{encoding:'utf8',maxBuffer:8*1024*1024});
     if (child.stderr) process.stderr.write(child.stderr);
     let setup; try { setup=JSON.parse(child.stdout); } catch { setup={error:child.error?.message || 'Setup did not return a valid result'}; }
-    console.log(JSON.stringify({status,destination,source:skillDir,setup},null,2));
+    console.log(JSON.stringify({status,destination,source:skillDir,...(backup?{backup}:{}),setup},null,2));
     if (child.status!==0 || child.error) process.exitCode=1;
   }
   const destination = skillInstallPath();
   mkdirSync(path.dirname(destination), {recursive: true});
   const stat = lstatSafe(destination);
   if (stat) {
+    try {
+      if (realpathSync(destination)===realpathSync(skillDir)) { finish('already-installed',destination); return; }
+    } catch {}
+    if (args.update) {
+      const entry=path.join(destination,'SKILL.md');
+      if (!existsSync(entry) || !/^name:\s*ai-video-director\s*$/m.test(readFileSync(entry,'utf8'))) {
+        throw new Error('Existing destination is not an identified AI Video Director Skill. Agent must inspect ownership before replacing it.');
+      }
+      // Keep old SKILL.md outside discovery roots, otherwise the backup itself
+      // can be loaded as a second Skill with the same name.
+      const backupRoot=path.join(path.dirname(path.dirname(destination)),'skill-backups');
+      mkdirSync(backupRoot,{recursive:true});
+      const backup=path.join(backupRoot,`ai-video-director-${Date.now()}`);
+      if (lstatSafe(backup)) throw new Error('Skill backup already exists; Agent retries with a distinct backup location.');
+      renameSync(destination,backup);
+      try { symlinkSync(skillDir,destination,'dir'); }
+      catch(error) { renameSync(backup,destination); throw error; }
+      finish('updated',destination,backup);
+      return;
+    }
     if (stat.isSymbolicLink()) {
       try {
         if (realpathSync(destination) === realpathSync(skillDir)) {
@@ -233,11 +254,11 @@ function installSkill(args) {
         // A broken link may be replaced only with explicit force.
       }
       if (!args.force) {
-        throw new Error(`A different symlink exists at ${destination}; pass --force to replace only that symlink.`);
+        throw new Error(`A different installation exists at ${destination}; Agent uses --update for an authorized Skill update, preserving a backup.`);
       }
       unlinkSync(destination);
     } else {
-      throw new Error(`Refusing to replace a real file or directory at ${destination}.`);
+      throw new Error(`Existing Skill directory at ${destination}; Agent inspects it and uses --update for an authorized Skill update. Unknown files are preserved.`);
     }
   }
   symlinkSync(skillDir, destination, 'dir');
@@ -364,7 +385,7 @@ function usage() {
   console.log(`Usage:
   node scripts/director.mjs doctor [--stage rough|fine|release --capabilities <capabilities.json>]
   node scripts/director.mjs contract --section <name>
-  node scripts/director.mjs install-skill [--force]
+  node scripts/director.mjs install-skill [--update | --force]
   node scripts/director.mjs uninstall-skill
   node scripts/director.mjs init-project --id <id> [--root <outside-repo-directory>] [--language <zh-CN|en>] [--force]`);
 }

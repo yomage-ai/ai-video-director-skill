@@ -927,5 +927,26 @@
     "options": []
   },
   "risks": [],
-  "approvedAt": null
+  "approvedAt": null,
+  "reviewWorkflow": {
+    "mode": "creator-feedback",
+    "schemaVersion": 6,
+    "agentResponsibilities": [
+      "content",
+      "every-retained-interval",
+      "every-join",
+      "picture",
+      "pauses",
+      "pace",
+      "measured-audio-levels",
+      "decode"
+    ],
+    "creatorResponsibilities": [
+      "rough-feedback-and-approval",
+      "style-review",
+      "final-approval"
+    ],
+    "listeningModelsRequired": false,
+    "listeningModelProposalsEnabled": false
+  }
 }

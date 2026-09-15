@@ -1,5 +1,7 @@
 # Complete Workflow
 
+Current review ownership: follow [creator-feedback-review.md](creator-feedback-review.md). Agent completes technical/content preparation; creator reviews the rough cut and gives feedback. Historical listening-specific fields do not require a listening model or block normal handoff. 当前审片职责以上述规则为准：Agent 检查并交付粗剪，创作者反馈后继续；不得把历史听审字段变成模型安装或暂停条件。
+
 ## Mental Model
 
 Treat the workflow like renovating a home:
@@ -16,7 +18,7 @@ Changing soft furnishing is local. Changing the spoken content or cut points mea
 ```mermaid
 flowchart TD
   A["00 Lightweight intake and local probe"] --> B["01 First approval: content lock and rough-cut plan"]
-  B --> C["02 ASR, transcript correction, and full source listen"]
+  B --> C["02 ASR, transcript correction, and source preparation"]
   C --> D["03 Executable rough-cut plan"]
   D --> E["04 ChatCut rough-cut review"]
   E --> E2["04b Source-level A-roll color normalization"]
@@ -53,12 +55,12 @@ Before stages 02–04 import or resume media, apply [chatcut-media-recovery.md](
 |---|---|---|---|
 | 00 | Lock only the inputs needed for the first decision: platform, aspect ratio, source identities, supplied-manuscript reliability, rights/privacy blockers, and local media facts. Do not upload large media, retry a cloud import, render style, or research publication details before the first approval unless one of those actions is genuinely needed to understand the content | local file inspection, `ffprobe`, supplied manuscript, selective source orientation | lightweight intake and first-approval work-budget decision |
 | 01 | Present a plain-language card in the user's language that locks the core claim, must-keep content, removable content, order, rough-cut rhythm target, and uncertainties. Do not expose machine JSON. Do not ask the user to approve a visual style that has not been demonstrated | LLM plus user | approved content lock and rough-cut plan |
-| 02 | After first approval, turn speech into word-timed text, correct it against the recording, and listen through the complete source before cutting | ASR, ChatCut transcript, human listening | corrected transcript, word timing, and source-listen record |
+| 02 | After first approval, prepare word timing, correct supported transcript errors, inspect all retained source ranges and compare takes | ASR, ChatCut transcript, source frames and waveform | corrected transcript, word timing and source-preparation record |
 | 03 | Convert the approved content decision into executable selections, alternate-take decisions, expected joins, and early/middle/late pace windows | director reasoning | executable rough-cut plan |
-| 04 | Remove mistakes, repeats, dead sections, and bad takes while watching and listening; compare repeated takes quality-first, audit every real placed-item join at normal speed, classify pauses by function, compare early/middle/late speaking pace, apply only stable pitch-preserving retime when justified, use the later take only as a tie-breaker, then normalize original A-roll color once at source/track/global scope and roll back with a stage update if it drifts | ChatCut, decoded-frame comparison, `audit-rough-cut-review.mjs` | reviewed timeline, a complete fail-closed `rough-cut-review.json`, exact audio-window proof for every real join, pace and pause decisions, source-color proof, and FCP XML |
+| 04 | Remove mistakes, repeats, dead sections and bad takes; compare takes quality-first, inspect every placed-item join using timing, context, waveform and picture, classify pauses, compare early/middle/late pace, and normalize A-roll color at source/track/global scope | ChatCut, technical media checks, `audit-rough-cut-review.mjs` schema 6 | prepared rough timeline, honest Agent checks, creator-feedback handoff, pace/pause decisions, source-color proof and FCP XML |
 | 05 | Convert the reviewed edit into one machine-readable timing truth | XML bridge | canonical EDL |
 | 06 | Rebuild A-roll exactly from the best source | FFmpeg precise re-encode | A-roll master and captions aligned to it |
-| 07 | Watch and listen from start to finish after the last cut change; approve the source-level color decision | media checks plus human | locked rough cut and canonical EDL version whose A-roll color fine edit must inherit |
+| 07 | Creator reviews the prepared rough cut and gives feedback; Agent resolves feedback and preserves approval of that version and source color | Agent checks plus creator review | locked rough cut and canonical EDL version whose A-roll color fine edit must inherit |
 | 08 | Map each spoken section to evidence or a visual role; classify each aggregate run as `A-only`, `B-only`, or `AB-live`, choose the layout family separately for `AB-live`, and propose chapter labels, order, one-sentence scopes, and any recurring signature-outro candidate | LLM plus real artifacts | visual beat sheet, coverage-run plan, and semantic chapter proposal |
 | 09 | Preview the fine-edit direction only after rough-cut lock unless an exact approved private profile or reference already exists. Resolve the style source in order: exact approved reference, explicit user style/reference, public curated style, then dynamic adaptation after at least two curated candidates are assessed with rejection or borrowing reasons. The public library preserves liked, used, approved, and marked references but is not a closed asset whitelist. When no entry is a complete match, define one dominant visual/audio system and a beat-level plan for real evidence, generated or code-authored material, typography, icons, footage, music, and SFX. Use a `6-12 s` audiovisual sample with real dialogue, captions, the planned asset/evidence treatment, presenter treatment when relevant, and the proposed BGM/SFX state | curated style registry, dynamic adaptation contract, HyperFrames, Remotion, real media, `audit-fine-edit-direction.mjs` | audited style-source decision, asset plan, audiovisual system sample, and user approval |
 | 10 | Collect only usable assets and record their rights | owned files, rights-checked libraries | asset list and rights manifest |
@@ -91,4 +93,4 @@ When a ChatCut duplicate or downstream working timeline uses a different frame r
 
 Use [execution-and-evidence.md](execution-and-evidence.md) for stage commands, binding, approvals and migration. The graph describes editorial order; pipeline receipts bind real versions. The rough candidate is rendered before its own audit, while fine-render and delivery are gated. Read `production-standard.md` at rough/fine execution, not as a prerequisite to a lightweight content card.
 
-阶段图表达剪辑顺序，实际入口按文件哈希绑定。先生成粗剪候选再听审，精剪和交付必须经过门禁；轻量内容卡不先背完整生产规范。
+阶段图表达剪辑顺序，实际入口按文件哈希绑定。Agent 先生成并检查粗剪，再交付创作者反馈，精剪和交付必须经过门禁；轻量内容卡不先背完整生产规范。

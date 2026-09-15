@@ -1,5 +1,7 @@
 # Production Standard
 
+Current review ownership: follow [creator-feedback-review.md](creator-feedback-review.md). Agent completes technical/content preparation; creator reviews the rough cut and gives feedback. Historical listening-specific fields do not require a listening model or block normal handoff. 当前审片职责以上述规则为准：Agent 检查并交付粗剪，创作者反馈后继续；不得把历史听审字段变成模型安装或暂停条件。
+
 ## Content Lock
 
 Before rough cutting a fresh video, obtain approval for:
@@ -30,7 +32,7 @@ Rough cut is complete only when all of the following are true:
 - Dialogue order and meaning match the approved content lock.
 - Transcript text is correct, with timing accurate enough for downstream captions.
 - The original talking-head color is normalized or explicitly left unchanged at source, track, or global scope, with a natural-skin review and any failed correction rolled back.
-- The complete locked A-roll has been watched and listened to, not spot-checked.
+- The Agent has completed full-interval and full-join technical/content checks; the creator has reviewed and approved the exact rough-cut version. No listening model is required.
 - The canonical EDL is versioned and accepted.
 - Resolution, orientation, frame cadence, color, and audio have no unexplained degradation.
 
@@ -304,7 +306,7 @@ Run the smallest useful test for each risk:
 
 Only after these pass may the full video render.
 
-Before a rough cut is shown as ready for approval, run `scripts/audit-rough-cut-review.mjs`. The record must enumerate every real join, preserve and audibly verify both boundary tokens, resolve the rendered-program pause scan, compare early/middle/late pace, and document an Agent normal-speed full listen. When retiming was applied, the audit must also prove that joins and breaths, timeline boundaries, captions, B-roll, presenter or cutout, SFX, music and ducking, layout and motion, progress, transitions, and outro were rebased and reviewed, or explicitly marked `not-present`. ASR, waveform markers, silence detection, contact sheets, and transcript text are assists; none may be the sole proof of speech quality.
+Before presenting a rough cut, run `scripts/audit-rough-cut-review.mjs` with schema 6. Enumerate every retained interval and real join; inspect boundary words, timing, waveform, picture, pauses, early/middle/late pace and audio levels. Resolve known defects and record the actual methods without inventing Agent listening. Deliver the prepared rough cut for creator feedback. Missing native audio input does not block delivery. After retiming, rebase and check affected captions, B-roll, presenter, SFX, music/ducking, layout/motion, progress, transitions and outro, or mark them not present. Schema 4/5 listening proofs remain historical compatibility only.
 
 Treat laughter, smiles, reaction holds, expressive silence, and an optional freeze frame as editorial moments, not fixed cleanup rules. For each material moment, choose among preserving natural motion, shortening, cutting away, holding, freezing, or another motivated treatment from meaning, performance quality, comedic or emotional timing, pace, and visual continuity. Never auto-freeze because laughter exists and never auto-remove a hold merely because it is long. Any deliberate freeze or conspicuous hold needs a recorded reason and normal-speed audiovisual review.
 

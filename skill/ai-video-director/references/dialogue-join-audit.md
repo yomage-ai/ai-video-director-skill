@@ -1,5 +1,7 @@
 # Dialogue Join Audit / 对白衔接检查
 
+Current review ownership: follow [creator-feedback-review.md](creator-feedback-review.md). Agent completes technical/content preparation; creator reviews the rough cut and gives feedback. Historical listening-specific fields do not require a listening model or block normal handoff. 当前审片职责以上述规则为准：Agent 检查并交付粗剪，创作者反馈后继续；不得把历史听审字段变成模型安装或暂停条件。
+
 Use this reference for every speech-led rough cut, especially after retake selection, transcript-linked edits, or user feedback about long pauses, swallowed words, or obvious jump cuts.
 
 每条口播粗剪都要使用本检查，尤其是在选择重录片段、做完文本联动剪辑，或收到“停顿太长、字没说清、剪接明显”等反馈之后。
@@ -47,6 +49,10 @@ For blinking, eye/gaze resets and expression continuity, inspect the motion arou
 
 ## Pause Classification / 气口分类
 
+For newly prepared reviews, `pauseContractVersion: 1` makes the version-bound `agentPreparation.pauseLedger` mandatory in the rough auditor. Measure the actual speech-to-speech interval across **both** clip handles, and inspect retained interiors. A gap-free timeline is not gap-free speech; ASR may include quiet tails inside a long word. Re-read after a Script rebuild or reorder: omitting a silence marker can preserve an old handle. Compare decoded waveform with the local noise floor, and inspect word-timing anomalies. A global silence threshold or one common compression target cannot substitute for these measurements. Record each join's context and disposition; do not convert a review threshold into a universal target. See [pause-ledger.md](pause-ledger.md) for the small data contract. Older approved review versions remain readable; a fresh revision must use the new preparation entry.
+
+新生成检查表会启用 `pauseContractVersion: 1`，粗剪审查器要求绑定实际成片版本的 `agentPreparation.pauseLedger`。Agent 必须测量跨剪点**两侧预留相加**的真实语音间隔，并检查保留段内部。时间线上没有空隙不等于说话没有停顿；ASR 也可能把静段算进长词。Script 重建或调序后要回读，因为省略静音标记可能仍保留旧尾巴。用解码波形与局部底噪对照，并检查异常词时长。统一静音阈值或统一压缩时长不能代替逐项测量；每项记录语境和处理理由，不把本片选用的秒数变成全局标准。格式见 [pause-ledger.md](pause-ledger.md)。旧的已确认版本保持可读，新返修须重新生成检查表。
+
 - Phrase-internal breath: normally preserve when it supports phrasing; shorten only when it is clearly disruptive.
 - Sentence-flow or retake join: `0.20-0.40 s` is a useful review candidate for compact social speech, not a universal value.
 - Topic or emphasis pause: often longer; preserve the rhetorical function before optimizing pace.
@@ -83,31 +89,11 @@ Laughter, smiles, reaction holds, expressive silence, and freeze frames have no 
 
 ## Required Review / 必做复核
 
-For each real placed-item boundary, listen to a rendered window with two or three seconds of context on both sides at normal speed, without scrubbing through the cut. Record:
+Use schema 6 and [creator-feedback-review.md](creator-feedback-review.md). For every real placed-item boundary, the Agent records the expected last/first words, source and output timing, measured pause, waveform/source handles, before/on/after pictures, and a clear/repaired/intentional disposition backed by evidence. Inspect two or three seconds of context on both sides; retain natural breaths and do not cut inside words. Resolve known clipped words, duplicates, excessive pauses, unstable pace and visible resets before delivery.
 
-- expected and audible last token;
-- expected and audible first token;
-- measured pause length;
-- swallow, lip-smack, click, inhale, or duplicate status;
-- visual state immediately before, on, and after the boundary;
-- pass, repair, or intentional exception.
+After the last change, recheck the opening, closing and changed boundaries. Run `audit-rough-cut-review.mjs` on the prepared schema 6 report and deliver the rough cut. The creator's normal viewing and feedback supplies acceptance; missing native audio input never triggers a listening-model proposal or pauses this handoff. Record the limits of Agent checks honestly. Legacy schema 4/5 listening fields apply only to historical evidence.
 
-每个真实素材片段边界都要渲染前后各两到三秒，并以正常速度连续播放，不能只靠拖动播放头判断。记录：
-
-- 预期与实际听到的句尾词；
-- 预期与实际听到的句首词；
-- 气口时长；
-- 吞咽、咂嘴、爆点、吸气或重复情况；
-- 剪点前一帧、剪点帧和后一帧的画面状态；
-- 通过、返修或有理由保留的例外。
-
-After the last change, verify the manuscript opening and closing, review every changed boundary again, and play the complete cut from start to finish. If normal-speed listening is unavailable, keep the rough cut status as unverified.
-
-最后一次改动后，还要复核全文开头、结尾、所有改动过的衔接点，并从头到尾完整播放。无法正常速度听审时，粗剪必须标记为“未验证”，不能宣布锁定。
-
-Every real join between placed media items must have one boundary record. A short list of "important joins" is not a complete audit. Before presenting the rough cut, run `node scripts/audit-rough-cut-review.mjs <rough-cut-review.json> [report.json]`. The audit must fail when the item count, join count, and verified-boundary count disagree, when any word or mouth-noise review is pending, or when automated ASR/silence detection is the only proof.
-
-每个真实素材拼接点都必须有一条边界记录。只列几处“重点听审”不能代替全量检查。提交粗剪前运行 `node scripts/audit-rough-cut-review.mjs <rough-cut-review.json> [report.json]`。素材数、衔接数和已验证边界数不一致，任何字头字尾或口腔杂音仍待处理，或者只用 ASR、静音扫描等自动结果代替听审时，都必须阻断交付。
+每个真实拼接点都由 Agent 记录句尾/句首词、源与成片时间、气口时长、波形及源素材预留、前中后画面，以及有证据的处理结果；前后各保留两三秒上下文检查。已知切字、叠字、过长停顿、语速突变和明显表情复位必须先修好。最后复核开头、结尾和改动剪点，运行 schema 6 检查后交付粗剪，由创作者正常审片反馈。缺少听觉输入不触发模型提议或暂停；不能把技术检查或用户确认写成 Agent 听过。旧版听审字段只用于读取历史证据。
 
 ## Feedback-Class Sweep / 同类问题全片扫描
 

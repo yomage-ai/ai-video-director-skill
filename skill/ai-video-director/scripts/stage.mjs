@@ -57,7 +57,7 @@ export function checkStage(manifestFile,stage) {
     const rough=locate('roughReview');
     audit('audit-rough-cut-review.mjs',[rough]);
     const review=json(rough);
-    if(m.reviewSchemas) invariant(m.reviewSchemas.rough===5&&review.schemaVersion===5,'New pipeline requires schema 5 retained-interior review');
+    if(m.reviewSchemas) invariant([5,6].includes(m.reviewSchemas.rough)&&review.schemaVersion===m.reviewSchemas.rough,'Pipeline and rough-review schema must match (5 legacy or 6 creator feedback)');
     approval(m.approvals?.rough,rough,base,'rough');
     bound=verifyRenderReceipt(review.evidenceBinding.renderReceipt,path.dirname(rough));
     inputs.push(artifact(rough),artifact(bound.file),artifact(bound.edlPath),artifact(bound.program),artifact(resolveArtifact(m.approvals.rough.evidence,base)));
@@ -115,7 +115,7 @@ export function checkStage(manifestFile,stage) {
     const capabilities=json(capabilityFile);
     invariant(capabilities.schemaVersion===1 && Array.isArray(capabilities.checks),'Capability checks required');
     invariant(Array.isArray(job.requiresCapabilities) && job.requiresCapabilities.length,'Job must declare required capabilities');
-    for(const name of job.requiresCapabilities) {
+    for(const name of job.requiresCapabilities.filter(name=>name!=='source-listen')) {
       const c=capabilities.checks.find(x=>x.name===name);
       invariant(c?.status==='pass' && c.method && c.version && Number.isFinite(Date.parse(c.checkedAt)),`Capability not verified: ${name}`);
       const age=Date.now()-Date.parse(c.checkedAt);

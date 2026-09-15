@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 import {cpSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, renameSync, writeFileSync} from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import {fileURLToPath} from 'node:url';
-import {activateRuntimePaths, classifyChatcut, findHyperframes, nativeInstallPlan, npmCommand, run, runtimeRoot, skillRoots, version, xmlDependency} from './lib/setup-runtime.mjs';
+import {activateRuntimePaths, findHyperframes, nativeInstallPlan, npmCommand, run, runtimeRoot, skillRoots, version, xmlDependency} from './lib/setup-runtime.mjs';
 import {artifact, decode, probe} from './lib/media-contract.mjs';
-import {prepareChatcutUpload} from './lib/chatcut-upload-compat.mjs';
+import {ensureChatcutUpload} from './lib/chatcut-upload-compat.mjs';
+import {classifyHostedChatcut, addNewChatcutHeader} from './lib/chatcut-host.mjs';
 import {recoveryAction} from './lib/recovery.mjs';
 
 const skillDir=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -54,50 +56,50 @@ function core() {
   return !!npm && report.checks.every(c=>c.status==='pass');
 }
 
-function chatcut() {
-  if (!codex || !path.isAbsolute(codex) || !existsSync(codex)) { needs('chatcut','Agent locates the active desktop app bundled CLI, then reruns --codex <absolute-cli>. For another host or an already callable Desktop surface, follow dependency-setup.md instead.'); return; }
-  const marketplaceSource=manifest.chatcut.source;
-  let markets=readCommand([codex,'plugin','marketplace','list','--json']);
-  if (!markets) throw new Error('Cannot inspect the host plugin registry; use the current official host installer, not cache-directory inference.');
-  let market=markets.marketplaces?.find(m=>m.marketplaceSource?.source?.replace(/\.git$/,'').toLowerCase()===marketplaceSource.replace(/\.git$/,'').toLowerCase());
-  if (!market && apply) {
-    checkedRun([codex,'plugin','marketplace','add',marketplaceSource,'--ref',manifest.chatcut.revision]);
-    markets=readCommand([codex,'plugin','marketplace','list','--json']);
-    market=markets?.marketplaces?.find(m=>m.marketplaceSource?.source?.replace(/\.git$/,'').toLowerCase()===marketplaceSource.replace(/\.git$/,'').toLowerCase());
+async function chatcut() {
+  if (!codex || !path.isAbsolute(codex) || !existsSync(codex)) { needs('chatcut','Agent locates the active desktop bundled CLI and reruns --codex <absolute-cli>; otherwise use the host MCP settings. Do not ask the user to install a CLI.'); return; }
+  const get=()=>readCommand([codex,'mcp','get','chatcut','--json']);
+  let server=get();
+  if (!server) {
+    // A failed get does not prove absence. Confirm in a successful registry read.
+    const listed=readCommand([codex,'mcp','list','--json']);
+    if (!Array.isArray(listed) || listed.some(s=>s.name==='chatcut')) throw new Error('Cannot verify the existing ChatCut registration; Agent diagnoses the host registry before changing it.');
+    if (apply) {
+      const host=manifest.chatcut.hosted;
+      const result=run([codex,'mcp','add','chatcut','--url',host.url,'--oauth-resource',host.oauthResource],{timeout:120000,live:true});
+      server=get();
+      if (!server) throw new Error('Official ChatCut registration did not become readable; Agent inspects the host command log and resumes registration.');
+      const headers=server.transport?.http_headers || server.http_headers || {};
+      if (Object.entries(host.headers).some(([k,v])=>headers[k]!==v)) {
+        addNewChatcutHeader(path.join(process.env.CODEX_HOME || path.join(os.homedir(),'.codex'),'config.toml'),host.headers);
+        server=get();
+        const actual=server?.transport?.http_headers || server?.http_headers || {};
+        if (Object.entries(host.headers).some(([k,v])=>actual[k]!==v)) throw new Error('Registered ChatCut headers are not visible to the host; Agent repairs registration before proceeding.');
+      }
+      if (!result.ok) action('chatcut-registration','Registration exists but the command did not complete, possibly while waiting for OAuth. Recheck authentication and open the required sign-in flow once.');
+    }
   }
-  if (!market) { needs('chatcut','Run --apply to add the official pinned ChatCut marketplace.'); return; }
-  const list=()=>readCommand([codex,'plugin','list','--marketplace',market.name,'--json']);
-  let registry=list();
-  if (!registry) throw new Error('Cannot read ChatCut plugin status.');
-  let plugin=registry.installed?.find(p=>p.name==='chatcut');
-  if (!plugin?.installed && apply) {
-    const candidate=registry.available?.find(p=>p.name==='chatcut');
-    if (candidate?.version && candidate.version!==manifest.chatcut.version) throw new Error('Existing marketplace offers a different ChatCut version; review its upstream change before adoption. Do not overwrite the marketplace.');
-    checkedRun([codex,'plugin','add',`chatcut@${market.name}`,'--json']);
-    plugin=list()?.installed?.find(p=>p.name==='chatcut');
-  }
-  const server=readCommand([codex,'mcp','get','chatcut','--json']);
   const servers=readCommand([codex,'mcp','list','--json']);
-  const authStatus=Array.isArray(servers) ? servers.find(s=>s.name==='chatcut')?.auth_status : undefined;
-  const status=classifyChatcut(plugin,server,authStatus);
-  add('chatcut',status,{version:plugin?.version || null,authStatus:authStatus || 'unknown'});
-  if (status==='disabled') action('chatcut','Check why this plugin is disabled; preserve an explicit user-disable decision. Enable only within current authorization, using the host supported command.');
-  else if (status==='missing' || status==='registration-required') action('chatcut','Resume the official plugin install/registration flow and verify its actual result.');
+  const authStatus=Array.isArray(servers)?servers.find(s=>s.name==='chatcut')?.auth_status:undefined;
+  const status=classifyHostedChatcut(server,authStatus);
+  add('chatcut',status,{authStatus:authStatus || 'unknown',pluginVersionRequired:false});
+  if (status==='missing') action('chatcut','Run --apply to register the official hosted server. Plugin installation is not required.');
+  else if (status==='disabled') action('chatcut','Preserve the disabled connection and determine whether it was explicitly disabled by the user. Use the supported host settings within current authorization; do not create another connection to bypass it.');
   else if (status==='authentication-required') {
-    report.userActions.push({name:'chatcut-login',...recoveryAction('authentication','ChatCut','The installed connector reports not_logged_in; login/consent is required before source upload or editing.')});
-    action('chatcut-login','Tell the user that ChatCut needs login and open the official sign-in flow once. Let the user complete required login/consent. Recheck mcp list and make a live call before resuming. Record the blocker in pipeline.recovery. Do not switch to local editing or another model/provider to avoid this step.');
-  }
-  else action('chatcut-session','Discover live ChatCut tools and make a read-only call. If it requests authentication, explain the login to the user, open the official flow once and wait for any required user consent. Recheck auth and live tools before resuming; record the blocker rather than switching routes. Request a new session only when re-discovery fails after recovery. Installed does not mean logged in or callable.');
-  action('source-listen','Before editing, test whether this exact host/model receives real audio for analysis. Name the working modality or reviewer and bind a real speech sample. A playable file, audio attachment returned to the user, ASR text, waveform, or ChatCut login is not a listening-capability pass. If unavailable, record the exact missing route and stop production handoff; do not turn a rough-cut request into permission for an unreviewed export.');
+    report.userActions.push({name:'chatcut-login',...recoveryAction('authentication','ChatCut','The connector reports not_logged_in; complete the official sign-in window to resume.')});
+    action('chatcut-login','Explain the required ChatCut sign-in, launch the bundled CLI mcp login chatcut in a foreground session once, and surface its actual browser URL. Let the user perform login/consent. Recheck authentication and live tools, then continue the preserved project. Do not ask the user to run commands or reinstall.');
+  } else action('chatcut-session','Rediscover live ChatCut tools and make a read-only project call. If authentication is requested, open the official sign-in flow once. If logged in but tools remain absent, diagnose the reported connection error and rediscover before asking for a host-required session reload. Preserve the project and next operation.');
   if (status==='installed-session-verification-required') {
+    // Registry lookup only resolves a helper; absent/old/new plugins do not gate the connection.
+    const registry=readCommand([codex,'plugin','list','--json']);
+    const plugin=registry?.installed?.find(p=>p.name==='chatcut' && p.installed);
     const helper=plugin?.source?.path && path.join(plugin.source.path,'skills','asset-import','scripts','upload-media.mjs');
-    if (helper && existsSync(helper)) {
-      const prepared=prepareChatcutUpload(helper,{apply});
-      add('chatcut-upload-compat',prepared.ready?'pass':'preparation-required',{...prepared,scope:'helper verified/prepared locally; not an authenticated upload test'});
-    } else needs('chatcut-upload-compat','Resolve the official helper from the active asset-import Skill, then Agent runs chatcut-upload.mjs --helper <absolute-helper> --prepare-only. Do not ask the user to copy a helper or edit settings.');
-    action('chatcut-upload','For hosted imports and same-asset retry, run this Skill\'s chatcut-upload.mjs --helper <active-official-helper> -- <official arguments>. It automatically verifies and prepares the governed compatibility helper. A large file runs alone; retain no-transcribe and existing assets.');
+    const prepared=await ensureChatcutUpload(helper,{apply});
+    add('chatcut-upload-compat',prepared.ready?'pass':'preparation-required',{...prepared,scope:'local helper readiness only; verify the live import contract before media transfer'});
+    action('chatcut-upload','Read the active asset-import contract, query existing assets, then run chatcut-upload.mjs with current official session arguments. The wrapper reuses a reviewed active helper or acquires the isolated hash-pinned official helper. Preserve existing asset IDs and no-transcribe. If the service rejects the contract, diagnose that operation; never loop imports or alter plugin cache.');
   }
-  action('asr','Verify the chosen ChatCut host exposes real transcription and can access the authorized source; transcribe after content approval. A manuscript or plugin cache does not prove ASR readiness.');
+  action('source-listen','Verify actual audio input and a real speech sample before promising reviewed rough output. If unavailable, record the exact route gap and continue independent provisional work. Do not confuse transcription or playback with listening; obtain a decision only for a genuinely new provider, fee or permission.');
+  action('asr','Verify live transcription against the authorized source; use the current service schema rather than the local plugin version.');
 }
 
 function fine(npm) {
@@ -178,9 +180,9 @@ try {
     checkedRun([process.execPath,path.join(skillDir,'scripts','capability-probe.mjs'),evidence]);
     add('ffmpeg-smoke','pass',{evidence:artifact(evidence),scope:'local synthetic audio/video encode and probe'});
   }
-  if (ready && stage==='rough') chatcut();
+  if (ready && stage==='rough') await chatcut();
   if (ready && ['fine','release'].includes(stage)) fine(npmCommand());
-} catch(e) { report.error=e.message; }
+} catch(e) { report.error=e.message; action('setup-recovery','Agent inspects the exact failed operation and preserved receipt, repairs the cause and retries only that step once after conditions change. Continue independent project work. Surface only a concrete login, permission, cost or host-reload action to the user; do not finish with a raw setup error.'); }
 report.localReady=!report.error && report.checks.every(c=>c.status==='pass' || c.status==='installed-session-verification-required');
 if (apply) {
   mkdirSync(runtimeRoot(),{recursive:true});

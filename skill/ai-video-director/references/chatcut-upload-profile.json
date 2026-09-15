@@ -4,9 +4,19 @@
   "upstreamVersion": "0.2.26",
   "upstreamRevision": "a7b75b22e8d26a91ecaf02c67b9d20fd02006ab8",
   "upstreamSha256": "345d3500569e9177a39b0f136d1d93a32917a8fc1903831fa78ec250bf20662e",
+  "reviewedUpstreams": [
+    {
+      "upstreamVersion": "1.10.12",
+      "upstreamRevision": "506b5b0d671ac84e51aa803433ed690a96748bac",
+      "upstreamSha256": "72fe5aa2c5cce067f8d926a7588e7101632693b7453b627b9bda1fbb0b6477a9",
+      "reviewedAt": "2026-09-11",
+      "review": "Installed helper matches official source. Changes add bounded transcription language samples and sample-accurate waveform metadata; the four transport adaptation anchors and storage protocol are unchanged."
+    }
+  ],
   "requestTimeoutMs": 600000,
   "attemptsPerRequest": 2,
   "parallelPartsPerFile": 2,
   "preserveNoTranscribeInRetry": true,
-  "governance": "governance-chatcut-upload-compat.json"
+  "governance": "governance-chatcut-upload-compat.json",
+  "fallbackUpstreamSha256": "72fe5aa2c5cce067f8d926a7588e7101632693b7453b627b9bda1fbb0b6477a9"
 }

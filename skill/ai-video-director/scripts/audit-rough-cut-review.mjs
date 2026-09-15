@@ -5,6 +5,7 @@ import path from 'node:path';
 import {checkInteriorReview} from './lib/editorial-checks.mjs';
 import {verifyRenderReceipt,resolveArtifact,probe,joins,invariant,verifyAudioWindow} from './lib/media-contract.mjs';
 import {sameFile} from './lib/media-contract.mjs';
+import {checkCreatorReview} from './lib/creator-review.mjs';
 
 const [inputPath, reportPath] = process.argv.slice(2);
 if (!inputPath) {
@@ -13,6 +14,17 @@ if (!inputPath) {
 }
 
 const data = JSON.parse(readFileSync(inputPath, 'utf8'));
+if(data.schemaVersion===6) {
+  let result;
+  try {
+    const base=path.dirname(path.resolve(inputPath));
+    const bound=verifyRenderReceipt(data.evidenceBinding?.renderReceipt,base);
+    result={...checkCreatorReview(data,bound,base),input:inputPath,errors:[]};
+  } catch(error) { result={ok:false,input:inputPath,errors:[error.message],warnings:[]}; }
+  if(reportPath) writeFileSync(reportPath,JSON.stringify(result,null,2)+'\n');
+  console.log(JSON.stringify(result,null,2));
+  process.exit(result.ok?0:1);
+}
 const errors = [];
 const warnings = [];
 

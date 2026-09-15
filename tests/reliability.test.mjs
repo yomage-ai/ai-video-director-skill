@@ -146,5 +146,5 @@ test('operational doctor does not equate installation with connected production 
   const dir=temp(),file=path.join(dir,'capabilities.json');run('capability-probe.mjs',[file]);
   assert.equal(json(file).checks.length,2);
   const r=result('director.mjs',['doctor','--stage','rough','--capabilities',file]);
-  assert.notEqual(r.status,0);assert.match(r.stdout,/operational chatcut/);assert.match(r.stdout,/operational source-listen/);
+  assert.notEqual(r.status,0);assert.match(r.stdout,/operational chatcut/);assert.doesNotMatch(r.stdout,/operational source-listen/);
 });

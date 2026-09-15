@@ -88,7 +88,7 @@ test('project scaffold stays outside the repository and includes decision artifa
   assert.equal(intake.projectId, 'test-video');
   assert.equal(roughCutReview.projectId, 'test-video');
   assert.equal(roughCutReview.takeSelectionPolicy.principle, 'quality-first');
-  assert.equal(roughCutReview.schemaVersion, 5);
+  assert.equal(roughCutReview.schemaVersion, 6);
   assert.equal(roughCutReview.timelineInventory.allRealJoinsRepresented, false);
   assert.equal(roughCutReview.paceConsistencyReview.comparisonWindows.length, 3);
   assert.equal(roughCutReview.fullCutReview.listenedFromStartToFinish, false);

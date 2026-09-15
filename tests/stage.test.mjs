@@ -47,6 +47,7 @@ function project() {
   write(capabilities,{schemaVersion:1,checks:['ffmpeg','ffprobe','chatcut','asr','source-listen','fine-renderer'].map(name=>({
     name,status:'pass',version:'synthetic-gate-fixture',method:'Synthetic attestation for gate testing only',checkedAt:new Date().toISOString(),evidence:artifact(message)}))});
   const m=json(path.join(templates,'pipeline.template.json'));
+  m.reviewSchemas.rough=5; // Exercise stored legacy approvals against the new runtime.
   Object.assign(m,{projectId:'synthetic-stage-test',language:'zh-CN'});
   Object.assign(m.artifacts,{contentBrief:brief,roughReview:roughFile,fineDirection:fineFile,capabilities});
   for(const [key,file] of Object.entries({content:brief,rough:roughFile,style:fineFile})) m.approvals[key]=approval(file,message);

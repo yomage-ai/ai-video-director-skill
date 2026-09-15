@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 5,
+  "schemaVersion": 6,
   "projectId": "replace-with-project-id",
   "canonicalEdlVersion": null,
   "status": "in-progress|ready-for-user-review|approved",
@@ -222,5 +222,22 @@
   "approvedAt": null,
   "evidenceBinding": {
     "renderReceipt": null
+  },
+  "reviewMode": "creator-feedback",
+  "agentPreparation": {
+    "programSha256": null,
+    "listeningModelUsed": false,
+    "agentAuditoryReviewClaimed": false,
+    "checks": {},
+    "intervals": [],
+    "boundaries": [],
+    "unresolvedIssues": []
+  },
+  "creatorFeedback": {
+    "approvedBy": null,
+    "approvedAt": null,
+    "programSha256": null,
+    "quote": "",
+    "evidence": null
   }
 }

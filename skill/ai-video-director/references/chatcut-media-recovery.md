@@ -6,19 +6,23 @@ Read before the first ChatCut media import, when resuming a pending asset, or af
 
 ## Automatic upload entry / Agent 自动执行入口
 
-For every authorized hosted import or same-asset retry with the governed Plugin 0.2.26 helper, **run this Skill's executable entry below**. Obtain the session and arguments from the official `import_media` / `asset-import` flow; resolve the original helper from that active Skill, not a workspace copy. The Agent supplies paths and session values; these are not user setup steps.
+For every authorized hosted import or same-asset retry, **run this Skill's executable entry below**. Obtain the session and arguments from the official `import_media` / `asset-import` flow; resolve the original helper from that active Skill, not a workspace copy. The Agent supplies paths and session values; these are not user setup steps.
 
 ```text
-node <director-skill>/scripts/chatcut-upload.mjs --helper <absolute-official-upload-media.mjs> -- <official-upload-arguments>
+node <director-skill>/scripts/chatcut-upload.mjs [--helper <absolute-official-upload-media.mjs>] -- <official-upload-arguments>
 ```
 
 The entry automatically checks the full official helper hash, prepares/reuses an isolated local compatibility copy, and executes it in the foreground. Its fixed profile sets **two parallel parts per file, a 600-second request ceiling and two attempts**; retry arguments retain `--no-transcribe` when selected. The official session, media preparation, server-assigned part sizes, storage upload, asset IDs, finalization and result JSON remain in the upstream flow. The original plugin stays unchanged. A large failed recording runs alone; additional files would still share bandwidth.
 
-The rough-stage setup prepares this compatibility copy automatically from the installed plugin registry; the upload entry also prepares it on demand, so a copied Skill works without an earlier setup receipt. Preparation needs no upload, login, new npm package or user editing. Unknown upstream hashes or modified cached copies stop before execution and require Agent review. Do not silently run the old 120-second helper after this check fails. Use the existing supported recovery route if the active host explicitly disallows a compatibility copy.
+The rough-stage setup prepares this compatibility copy automatically from the installed plugin registry; the upload entry also prepares it on demand, so a copied Skill works without an earlier setup receipt. Preparation needs no upload, login, new npm package or user editing. An unknown or absent active helper automatically selects an isolated, downloaded, full-hash-verified official helper from the maintained profile. With no plugin folder, omit `--helper`. Modified cached copies remain an Agent inspection issue; do not execute or overwrite them. Do not silently run the old 120-second helper after this check fails. Use the existing supported recovery route if the active host explicitly disallows a compatibility copy.
 
-**正常上传和失败重试都由 Agent 调用上面的 Skill 入口，不能只读本文后仍直接运行旧脚本。** 入口自动校验官方版本，生成或复用本地适配副本：每个文件同时传 2 个分片、单次请求最多等 10 分钟、失败最多尝试 2 次。素材编号、转写选择和官方上传流程保留，原插件不动。大文件单独传。粗剪前的 setup 会自动准备；漏跑 setup 时上传入口也会自行准备。用户不用复制脚本、改参数或另外拿一份文档。未知插件版本由 Agent 检查，不擅自套补丁或退回旧入口死循环。
+**正常上传和失败重试都由 Agent 调用上面的 Skill 入口，不能只读本文后仍直接运行旧脚本。** 入口自动校验官方版本，生成或复用本地适配副本：每个文件同时传 2 个分片、单次请求最多等 10 分钟、失败最多尝试 2 次。素材编号、转写选择和官方上传流程保留，原插件不动。大文件单独传。粗剪前的 setup 会自动准备；漏跑 setup 时上传入口也会自行准备。用户不用复制脚本、改参数或另外拿一份文档。未知或未安装版本自动获取独立的官方固定版本并完整校验，不改用户插件；没有插件目录时省略 `--helper`。缓存被改动则由 Agent 排查，不执行可疑内容，不退回旧入口死循环。
 
 This is a version-bound reliability fix, not unlimited waiting or a cure for offline/auth/permission/storage failures. The 600-second value is this helper's ceiling; lower transport/service limits can still fail earlier. See [compatibility governance](governance-chatcut-upload-compat.json) for the fixed scope and [profile](chatcut-upload-profile.json) for exact values. / 这次确实有可执行修复；断网、登录失效、权限或存储不足仍要按实际原因处理，其他网络层也可能先报错，不能承诺任意网络永远成功。
+
+Reviewed update 2026-09-11: Plugin 1.10.12 is also supported by exact helper hash. The installed helper matches official revision `506b5b0d671ac84e51aa803433ed690a96748bac`; its transcription preparation changed, while upload adaptation anchors stayed unchanged. Legacy 0.2.26 remains supported. Unknown hashes automatically acquire the reviewed isolated helper; new source adoption still requires review and validation. An unknown version alone is not evidence that ChatCut rejected the media.
+
+2026-09-11 已增加 1.10.12 官方脚本的精确哈希支持，保留旧版。未知版本自动走已验证的独立助手；升级适配版本才需要 Agent 对照源码并验证；本地版本检查失败不等于 ChatCut 拒收素材，不应直接变成用户手动上传任务。
 
 ## Identify the actual failure / 先分清卡在哪里
 

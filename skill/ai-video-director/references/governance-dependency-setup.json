@@ -115,5 +115,14 @@
       "host plugin lifecycle change",
       "real rendering/ASR failure"
     ]
+  },
+  "hostedSetupUpdate": {
+    "evaluatedAt": "2026-09-11",
+    "source": "https://github.com/ChatCut-Inc/agent-plugin/blob/506b5b0d671ac84e51aa803433ed690a96748bac/codex/skills/chatcut-plugin-basics/SKILL.md",
+    "decision": "Use existing hosted registration independent of plugin version; register a missing official hosted MCP directly, no plugin lifecycle operation required.",
+    "configBoundary": "Only this invocation newly-created ChatCut registration receives its required static header; preserve prior bytes and private backup. Existing registration and disabled state are not retargeted.",
+    "skillUpdate": "Explicit Skill update supports recognized old directory/link backup before installation; failed link restores backup; unknown destinations preserved.",
+    "validation": "Anonymous host CLI simulations cover fresh registration, repeat reuse, old/current/future plugin states, missing plugin, logged-out prompt ownership and unreadable registry. Real existing macOS connection setup passed without configuration mutation.",
+    "scope": "Installation and recovery only; no claim of auditory readiness or complete cross-platform/account onboarding."
   }
 }
