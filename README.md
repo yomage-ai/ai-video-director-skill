@@ -1,45 +1,43 @@
-# AI Video Director Skill
+# AI 视频导演 Skill
 
-**[简体中文快速开始](README.zh-CN.md)** | English
+[English](README.en.md)
 
-Copy this request to Codex or another coding agent. Attach your recording or provide its local path; a manuscript and style reference are optional:
+把下面这段话复制给 Codex 或其他 Coding Agent。附上录制视频或提供本地路径；文稿和风格参考可选：
 
 ```text
-Use my installed local $ai-video-director Skill first. If it is not installed, read and use it from:
+使用我已安装的本地 $ai-video-director Skill 剪辑口播视频。如果没有安装，再读取并使用这个仓库：
 https://github.com/yomage-ai/ai-video-director-skill
 
-My material: [attached recording or local path; manuscript and references if available]
-Target platform and aspect ratio: [for example: Douyin, 9:16]
-Style request or reference: [optional; use the built-in Xiaoxiong style by default]
+我提供的素材：[视频附件或本地路径；有文稿和参考时一并提供]
+目标平台与画幅：[例如：抖音，9:16]
+风格要求或参考：[可选；默认使用内置小熊风格]
 ```
 
-This Skill turns recorded talking-head footage into edited videos. It can remove mistakes and retakes, add captions, adjust sound and picture, and add suitable motion graphics, music, and sound effects. Request a rough cut only or continue to a full fine edit.
+本 Skill 将录制好的真人口播剪成视频，支持去除口误和重录、制作字幕、调整声音与画面，以及添加合适的动画、音乐和音效。你可以只做粗剪，也可以继续制作完整精剪。
 
-The Xiaoxiong style is built in. Provide your own reference or let the Agent recommend a direction based on the content.
+默认内置小熊风格。你也可以提供自己的风格参考，或让 Agent 根据内容推荐方向。
 
-On first use, the Agent checks and prepares the tools it needs. When your action is needed, it opens the available sign-in or permission flow and explains the exact step; any new payment requires your confirmation. If the host requires a new task to load a connection, it preserves the project and tells you where work resumes.
+首次使用时，Agent 会检查并准备所需工具。需要你操作时，Agent 会打开可用的登录或授权入口，并说明具体步骤；新增付费由你确认。若宿主确实需要新任务才能加载连接，Agent 会保留工程并说明恢复位置。
 
-Agent checks content, joins, picture and audio levels, then delivers the rough cut for your feedback. After approval, it continues to fine editing. No additional listening model or audio-review purchase is required.
+Agent 会按规范完成内容、衔接、画面和音量检查，交付粗剪供你观看和反馈；确认后继续精剪。无需另外配置或购买听审模型。
 
-Already edited a version yourself? Say: “Keep my chosen clips, order, speed and audio; only improve the named visual elements.” Agent preserves that master, adds missing visuals, captions and top progress, and checks the changed regions. Audio or structural edits use the normal review route. Existing valid approvals are reused.
+## 用户需要提供
 
-## What You Provide
+- 真人口播视频，也支持带摄像头画面的录屏。文稿可辅助分析，但不能代替原素材。
+- 目标平台、画幅和视频用途。
+- 必须保留的观点、内容、来源或参考素材。
+- 已有的风格偏好或视觉参考（可选）。
+- 续剪已有视频时，提供这一版视频；有原片和可编辑工程时一并提供。Agent 先判断一体导出的视频能安全修改哪些部分，不强求重录。
 
-- Recorded talking-head footage, including a screen recording with a baked-in webcam. A manuscript helps but does not replace source footage.
-- Target platform, aspect ratio, and intended use.
-- Required points, sections, source material, or references.
-- Any style preference or visual reference you already have (optional).
-- For an existing edit, provide that version; source footage and an editable project help when available. Agent first checks what the supplied flattened video can safely support.
+## 你会得到什么
 
-## What You Receive
+- **粗剪方案**：先确认视频重点、内容取舍和顺序，再开始剪辑。
+- **视听样片**：粗剪确认后，先看一段 6–12 秒的精剪效果，包含真实对白、字幕和声音设计；满意后再制作完整视频。
+- **成片与工程**：最终视频、可编辑工程和检查记录。只做粗剪时，交付粗剪视频、可编辑时间线和字幕。
+- **发布文案**：需要发布时，提供多套封面标题、文案、标签和 AI 声明方案供你选择。
 
-- **Rough-cut plan:** confirm the main point, content choices, and sequence before editing begins.
-- **Audiovisual sample:** after approving the rough cut, review a 6–12 second fine-edit sample with real dialogue, captions, and sound design before the full video is produced.
-- **Video and project:** the finished video, editable project, and check records. A rough-cut-only request delivers the rough video, editable timeline, and captions.
-- **Publication copy:** when requested, several cover-title, caption, hashtag, and AI-disclosure options to choose from.
+素材检查、转写、工具准备、风格推荐、渲染和交付检查由 Agent 完成。你只需提供素材与目标，并确认内容取舍和样片效果。
 
-The Agent handles media inspection, transcription, tool setup, style recommendations, rendering, and delivery checks. You provide the footage and goal, then review the content choices and audiovisual sample.
+## 开源协议
 
-## License
-
-Original code, documentation, scripts, and templates in this repository are available under the [Apache License 2.0](LICENSE). Third-party tools, models, fonts, services, and user-provided media keep their own licenses and rights.
+本仓库原创的代码、文档、脚本和模板采用 [Apache License 2.0](LICENSE) 开源。第三方工具、模型、字体、服务和用户提供的素材继续遵循各自的协议与权利条件。
