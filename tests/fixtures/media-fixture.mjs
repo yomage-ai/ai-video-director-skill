@@ -42,7 +42,7 @@ export function bindRoughReview(review) {
     classes:Object.fromEntries(['restart','mouth-preparation','blink-reset','literal-repeat','semantic-repeat'].map(k=>[k,'clear']))}))};
   review.evidenceBinding={renderReceipt:fixture.receipt};
   review.canonicalEdlVersion=fixture.receipt && json(fixture.receipt.path).edl.sha256;
-  const p=fixture.prepared.manuscriptAudibilityAudit.verifiedBoundaries[0];
+  const p=fixture.prepared.boundaryWindows[0];
   review.manuscriptAudibilityAudit.verifiedBoundaries.forEach(b=>Object.assign(b,{boundaryId:p.boundaryId,timelineFrame:p.timelineFrame,
     timelineTimeSeconds:p.timelineTimeSeconds,renderedWindow:p.renderedWindow,windowEvidence:p.windowEvidence}));
   review.pauseScan.candidates=[{startSeconds:14.8,endSeconds:15.1,decision:'keep',reason:'Synthetic audit fixture; not an actual editorial approval.'}];

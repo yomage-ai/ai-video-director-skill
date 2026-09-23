@@ -44,10 +44,25 @@ test('resume removes obsolete listening prerequisite while preserving real block
   {id:'login',status:'blocked',kind:'authentication',provider:'ChatCut',detail:'login needed'},
   {id:'clipped-word',status:'blocked',kind:'quality',provider:'editor',detail:'Known word onset clipped'}]}};
  writeFileSync(file,JSON.stringify(m));const result=migrateCreatorReview(file);
- assert.equal(result.changes.length,2);assert.equal(migrateCreatorReview(file).changes.length,0);
+ assert.equal(result.changes.length,1);
+ assert.deepEqual(result.agentReviewRequired,['actual-auditory-review']);
+ assert.equal(JSON.parse(readFileSync(file,'utf8')).recovery.blockers[0].status,'blocked');assert.equal(migrateCreatorReview(file).changes.length,0);
+ const classification=path.join(f.base,'classification.json');
+ writeFileSync(classification,JSON.stringify({pipelineSha256:artifact(file).sha256,blockers:[{id:'actual-auditory-review',scope:'obsolete-prerequisite-only',reason:'Synthetic inspected prerequisite; no defect',evidence:f.evidence}]}));
+ migrateCreatorReview(file,{classificationFile:classification});
  const saved=JSON.parse(readFileSync(file,'utf8'));
  assert.deepEqual(saved.approvals,m.approvals);
  assert.deepEqual(saved.jobs['rough-render'].requiresCapabilities,['ffmpeg','chatcut']);
  assert.equal(saved.recovery.blockers[0].status,'resolved');
  assert.deepEqual(saved.recovery.blockers.slice(1),m.recovery.blockers.slice(1));
+});
+
+test('migration cannot retire a known defect under an old audio-review id or a stale classification',()=>{
+ const f=fixture(),file=path.join(f.base,'pipeline.json'),classification=path.join(f.base,'classify.json');
+ const m={schemaVersion:1,jobs:{},recovery:{blockers:[{id:'source-listen',kind:'quality',status:'blocked',knownDefects:['clipped-word']}]}};
+ writeFileSync(file,JSON.stringify(m));
+ const c={pipelineSha256:artifact(file).sha256,blockers:[{id:'source-listen',scope:'obsolete-prerequisite-only',reason:'Synthetic',evidence:f.evidence}]};
+ writeFileSync(classification,JSON.stringify(c));assert.throws(()=>migrateCreatorReview(file,{classificationFile:classification}),/Known defects/);
+ c.pipelineSha256='old';writeFileSync(classification,JSON.stringify(c));assert.throws(()=>migrateCreatorReview(file,{classificationFile:classification}),/another pipeline/);
+ assert.deepEqual(JSON.parse(readFileSync(file,'utf8')),m);
 });

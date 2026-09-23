@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "libraryId": "ai-video-director-curated-talking-head-styles",
-  "libraryVersion": 1,
+  "libraryVersion": 2,
   "purpose": {
     "en": "A public, shareable fine-edit style floor for talking-head videos when the creator has not supplied a preferred style.",
     "zh-CN": "当创作者没有提供偏好风格时，为口播视频提供可公开复用的精剪风格下限。"
@@ -94,10 +94,22 @@
         "palette": {
           "paper": "#FCFBF6",
           "ink": "#171A16",
-          "green": ["#2F8F46", "#DDEFD4"],
-          "yellow": ["#F2BE2E", "#F8DE7E"],
-          "coral": ["#F58E91", "#FFD2CE"],
-          "blue": ["#4C9FE3", "#D8EBF8"],
+          "green": [
+            "#2F8F46",
+            "#DDEFD4"
+          ],
+          "yellow": [
+            "#F2BE2E",
+            "#F8DE7E"
+          ],
+          "coral": [
+            "#F58E91",
+            "#FFD2CE"
+          ],
+          "blue": [
+            "#4C9FE3",
+            "#D8EBF8"
+          ],
           "orange": "#F2A221"
         },
         "colorBalance": "Warm white dominates; green carries the main path; yellow, coral, blue, and orange mark distinct semantic roles rather than decorating every object.",
@@ -137,7 +149,12 @@
         "timing": "Sentence- and token-locked sequential reveals."
       },
       "soundGrammar": {
-        "candidates": ["paper", "pen", "check", "soft-interface-tick"],
+        "candidates": [
+          "paper",
+          "pen",
+          "check",
+          "soft-interface-tick"
+        ],
         "rule": "Use only when the sound clarifies a semantic action; do not sonify every icon."
       },
       "provenance": {
@@ -227,7 +244,12 @@
         "timing": "Chapter changes follow semantic boundaries; small notes follow sentence cues."
       },
       "soundGrammar": {
-        "candidates": ["paper-slide", "soft-pencil", "stamp", "subtle-page-turn"],
+        "candidates": [
+          "paper-slide",
+          "soft-pencil",
+          "stamp",
+          "subtle-page-turn"
+        ],
         "rule": "Prefer one recognizable material cue per meaningful change, not a constant scrapbook sound bed."
       },
       "provenance": {
@@ -318,7 +340,12 @@
         "timing": "Claim, proof, and callout remain token-accurate with no early state reveal."
       },
       "soundGrammar": {
-        "candidates": ["restrained-impact", "interface-confirm", "short-error-cue", "single-number-hit"],
+        "candidates": [
+          "restrained-impact",
+          "interface-confirm",
+          "short-error-cue",
+          "single-number-hit"
+        ],
         "rule": "Use sparse semantic cues; dense explainers may remain voice-only."
       },
       "provenance": {
@@ -406,7 +433,12 @@
         "timing": "Each module enters on its spoken label and holds long enough for phone-scale reading."
       },
       "soundGrammar": {
-        "candidates": ["soft-pop", "short-swipe", "selection-tick", "single-comparison-hit"],
+        "candidates": [
+          "soft-pop",
+          "short-swipe",
+          "selection-tick",
+          "single-comparison-hit"
+        ],
         "rule": "Keep a small repeated cue vocabulary and reserve stronger hits for the selected or winning item."
       },
       "provenance": {
@@ -414,6 +446,136 @@
         "sourceAssetDistributed": false,
         "note": "The recipe defines reusable design decisions and contains no third-party visual asset."
       }
+    },
+    {
+      "id": "warm-evidence-qa-v1",
+      "status": "candidate",
+      "validationLevel": "creator-approved-project-look; local-reusable-implementation-awaiting-next-real-video",
+      "curationSignals": [
+        "creator-approved-question-card-and-screen-evidence",
+        "explicit-local-style-extraction-request"
+      ],
+      "label": {
+        "en": "Warm Evidence Q&A",
+        "zh-CN": "暖白实证问答"
+      },
+      "summary": {
+        "en": "A cropped presenter introduces each question beside an icon card; the answer switches to continuous real screen evidence or a semantic diagram.",
+        "zh-CN": "左侧人物提问，右侧图标卡片随后缩为标题；操作答案连续录屏，解释答案使用图解。"
+      },
+      "contentFit": {
+        "viewerJobs": [
+          "identify-the-topic",
+          "follow-a-question-answer-series",
+          "inspect-a-software-operation",
+          "understand-grouped-concepts"
+        ],
+        "strongSignals": [
+          "Question-led software or skill explanations mix real demonstrations and commentary.",
+          "A real result can establish context before questions."
+        ],
+        "avoidWhen": [
+          "Single uninterrupted emotional performance without distinct questions.",
+          "Evidence becomes unreadable inside a split layout; give it the full content area."
+        ]
+      },
+      "visualContract": {
+        "surface": "Warm paper panels, restrained borders, soft card shadows. / 暖白纸面、轻边框、柔和卡片阴影。",
+        "palette": {
+          "paper": "#f5f0e5",
+          "nav": "#eeeadd",
+          "ink": "#293b34",
+          "green": "#507060",
+          "softGreen": "#dfeade",
+          "yellow": "#e6bd46",
+          "card": "#fffdf7"
+        },
+        "typography": "Readable sans serif hierarchy; body text stays subordinate to evidence and semantic icons. / 清晰无衬线层级，正文不抢图解。",
+        "composition": [
+          "For presenter explanations, begin around 30% cropped presenter / 70% evidence area; preserve face/gesture and adapt to current aspect.",
+          "Reading: a large right-side question card; after the question, animate it into a compact upper-right title and reflow the answer below it.",
+          "Demonstrations: full content-area screen recording with native webcam intact; additional explanation may use only original voice over a genuine quiet/loading interval.",
+          "Top chapter navigation and bottom centered transparent captions; reserved zones apply to all simultaneous layers."
+        ],
+        "scalableTokens": {
+          "referenceCanvas": {
+            "width": 1660,
+            "height": 1080
+          },
+          "presenterPanelWidth": 500,
+          "navigationHeight": 64,
+          "questionLarge": {
+            "x": 580,
+            "y": 287,
+            "width": 1000,
+            "height": 460
+          },
+          "questionDocked": {
+            "x": 580,
+            "y": 118,
+            "width": 1000,
+            "height": 108
+          },
+          "questionTitleSize": 65,
+          "dockedTitleSize": 41,
+          "caption": {
+            "left": 40,
+            "top": 977,
+            "width": 1580,
+            "fontSize": 36,
+            "fill": "#ffffff",
+            "stroke": "#131c17",
+            "strokeWidth": 1.1
+          },
+          "adaptation": "Scale from reference canvas, then reflow around actual evidence, captions and title. Independent text size interpolation prevents unreadable shrink-to-fit."
+        }
+      },
+      "brollGrammar": {
+        "primaryForms": [
+          "real-screenshot-or-recording",
+          "semantic-icon-cards",
+          "process-arrows",
+          "category-cards",
+          "local-archive-diagram"
+        ],
+        "buildRule": "Choose structure from meaning: sequence→flow, parallel categories→cards, relations→diagram. Reveal with speech; retain or remove evidence according to its current reading, comparison or recall role. / 流程用流程图、类别用小卡片、关系用图解；按本片阅读、对照或回顾需要决定何时进退。",
+        "evidenceBoundary": "A user-selected screenshot may fill the evidence area proportionally with same-image extension; do not fabricate UI, stretch, clip important text or retain an obsolete cover/title."
+      },
+      "motionGrammar": {
+        "entrances": [
+          "brief card entrance",
+          "sequential icon reveal",
+          "question-card docking"
+        ],
+        "character": "Calm, visible and motivated; no gratuitous spin or constant movement. / 克制、可感知、有语义作用。",
+        "timing": "Question card holds for the complete spoken question, then docks once. Evidence duration is chosen for this video; it may span semantic beats while still useful.",
+        "component": "assets/components/question-card.mjs"
+      },
+      "soundGrammar": {
+        "candidates": [
+          "quiet paper cue for question",
+          "short whoosh for docking",
+          "soft confirmation ding",
+          "small pop for grouped items"
+        ],
+        "rule": "Speech dominant; cue only the selected semantic transitions. Verify cues in the final mix. BGM off was accepted for this kind of demonstration, not a universal music ban. / 人声优先，重要转折才配音效，并验证真实入轨。"
+      },
+      "provenance": {
+        "relationship": "De-identified extraction from creator-approved mixed presenter/screen editing and current explicit iteration request.",
+        "sourceAssetDistributed": false,
+        "note": "No original face, voice, screenshot, project copy or audience metric is bundled. This is an optional visual recipe, not a global rule for numbers, hooks or visual duration. Select and adapt per project; the reusable candidate still needs another real video."
+      }
     }
-  ]
+  ],
+  "compatibleVersions": {
+    "1": {
+      "styleDigests": {
+        "handdrawn-knowledge-map-v1": "95a1e68a53ce7dacf9b86a4448950a689462a36c951eb81d7f43789eca3149fc",
+        "warm-notebook-journey-v1": "ceb081523a72b385ff7de34ee00b4716eba9cd50ef7046a850fbf890884d0d5a",
+        "bold-evidence-editorial-v1": "9c25b8aaf4818e85762c8fa1ec4bca200601c7675767afb35185cf0b23bb52f6",
+        "color-block-explainer-v1": "11d680da524019a86d4aad7b3038331c255e743621edc01fee12219c4419ad05"
+      },
+      "reason": "Only unchanged existing styles; new candidate requires the current library version."
+    }
+  }
 }

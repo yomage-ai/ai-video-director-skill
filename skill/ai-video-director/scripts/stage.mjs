@@ -7,6 +7,8 @@ import {artifact,json,resolveArtifact,verifyRenderReceipt,decode,probe,invariant
 import {sameFile,finite} from './lib/media-contract.mjs';
 import {verifyRecovery} from './lib/recovery.mjs';
 import {checkRevision,runRevision} from './lib/locked-master.mjs';
+import {checkProgramReview} from './lib/program-review.mjs';
+import {recordStageEvent} from './lib/iteration-log.mjs';
 
 const scripts = path.dirname(fileURLToPath(import.meta.url));
 function audit(script,args) {
@@ -74,6 +76,11 @@ export function checkStage(manifestFile,stage) {
     }
     }
   }
+  if(m.reviewSchemas?.program===1 && m.outputScope==='full-edit' && stage!=='rough-render') {
+    const result=checkProgramReview(artifact(locate('programPlan')),artifact(locate('programPreflight')),base,
+      {edlRef:bound.receipt.edl,outputSpec:m.jobs?.['fine-render']?.outputSpec});
+    inputs.push(...result.inputs);
+  }
   if(stage === 'deliver' && m.outputScope === 'rough-cut') {
     for(const key of ['editableProject','captions']) inputs.push(artifact(resolveArtifact(m.roughDelivery?.[key],base,`roughDelivery.${key}`)));
     decode(bound.program);
@@ -100,6 +107,11 @@ export function checkStage(manifestFile,stage) {
     invariant(receipt.inputs?.length > 0,'Fine render dependency bindings required');
     // Approved rough/style must be the same dependencies used by the final render.
     for(const ref of inputs) invariant(receipt.inputs.some(x=>x.path===ref.path && x.sha256===ref.sha256),'Final render used an older approval/input');
+    if(m.reviewSchemas?.program===1) {
+      const result=checkProgramReview(artifact(locate('programPlan')),artifact(locate('programFinalReview')),base,
+        {edlRef:bound.receipt.edl,outputSpec:receipt.outputSpec,renderRef:receipt.output});
+      inputs.push(...result.inputs);
+    }
     if(m.publicationInScope === true) audit('audit-publish-package.mjs',[d.supportingArtifacts.publicationPackageAbsolutePath]);
     audit('audit-learning-scope-ledger.mjs',[d.supportingArtifacts.learningScopeLedgerAbsolutePath]);
     decode(master);
@@ -131,7 +143,13 @@ export function checkStage(manifestFile,stage) {
 export function runStage(file,stage) {
   const checked=checkStage(file,stage);
   if(checked.scope==='locked-master') return runRevision(checked);
-  if(stage==='deliver') return {...checked,m:undefined,base:undefined};
+  if(stage==='deliver') {
+    const {m,base}=checked;
+    const output=m.outputScope==='rough-cut'?checked.delivered.aroll:json(path.resolve(base,m.artifacts.deliveryManifest)).releaseMaster.absolutePath;
+    const consent=m.outputScope==='rough-cut'?m.approvals.rough:m.approvals.release;
+    const iteration=recordStageEvent({...checked,output,p:{version:path.basename(output)}},'approval','approved',resolveArtifact(consent.evidence,base));
+    return {...checked,iteration,m:undefined,base:undefined};
+  }
   const {m,base,inputs}=checked,job=m.jobs[stage];
   const output=path.resolve(base,job.outputPath);
   const startedAt=new Date().toISOString();
@@ -147,7 +165,8 @@ export function runStage(file,stage) {
   const receipt={schemaVersion:1,stage,projectId:m.projectId,startedAt,completedAt:new Date().toISOString(),
     inputs,output:artifact(output),outputSpec:job.outputSpec,argv:job.argv,fullDecodePassed:true,media};
   writeFileSync(`${output}.stage.json`,JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});
-  return {ok:true,stage,output,receipt:`${output}.stage.json`};
+  const iteration=recordStageEvent({...checked,output,p:{version:path.basename(output)}},'render','pass',`${output}.stage.json`);
+  return {ok:true,stage,output,receipt:`${output}.stage.json`,iteration};
 }
 // Installed Skills may be directory symlinks. Compare file identities so the
 // documented installed-path command cannot silently skip its CLI entry point.

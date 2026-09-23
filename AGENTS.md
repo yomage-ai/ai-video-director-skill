@@ -39,3 +39,9 @@ Hard rules:
   a hidden default, and use only item-level rights-cleared media.
 - Do not perform a full render before targeted audio, transition, layout, color, and keyframe checks pass.
 - Deliver the editable project and decision/QA records with the final video.
+
+## README maintenance / README 维护
+
+Preserve the creator-edited README scope and wording. An internal capability change does not justify adding usage branches or workflow explanations. Read the latest user diff before editing; change only requested or factually necessary user-facing content, with matching Chinese/English deletions. Put implementation, recovery and trial details in Skill references or project state. Never restore a removed paragraph through translation or template reuse.
+
+保留用户定版的 README 内容边界。内部能力改动不自动增加用法分支或流程说明；先读最新用户修改，只改明确要求或事实变化必需的内容，中英文同步删留。实现、恢复和实片验证放内部文档，不借翻译、补全或模板恢复已删段落。

@@ -36,3 +36,19 @@ test('update does not replace an unrelated directory',()=>{
     assert.equal(readFileSync(path.join(destination,'SKILL.md'),'utf8'),'---\nname: unrelated\n---\n');
   } finally {rmSync(dir,{recursive:true,force:true});}
 });
+
+import {switchSkillWithRollback} from '../skill/ai-video-director/scripts/lib/skill-install.mjs';
+import {unlinkSync} from 'node:fs';
+test('failed setup restores the old Skill and personal files, including thrown setup errors',()=>{
+ for(const setup of [()=>({ok:false,error:'synthetic dependency failure'}),()=>{throw Error('synthetic setup exception');}]){
+  const dir=mkdtempSync(path.join(os.tmpdir(),'avd-rollback-')),destination=path.join(dir,'installed'),source=path.join(dir,'new');
+  mkdirSync(destination);mkdirSync(source);writeFileSync(path.join(destination,'personal.txt'),'keep');
+  try{const r=switchSkillWithRollback({destination,source,backupRoot:path.join(dir,'backups'),setup});assert.equal(r.status,'rolled-back');assert.equal(readFileSync(path.join(destination,'personal.txt'),'utf8'),'keep');}
+  finally{rmSync(dir,{recursive:true,force:true});}
+ }
+});
+test('setup cannot roll back over a concurrent replacement',()=>{
+ const dir=mkdtempSync(path.join(os.tmpdir(),'avd-update-race-')),destination=path.join(dir,'installed'),source=path.join(dir,'new');mkdirSync(destination);mkdirSync(source);writeFileSync(path.join(destination,'old.txt'),'keep');
+ try{const r=switchSkillWithRollback({destination,source,backupRoot:path.join(dir,'backups'),setup:()=>{unlinkSync(destination);mkdirSync(destination);writeFileSync(path.join(destination,'other.txt'),'other actor');return {ok:false};}});assert.equal(r.status,'recovery-required');assert.equal(readFileSync(path.join(destination,'other.txt'),'utf8'),'other actor');assert.equal(readFileSync(path.join(r.backup,'old.txt'),'utf8'),'keep');}
+ finally{rmSync(dir,{recursive:true,force:true});}
+});

@@ -21,3 +21,10 @@ test('new creator review cannot pass using only general clear checkboxes',()=>{
  Object.assign(data.agentPreparation.checks.audioLevels,{integratedLufs:-16.5,truePeakDbtp:-1.2});
  assert.throws(()=>checkCreatorReview(data,f.bound,f.base));data.agentPreparation.pauseLedger=f.save();assert.equal(checkCreatorReview(data,f.bound,f.base).ok,true);
 });
+
+test('measured speech edges reject a fabricated small gap and edges outside retained intervals',()=>{
+ const f=fixture();f.ledger.schemaVersion=2;Object.assign(f.ledger.joins[0],{outgoingSpeechEndSeconds:.8,incomingSpeechStartSeconds:1.2,gapSeconds:.4});
+ assert.equal(checkPauseLedger(f.save(),f.bound,f.base,{version:2}).joins,1);
+ f.ledger.joins[0].gapSeconds=.1;assert.throws(()=>checkPauseLedger(f.save(),f.bound,f.base,{version:2}),/outgoing tail/);
+ f.ledger.joins[0].outgoingSpeechEndSeconds=1.1;assert.throws(()=>checkPauseLedger(f.save(),f.bound,f.base),/Outgoing speech/);
+});

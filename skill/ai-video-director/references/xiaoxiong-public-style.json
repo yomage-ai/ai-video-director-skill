@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "profileId": "xiaoxiong-public-style-v1",
-  "version": 2,
-  "updatedAt": "2026-09-11",
+  "version": 3,
+  "updatedAt": "2026-09-15",
   "scope": "bundled-public-default",
   "authorization": "creator-explicitly-authorized-public-sharing-of-approved-editing-style-2026-09-06",
   "preferences": {
@@ -11,12 +11,39 @@
         "preset": "xiaoxiong-landscape-screen-v1",
         "canvas": "preserve-approved-native-aspect-resolution-and-cadence-not-forced-16:9",
         "progressEdge": "top",
-        "captions": {"surface": "transparent", "align": "center", "layer": "topmost", "verticalPlacement": "approved-bottom-caption-lane"},
+        "captions": {
+          "surface": "transparent",
+          "align": "center",
+          "layer": "topmost",
+          "verticalPlacement": "approved-bottom-caption-lane"
+        },
         "portraitSafeCoordinatesApplied": false,
-        "screen": {"preferOriginalVideo": true, "supportMuted": true, "loopOperations": false, "zoom": "only-for-demonstrated-legibility-need"},
-        "presenter": {"role": "supplement-missing-information", "cutout": "optional-not-mandatory", "size": "reuse-approved-normalized-size-no-universal-half-scale", "chairIncluded": false},
+        "screen": {
+          "preferOriginalVideo": true,
+          "supportMuted": true,
+          "loopOperations": false,
+          "zoom": "only-for-demonstrated-legibility-need"
+        },
+        "presenter": {
+          "role": "supplement-missing-information",
+          "cutout": "optional-not-mandatory",
+          "size": "reuse-approved-normalized-size-no-universal-half-scale",
+          "chairIncluded": false
+        },
         "transitions": "preserve-approved-treatment-unless-current-request-changes-it",
-        "template": "assets/templates/presentation.template.json"
+        "template": "assets/templates/presentation.template.json",
+        "questionExplainer": {
+          "styleId": "warm-evidence-qa-v1",
+          "status": "local-candidate-next-real-video-required",
+          "when": "question-led explanations with both real screen evidence and presenter commentary",
+          "reuse": "adapt selected recipe to current content; emphasis, media duration and layout remain per-project decisions",
+          "opening": "choose hook and information order for the current video; do not mandate a result-first or question-first opening",
+          "question": "large card during the complete question, then dock and clear the answer area",
+          "answer": "continuous screen when the screen explains; semantic diagram beside presenter otherwise",
+          "supplement": "original voice only over a genuine quiet screen interval; no redundant telling or independent presenter cut-in",
+          "visualForms": "meaningful icons, category cards, process or relationship diagrams; avoid text-only lists and empty reading states",
+          "activation": "optional recipe only when selected for this project; approval of one video does not activate it globally"
+        }
       },
       "audioLoudness": {
         "version": 1,

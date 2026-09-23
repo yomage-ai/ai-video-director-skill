@@ -10,7 +10,8 @@ const output = execFileSync(
   ['ls-files', '--cached', '--others', '--exclude-standard', '-z'],
   {cwd: repoRoot, encoding: 'utf8'},
 );
-const files = output.split('\0').filter(Boolean);
+const deleted = new Set(execFileSync('git', ['ls-files', '--deleted', '-z'], {cwd: repoRoot, encoding: 'utf8'}).split('\0').filter(Boolean));
+const files = output.split('\0').filter(p => p && !deleted.has(p));
 const findings = [];
 
 const mediaExtensions = new Set([
@@ -61,7 +62,7 @@ for (const relativePath of files) {
   }
 }
 
-console.log(JSON.stringify({ok: findings.length === 0, scannedFiles: files.length, findings}, null, 2));
+console.log(JSON.stringify({ok: findings.length === 0, scannedFiles: files.length, excludedDeletedWorkingTreeFiles: [...deleted], findings}, null, 2));
 if (findings.length > 0) {
   process.exitCode = 1;
 }

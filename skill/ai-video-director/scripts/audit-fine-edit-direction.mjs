@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {resolveArtifact,verifyRenderReceipt,probe,invariant} from './lib/media-contract.mjs';
 import {sameFile} from './lib/media-contract.mjs';
 import {checkInformationPlan,checkPresentation} from './lib/editorial-checks.mjs';
+import {compatibleStyleVersion} from './lib/style-version.mjs';
 
 const [inputPath, reportPath] = process.argv.slice(2);
 if (!inputPath) {
@@ -72,7 +73,7 @@ const curatedDecisionModes = new Set(['curated-library', ...dynamicModes]);
 if (curatedDecisionModes.has(data.styleSource?.mode)) {
   const selection = data.styleSource?.curatedLibrary ?? {};
   requireTrue(selection.reviewed, 'styleSource.curatedLibrary.reviewed');
-  if (selection.libraryVersion !== curatedLibrary.libraryVersion) {
+  if (!compatibleStyleVersion(curatedLibrary,selection.libraryVersion,[...(selection.candidateStyleIds||[]),...(selection.selectedStyleId?[selection.selectedStyleId]:[])])) {
     errors.push('styleSource.curatedLibrary.libraryVersion must match the installed curated style library');
   }
   const minimumCandidates = curatedLibrary.selectionPolicy?.candidateComparisonMinimum ?? 2;

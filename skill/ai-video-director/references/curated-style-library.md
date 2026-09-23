@@ -173,3 +173,5 @@ When a style originated in one creator's work, remove the creator's character, l
 修改目录后，先运行 `node scripts/audit-curated-style-library.mjs` 和仓库测试，再把新条目用于真实项目。
 
 某种风格来自一位创作者的作品时，公开前移除角色、Logo、签名动作、未发布素材、单片原文时间点、账号状态和私有素材编号。小熊明确授权共享的可缩放坐标、字幕、色值及排序优先级直接进入公共默认，不另留必需的私人风格包。
+
+`warm-evidence-qa-v1` is a local candidate for question-led presenter/screen explanations. The creator approved the source look; another real video must validate this reusable implementation before remote promotion. The recipe and seek-safe question-card helper contain no private media. / 暖白实证问答是本地待验证配方：提问大卡片、读完缩为标题、按答案切换连续录屏或图解。原片观感已确认，通用实现仍等下一实片验证。

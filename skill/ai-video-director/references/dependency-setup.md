@@ -48,3 +48,5 @@ Read the `chatcut` row from the bundled CLI's `mcp list --json` as well as `mcp 
 No listening model is an editing dependency. Do not propose, install or test Qwen audio understanding, GPT-Audio-1.5 or a replacement. Agent completes the existing technical/content checks, delivers the rough cut and receives creator feedback. Follow [creator-feedback-review.md](creator-feedback-review.md).
 
 听审模型不是剪辑依赖。不再提议、安装或测试千问、GPT-Audio-1.5 或替代方案。Agent 按既有规范检查并交付粗剪，用户反馈后继续；不能因缺少音频模型暂停。
+
+An authorized Skill update is transactional: preserve the previous installation, switch the link, run intake setup, and restore the previous installation if setup fails. If another actor changes the destination during setup, preserve both that destination and the backup for Agent recovery. Dependency-side installations are not silently deleted. / 更新后依赖检查失败则恢复原 Skill；并发替换时保留双方，由 Agent 排障，不覆盖别人的目录。

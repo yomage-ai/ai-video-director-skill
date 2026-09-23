@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import {spawnSync} from 'node:child_process';
+import {switchSkillWithRollback} from './lib/skill-install.mjs';
 import {resolveArtifact} from './lib/media-contract.mjs';
 import {publicStyle} from './lib/style-profile.mjs';
 import {activateRuntimePaths, findHyperframes, npmCommand, skillRoots, xmlDependency} from './lib/setup-runtime.mjs';
@@ -12,7 +13,6 @@ import {
   readFileSync,
   readlinkSync,
   realpathSync,
-  renameSync,
   symlinkSync,
   unlinkSync,
   writeFileSync,
@@ -213,12 +213,16 @@ function lstatSafe(target) {
 }
 
 function installSkill(args) {
-  function finish(status,destination,backup) {
+  function setupInstallation() {
     const child=spawnSync(process.execPath,[path.join(scriptDir,'setup.mjs'),'--stage','intake','--apply'],{encoding:'utf8',maxBuffer:8*1024*1024});
-    if (child.stderr) process.stderr.write(child.stderr);
-    let setup; try { setup=JSON.parse(child.stdout); } catch { setup={error:child.error?.message || 'Setup did not return a valid result'}; }
-    console.log(JSON.stringify({status,destination,source:skillDir,...(backup?{backup}:{}),setup},null,2));
-    if (child.status!==0 || child.error) process.exitCode=1;
+    if(child.stderr) process.stderr.write(child.stderr);
+    let setup; try { setup=JSON.parse(child.stdout); } catch { setup={error:child.error?.message || 'Setup did not return valid JSON'}; }
+    return {...setup,ok:child.status===0 && !child.error && !setup.error && setup.localReady===true};
+  }
+  function finish(status,destination) {
+    const setup=setupInstallation();
+    console.log(JSON.stringify({status,destination,source:skillDir,setup},null,2));
+    if(!setup.ok) process.exitCode=1;
   }
   const destination = skillInstallPath();
   mkdirSync(path.dirname(destination), {recursive: true});
@@ -235,13 +239,9 @@ function installSkill(args) {
       // Keep old SKILL.md outside discovery roots, otherwise the backup itself
       // can be loaded as a second Skill with the same name.
       const backupRoot=path.join(path.dirname(path.dirname(destination)),'skill-backups');
-      mkdirSync(backupRoot,{recursive:true});
-      const backup=path.join(backupRoot,`ai-video-director-${Date.now()}`);
-      if (lstatSafe(backup)) throw new Error('Skill backup already exists; Agent retries with a distinct backup location.');
-      renameSync(destination,backup);
-      try { symlinkSync(skillDir,destination,'dir'); }
-      catch(error) { renameSync(backup,destination); throw error; }
-      finish('updated',destination,backup);
+      const result=switchSkillWithRollback({destination,source:skillDir,backupRoot,setup:setupInstallation});
+      console.log(JSON.stringify(result,null,2));
+      if(result.status!=='updated') process.exitCode=1;
       return;
     }
     if (stat.isSymbolicLink()) {
@@ -339,6 +339,7 @@ function initProject(args) {
     ['director-plan.template.json', 'analysis/director-plan.json'],
     ['rough-cut-review.template.json', 'analysis/rough-cut-review.json'],
     ['fine-edit-direction.template.json', 'analysis/fine-edit-direction.json'],
+    ['program-plan.template.json', 'analysis/program-plan.json'],
     ['project-state.template.json', 'project-state.json'],
     ['pipeline.template.json', 'pipeline.json'],
     ['trial-metrics.template.json', 'analysis/trial-metrics.json'],

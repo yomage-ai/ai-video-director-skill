@@ -118,6 +118,8 @@ test('authenticated connection without a plugin still reaches automatic helper p
     const report=JSON.parse(result.stdout);
     assert.equal(report.error,undefined);
     assert.equal(report.userActions.length,0);
+    assert.ok(!report.agentActions.some(a=>a.name==='source-listen'));
+    assert.ok(report.agentActions.some(a=>a.name==='creator-review'));
     assert.equal(report.checks.find(c=>c.name==='chatcut').status,'installed-session-verification-required');
     assert.equal(report.checks.find(c=>c.name==='chatcut-upload-compat').action,'acquisition-required');
     assert.equal(report.checks.find(c=>c.name==='chatcut-upload-compat').selection,'isolated-reviewed-helper');

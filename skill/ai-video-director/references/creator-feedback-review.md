@@ -22,3 +22,15 @@ New projects and resumed work use schema 6, `reviewMode: "creator-feedback"`. `p
 For ChatCut creator approval, save a fresh timeline snapshot with project/timeline IDs and source ranges before duplicating it. Bind the user's message to that snapshot; exported timing/render evidence can then be attached to the same version. Never ask the creator to repeat their approval merely because an internal report was generated later. Do not mark style or final-master approval from rough approval.
 
 ChatCut 粗剪确认先绑定实时的工程、时间线和源区间快照，再复制为精剪版本。导出回执随后关联到同版；不能因内部报告生成较晚要求用户重复确认，也不能把粗剪确认扩大成风格或最终成片确认。
+
+## Current preparation / 当前检查表
+
+New schema 6 preparations set `preparationContractVersion: 2` and `pauseContractVersion: 3`. Shared `scripts/lib/review-policy.mjs` owns the check and defect lists. Each retained interval and join records every applicable defect class plus actual method, observation and evidence. Takes and color remain explicit checks. Old schema 4/5 fixtures are retained only for compatibility; the current template has no obsolete mandatory listening fields.
+
+新检查表由同一类别表生成并校验：段内重起、口型准备、眨眼复位、逐字/同义重复、长停顿和异常字长；接点查字头字尾、留白、重起、重复与画面跳变。用户指出一种问题就检查全片同类，不能只修给出的时间点。每类处理状态配实际记录；数值或“clear”不能证明听感。
+
+On resume, `migrate-creator-review.mjs` removes retired job capabilities but preserves ambiguous blockers. Agent inspects their original evidence and supplies `--classification file.json` only for a confirmed obsolete prerequisite. That file binds `pipelineSha256` and `blockers: [{id, scope: "obsolete-prerequisite-only", reason, evidence: {path, sha256}}]`. Do not classify actual known defects as missing listening capability. A changed pipeline invalidates the classification. This inspection belongs to the Agent; do not ask the user for an audio model.
+
+迁移不能仅凭旧阻塞名称清除问题。Agent 先核对原证据，用上述版本绑定的分类记录仅撤销旧前置要求；真实缺陷、登录和费用继续保留。
+
+Source-boundary protection and actual before/after WAV evidence use [pause-ledger.md](pause-ledger.md). Schema 3 checks labelled complete-word ranges and fade/cut safety; it does not automatically establish phonetic accuracy or naturalness. / 字头字尾保护与原片/成片真实音频对照见气口清单；程序保护已标注范围，不能把标注或波形当独立听审。

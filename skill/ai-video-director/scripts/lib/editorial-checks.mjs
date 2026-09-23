@@ -5,7 +5,9 @@ export function checkInformationPlan(plan) {
   invariant(plan?.schemaVersion===1&&Array.isArray(plan.claims)&&plan.claims.length,'Information claims required');
   const ids=new Set();
   for(const c of plan.claims) {
-    invariant(text(c.id)&&!ids.has(c.id)&&text(c.viewerBenefit),'Unique claim and viewer benefit required');ids.add(c.id);
+    invariant(text(c.id)&&!ids.has(c.id)&&text(c.viewerBenefit),'Unique claim and viewer benefit required');
+    for(const id of c.dependsOn||[])invariant(ids.has(id),'Required context must precede the dependent claim');
+    ids.add(c.id);
     invariant(Array.isArray(c.occurrences)&&c.occurrences.length,'Claim occurrences required');
     invariant(c.occurrences.filter(o=>o.role==='primary').length===1,'Each claim needs exactly one primary telling');
     for(const o of c.occurrences) {

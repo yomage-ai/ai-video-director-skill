@@ -56,3 +56,9 @@ node scripts/memory.mjs promote --id <feedback-id> --key captions.motion --value
 `init`, `record` and `promote` create local data only when needed. The current owner's former profile has been split by explicit approval: reusable style into this repository, identity treatment into `xiaoxiong-ip`, host settings retained locally, original history retained as provenance. Future installs need no migration of that old profile to obtain the style.
 
 One feedback item may expose a general mechanism, a shared style and a concrete project choice. Split it into linked records using `linkedEntryIds`; do not duplicate the full mixed payload. 例如“截图、录屏或混合形式按内容选择”是通用判断，小熊黄蓝色值是公共风格，具体哪段录屏用于哪句话仍是单片决定。个人知识库保存来源、状态、冲突和实践历史，不代替实际实现。
+
+## Scope before reuse / 先分清适用范围
+
+Classify each feedback item before changing defaults: **general mechanism** (e.g. verify the actual audio), **optional style recipe** (use only when selected for the current video), or **project-only decision** (which number to emphasize, which image to use, its hold length, a particular line deletion). Keep factual accuracy separate from visual intensity: large numbers are allowed when suited to the video. A creator approving an entire video does not approve every detail as a future default. Split mixed feedback; if broader adoption was not stated, keep the exact treatment project-only.
+
+沉淀前逐项分清：**通用机制**（检查实际混音、字头字尾完整）、**可选风格配方**（本片选中才使用）、**单片决定**（数字强调、图片选择、停留时长、具体删句）。数字真实与数字要不要大字是两回事；别的视频可以突出数字。整片认可不代表每个细节永久成为默认。混合反馈拆开记录，未明确跨片采用的具体处理默认只作用于当前视频。

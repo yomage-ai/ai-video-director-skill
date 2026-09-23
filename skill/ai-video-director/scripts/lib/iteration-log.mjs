@@ -53,5 +53,5 @@ export function recordStageEvent(c,type,result,evidenceFile) {
   }
   return appendIteration(c.base,{schemaVersion:1,id,projectId:c.projectId,version:c.p.version,
     type,occurredAt,artifact:artifact(c.output),evidence:artifact(evidenceFile),result,
-    ...(type==='render'?{renderKind:c.m.jobs['revision-render'].renderKind||'full'}:{}),...(type==='approval'?{approvedBy:'user'}:{})});
+    ...(type==='render'?{renderKind:c.m.jobs[c.stage||'revision-render']?.renderKind||'full'}:{}),...(type==='approval'?{approvedBy:'user'}:{})});
 }

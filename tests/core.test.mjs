@@ -87,30 +87,12 @@ test('project scaffold stays outside the repository and includes decision artifa
   assert.equal(state.projectId, 'test-video');
   assert.equal(intake.projectId, 'test-video');
   assert.equal(roughCutReview.projectId, 'test-video');
-  assert.equal(roughCutReview.takeSelectionPolicy.principle, 'quality-first');
-  assert.equal(roughCutReview.schemaVersion, 6);
-  assert.equal(roughCutReview.timelineInventory.allRealJoinsRepresented, false);
-  assert.equal(roughCutReview.paceConsistencyReview.comparisonWindows.length, 3);
-  assert.equal(roughCutReview.fullCutReview.listenedFromStartToFinish, false);
-  assert.equal(roughCutReview.joinReview.allPlacedItemBoundariesEnumerated, false);
-  assert.equal(roughCutReview.manuscriptAudibilityAudit.openingWordsAudible, false);
-  assert.equal(roughCutReview.manuscriptAudibilityAudit.verifiedBoundaries[0].normalSpeedAuditioned,
-    false);
-  assert.deepEqual(roughCutReview.manuscriptAudibilityAudit.acceptancePriority, [
-    'intended-word-intelligibility',
-    'natural-pause-and-mouth-noise-cleanup',
-    'picture-continuity',
-  ]);
-  assert.equal(roughCutReview.playbackSpeedReview.sourceRate, 1);
-  assert.equal(roughCutReview.playbackSpeedReview.retimeApplied, null);
-  assert.equal(roughCutReview.paceConsistencyReview.postRetimeRevalidation.status,
-    'not-applicable|pending|pass');
-  assert.equal(roughCutReview.dialogueLoudnessMatch.integratedLufsMatchedFirst, false);
-  assert.equal(roughCutReview.audibleDuplicateAudit.crossSegmentAndClipBoundariesScanned, false);
-  assert.equal(roughCutReview.structuralEditReadback.intentionalTransitionsChecked, false);
-  assert.equal(roughCutReview.sourceColorNormalization.workflowStage,
-    'rough-cut-before-approval');
-  assert.equal(roughCutReview.sourceColorNormalization.fineEditReprocessingRequired, false);
+  assert.equal(roughCutReview.schemaVersion,6);
+  assert.equal(roughCutReview.preparationContractVersion,2);
+  assert.equal(roughCutReview.pauseContractVersion,3);
+  assert.equal(roughCutReview.agentPreparation.agentAuditoryReviewClaimed,false);
+  assert.equal(roughCutReview.manuscriptAudibilityAudit,undefined);
+  assert.equal(roughCutReview.creatorFeedback.approvedBy,null);
   assert.equal(fineEditDirection.projectId, 'test-video');
   assert.equal(fineEditDirection.screenEvidence.onePrimaryEvidencePlaneDefault, true);
   assert.equal(fineEditDirection.audio.backgroundMusic.auditionedInStyleSample, false);
@@ -221,8 +203,8 @@ test('curated style library provides a public, content-routed fine-edit floor', 
 
 test('rough-cut review audit blocks incomplete joins, unresolved pauses, and unverified pace', () => {
   const template = JSON.parse(readFileSync(path.join(
-    repoRoot, 'skill', 'ai-video-director', 'assets', 'templates',
-    'rough-cut-review.template.json'), 'utf8'));
+    repoRoot, 'tests', 'fixtures',
+    'rough-review-template-legacy.json'), 'utf8'));
   const valid = structuredClone(template);
   valid.status = 'ready-for-user-review';
   valid.timelineInventory = {
@@ -1891,8 +1873,8 @@ test('bilingual trigger forward tests cover realistic Chinese and English edit r
     path.join(repoRoot, 'skill', 'ai-video-director', 'SKILL.md'),
     'utf8',
   );
-  const readmeEn = readFileSync(path.join(repoRoot, 'README.md'), 'utf8');
-  const readmeZh = readFileSync(path.join(repoRoot, 'README.zh-CN.md'), 'utf8');
+  const readmeEn = readFileSync(path.join(repoRoot, 'README.en.md'), 'utf8');
+  const readmeZh = readFileSync(path.join(repoRoot, 'README.md'), 'utf8');
   const chineseRequest = '请继续处理这段口播视频，修掉跨片段重复词和 B-roll 闪帧。';
   const englishRequest = 'Continue editing this talking-head video and fix cross-segment repeated words and B-roll flashes.';
   const chineseProgressRequest = '给这条竖屏口播加通用 RMCU 章节进度条，未激活长标题省略，当前标题溢出才循环滚动。';
@@ -2441,7 +2423,7 @@ test('public repository is Apache-2.0 and contains no personal media or exposed 
   assert.equal(packageJson.private, true);
   assert.equal(packageJson.license, 'Apache-2.0');
   assert.match(license, /Apache License/);
-  assert.match(readme, /## License/);
+  assert.match(readme, /## 开源协议/);
   assert.equal(result.ok, true);
   assert.deepEqual(result.errors, []);
 });

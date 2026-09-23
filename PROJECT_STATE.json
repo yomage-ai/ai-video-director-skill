@@ -1,33 +1,49 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-15",
+  "updatedAt": "2026-09-23",
   "localImprovement": {
-    "status": "implemented-local-awaiting-result-review",
+    "id": "creator-feedback-program-review-20260915",
+    "status": "source-sync-approved-real-video-trial-pending",
+    "baseCommit": "0e791bf2aa3e45f99e9292dfe4391b0343619cd3",
     "scope": [
-      "locked-master-visual-revision",
-      "retained-interior-review",
-      "complete-dynamic-sample",
-      "information-ownership",
-      "integer-frame-rebase",
-      "keyframe-tail-reuse",
-      "iteration-events"
+      "shared-rough-preparation-and-defect-classes",
+      "source-bounded-pause-measurements",
+      "evidence-classified-legacy-migration",
+      "transactional-install-rollback",
+      "whole-program-preflight-and-final-evidence",
+      "actual-sfx-mix-verification",
+      "question-card-component-and-candidate-style",
+      "per-style-version-compatibility",
+      "spoken-information-dependencies",
+      "normal-stage-iteration-events",
+      "remove-unrequested-readme-paragraph"
     ],
     "independentRealProjectValidation": "pending",
-    "remoteSubmissionAuthorized": false,
+    "remoteSubmissionAuthorized": true,
     "engineeringValidation": {
-      "checkedAt": "2026-09-11T04:18:29Z",
+      "checkedAt": "2026-09-23",
       "tests": {
-        "total": 78,
-        "passed": 77,
-        "failed": 1,
-        "newRevisionTestsPassed": 9
+        "total": 115,
+        "passed": 114,
+        "failed": 1
       },
-      "remainingFailure": "pre-existing-public-repository-audit-of-historical-commit-email-metadata-no-history-rewrite-authorized",
+      "remainingFailure": "pre-existing historical commit email metadata audit; no history rewrite authorized",
       "localDoctor": "pass-installation-only",
-      "currentFilePrivacyScan": "pass-137-files-no-findings",
+      "currentFilePrivacyScan": "pass-162-current-files-no-findings; renamed old README absent from working tree",
       "skillQuickValidate": "pass",
       "diffWhitespace": "pass",
-      "perceptualQuality": "not-established-by-synthetic-tests"
+      "perceptualQuality": "next-independent-real-video-pending; synthetic tests do not establish listening or visual taste"
+    },
+    "followUp": {
+      "date": "2026-09-16",
+      "readme": "Chinese README.md with English README.en.md entry; original content preserved",
+      "sourceBoundaryContract": 3,
+      "mechanicalEvidence": "source-labelled complete words and uncertain edge ranges; reject cut/fade intrusion, verify original/output audio windows, map rate and gap range",
+      "perceptualBoundary": "source labels require actual waveform/spectrogram/context inspection; code does not independently recognize phonemes or certify naturalness",
+      "feedbackScope": "general mechanisms / per-project selected style recipes / project-only decisions; no inherited number-emphasis or fixed visual-exit rule",
+      "remoteSubmissionAuthorized": true,
+      "sourceSyncApprovedAt": "2026-09-23",
+      "realVideoTrial": "pending"
     }
   },
   "repository": "https://github.com/yomage-ai/ai-video-director-skill",
@@ -52,16 +68,16 @@
   "candidateWorkflow": "evidence-bound-talking-head-video-v2",
   "candidatePromotionGate": {
     "remoteSubmissionAllowedNow": true,
-    "requiredEvidence": "engineering-regression-skill-validation-privacy-review-and-nonconflicting-remote-state",
+    "requiredEvidence": "User approved the reviewed 49-path local source snapshot for submission on 2026-09-23; independent real-video quality and resource observations remain pending",
     "afterTrial": "record-real-project-quality-resource-and-revision-outcomes-without-retroactively-equating-source-submission-with-trial-success",
     "trialMetricsTemplate": "skill/ai-video-director/assets/templates/trial-metrics.template.json",
-    "authorizedAt": "2026-09-15",
-    "authorization": "explicit-current-local-source-sync-2026-09-15; further functional changes still require their own result approval",
-    "previousTrialBeforeSubmissionHold": "superseded-by-explicit-current-authorization"
+    "authorizedAt": "2026-09-23",
+    "authorization": "Explicit confirmation to synchronize the reviewed 49 local paths; source submission only, not trial completion or a package release",
+    "previousTrialBeforeSubmissionHold": "overridden for this reviewed source submission; independent real-video trial remains pending"
   },
   "curatedStyleLibrary": {
     "schemaVersion": 1,
-    "libraryVersion": 1,
+    "libraryVersion": 2,
     "registry": "skill/ai-video-director/references/curated-style-library.json",
     "guide": "skill/ai-video-director/references/curated-style-library.md",
     "activeStyleIds": [
@@ -80,7 +96,10 @@
     "referenceRole": "liked-used-approved-and-marked-styles-are-public-reference-material-not-a-closed-asset-whitelist",
     "noCompleteMatchPolicy": "define-one-dominant-audiovisual-system-and-a-beat-level-plan-for-evidence-generated-or-code-authored-assets-typography-icons-footage-music-and-sfx",
     "privacyBoundary": "no-identity-media-private-reference-project-copy-or-unlicensed-assets; approved-scalable-style-tokens-are-public",
-    "validationStatus": "engineering-validated-next-real-project-motion-and-attention-cost-trial-pending"
+    "validationStatus": "anonymous engineering tests pass; new candidate awaits independent real-video trial",
+    "candidateStyleIds": [
+      "warm-evidence-qa-v1"
+    ]
   },
   "roughCutPolicy": {
     "firstApprovalFastPath": {
@@ -96,14 +115,16 @@
       "silentHeavyWorkAfterTargetExceeded": false,
       "visualStyleApprovalDeferredUntil": "rough-cut-lock-unless-an-exact-approved-reference-or-private-profile-exists",
       "reliableSuppliedManuscriptMayOrientContentBeforeFullAsr": true,
-      "fullAsrTimingAndSourceListenRequiredBeforeCutExecution": true,
+      "fullAsrTimingAndSourceListenRequiredBeforeCutExecution": false,
       "avoidBeforeFirstApprovalUnlessRequired": [
         "large-media-upload",
         "cloud-import-retry",
         "full-render",
         "style-production",
         "publication-research"
-      ]
+      ],
+      "sourceTimingAndAgentPreparationRequiredBeforeCutExecution": true,
+      "auditoryApproval": "creator feedback and exact-version approval; do not fabricate independent listening or require a listening model"
     },
     "repeatedTakeSelection": {
       "default": "quality-first",
@@ -1185,24 +1206,30 @@
   },
   "creatorFeedbackWorkflow": {
     "date": "2026-09-11",
-    "status": "approved-for-current-source-synchronization",
+    "status": "source-sync-approved-real-video-trial-pending",
     "default": "Agent prepares and checks rough cut; creator gives feedback and approval; continue fine edit",
     "listeningModels": "not-proposed-installed-tested-or-called",
     "appliesTo": "all-installations-and-resumed-projects",
     "remoteSubmissionAuthorized": true,
     "validation": {
-      "targetedTests": "18/18 pass",
-      "fullSuite": "92/93 pass; existing commit-email history audit fails",
-      "doctor": "pass",
-      "currentFilePrivacy": "144 files clean",
-      "skillStructure": "valid",
-      "remoteCommitPush": "not performed"
+      "checkedAt": "2026-09-23",
+      "tests": {
+        "total": 115,
+        "passed": 114,
+        "failed": 1
+      },
+      "remainingFailure": "pre-existing historical commit email metadata audit; no history rewrite authorized",
+      "localDoctor": "pass-installation-only",
+      "currentFilePrivacyScan": "pass-162-current-files-no-findings; renamed old README absent from working tree",
+      "skillQuickValidate": "pass",
+      "diffWhitespace": "pass",
+      "perceptualQuality": "next-independent-real-video-pending; synthetic tests do not establish listening or visual taste"
     },
-    "currentAuthorizationDate": "2026-09-15"
+    "currentAuthorizationDate": "2026-09-23"
   },
   "currentSourceSubmission": {
     "date": "2026-09-15",
-    "status": "user-authorized-current-local-snapshot",
+    "status": "historical-snapshot-synchronized-before-current-local-iteration",
     "authorization": "Creator explicitly requested checking and submitting the current local Skill to synchronize remote and local. Existing candidate source is in scope; new functional repairs, history rewriting and release artifacts are not added.",
     "remoteSubmissionAuthorized": true,
     "scope": [
@@ -1226,17 +1253,52 @@
     "knownUnresolvedIssues": [
       {
         "file": "skill/ai-video-director/scripts/setup.mjs",
-        "issue": "Legacy source-listen action wording still conflicts with the creator-feedback instructions."
+        "issue": "Legacy source-listen action wording still conflicts with the creator-feedback instructions.",
+        "currentLocalDisposition": "fixed-and-regression-tested-in-creator-feedback-program-review-20260915; not remotely submitted or independently trialed"
       },
       {
         "file": "skill/ai-video-director/scripts/migrate-creator-review.mjs",
-        "issue": "Blocker retirement identifies legacy IDs/kinds without a dedicated prerequisite-only marker; manually distinguish actual quality defects before migration."
+        "issue": "Blocker retirement identifies legacy IDs/kinds without a dedicated prerequisite-only marker; manually distinguish actual quality defects before migration.",
+        "currentLocalDisposition": "fixed-and-regression-tested-in-creator-feedback-program-review-20260915; not remotely submitted or independently trialed"
       },
       {
         "file": "skill/ai-video-director/scripts/director.mjs",
-        "issue": "Authorized update preserves a backup but does not automatically restore the old installation after subsequent setup failure."
+        "issue": "Authorized update preserves a backup but does not automatically restore the old installation after subsequent setup failure.",
+        "currentLocalDisposition": "fixed-and-regression-tested-in-creator-feedback-program-review-20260915; not remotely submitted or independently trialed"
       }
     ],
-    "qualityBoundary": "One creator-approved full video does not establish universal editing quality, cross-platform onboarding, or all pending independent trial metrics."
+    "qualityBoundary": "One creator-approved full video does not establish universal editing quality, cross-platform onboarding, or all pending independent trial metrics.",
+    "commit": "0e791bf2aa3e45f99e9292dfe4391b0343619cd3",
+    "scopeBoundary": "This authorization applies only to the recorded committed snapshot, not current uncommitted changes."
+  },
+  "currentLocalSourceSubmission": {
+    "date": "2026-09-23",
+    "status": "reviewed-snapshot-approved-for-source-sync",
+    "scope": "34 modified and 15 new paths reviewed before confirmation",
+    "remoteSubmissionAuthorized": true,
+    "independentRealProjectValidation": "pending",
+    "releasePackageAuthorized": false,
+    "historyRewriteAuthorized": false,
+    "validation": "114/115 tests pass; only existing historical commit-email metadata audit fails; doctor, 162-file privacy scan, Skill structure and diff whitespace pass"
+  },
+  "nextRealVideoTrial": {
+    "status": "pending",
+    "agentChecks": [
+      "all retained intervals and joins classified with source-bounded pause edges",
+      "check contextual clarity and intended sentence meaning; hook order remains a project decision",
+      "continuous screen answers without unintended presenter flashes",
+      "when the question-card recipe is selected: check hold and docking through all chapters including final states",
+      "screen-relative claims match displayed evidence",
+      "SFX cue signal verified in actual final mix",
+      "native canvas and one editable composition entry",
+      "no unsolicited README expansion",
+      "iteration counts and measured tool time tracked from new events, missing history remains unknown"
+    ],
+    "creatorChecks": [
+      "natural speech and transitions",
+      "readability and visual hierarchy",
+      "sound effect audibility and restraint"
+    ],
+    "promotion": "Reviewed source synchronization approved on 2026-09-23; report real-video outcomes separately before claiming quality validation, with no zero-defect or speedup guarantee"
   }
 }

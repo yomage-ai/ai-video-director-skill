@@ -73,7 +73,7 @@ test('neutral audio keeps energy near the join instead of adding a frame-length 
   const rms=(a,b)=>{const values=samples.subarray(Math.round(a*48000),Math.round(b*48000));return Math.sqrt(values.reduce((sum,v)=>sum+v*v,0)/values.length);};
   assert.ok(rms(.480,.497)/rms(.2,.4)>.75,'word-tail region must not have an implicit fade');
   assert.ok(rms(.503,.520)/rms(.6,.8)>.75,'word-onset region must not have an implicit fade');
-  const window=f.prepared.manuscriptAudibilityAudit.verifiedBoundaries[0].windowEvidence;
+  const window=f.prepared.boundaryWindows[0].windowEvidence;
   assert.equal(window.endSeconds-window.startSeconds,5);
   assert.equal(json(f.output+'.render.json').command.some(x=>x.includes('afade')),false);
 });

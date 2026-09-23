@@ -7,6 +7,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {artifact,json,sha256,sameFile} from '../skill/ai-video-director/scripts/lib/media-contract.mjs';
 import {checkStage,runStage} from '../skill/ai-video-director/scripts/stage.mjs';
+import {programReviewFrames} from '../skill/ai-video-director/scripts/lib/program-review.mjs';
 import {bindRoughReview,bindFineDirection,run} from './fixtures/media-fixture.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -47,6 +48,7 @@ function project() {
   write(capabilities,{schemaVersion:1,checks:['ffmpeg','ffprobe','chatcut','asr','source-listen','fine-renderer'].map(name=>({
     name,status:'pass',version:'synthetic-gate-fixture',method:'Synthetic attestation for gate testing only',checkedAt:new Date().toISOString(),evidence:artifact(message)}))});
   const m=json(path.join(templates,'pipeline.template.json'));
+  delete m.reviewSchemas.program; // Stored legacy project predates full-program checks.
   m.reviewSchemas.rough=5; // Exercise stored legacy approvals against the new runtime.
   Object.assign(m,{projectId:'synthetic-stage-test',language:'zh-CN'});
   Object.assign(m.artifacts,{contentBrief:brief,roughReview:roughFile,fineDirection:fineFile,capabilities});
@@ -91,7 +93,17 @@ test('stage rejects an actual render at the wrong resolution and does not create
 });
 
 test('fine render and final delivery bind exact output, approval and dependencies end to end',()=>{
-  const p=project();const result=runStage(p.file,'fine-render');
+  const p=project();p.m.reviewSchemas.program=1;p.save();
+  assert.throws(()=>checkStage(p.file,'fine-render'));
+  const planFile=path.join(p.dir,'program.json'),preflight=path.join(p.dir,'program-preflight.json'),finalReview=path.join(p.dir,'program-final.json');
+  const image=path.join(p.dir,'actual-synthetic-frame.png');
+  const frame=spawnSync('ffmpeg',['-v','error','-i',p.f.output,'-frames:v','1',image]);assert.equal(frame.status,0);
+  const plan={schemaVersion:1,edl:artifact(p.f.edlFile),canvas:{width:160,height:90,fps:30,durationFrames:900},beats:[{id:'screen-proof',startFrame:0,endFrame:900,viewerJob:'Synthetic screen proof',requiredLayers:['screen'],continuousScreen:true}],layers:[{id:'screen',kind:'screen',startFrame:0,endFrame:900,keyframes:[]}],sfx:'off',cues:[]};write(planFile,plan);
+  const review={schemaVersion:1,phase:'preflight',planSha256:artifact(planFile).sha256,method:'Synthetic actual frame extraction; not creator QA',unresolved:[],frames:programReviewFrames(plan).map(frame=>({frame,status:'clear',observation:'Uniform synthetic color source',image:artifact(image),boxes:[]}))};write(preflight,review);
+  Object.assign(p.m.artifacts,{programPlan:planFile,programPreflight:preflight,programFinalReview:finalReview});p.save();
+  const result=runStage(p.file,'fine-render');
+  assert.equal(result.iteration.summary.renderCounts.full,1);
+
   assert.equal(json(result.receipt).fullDecodePassed,true);
   assert.throws(()=>runStage(p.file,'fine-render'),/output exists/);
   const support={};
@@ -112,9 +124,12 @@ test('fine render and final delivery bind exact output, approval and dependencie
   p.m.artifacts.deliveryManifest=delivery;p.m.artifacts.fineRenderReceipt=result.receipt;p.save();
   assert.throws(()=>checkStage(p.file,'deliver'),/release: user approval/);
   p.m.approvals.release=approval(result.output,p.message);p.save();
-  assert.equal(runStage(p.file,'deliver').ok,true);
+  assert.throws(()=>runStage(p.file,'deliver'));
+  write(finalReview,{...review,phase:'final',render:artifact(result.output)});
+  const delivered=runStage(p.file,'deliver');assert.equal(delivered.ok,true);assert.equal(delivered.iteration.summary.creatorAccepted,true);
+  assert.equal(runStage(p.file,'deliver').iteration.summary.eventCount,delivered.iteration.summary.eventCount);
   p.m.jobs['fine-render'].outputSpec.width=320;p.save();
-  assert.throws(()=>checkStage(p.file,'deliver'),/specification changed/);
+  assert.throws(()=>checkStage(p.file,'deliver'),/specification changed|canvas width/);
   p.m.jobs['fine-render'].outputSpec.width=160;p.save();
   const fine=json(p.fineFile);fine.contentDirection.primaryViewerJob+=' Updated after rendering.';write(p.fineFile,fine);
   p.m.approvals.style=approval(p.fineFile,p.message);p.save();

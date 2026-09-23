@@ -5,6 +5,8 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {artifact,json,joins,invariant,verifyRenderReceipt} from './lib/media-contract.mjs';
 
+import {preparationChecks,pendingClasses} from './lib/review-policy.mjs';
+
 const [receiptArg, outputArg] = process.argv.slice(2);
 invariant(receiptArg && outputArg,'Usage: prepare-rough-review.mjs <render.json> <new-review.json>');
 const output = path.resolve(outputArg);
@@ -15,34 +17,30 @@ const template = fileURLToPath(new URL('../assets/templates/rough-cut-review.tem
 const review = json(template);
 review.schemaVersion=6;
 review.reviewMode='creator-feedback';
-review.pauseContractVersion=1;
+review.pauseContractVersion=3;
+review.preparationContractVersion=2;
 review.status = 'in-progress';
 review.evidenceBinding = {renderReceipt:binding};
 review.canonicalEdlVersion = receipt.edl.sha256;
 const boundaries = joins(edl);
 const pendingCheck=()=>({status:'pending',method:'',observation:'',evidence:null});
 review.agentPreparation={programSha256:receipt.output.sha256,listeningModelUsed:false,agentAuditoryReviewClaimed:false,
-  checks:Object.fromEntries(['content','picture','pauses','pace','audioLevels','decode'].map(k=>[k,pendingCheck()])),
-  intervals:edl.segments.map(s=>({segmentId:s.id,startFrame:s.outputStartFrame,endFrame:s.outputEndFrameExclusive,...pendingCheck()})),
-  boundaries:boundaries.map(b=>({...b,expectedLastToken:'',expectedFirstToken:'',...pendingCheck()})),unresolvedIssues:[]};
+  checks:Object.fromEntries(preparationChecks.map(k=>[k,pendingCheck()])),
+  intervals:edl.segments.map(s=>({segmentId:s.id,startFrame:s.outputStartFrame,endFrame:s.outputEndFrameExclusive,classes:pendingClasses('interval'),...pendingCheck()})),
+  boundaries:boundaries.map(b=>({...b,expectedLastToken:'',expectedFirstToken:'',classes:pendingClasses('join'),...pendingCheck()})),unresolvedIssues:[]};
 review.creatorFeedback={approvedBy:null,approvedAt:null,programSha256:null,quote:'',evidence:null};
 review.agentPreparation.pauseLedger=null;
 review.timelineInventory = {durationSeconds:edl.durationSeconds,placedMediaItems:edl.segments.length,
   expectedJoinCount:boundaries.length,actualJoinCount:boundaries.length,allRealJoinsRepresented:true};
-review.retainedInteriorReview={programSha256:receipt.output.sha256,intervals:edl.segments.map(s=>({
-  segmentId:s.id,startFrame:s.outputStartFrame,endFrame:s.outputEndFrameExclusive,
-  normalSpeedAudio:false,normalSpeedMotion:false,method:'',observation:'',evidence:null,
-  classes:{restart:'pending','mouth-preparation':'pending','blink-reset':'pending','literal-repeat':'pending','semantic-repeat':'pending'}
-}))};
 const directory = path.join(path.dirname(output),path.basename(output,'.json')+'-windows');
 mkdirSync(directory,{recursive:true});
-review.manuscriptAudibilityAudit.verifiedBoundaries = boundaries.map((boundary,index)=>{
+review.boundaryWindows = boundaries.map((boundary,index)=>{
   const startSeconds = Math.max(0,boundary.timelineTimeSeconds-2.5);
   const endSeconds = Math.min(edl.durationSeconds,boundary.timelineTimeSeconds+2.5);
   const file = path.join(directory,`join-${index+1}.wav`);
   execFileSync('ffmpeg',['-v','error','-n','-ss',String(startSeconds),'-i',program,'-t',String(endSeconds-startSeconds),
     '-vn','-ac','1','-ar','48000','-c:a','pcm_s16le',file],{stdio:'pipe'});
-  return {...review.manuscriptAudibilityAudit.verifiedBoundaries[0],...boundary,
+  return {...boundary,
     renderedWindow:file,windowEvidence:{...artifact(file),programSha256:receipt.output.sha256,startSeconds,endSeconds,
       generator:'prepare-rough-review.mjs / ffmpeg pcm_s16le 48000 mono'}};
 });

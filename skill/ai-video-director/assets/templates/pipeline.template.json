@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "reviewSchemas": {
     "rough": 6,
-    "fine": 2
+    "fine": 2,
+    "program": 1
   },
   "projectId": "replace-with-project-id",
   "language": "en",
@@ -17,7 +18,10 @@
     "fineDirection": "analysis/fine-edit-direction.json",
     "deliveryManifest": "delivery/delivery-manifest.json",
     "capabilities": "analysis/capabilities.json",
-    "fineRenderReceipt": null
+    "fineRenderReceipt": null,
+    "programPlan": "analysis/program-plan.json",
+    "programPreflight": "analysis/program-preflight.json",
+    "programFinalReview": "analysis/program-final-review.json"
   },
   "approvals": {
     "content": {

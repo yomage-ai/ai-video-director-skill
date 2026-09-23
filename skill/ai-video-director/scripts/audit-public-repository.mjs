@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync} from 'node:fs';
 import {spawnSync} from 'node:child_process';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -43,7 +43,8 @@ const trackedFiles = run(['ls-files', '-z']).split('\0').filter(Boolean);
 for (const relative of trackedFiles) {
   if (forbiddenMedia.test(relative)) errors.push(`Tracked media or sensitive binary is not allowed: ${relative}`);
   const absolute = path.join(repoRoot, relative);
-  const content = readFileSync(absolute);
+  // An unstaged rename leaves the old path in the index; audit that blob too.
+  const content = existsSync(absolute) ? readFileSync(absolute) : run(['show', `:${relative}`], {encoding:null});
   if (content.includes(0)) {
     errors.push(`Unexpected binary tracked file: ${relative}`);
   } else {

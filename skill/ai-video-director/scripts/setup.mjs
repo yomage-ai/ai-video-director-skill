@@ -98,7 +98,7 @@ async function chatcut() {
     add('chatcut-upload-compat',prepared.ready?'pass':'preparation-required',{...prepared,scope:'local helper readiness only; verify the live import contract before media transfer'});
     action('chatcut-upload','Read the active asset-import contract, query existing assets, then run chatcut-upload.mjs with current official session arguments. The wrapper reuses a reviewed active helper or acquires the isolated hash-pinned official helper. Preserve existing asset IDs and no-transcribe. If the service rejects the contract, diagnose that operation; never loop imports or alter plugin cache.');
   }
-  action('source-listen','Verify actual audio input and a real speech sample before promising reviewed rough output. If unavailable, record the exact route gap and continue independent provisional work. Do not confuse transcription or playback with listening; obtain a decision only for a genuinely new provider, fee or permission.');
+  action('creator-review','Agent checks content, retained intervals, joins, picture, measured pauses and audio levels, then delivers the rough cut for creator feedback. Missing native audio input is not a blocker. Do not request or install a listening model, or claim independent listening.');
   action('asr','Verify live transcription against the authorized source; use the current service schema rather than the local plugin version.');
 }
 
